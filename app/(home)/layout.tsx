@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "./components/Footer";
 
 export default function HomeLayout({
   children,
@@ -9,7 +10,8 @@ export default function HomeLayout({
     <>
       {/* <HomeHeader/>  */}
       <main>{children}</main>
-      {/* <HomeFooter/> */}
+
+      <Footer />
     </>
   );
 }
