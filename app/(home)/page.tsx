@@ -4,7 +4,7 @@ import Subscribe from "./components/sections/Subscribe";
 
 export default function Home() {
   return (
-    <section className="h-screen w-full grid place-items-center">
+    <section className="w-full bg-yellow-50">
       <Hero />
       {/* Banner Section */}
       {/* Categories Section */}

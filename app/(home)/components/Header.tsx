@@ -7,7 +7,7 @@ const Header = () => {
   return (
     // container mx-auto py-[15px] md:py-[30px]  border-b border-b-gray-400  md:border-b-0  flex flex-col-reverse md:flex-row   justify-center  items-center
     // px-1 py-2 lg:max-w-[600px] max-w-[350px] border-[1px] rounded-full border-black  flex justify-between items-center bg-white
-    <div className="container mx-auto sm:px-4 md:px-8 lg:px-16 xl:px-32 py-[8px] md:py-[30px] flex flex-row justify-end  items-center">
+    <div className="fixed container mx-auto sm:px-4 md:px-8 lg:px-16 xl:px-32 py-[8px] md:py-[30px] flex flex-row justify-end  items-center">
       <div className="hidden  px-1 py-2 max-w-[380px] lg:max-w-[450px] xl:max-w-[580px]  border-[1px] rounded-full border-black  md:flex justify-between items-center bg-white ">
         <input
           className="pr-2  w-[634px] text-sm md:text-lg  outline-none rounded-full"
