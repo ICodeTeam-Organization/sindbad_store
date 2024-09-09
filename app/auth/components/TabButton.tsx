@@ -1,17 +1,25 @@
 import { Button } from "@/components/ui/button";
 
-const TabButton = () => {
+type Props = { showLoginForm: boolean; handleChangeForm: () => void };
+
+const TabButton = ({ showLoginForm, handleChangeForm }: Props) => {
   return (
-    <div className="flex py-2">
+    <div className="flex ">
       <Button
         variant={"ghost"}
-        className="w-1/2 border-b-2 rounded-none font-bold text-lg  "
+        className={`${
+          showLoginForm && "border-none text-gray-400"
+        } border border-b-2 border-b-orange-500 w-1/2  rounded-none font-bold text-lg transition-all duration-200  `}
+        onClick={handleChangeForm}
       >
         حساب جديد
       </Button>
       <Button
         variant={"ghost"}
-        className="w-1/2 border-b-2 rounded-none font-bold text-lg  "
+        className={`${
+          !showLoginForm && "border-none text-gray-400"
+        } border border-b-2 border-b-orange-500 w-1/2  rounded-none font-bold text-lg transition-all duration-200  `}
+        onClick={handleChangeForm}
       >
         تسجيل الدخول
       </Button>

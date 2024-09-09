@@ -7,7 +7,7 @@ import { BsEye } from "react-icons/bs";
 type Props = {
   name?: string;
   placeholder?: string;
-  onChange?: () => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const PasswordInput = ({ name, placeholder, onChange }: Props) => {
@@ -20,7 +20,6 @@ const PasswordInput = ({ name, placeholder, onChange }: Props) => {
   return (
     <div className="relative">
       <Input
-        id="password"
         type={showPassword ? "text" : "password"}
         name={name}
         placeholder={placeholder}
