@@ -1,5 +1,5 @@
 import Image from "next/image";
-import hero from "@/app/Images/hero.jpg";
+import hero from "@/public/images/hero.jpg";
 const CategoryCard = () => {
   return (
     <div className="text-center ">

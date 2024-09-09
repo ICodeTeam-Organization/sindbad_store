@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Adds from "@/app/Images/Ads.svg";
+import Adds from "@/public/images/Ads.svg";
 const Ads = () => {
   return (
     <div className="m-auto w-full">

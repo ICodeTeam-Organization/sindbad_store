@@ -2,7 +2,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import React from "react";
 import SectionTitle from "../SectionTitle";
 import Image from "next/image";
-import hero from "@/app/Images/hero.jpg";
+import hero from "@/public/images/hero.jpg";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,

@@ -5,7 +5,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import React from "react";
 import SectionTitle from "../SectionTitle";
 import Image from "next/image";
-import store from "@/app/Images/Store.svg";
+import store from "@/public/images/store.svg";
 import {
   Carousel,
   CarouselContent,
@@ -24,7 +24,7 @@ const AllStores = () => {
           تسوق احدث المنتجات المميزة المضافة جديد
         </p>
       </div>
-      <Carousel dir="ltr" className="m-auto max-sm:w-[370px] sm:w-[500px] md:w-[700px] lg:w-[1000px] xl:w-[1650px]">
+      <Carousel dir="ltr" className="m-auto max-sm:w-[370px] sm:w-[500px] md:w-[700px] lg:w-[1000px] xl:w-[1280px] 2xl:w-[1500px]">
         <CarouselPrevious className=" absolute -top-7 max-md:left-[0px] md:left-[0px] lg:left-[60px]  xl:left-[200px] text-[#F58634]" />
         <CarouselNext className=" absolute -top-7 max-md:left-[35px] md:left-[35px] lg:left-[100px] xl:left-[250px] text-[#F58634]" />
         <CarouselContent className="">
@@ -51,7 +51,7 @@ const AllStores = () => {
                   <AiFillStar className="text-[#D6D6D6]" />
                   <p className="text-[#A5A5A5] mr-3">(4.5)</p>
                 </div>
-                <div className="max-md:w-[110px] md:w-[150px] max-md:h-[25px] md:h-[47px] cursor-pointer xl:w-[360px] h-[56px] text-xl max-lg:w-[200px] rounded-sm border-[1px] hover:bg-[#F58634] hover:text-white transition-all duration-700 flex justify-center items-center border-black max-md:mt-1 md:mt-6 mt-3">
+                <div className="max-md:w-[110px] md:w-[150px] max-md:h-[25px] md:h-[47px] cursor-pointer xl:w-[260px] h-[56px] text-xl max-lg:w-[200px] rounded-sm border-[1px] hover:bg-[#F58634] hover:text-white transition-all duration-700 flex justify-center items-center border-black max-md:mt-1 md:mt-6 mt-3">
                   <h1 className="max-md:text-[15px]">زيارة المتجر</h1>
                   <IoIosArrowBack />
                 </div>

@@ -1,10 +1,10 @@
 import Image from "next/image";
-import specialrequist from "@/app/Images/specialrequist.svg";
-import Stores from "@/app/Images/Stores.svg";
-import discounts from "@/app/Images/discounts.svg";
-import onlineStores from "@/app/Images/onlineStores.svg";
-import shoppingStore from "@/app/Images/shoppingStore.svg";
-import wholesaleSection from "@/app/Images/wholesaleSection.svg";
+import specialrequist from "@/public/images/specialrequist.svg";
+import Stores from "@/public/images/Stores.svg";
+import discounts from "@/public/images/discounts.svg";
+import onlineStores from "@/public/images/onlineStores.svg";
+import shoppingStore from "@/public/images/shoppingStore.svg";
+import wholesaleSection from "@/public/images/wholesaleSection.svg";
 const Cards = () => {
   const cards = [
     { name: "طلب خاص", image: specialrequist },
