@@ -5,7 +5,7 @@ import Link from "next/link";
 const MobileVert = () => {
   return (
     
-    <div className='m-auto mt-28 min-w-[100px] max-w-[424px] min-h-[50px] p-[32px] rounded-[4px] border-solid border-[1px] border-[#E4E7E9] shadow-lg drop-shadow-sm shadow-[#0000001F]'>
+    <div className='m-auto my-24 min-w-[100px] max-w-[424px] min-h-[50px] p-[32px] rounded-[4px] border-solid border-[1px] border-[#E4E7E9] shadow-lg drop-shadow-sm shadow-[#0000001F]'>
         <h1 className='m-auto text-[28px] text-center font-bold mt-2'>التحقق من بريدك الإلكتروني </h1>
         <div className='m-auto mt-[30px] flex justify-between'>
             <p className='text-[20px]  text-[#191C1F]'>رمز التحقق</p>
