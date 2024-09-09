@@ -1,8 +1,8 @@
+import BackButton from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineHome } from "react-icons/md";
-import { TiArrowLeftThick } from "react-icons/ti";
 
 const NotFoundPage = () => {
   return (
@@ -22,14 +22,7 @@ const NotFoundPage = () => {
             <span className="ml-2">الرئيسية</span> <MdOutlineHome size={20} />
           </Button>
         </Link>
-        <Link href={""}>
-          <Button
-            variant={"outline"}
-            className="font-bold hover:bg-primary-background hover:text-white"
-          >
-            <span className="ml-2">رجوع</span> <TiArrowLeftThick size={15} />
-          </Button>
-        </Link>
+        <BackButton />
       </div>
     </div>
   );
