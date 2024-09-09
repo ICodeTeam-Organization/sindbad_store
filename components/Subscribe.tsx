@@ -1,11 +1,10 @@
-import React from "react";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { FaAppStore } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 
 const Subscribe = () => {
   return (
-    <div className="py-8  pr-2  bg-stone-100  w-full">
+    <div className="py-3 pr-2  bg-stone-100  w-full">
       <div className="container mx-auto sm:px-4 md:px-8 lg:px-16 xl:px-32 py-3 w-full flex flex-col lg:flex-row  lg:flex-wrap  lg:justify-evenly  items-start lg:items-center gap-5 lg:gap-0">
         <div className="flex items-center ">
           <div className="bg-white rounded-full w-fit p-3 ml-5">

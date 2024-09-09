@@ -1,6 +1,5 @@
-import About from "./components/sections/About";
+import Feature from "./components/sections/Feature";
 import Hero from "./components/sections/Hero";
-import Subscribe from "./components/sections/Subscribe";
 
 export default function Home() {
   return (
@@ -9,7 +8,7 @@ export default function Home() {
       {/* Banner Section */}
       {/* Categories Section */}
       {/* ...other Sections */}
-      
+      <Feature />
     </section>
   );
 }

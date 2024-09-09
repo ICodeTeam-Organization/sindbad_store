@@ -9,7 +9,7 @@ import { RiArrowLeftDoubleLine } from "react-icons/ri";
 
 const About = () => {
   return (
-    <div className="container mx-auto pr-3  sm:px-4 md:px-8 lg:px16 xl:px-32   flex flex-col  lg:flex-row gap-4 lg:justify-evenly ">
+    <div className="container mx-auto pr-3 my-10 sm:px-4 md:px-8 lg:px16 xl:px-32   flex flex-col  lg:flex-row gap-4 lg:justify-evenly ">
       <div className="text-start">
         <h3 className="font-bold text-lg text-black mb-3">عن متجرنا</h3>
         <p className="md:max-w-96 xm:max-w-64 text-gray-500">
