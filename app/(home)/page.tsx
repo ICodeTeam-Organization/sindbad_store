@@ -11,7 +11,7 @@ import TodayOffers from "./components/sections/TodayOffers";
 
 export default function Home() {
   return (
-    <section className="w-full bg-yellow-50">
+    <section className="w-full">
       <Hero />
       <Cards />
       <Categories />
