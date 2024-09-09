@@ -12,7 +12,7 @@ const forgetPass = () => {
         </div>
         <div className='m-auto mt-[30px]'>
             <p className='text-[20px] text-start text-[#191C1F]'>رقم الجوال</p>
-            <input className='min-w-[150px] w-full h-[44px]  border-[1px] border-solid rounded-[2px] border-[#E4E7E9]' type="text" />
+            <input className='min-w-[150px] w-full h-[44px]  border-[1px] border-solid rounded-[2px] border-[#E4E7E9] pr-2' type="text" />
             <button className='min-w-[150px] w-full h-[48px] mt-5 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-[20px] flex justify-center items-center'>إرسال الرمز <AiOutlineArrowLeft className="mr-2" /></button>
         </div>
         <div className="text-start my-5 text-[15px] text-[#5F6C72]">
