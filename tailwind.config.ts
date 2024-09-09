@@ -9,7 +9,7 @@ const config: Config = {
   ],
   theme: {
   	extend: {
-  		colors: {
+  		colors: {	
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -21,6 +21,7 @@ const config: Config = {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
+				background: '#FA8232',
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},

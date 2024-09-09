@@ -12,7 +12,7 @@ const MobileVert = () => {
             <Link className='text-[20px]  text-[#2DA5F3]' href={""}>إعادة إرسال الرمز</Link>
         </div> 
         <div>
-            <input className='min-w-[150px] w-full h-[44px]  border-[1px] border-solid rounded-[2px] border-[#E4E7E9]' type="text" />
+            <input className='min-w-[150px] w-full h-[44px]  border-[1px] border-solid rounded-[2px] border-[#E4E7E9] pr-2' type="text" />
             <button className='min-w-[150px] w-full h-[48px] mt-5 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-[20px] flex justify-center items-center'> <AiOutlineArrowRight className="ml-3" />تحقق لي</button>
         </div>   
             
