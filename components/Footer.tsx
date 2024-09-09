@@ -1,8 +1,8 @@
-import paypal from "@/app/Images/paypal.svg";
-import master from "@/app/Images/master.svg";
-import visa from "@/app/Images/visa.svg";
-import mada from "@/app/Images/mada.svg";
-import photo from "@/app/Images/photo.svg";
+import paypal from "../public/images/paypal.svg";
+import master from "../public/images/master.svg";
+import visa from "../public/images/visa.svg";
+import mada from "../public/images/mada.svg";
+import photo from "../public/images/photo.svg";
 import Image from "next/image";
 
 const Footer = () => {

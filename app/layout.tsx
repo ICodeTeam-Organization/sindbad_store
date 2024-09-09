@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import ClientProviders from "@/components/client-providers";
+import Subscribe from "@/components/Subscribe";
+import Footer from "@/components/Footer";
+import About from "@/components/About";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +36,9 @@ export default function RootLayout({
         <main>
           <ClientProviders>{children}</ClientProviders>
         </main>
+        <Subscribe/>
+        <About/>
+        <Footer/>
       </body>
     </html>
   );

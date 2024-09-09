@@ -9,8 +9,7 @@ export default function Home() {
       {/* Banner Section */}
       {/* Categories Section */}
       {/* ...other Sections */}
-      <Subscribe />
-      <About />
+      
     </section>
   );
 }
