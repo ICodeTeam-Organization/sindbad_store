@@ -2,12 +2,12 @@ import { BsArrowRightCircle } from "react-icons/bs";
 import { BsArrowLeftCircle } from "react-icons/bs"; 
 import { BiPlusCircle } from "react-icons/bi"; 
 import Adresses from './Components/Adresses'
-
+import AddShipingAdresses from'./Components/AddShipingAdresses'
 const ShipingAdr = () => {
   const arr = ['01','02','03','04','05'];
   return (
     <div className="m-auto my-16">
-        <button className=" mr-16 py-2 px-6 flex justify-between items-center bg-primary-background text-white rounded-sm">جديد<BiPlusCircle /></button>
+        <AddShipingAdresses />
         <div className="mx-8 m-auto border-2 rounded-sm py-3 mt-6">
             <p className="pr-6 pb-3 text-lg font-bold">عناوين المستخدم</p>
             <Adresses />
