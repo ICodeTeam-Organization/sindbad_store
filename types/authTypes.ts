@@ -1,9 +1,9 @@
-export type UserLoginData = {
+export type loginFormField = {
   email: string;
   password: string;
 };
 
-export type UserRegisterData = {
+export type registerFormField = {
   name: string;
   phone: string;
   email: string;

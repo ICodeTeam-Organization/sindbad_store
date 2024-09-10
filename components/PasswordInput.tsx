@@ -1,16 +1,21 @@
 "use client";
 
+import { registerFormField } from "@/types/authTypes";
 import { Input } from "./ui/input";
-import { useState } from "react";
+import { InputHTMLAttributes, useState } from "react";
+import { UseFormRegister } from "react-hook-form";
 import { BsEye } from "react-icons/bs";
 
-type Props = {
-  name?: string;
-  placeholder?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+type PasswordComponentProps = {
+  fieldName?: keyof registerFormField;
+  register?: UseFormRegister<registerFormField>;
+} & InputHTMLAttributes<HTMLInputElement>;
 
-const PasswordInput = ({ name, placeholder, onChange }: Props) => {
+const PasswordInput: React.FC<PasswordComponentProps> = ({
+  fieldName,
+  register,
+  ...rest
+}) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const handleShowPasword = () => {
@@ -20,10 +25,9 @@ const PasswordInput = ({ name, placeholder, onChange }: Props) => {
   return (
     <div className="relative">
       <Input
+        {...(fieldName && register && { ...register(fieldName) })}
+        {...rest}
         type={showPassword ? "text" : "password"}
-        name={name}
-        placeholder={placeholder}
-        onChange={onChange}
       />
       <BsEye
         onClick={handleShowPasword}
