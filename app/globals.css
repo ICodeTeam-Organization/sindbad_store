@@ -90,3 +90,14 @@ body {
     @apply bg-background text-foreground;
   }
 }
+html::-webkit-scrollbar {
+  width: 0px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #fff;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: #fff;
+}

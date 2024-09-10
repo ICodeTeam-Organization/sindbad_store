@@ -3,7 +3,7 @@ import { GoChevronLeft, GoChevronRight } from "react-icons/go";
 
 export default function Pagination() {
   return (
-    <div className="container mx-auto px-4">
+    <div className="container mx-auto px-4 mb-20">
       <nav
         className="flex flex-wrap justify-between md:justify-center items-center"
         aria-label="Pagination"
