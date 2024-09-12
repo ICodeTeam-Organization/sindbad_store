@@ -3,7 +3,7 @@ import { BsArrowLeftCircle } from "react-icons/bs";
 import { BiPlusCircle } from "react-icons/bi"; 
 import Adresses from './Components/Adresses'
 import AddShipingAdresses from'./Components/AddShipingAdresses'
-import Pagination from "./Components/Pagination";
+import Pagination from "@/components/Pagination";
 const ShipingAdr = () => {
   return (
     <div className="m-auto my-16">
