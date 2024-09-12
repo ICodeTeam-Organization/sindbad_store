@@ -24,7 +24,7 @@ const SelectShppingAdress = () => {
   ];
 
   return (
-    <div>
+    <div className="w-72 ml-10 ">
       <Select dir="rtl">
         <SelectTrigger className="w-full">
           <SelectValue placeholder="عنوان الشحن" />
