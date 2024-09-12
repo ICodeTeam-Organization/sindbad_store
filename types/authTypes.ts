@@ -11,3 +11,8 @@ export type registerFormField = {
   confirmPassword: string;
   agreeTerms: boolean;
 };
+
+export type Forget={
+  phone:string;
+}
+
