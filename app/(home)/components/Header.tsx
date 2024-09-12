@@ -7,6 +7,7 @@ import { GoPerson } from "react-icons/go";
 import { FaAngleDown } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -26,7 +27,19 @@ const Header = () => {
         scrolled && "bg-white shadow-md z-50"
       }`}
     >
-      <div className=" container mx-auto sm:px-4 md:px-8 lg:px-16 xl:px-32  flex flex-row justify-end  items-center">
+      <div
+        className={`${
+          scrolled ? "justify-between" : "justify-end"
+        } container w-full sm:px-4 md:px-8 lg:px-16 xl:px-32  flex flex-row   items-center`}
+      >
+        <Image
+          className={scrolled ? `block relative` : `hidden`}
+          src={"/images/sedebadLogo.svg"}
+          width={100}
+          height={80}
+          alt=""
+        />
+
         <div className="hidden  px-1 py-2 max-w-[380px] lg:max-w-[450px] xl:max-w-[580px]  border-[1px] rounded-full border-black  md:flex justify-between items-center bg-white ">
           <input
             className="pr-2  w-[634px] text-sm md:text-lg  outline-none rounded-full"
@@ -37,6 +50,7 @@ const Header = () => {
             <BiSearch color="gray" />
           </button>
         </div>
+
         <div className=" ml-2 md:-ml-0 md:mr-5 xl:mr-8 flex items-center justify-end md:justify-normal w-full md:w-fit">
           <div className="flex">
             <Link
@@ -54,7 +68,7 @@ const Header = () => {
                 <FaAngleDown size={15} />
               </div>
             </Link>
-            <Link href={"/shpping-card/"}>
+            <Link href={"/shopping-card/"}>
               <div className="relative p-3 mr-3 md:mr-5 w-fit bg-neutral-100 rounded-full hover:cursor-pointer ">
                 <MdOutlineLocalGroceryStore className="text-[18px] md:text-[25px]" />
                 <div className="flex justify-center items-center bg-[#F55157] w-[13px] h-[13px] md:w-[18px] md:h-[18px] rounded-full absolute top-0 right-0 ">
