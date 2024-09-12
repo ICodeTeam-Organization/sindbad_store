@@ -3,7 +3,7 @@ import { BiPlusCircle } from "react-icons/bi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { addshipingadressSchema } from "@/app/auth/schema";
+import { AddshipingadressSchema } from "@/app/auth/schema";
 import {
   Form,
   FormControl,
@@ -30,8 +30,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 const AddShipingAdresses = () => {
-  const form = useForm<z.infer<typeof addshipingadressSchema>>({
-    resolver: zodResolver(addshipingadressSchema),
+  const form = useForm<z.infer<typeof AddshipingadressSchema>>({
+    resolver: zodResolver(AddshipingadressSchema),
     defaultValues: {
       title: "",
       reciver: "",
@@ -39,7 +39,7 @@ const AddShipingAdresses = () => {
       city: "",
     },
   });
-  function onSubmit(values: z.infer<typeof addshipingadressSchema>) {
+  function onSubmit(values: z.infer<typeof AddshipingadressSchema>) {
     console.log(values);
   }
   return (

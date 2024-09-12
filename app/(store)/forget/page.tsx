@@ -17,14 +17,14 @@ const forgetPass = () => {
       <div className="text-start my-5 text-[15px] text-[#5F6C72]">
         <p>
           لديك حساب بالفعل؟{" "}
-          <Link className="mr-1 text-[#2DA5F3]" href={"../auth"}>
+          <Link className="mr-1 text-[#2DA5F3]" href={"/auth"}>
             تسجيل الدخول
           </Link>
         </p>
         <p>
           {" "}
           ليس لديك حساب؟
-          <Link className="mr-2 text-[#2DA5F3]" href={"../auth"}>
+          <Link className="mr-2 text-[#2DA5F3]" href={"/auth"}>
             حساب جديد{" "}
           </Link>
         </p>

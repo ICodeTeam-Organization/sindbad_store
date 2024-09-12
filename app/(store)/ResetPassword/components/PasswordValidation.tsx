@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { resetPassSchema } from "@/app/auth/schema";
+import { ResetPassSchema } from "@/app/auth/schema";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -19,15 +19,15 @@ import PasswordInput from "@/components/PasswordInput";
 import { Input } from "@/components/ui/input";
 
 const PasswordValidation = () => {
-  const form = useForm<z.infer<typeof resetPassSchema>>({
-    resolver: zodResolver(resetPassSchema),
+  const form = useForm<z.infer<typeof ResetPassSchema>>({
+    resolver: zodResolver(ResetPassSchema),
     defaultValues: {
       password: "",
       confirmPassword: "",
       activation: "",
     },
   });
-  function onSubmit(values: z.infer<typeof resetPassSchema>) {
+  function onSubmit(values: z.infer<typeof ResetPassSchema>) {
     console.log(values);
   }
   return (

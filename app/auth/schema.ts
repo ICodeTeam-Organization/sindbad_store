@@ -30,7 +30,7 @@ export const VertificationCodeSchema = z.object({
   activation: z.string().min(1, "يجب إدخال رمز التفعيل"),
 });
 
-export const resetPassSchema = z
+export const ResetPassSchema = z
   .object({
     password: z.string().min(6, "كلمة المرور يجب أن تكون على الأقل 6 أحرف"),
     confirmPassword: z.string().min(6, "كلمة المرور غير مطابقة"),
@@ -41,7 +41,7 @@ export const resetPassSchema = z
     message: "كلمة المرور غير مطابقة",
   });
 
-export const addshipingadressSchema = z.object({
+export const AddshipingadressSchema = z.object({
   title: z.string().min(1, "يجب إدخال العنوان"),
   reciver: z.string().min(1, "يجب إدخال اسم المستلم"),
   phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
