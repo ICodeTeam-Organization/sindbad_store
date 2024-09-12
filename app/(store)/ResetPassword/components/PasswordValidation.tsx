@@ -5,16 +5,26 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { resetPassSchema } from "@/app/auth/schema";
 import { Button } from "@/components/ui/button";
-import {Form,FormControl,FormField,FormItem,FormLabel,FormMessage,} from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { AiOutlineArrowLeft } from "react-icons/ai";
 import React from "react";
 import PasswordInput from "@/components/PasswordInput";
+import { Input } from "@/components/ui/input";
+
 const PasswordValidation = () => {
   const form = useForm<z.infer<typeof resetPassSchema>>({
     resolver: zodResolver(resetPassSchema),
     defaultValues: {
       password: "",
       confirmPassword: "",
+      activation: "",
     },
   });
   function onSubmit(values: z.infer<typeof resetPassSchema>) {
@@ -23,6 +33,19 @@ const PasswordValidation = () => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
+          name="activation"
+          render={({ field }) => (
+            <FormItem className="m-auto mt-[30px]">
+              <FormLabel className="text-xl">رمز التفعيل</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="password"

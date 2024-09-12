@@ -1,71 +1,195 @@
-import {AlertDialog,AlertDialogAction,AlertDialogCancel,AlertDialogContent,AlertDialogDescription,AlertDialogFooter,AlertDialogHeader,AlertDialogTrigger,} from "@/components/ui/alert-dialog"
-  import { Button } from "@/components/ui/button"
-import { BiPlusCircle } from "react-icons/bi"
-
+"use client";
+import { BiPlusCircle } from "react-icons/bi";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { addshipingadressSchema } from "@/app/auth/schema";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 const AddShipingAdresses = () => {
+  const form = useForm<z.infer<typeof addshipingadressSchema>>({
+    resolver: zodResolver(addshipingadressSchema),
+    defaultValues: {
+      title: "",
+      reciver: "",
+      phone: "",
+      city: "",
+    },
+  });
+  function onSubmit(values: z.infer<typeof addshipingadressSchema>) {
+    console.log(values);
+  }
   return (
-    <div>  
-    <AlertDialog>
-    <AlertDialogTrigger asChild>
-        <Button variant='outline' className=' mr-16 py-2 px-6 flex justify-between items-center bg-primary-background hover:bg-orange-600 hover:text-white text-white rounded-sm'>جديد<BiPlusCircle className='mr-1' size={20} /></Button>
-    </AlertDialogTrigger>
-    <AlertDialogContent className='m-auto'>
-        <AlertDialogHeader>
-        <AlertDialogDescription>
-          <div className='m-auto p-8'>            
-            <div className='my-4'>
-                <h1 className='m-auto text-3xl text-right  font-bold mb-2'>العنوان</h1> 
-                <input className=' w-full h-11  border-2 border-solid rounded-sm pr-2' type="text" />
-            </div>  
-              
-            <div className='my-4 m-auto'>
-                <h1 className='text-3xl text-right  font-bold mb-2'>المنطقة</h1> 
-                <div className='text-center font-bold text-lg grid grid-cols-3'>
-                  <h1>المحافظة</h1>
-                  <h1>المديرية</h1>
-                  <h1>المنطقة</h1>
-                  <select name="" id="" className="m-auto w-full border outline-none p-2">
-                    <option className="hidden">المحافظة</option>
-                    <option>حضرموت</option>
-                    <option>عدن</option>
-                    <option>صنعاء</option>
-                  </select>
-                  <select name="" id="" className="m-auto w-full border outline-none p-2">
-                    <option className="hidden">المديرية</option>
-                    <option>المكلا</option>
-                    <option>سيؤن</option>
-                    <option>الشحر</option>
-                  </select>
-                  <select name="" id="" className="m-auto w-full border outline-none p-2">
-                    <option className="hidden">المنطقة</option>
-                    <option>حضرموت</option>
-                    <option>عدن</option>
-                    <option>صنعاء</option>
-                  </select>
-                </div>
-            </div>  
-            <div className='my-4'>
-                <h1 className='m-auto text-3xl text-right  font-bold mb-2'>المستلم</h1> 
-                <input className='w-full h-11  border-2 border-solid rounded-sm pr-2' type="text" />
-            </div>  
-              
-            <div className='my-4'>
-                <h1 className='m-auto text-3xl text-right  font-bold mb-2'>رقم التلفون</h1> 
-                <input className='w-full h-11  border-2 border-solid rounded-sm pr-2' type="text" />
-            </div>  
-              
-          </div>
-        </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-        <AlertDialogCancel>إلغاء</AlertDialogCancel>
-        <AlertDialogAction className='px-24 text-white bg-primary-background hover:bg-orange-600 transition-all duration-300 rounded-sm text-lg flex justify-center items-center'>حفظ التعديلات</AlertDialogAction>
-        </AlertDialogFooter>
-    </AlertDialogContent>
-    </AlertDialog>
-    </div>
-      
-  )
-}
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className=" mr-16 py-2 px-6 flex justify-between items-center bg-primary-background hover:bg-orange-600 hover:text-white text-white rounded-sm"
+        >
+          جديد
+          <BiPlusCircle className="mr-1" size={20} />
+        </Button>
+      </DialogTrigger>
 
-export default AddShipingAdresses
+      <DialogContent className="m-auto">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <DialogHeader>
+              <div className="m-auto p-8">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem className="my-4 text-right">
+                      <FormLabel className="m-auto text-3xl font-bold mb-2">
+                        <p>العنوان</p>
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormLabel className="m-auto text-3xl font-bold mb-2">
+                  <p className=" text-right">المنطقة</p>
+                </FormLabel>
+                <div className="grid grid-cols-3 gap-2 ">
+                  <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field }) => (
+                      <FormItem className="text-center">
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger className="text-xl">
+                              <SelectValue placeholder="المحافظة" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup {...field}>
+                                <SelectItem value="est">حضرموت</SelectItem>
+                                <SelectItem value="cst">عدن</SelectItem>
+                                <SelectItem value="mst">صنعاء</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="city"
+                    render={({ field }) => (
+                      <FormItem className="text-center">
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger className="text-xl">
+                              <SelectValue placeholder="المديرية" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup {...field}>
+                                <SelectItem value="est">حضرموت</SelectItem>
+                                <SelectItem value="cst">عدن</SelectItem>
+                                <SelectItem value="mst">صنعاء</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem className="text-center">
+                        <FormControl>
+                          <Select>
+                            <SelectTrigger className="text-xl">
+                              <SelectValue placeholder="المنطقة" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectGroup {...field}>
+                                <SelectItem value="est">حضرموت</SelectItem>
+                                <SelectItem value="cst">عدن</SelectItem>
+                                <SelectItem value="mst">صنعاء</SelectItem>
+                              </SelectGroup>
+                            </SelectContent>
+                          </Select>
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                <FormField
+                  control={form.control}
+                  name="reciver"
+                  render={({ field }) => (
+                    <FormItem className="my-4 text-right">
+                      <FormLabel className="m-auto text-3xl font-bold mb-2">
+                        <p>المستلم</p>
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem className="my-4 text-right">
+                      <FormLabel className="m-auto text-3xl font-bold mb-2">
+                        <p>رقم التلفون</p>
+                      </FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+            </DialogHeader>
+
+            <DialogFooter>
+              <Button type="submit">حفظ التعديلات</Button>
+            </DialogFooter>
+          </form>
+        </Form>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default AddShipingAdresses;

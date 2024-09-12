@@ -1,8 +1,9 @@
 "use client";
-import { ForgetPasswordSchema } from "@/app/auth/schema";
+import { Input } from "@/components/ui/input";
+import { MobileVertificationSchema } from "@/app/auth/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { AiOutlineArrowLeft } from "react-icons/ai";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,16 +14,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import Link from "next/link";
 
-const PhoneValidation = () => {
-  const form = useForm<z.infer<typeof ForgetPasswordSchema>>({
-    resolver: zodResolver(ForgetPasswordSchema),
+const MobileCodeValidation = () => {
+  const form = useForm<z.infer<typeof MobileVertificationSchema>>({
+    resolver: zodResolver(MobileVertificationSchema),
     defaultValues: {
-      phone: "",
+      activation: "",
     },
   });
-  function onSubmit(values: z.infer<typeof ForgetPasswordSchema>) {
+  function onSubmit(values: z.infer<typeof MobileVertificationSchema>) {
     console.log(values);
   }
   return (
@@ -30,10 +31,15 @@ const PhoneValidation = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name="phone"
+          name="activation"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">رقم الجوال</FormLabel>
+              <div className="flex justify-between">
+                <FormLabel className="text-xl">رمز التحقق</FormLabel>
+                <Link className="text-[20px]  text-[#2DA5F3]" href={""}>
+                  إعادة إرسال الرمز
+                </Link>
+              </div>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -45,12 +51,13 @@ const PhoneValidation = () => {
           className="min-w-[150px] w-full h-[48px] mt-10 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-[20px] flex justify-center items-center font-bold"
           type="submit"
         >
-          إرسال الرمز
-          <AiOutlineArrowLeft className="mr-2" />
+          {" "}
+          <AiOutlineArrowRight className="ml-3" />
+          تحقق لي
         </Button>
       </form>
     </Form>
   );
 };
 
-export default PhoneValidation;
+export default MobileCodeValidation;

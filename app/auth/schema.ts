@@ -20,14 +20,21 @@ export const LoginSchema = z.object({
   email: z.string().email("يرجى إدخال بريد إلكتروني صحيح"),
   password: z.string().min(6, "كلمة المرور مطلوبة"),
 });
-export const ForgetPassword = z.object({
+export const ForgetPasswordSchema = z.object({
   phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
+});
+export const MobileVertificationSchema = z.object({
+  activation: z.string().min(1, "يجب إدخال رمز التحقق"),
+});
+export const VertificationCodeSchema = z.object({
+  activation: z.string().min(1, "يجب إدخال رمز التفعيل"),
 });
 
 export const resetPassSchema = z
   .object({
     password: z.string().min(6, "كلمة المرور يجب أن تكون على الأقل 6 أحرف"),
     confirmPassword: z.string().min(6, "كلمة المرور غير مطابقة"),
+    activation: z.string().min(1, "يجب إدخال رمز التفعيل")
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confrmPassword"],
@@ -35,9 +42,16 @@ export const resetPassSchema = z
   });
 
 export const addshipingadressSchema = z.object({
-  title: z.string().min(1, "الاسم مطلوب"),
+  title: z.string().min(1, "يجب إدخال العنوان"),
+  reciver: z.string().min(1, "يجب إدخال اسم المستلم"),
   phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
-//   selectitem: z
-//     .boolean()
-//     .refine((val) => val, "يجب الموافقة على الشروط والأحكام"),
+  city: z.string().min(1, "الاسم مطلوب")
+    
+
+}
+)
+.refine((data) => data.city === data.city, {
+  path: ["confirmPassword"],
+  message: "كلمة المرور غير مطابقة",
 });
+
