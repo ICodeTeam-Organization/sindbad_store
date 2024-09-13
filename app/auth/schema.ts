@@ -34,24 +34,23 @@ export const ResetPassSchema = z
   .object({
     password: z.string().min(6, "كلمة المرور يجب أن تكون على الأقل 6 أحرف"),
     confirmPassword: z.string().min(6, "كلمة المرور غير مطابقة"),
-    activation: z.string().min(1, "يجب إدخال رمز التفعيل")
+    activation: z.string().min(1, "يجب إدخال رمز التفعيل"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confrmPassword"],
     message: "كلمة المرور غير مطابقة",
   });
 
-export const AddshipingadressSchema = z.object({
-  title: z.string().min(1, "يجب إدخال العنوان"),
-  reciver: z.string().min(1, "يجب إدخال اسم المستلم"),
-  phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
-  city: z.string().min(1, "الاسم مطلوب")
-    
-
-}
-)
-.refine((data) => data.city === data.city, {
-  path: ["confirmPassword"],
-  message: "كلمة المرور غير مطابقة",
-});
-
+export const AddshipingadressSchema = z
+  .object({
+    title: z.string().min(1, "يجب إدخال العنوان"),
+    reciver: z.string().min(1, "يجب إدخال اسم المستلم"),
+    phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
+    state: z.string().min(1, "الاسم مطلوب"),
+    city: z.string().min(1, "الاسم مطلوب"),
+    place: z.string().min(1, "الاسم مطلوب"),
+  })
+  .refine((data) => data.city === data.city, {
+    path: ["confirmPassword"],
+    message: "كلمة المرور غير مطابقة",
+  });

@@ -36,7 +36,9 @@ const AddShipingAdresses = () => {
       title: "",
       reciver: "",
       phone: "",
+      state: "",
       city: "",
+      place: "",
     },
   });
   function onSubmit(values: z.infer<typeof AddshipingadressSchema>) {
@@ -81,11 +83,11 @@ const AddShipingAdresses = () => {
                 <div className="grid grid-cols-3 gap-2 ">
                   <FormField
                     control={form.control}
-                    name="city"
+                    name="state"
                     render={({ field }) => (
                       <FormItem className="text-center">
                         <FormControl>
-                          <Select>
+                          <Select onValueChange={field.onChange}>
                             <SelectTrigger className="text-xl">
                               <SelectValue placeholder="المحافظة" />
                             </SelectTrigger>
@@ -108,7 +110,7 @@ const AddShipingAdresses = () => {
                     render={({ field }) => (
                       <FormItem className="text-center">
                         <FormControl>
-                          <Select>
+                          <Select onValueChange={field.onChange}>
                             <SelectTrigger className="text-xl">
                               <SelectValue placeholder="المديرية" />
                             </SelectTrigger>
@@ -127,11 +129,11 @@ const AddShipingAdresses = () => {
                   />
                   <FormField
                     control={form.control}
-                    name="title"
+                    name="place"
                     render={({ field }) => (
                       <FormItem className="text-center">
                         <FormControl>
-                          <Select>
+                          <Select onValueChange={field.onChange}>
                             <SelectTrigger className="text-xl">
                               <SelectValue placeholder="المنطقة" />
                             </SelectTrigger>
