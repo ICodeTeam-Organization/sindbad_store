@@ -1,18 +1,13 @@
 import React from "react";
 import Image from "next/image";
 import { IoMdHeartEmpty } from "react-icons/io";
-
-interface E_commCardProps {
-  image: string;
-  title: string;
-  description: string;
-}
+import { E_commerceCardProps } from "../types";
 
 const E_commerceCard = ({
   image,
   title,
   description,
-}: E_commCardProps) => {
+}: E_commerceCardProps) => {
   return (
     <div className="border rounded-lg shadow-sm relative w-full max-w-[380px] mx-auto text-center">
       <Image

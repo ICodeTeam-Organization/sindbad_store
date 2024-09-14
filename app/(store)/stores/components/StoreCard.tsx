@@ -1,13 +1,7 @@
 import React from "react";
 import Image from "next/image";
-// import { LiaShoppingCartSolid } from "react-icons/lia";
+import { StoreCardProps } from "../typest";
 import { IoMdHeartEmpty } from "react-icons/io";
-
-interface StoreCardProps {
-  image: string;
-  title: string;
-  description: string;
-}
 
 const StoreCard = ({ image, title, description }: StoreCardProps) => {
   return (
