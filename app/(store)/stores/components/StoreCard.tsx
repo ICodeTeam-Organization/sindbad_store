@@ -25,7 +25,7 @@ const StoreCard = ({ image, title, description }: StoreCardProps) => {
             متجر المحل
           </button>
           <button className="flex-1 min-w-[40px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-            <IoMdHeartEmpty className="w-4 h-4" />
+            <IoMdHeartEmpty className="w-4 h-4 " />
           </button>
         </div>
       </div>
