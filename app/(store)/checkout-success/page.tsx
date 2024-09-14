@@ -1,10 +1,12 @@
+import { Card } from "@/components/ui/card";
+
 const page = () => {
   const code: number = 564846874;
   const requestNumber: number = 565456;
   return (
-    <div className="container  mx-auto mb-14 px-2 sm:px-4 md:px-8 lg:px-16 xl:px-32 pt-8 h-60">
+    <Card className="container  mx-auto mb-14  sm:px-4 md:px-8 lg:px-16 xl:px-32 py-8 px-1 h-fit w-fit text-center">
       <div className="mb-10 ">
-        <p className="lg:text-2xl text-lg font-semibold lg:font-bold mb-3">
+        <p className="lg:text-2xl text-lg  font-semibold lg:font-bold mb-3">
           تم تسجيل طلبكم بالرقم ({requestNumber}) بكود استلام ({code})
         </p>
         <p className="lg:text-2xl text-lg font-semibold lg:font-bold ">
@@ -19,7 +21,7 @@ const page = () => {
         في حال وجود اي ملاحظات ليديكم نرجو التواصل مع خدمة العملاء على رقم
         الواتس ( 777777777)
       </span>
-    </div>
+    </Card>
   );
 };
 
