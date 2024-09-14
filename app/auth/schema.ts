@@ -46,9 +46,9 @@ export const AddshipingadressSchema = z
     title: z.string().min(1, "يجب إدخال العنوان"),
     reciver: z.string().min(1, "يجب إدخال اسم المستلم"),
     phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
-    state: z.string().min(1, "الاسم مطلوب"),
-    city: z.string().min(1, "الاسم مطلوب"),
-    place: z.string().min(1, "الاسم مطلوب"),
+    state: z.string().min(1, "اختر المحافظة"),
+    city: z.string().min(1, "اختر المدينة"),
+    place: z.string().min(1, "اختر المنطقة"),
   })
   .refine((data) => data.city === data.city, {
     path: ["confirmPassword"],
