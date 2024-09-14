@@ -85,12 +85,12 @@ const SignUpForm: React.FC = () => {
             className="mr-10"
             name="agreeTerms"
           />
-          {errors.agreeTerms && (
-            <span className="text-sm text-red-500 ">
-              {errors.agreeTerms.message}
-            </span>
-          )}
         </div>
+        {errors.agreeTerms && (
+          <span className="block text-sm text-red-500 ">
+            {errors.agreeTerms.message}
+          </span>
+        )}
       </CardContent>
       <CardFooter>
         <Button className="w-full hover:bg-orange-600 bg-primary-background transition-colors">
