@@ -5,7 +5,6 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
-  BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 type Props = {
   SecondName?: string;
@@ -18,7 +17,7 @@ type Props = {
   FifthDir?: string;
 };
 
-const Direction = ({
+const BreadCrumb = ({
   SecondName,
   SecondDir = "",
   ThirdName,
@@ -39,7 +38,7 @@ const Direction = ({
         </BreadcrumbItem>
         <>
           <BreadcrumbItem>
-            {SecondName ? (
+            {SecondName && (
               <>
                 <AiOutlineLeft className="ml-2" />
                 <Link
@@ -49,10 +48,10 @@ const Direction = ({
                   <h3>{SecondName}</h3>
                 </Link>
               </>
-            ) : null}
+            )}
           </BreadcrumbItem>
           <BreadcrumbItem>
-            {ThirdName ? (
+            {ThirdName && (
               <>
                 <AiOutlineLeft className="ml-2" />
                 <Link
@@ -62,10 +61,10 @@ const Direction = ({
                   <h3>{ThirdName}</h3>
                 </Link>
               </>
-            ) : null}
+            )}
           </BreadcrumbItem>
           <BreadcrumbItem>
-            {ForthName ? (
+            {ForthName && (
               <>
                 <AiOutlineLeft className="ml-2" />
                 <Link
@@ -75,10 +74,10 @@ const Direction = ({
                   <h3>{ForthName}</h3>
                 </Link>
               </>
-            ) : null}
+            )}
           </BreadcrumbItem>
           <BreadcrumbItem>
-            {FifthName ? (
+            {FifthName && (
               <>
                 <AiOutlineLeft className="ml-2" />
                 <Link
@@ -88,7 +87,7 @@ const Direction = ({
                   <h3>{FifthName}</h3>
                 </Link>
               </>
-            ) : null}
+            )}
           </BreadcrumbItem>
         </>
       </BreadcrumbList>
@@ -96,4 +95,4 @@ const Direction = ({
   );
 };
 
-export default Direction;
+export default BreadCrumb;
