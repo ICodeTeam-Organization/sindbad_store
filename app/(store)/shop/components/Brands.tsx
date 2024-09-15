@@ -14,7 +14,7 @@ const Brands: React.FC<BrandsProps> = ({ brands }) => (
           <input
             type="checkbox"
             defaultChecked={index === 0}
-            className="form-checkbox text-orange-500 mr-2"
+            className="form-checkbox text-orange-500 ml-2"
           />
           {brand}
         </label>

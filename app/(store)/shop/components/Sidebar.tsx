@@ -23,13 +23,14 @@ const Sidebar = () => {
   ];
 
   const brandList = ['Google', 'Apple', 'Samsung', 'Microsoft','HP', 'Dell', 'Xiaomi','Symphony','Panasonic','Sony','Intel','LG','One Plus'];
+  const tags = ['Graphics Cards', 'TV', 'iPhone', 'Game',  'Asus Laptops', 'SSD', 'Mackbook','Speakers','Smart TV','Power Bank','Samsung','Microsoft','Tablet'];
 
   return (
     <aside className="hidden md:block w-1/4 p-4">
       <Categories categories={categoryList} />
       <PriceRange />
       <Brands brands={brandList} />
-      <PopularTags />
+      <PopularTags tags={tags} />
     </aside>
   );
 };
