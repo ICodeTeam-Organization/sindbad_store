@@ -8,6 +8,7 @@ import { FaAngleDown } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
 
@@ -28,9 +29,10 @@ const Header = () => {
       }`}
     >
       <div
-        className={`${
-          scrolled ? "justify-between" : "justify-end"
-        } container w-full sm:px-4 md:px-8 lg:px-16 xl:px-32  flex flex-row   items-center`}
+        className={cn(
+          scrolled ? "justify-between" : "justify-end",
+          "container w-full sm:px-4 md:px-8 lg:px-16 xl:px-32  flex flex-row   items-center"
+        )}
       >
         <Image
           className={scrolled ? `block relative` : `hidden`}
