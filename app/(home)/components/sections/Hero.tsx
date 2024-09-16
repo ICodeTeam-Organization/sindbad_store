@@ -7,13 +7,13 @@ const Hero = () => {
   return (
     <div className="container mx-auto">
       <Header />
-      <div>
+      <div className="relative -z-50">
         <Image
-          src={"images/sndbad.svg"}
-          width={1000}
-          height={500}
+          src={"images/smalSndbadHomeBack.svg"}
+          width={2000}
+          height={200}
           alt="hero-image"
-          className="w-full h-full object-contain"
+          className="  object-contain"
         />
       </div>
     </div>
