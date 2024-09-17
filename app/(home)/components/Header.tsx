@@ -24,9 +24,10 @@ const Header = () => {
   }, []);
   return (
     <div
-      className={`fixed  w-full py-4 transition-all duration-300 ${
+      className={cn(
+        "fixed left-1/2 -translate-x-1/2 w-full py-4 transition-all duration-300 flex justify-center",
         scrolled && "bg-white shadow-md z-50"
-      }`}
+      )}
     >
       <div
         className={cn(

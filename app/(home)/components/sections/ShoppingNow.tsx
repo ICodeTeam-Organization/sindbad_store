@@ -1,40 +1,13 @@
 import SectionTitle from "../SectionTitle";
-import hero from "@/public/images/hero.jpg";
 import ProductCard from "../ProductCard";
-
-const ShoppingNow = () => {
-  const products = [
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-  ];
+import { getApi } from "@/lib/http";
+import { notFound } from "next/navigation";
+const ShoppingNow = async () => {
+  const products = await getApi<any>(
+    // change the url later
+    "Product/Market/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/5"
+  );
+  if (!products) return notFound;
 
   return (
     <>
@@ -42,12 +15,12 @@ const ShoppingNow = () => {
         <SectionTitle title={"تسوق الآن"} />
         <div className="container ">
           <div className="grid 2xl:grid-cols-5 lg:grid-cols-4 max-lg:grid-cols-4 max-sm:grid-cols-3 gap-y-5 2xl:gap-[25px] max-sm:gap-x-1 max-lg:gap-x-5  max-md:m-auto  py-4 mr-2 ">
-            {products.map((product) => (
+            {products.data.map((product: any) => (
               <ProductCard
-                image={product.Image}
-                productName={product.productName}
+                key={product.id}
+                image={product.mainImageUrl}
+                productName={product.name}
                 price={product.price}
-                oldPrice={product.oldPrice}
               />
             ))}
           </div>

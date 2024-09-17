@@ -1,7 +1,6 @@
 import { AiOutlineHeart } from "react-icons/ai";
 import SectionTitle from "../SectionTitle";
 import Image from "next/image";
-import hero from "@/public/images/hero.jpg";
 import {
   Carousel,
   CarouselContent,
@@ -10,14 +9,15 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
+import { getApi } from "@/lib/http";
+import { notFound } from "next/navigation";
+const TodayOffers = async () => {
+  const Offersproducts = await getApi<any>(
+    // change the url later
+    "Product/Market/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/10"
+  );
+  if (!Offersproducts) return notFound;
 
-const TodayOffers = () => {
-  const products = {
-    Image: hero.src,
-    productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-    price: 1200,
-    oldPrice: 1600,
-  };
   return (
     <>
       <div className="container mx-auto sm:px-4 xl:px-32 pt-10">
@@ -25,28 +25,28 @@ const TodayOffers = () => {
       </div>
       <Carousel className="m-auto max-md:w-[265px] md:w-[650px] max-sm:w-[280px] sm:w-[500px] lg:w-[930px] xl:w-[1200px]">
         <CarouselContent dir="ltr" className="">
-          {Array.from({ length: 10 }).map((_, index) => (
+          {Offersproducts.data.map((product: any) => (
             <CarouselItem
-              key={index}
+              key={product.id}
               className="pl-0 ml-4 lg:basis-1/6 max-md:basis-1/3 max-sm:basis-1/2  md:basis-1/4  xl:basis-1/6 rounded-t-[8px]"
             >
               <Image
                 className="h-[210px] max-md:h-[120px] md:h-[120px] xl:h-[150px] rounded-t-[8px]"
-                src={products.Image}
+                src={product.mainImageUrl}
                 alt={""}
                 width={400}
                 height={0}
               />
               <div className="border-[1px] border-[#C3C3C3] border-t-0 pr-1">
                 <p className="line-clamp-2 font-[Tajawal] xl:pr-1 text-[#007580] text-[20px] max-md:text-[12px] md:text-[14px] text-right ">
-                  <strong>{products.productName}</strong>
+                  <strong>{product.name}</strong>
                 </p>
                 <div className="max-md:mt-2 max-sm:pr-0 pr-5 lg:mt-4 xl:mb-2 md:mt-1 text-right max-md:gap-0 md:gap-0 max-md:text-[12px] gap-[7px] flex justify-end">
                   <p className="pr-3 text-[12px] line-through">
-                    {products.oldPrice}
+                    {/* {products.oldPrice} */}
                   </p>
                   <p className=" text-lg  text-[#F55157]">
-                    <strong>{products.price}</strong>
+                    <strong>{product.price}</strong>
                   </p>
                 </div>
                 <div className="my-1 flex justify-around max-md:justify-between items-center w-full">
