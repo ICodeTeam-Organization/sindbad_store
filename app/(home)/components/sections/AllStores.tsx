@@ -9,7 +9,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { MdOutlineLocalGroceryStore } from "react-icons/md";
 
 const AllStores = () => {
   return (
