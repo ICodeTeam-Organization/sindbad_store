@@ -1,7 +1,6 @@
 import { IoIosArrowBack } from "react-icons/io";
 import { AiFillStar } from "react-icons/ai";
 import Image from "next/image";
-import store from "@/public/images/store.svg";
 import {
   Carousel,
   CarouselContent,
@@ -9,8 +8,17 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { getApi } from "@/lib/http";
+import { notFound } from "next/navigation";
 
-const AllStores = () => {
+const AllStores = async () => {
+  // Get all stores for slider in market homepage
+  const Allstores = await getApi<any>(
+    "Market/Store/GetAllStoresForViewInSliderInMarketHomePage"
+  );
+  if (!Allstores) return notFound;
+
+  console.log("🚀 ~ AllStores ~ Allstores:", Allstores);
   return (
     <div className="bg-[#F8F8F8] w-full max-md:h-[270px] h-[331px]">
       <div className="container  max-sm:px-4 md:px-8 lg:px-16 xl:px-32 pt-10">
@@ -26,22 +34,24 @@ const AllStores = () => {
         <CarouselPrevious className=" absolute -top-7 max-md:left-[0px] md:left-[0px] lg:left-[60px]  xl:left-[200px] text-[#F58634]" />
         <CarouselNext className=" absolute -top-7 max-md:left-[35px] md:left-[35px] lg:left-[100px] xl:left-[250px] text-[#F58634]" />
         <CarouselContent className="">
-          {Array.from({ length: 10 }).map((_, index) => (
+          {Allstores.data.map((store: any) => (
             <CarouselItem
-              key={index}
+              key={store.id}
               dir="rtl"
               className="flex items-center pl-0  ml-4 xl:basis-1/2 max-md:basis-1/2 md:basis-1/2 border-[2px] border-black rounded-sm bg-white w-[520px] h-[183px] max-md:h-[130px]  hover:border-[#F58634] transition-all duration-700"
             >
               <div className="w-full h-[179px] flex justify-center items-center">
                 <Image
                   className="w-[159.22px] h-[120px]"
-                  src={store}
+                  src={store.imagesUrl}
                   alt={""}
+                  width={0}
+                  height={0}
                 />
               </div>
               <div className="max-md:w-[300px] max-sm:w-[100px] md:w-[300px] max-md:h-[130px]  lg:w-[650px] h-[179px] max-md:mt-0 md:mt-0 mt-6">
                 <h1 className="text-[25px] max-md:text-[15px] max-sm:mt-1 font-bold text-right">
-                  متجر نسق
+                  {store.name}
                 </h1>
                 <p className="text-[17px] max-sm:text-sm text-[#666666]">
                   مستلزمات الاطفال
