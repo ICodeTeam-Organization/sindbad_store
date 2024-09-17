@@ -1,51 +1,24 @@
 import SectionTitle from "../SectionTitle";
-import hero from "@/public/images/hero.jpg";
 import ProductCard from "../ProductCard";
+import { getApi } from "@/lib/http";
+import { notFound } from "next/navigation";
+const BeastSeller = async () => {
+  const BeastSellerInWeek = await getApi<any>(
+    "Product/Market/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/5"
+  );
+  if (!BeastSellerInWeek) return notFound;
 
-const BeastSeller = () => {
-  const products = [
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-    {
-      Image: hero.src,
-      productName: "ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف",
-      price: 1200,
-      oldPrice: 1600,
-    },
-  ];
   return (
     <div className="container pt-10 mx-autocontainer mx-auto sm:px-4 md:px8 lg:px16 xl:px-32">
       <SectionTitle title={"الاكثر مبيعا في اسبوع"} />
       <div className="container ">
         <div className="grid 2xl:grid-cols-5 lg:grid-cols-4 max-lg:grid-cols-4 max-sm:grid-cols-3 gap-y-5 2xl:gap-[25px] max-sm:gap-x-1 max-lg:gap-x-5  max-md:m-auto  py-4 mr-2 ">
-          {products.map((product) => (
+          {BeastSellerInWeek.data.map((product: any) => (
             <ProductCard
-              image={product.Image}
-              productName={product.productName}
+              key={product.id}
+              image={product.mainImageUrl}
+              productName={product.name}
               price={product.price}
-              oldPrice={product.oldPrice}
             />
           ))}
         </div>

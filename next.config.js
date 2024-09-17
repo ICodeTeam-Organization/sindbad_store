@@ -7,6 +7,13 @@ module.exports = {
         port: "",
         pathname: "/images/**",
       },
+      {
+        protocol: "https",
+        hostname: "img-cdn.pixlr.com",
+        port: "",
+        pathname: "/image-generator/history/**",
+      }
+
     ],
   },
 };
