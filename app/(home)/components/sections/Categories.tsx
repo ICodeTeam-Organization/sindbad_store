@@ -13,7 +13,7 @@ const Categories = () => {
   ];
 
   return (
-    <div className="container mx-auto sm:px-4 md:px-8 lg:px-16 xl:px-32  mt-10 md:mt-20">
+    <div className="container mx-auto sm:px-4 md:px-8 lg:px-16 xl:px-32 mt-10 ">
       <div className="py-5 w-full">
         <div className="flex justify-between items-center ">
           <div>
@@ -26,7 +26,7 @@ const Categories = () => {
           <CategoriesDialog />
         </div>
       </div>
-      <div className="py-4 px-4 grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6  gap-x-3  justify-center">
+      <div className="py-4 px-4 flex flex-wrap justify-center gap-3 ">
         {categories.map((category) => (
           <div key={category.id} className="hidden md:block">
             <CategoryCard />
