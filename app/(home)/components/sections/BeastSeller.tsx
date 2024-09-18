@@ -6,7 +6,7 @@ const BeastSeller = async () => {
   const BeastSellerInWeek = await getApi<any>(
     "Product/Market/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/5"
   );
-  if (!BeastSellerInWeek) return notFound;
+  if (!BeastSellerInWeek) return notFound();
 
   return (
     <div className="container pt-10 mx-autocontainer mx-auto sm:px-4 md:px8 lg:px16 xl:px-32">

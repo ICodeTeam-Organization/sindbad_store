@@ -6,7 +6,7 @@ const RecentlyAdded = async () => {
   const RecentlyProducts = await getApi<any>(
     "Product/Market/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/5"
   );
-  if (!RecentlyProducts) return notFound;
+  if (!RecentlyProducts) return notFound();
 
   return (
     <div className="container pt-10 mx-autocontainer mx-auto sm:px-4 md:px8 lg:px16 xl:px-32">

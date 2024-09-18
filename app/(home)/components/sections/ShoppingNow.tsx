@@ -7,7 +7,7 @@ const ShoppingNow = async () => {
     // change the url later
     "Product/Market/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/5"
   );
-  if (!products) return notFound;
+  if (!products) return notFound();
 
   return (
     <>
