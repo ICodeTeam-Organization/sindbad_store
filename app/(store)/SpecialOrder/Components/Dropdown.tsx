@@ -1,4 +1,4 @@
-import { BiChevronDown } from "react-icons/bi"; 
+import { BiChevronDown } from "react-icons/bi";
 import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,14 +11,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 type props = {
-    name?: string;
-  };
+  name?: string;
+};
 
-const Dropdown = ({name}:props) => {
+const Dropdown = ({ name }: props) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className={`${!name &&"w-96 "}flex items-end text-lg justify-between bg-gray-200`} variant="outline"><span>{name}</span><BiChevronDown className="w-6 h-6" width={0} /></Button>
+        <Button
+          className={`${
+            !name && "w-96 "
+          }flex items-end text-lg justify-between bg-gray-200`}
+          variant="outline"
+        >
+          <span>{name}</span>
+          <BiChevronDown className="w-6 h-6" width={0} />
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuSeparator />

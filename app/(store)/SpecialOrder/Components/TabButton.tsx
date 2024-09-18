@@ -35,7 +35,9 @@ const TabButton = ({
         }  border-b-2 border-b-orange-500 w-1/3  rounded-none font-bold text-lg transition-all duration-200  `}
         onClick={handleChangeForm2}
       >
-        <p className="max-sm:text-sm max-sm:text-wrap max-sm:w-10">طلبات بانتظار الموافقة على السعر</p>
+        <p className="max-sm:text-sm max-sm:text-wrap max-sm:w-10">
+          طلبات بانتظار الموافقة على السعر
+        </p>
       </Button>
       <Button
         variant={"ghost"}

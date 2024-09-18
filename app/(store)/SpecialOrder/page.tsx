@@ -13,19 +13,19 @@ const page = () => {
     useState<boolean>(false);
   const [PreviousOrders, setPreviousOrders] = useState<boolean>(false);
   const handleChangeForm = () => {
-      setMyNewOrder(true);
-      setOrdersWaitingForAccept(false);
-      setPreviousOrders(false); 
+    setMyNewOrder(true);
+    setOrdersWaitingForAccept(false);
+    setPreviousOrders(false);
   };
   const handleChangeForm2 = () => {
     setMyNewOrder(false);
     setOrdersWaitingForAccept(true);
-    setPreviousOrders(false); 
+    setPreviousOrders(false);
   };
   const handleChangeForm3 = () => {
     setMyNewOrder(false);
     setOrdersWaitingForAccept(false);
-    setPreviousOrders(true); 
+    setPreviousOrders(true);
   };
   return (
     <>
