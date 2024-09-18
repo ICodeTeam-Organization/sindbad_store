@@ -1,16 +1,13 @@
 import CategoryCard from "../CategoryCard";
 import styles from "../SectionTitle.module.css";
 import CategoriesDialog from "../CategoriesDialog";
+import { getApi } from "@/lib/http";
+import { Category } from "@/types/storeTypes";
 
-const Categories = () => {
-  const categories = [
-    { id: 1 },
-    { id: 12 },
-    { id: 13 },
-    { id: 14 },
-    { id: 16 },
-    { id: 18 },
-  ];
+const Categories = async () => {
+  const categories = await getApi<any>(
+    "Market/Category/GetAllMainCategoriesWithPaginationForViewInCategoriesPage"
+  );
 
   return (
     <div className="container mx-auto sm:px-4 md:px-8 lg:px-16 xl:px-32 mt-10 ">
@@ -27,20 +24,19 @@ const Categories = () => {
         </div>
       </div>
       <div className="py-4 px-4 flex flex-wrap justify-center gap-3 ">
-        {categories.map((category) => (
-          <div key={category.id} className="hidden md:block">
-            <CategoryCard />
-          </div>
-        ))}
-        <div className="block md:hidden">
-          <CategoryCard />
-        </div>
-        <div className="block md:hidden">
-          <CategoryCard />
-        </div>
-        <div className="block md:hidden">
-          <CategoryCard />
-        </div>
+        {categories.data.map(
+          (category: Category, index: number) =>
+            index < 8 && (
+              <div key={category.id} className="hidden md:block">
+                <CategoryCard
+                  key={category.id}
+                  id={category.id}
+                  name={category.name}
+                  imageUrl={category.imageUrl!}
+                />
+              </div>
+            )
+        )}
       </div>
     </div>
   );

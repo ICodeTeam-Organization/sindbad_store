@@ -1,6 +1,5 @@
 import React from "react";
 import StoreCard from "./StoreCard";
-import store from "../../../../public/images/store-IKEA.svg";
 import { getApi } from "@/lib/http";
 import { StoreCardProps } from "../typest";
 import Pagination from "@/components/Pagination";

@@ -8,8 +8,11 @@ const Pagination = () => {
         className="text-primary-background mx-3 hover:text-white hover:bg-primary-background transition-all duration-700 rounded-full"
         size={30}
       />
-      {arr.map((itm) => (
-        <div className=" rounded-full border-2 hover:text-white hover:bg-primary-background hover:border-none transition-all duration-700 w-8 h-8 p-1 text-center ml-1">
+      {arr.map((itm, index) => (
+        <div
+          key={index}
+          className=" rounded-full border-2 hover:text-white hover:bg-primary-background hover:border-none transition-all duration-700 w-8 h-8 p-1 text-center ml-1"
+        >
           {itm}
         </div>
       ))}
