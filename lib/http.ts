@@ -46,10 +46,10 @@ async function http<T>(
 
   let content: unknown; // --------- change any to unkonwn to avoid an error
   if (!response.ok) {
-    const errorResponse = await response.json();
-    content = errorResponse.error || "حدث خطأ ما!";
+    const errorResponse = await response;
+    content = errorResponse.statusText || "حدث خطأ ما!";
 
-    if (errorResponse.status_code === 404) {
+    if (errorResponse.status === 404) {
       return notFound();
     }
 

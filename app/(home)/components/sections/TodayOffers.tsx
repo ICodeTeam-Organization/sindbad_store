@@ -16,7 +16,7 @@ const TodayOffers = async () => {
     // change the url later
     "Product/Market/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/10"
   );
-  if (!Offersproducts) return notFound;
+  if (!Offersproducts) return notFound();
 
   return (
     <>

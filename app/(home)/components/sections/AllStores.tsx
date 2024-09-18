@@ -16,7 +16,7 @@ const AllStores = async () => {
   const Allstores = await getApi<any>(
     "Market/Store/GetAllStoresForViewInSliderInMarketHomePage"
   );
-  if (!Allstores) return notFound;
+  if (!Allstores) return notFound();
 
   console.log("🚀 ~ AllStores ~ Allstores:", Allstores);
   return (
