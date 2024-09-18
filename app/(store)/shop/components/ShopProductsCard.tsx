@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { LiaShoppingCartSolid } from "react-icons/lia";
 import { IoMdHeartEmpty } from "react-icons/io";
-import productImg from '../../../../public/images/product.svg';
+import productImg from '../../../../public/images/productImg.svg';
 
 import { ProductCardProps } from "../types";
 
