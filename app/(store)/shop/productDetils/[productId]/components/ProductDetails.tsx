@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import { getApi } from '@/lib/http';
@@ -7,37 +7,41 @@ import ProductTitle from './ProductTitle';
 import ProductInfoRow from './ProductInfoRow';
 import PriceSection from './PriceSection';
 import { LiaShoppingCartSolid } from "react-icons/lia";
+import ImageGallery from './ImageGallery';
 
 type ProductDetailsProps = {
   params: {
-    productId: string; // Access productId from dynamic route params
+    productId: string; 
   };
 };
 
 const ProductDetails = ({ params }: ProductDetailsProps) => {
-  const { productId } = params; // Extract productId from dynamic route
+  
+
+  const { productId } = params; 
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (productId) {
       fetchProductDetails(productId);
+      console.log("Product ID:", productId);
     }
   }, [productId]);
 
   const fetchProductDetails = async (id: string) => {
     try {
-      const response = await getApi<any>(`products/ProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`);
+      const response = await getApi<any>(`ProductsProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`);
+      console.log("Product Data:", response?.data); // Log to check the data
 
-      // Check if the API call was successful and product data exists
       if (response?.success && response?.data) {
         setProduct(response.data);
       } else {
-        notFound(); // Redirect to 404 if no product found or API response is not successful
+        notFound();
       }
     } catch (error) {
       console.error("Error fetching product details:", error);
-      notFound(); // Redirect to 404 in case of error
+      notFound(); 
     }
   };
 
@@ -47,21 +51,25 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
   };
 
   if (!product) {
-    return <div>Loading...</div>; // Show loading state while fetching
+    return <div>Product not found</div>; 
   }
 
   return (
-    <div className="flex flex-col gap-8 p-8">
+    <div className="flex flex-col lg:flex-row gap-4 mt-12 px-12">
+      <div className="lg:w-1/3 ml-8">
+        <ImageGallery image={`/${product.mainImageUrl}`} />
+      </div>
+      <div className='lg:w-1/2'>
       <ProductTitle 
         description={product.description} 
-        rating={5} // Adjust rating based on your API response if available
+        rating={5} 
       />
 
       <ProductInfoRow 
-        label1="التوفر" value1="In Stock" // You can add availability based on API response
+        label1="التوفر" value1="In Stock"
         label2="رقم المنتج" value2={product.number}
       />
-      
+
       <ProductInfoRow 
         label1="الفئة" value1={product.categoryName} 
         label2="الماركة" value2={product.brandName || 'N/A'}
@@ -80,16 +88,17 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
         label2="الحجم" value2={product.attributesWithValues.find(attr => attr.attributeName === "Size")?.values.join(', ') || "N/A"}
       />
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mt-8">
         <div className="flex items-center gap-4">
           <button className="bg-gray-200 py-2 px-4 text-lg" onClick={handleDecrement}>-</button>
           <span>{quantity}</span>
           <button className="bg-gray-200 py-2 px-4 text-lg" onClick={handleIncrement}>+</button>
         </div>
         <button className="min-w-[200px] h-[50px] bg-orange-500 text-white text-xl rounded-md flex justify-center items-center mb-2 md:mb-0">
-            <LiaShoppingCartSolid className="w-8 h-8 mr-2" />
-            <p>اضف للسلة</p>
+          <LiaShoppingCartSolid className="w-8 h-8 mr-2" />
+          <p>اضف للسلة</p>
         </button>
+      </div>
       </div>
     </div>
   );

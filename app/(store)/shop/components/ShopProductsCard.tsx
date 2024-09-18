@@ -9,7 +9,7 @@ import { ProductCardProps } from "../types";
 const ShopProductsCard = ({ product}: any) => {
   return (
     
-    <a href={`/productDetils/${product.id}`} className="border rounded-lg shadow-sm relative max-w-[230px] mx-auto text-center cursor-pointer">
+    <a href={`/shop/productDetils/${product.id}`} className="border rounded-lg shadow-sm relative max-w-[230px] mx-auto text-center cursor-pointer">
       <Image
         src={product?.mainImageUrl || productImg}
         alt={product?.name}
