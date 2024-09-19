@@ -8,6 +8,7 @@ import {
 import { ArrowLeft } from "lucide-react";
 import React from "react";
 import PriceLabel from "./PriceLabel";
+import Link from "next/link";
 
 const Summary = () => {
   return (
@@ -28,10 +29,12 @@ const Summary = () => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="bg-primary-background hover:bg-orange-600 text-white text-lg  w-full">
-          ادخال سند السداد
-          <ArrowLeft className="mr-3 " />
-        </Button>
+        <Link href={"/checkout"}>
+          <Button className="bg-primary-background hover:bg-orange-600 text-white text-lg  w-full">
+            ادخال سند السداد
+            <ArrowLeft className="mr-3 " />
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

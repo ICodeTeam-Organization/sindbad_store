@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./SectionTitle.module.css";
 import { IoIosArrowForward } from "react-icons/io";
 
@@ -14,10 +15,12 @@ const SectionTitle = ({ title }: Props) => {
             {title} :
           </h3>
         </div>
+        <Link href={"/shop"}>
         <button className="btn flex items-center text-sm ml-3 ">
           <IoIosArrowForward className="text-sky-700" />
           <h3 className="mr-2">عرض الكل</h3>
         </button>
+        </Link>
       </div>
     </div>
   );

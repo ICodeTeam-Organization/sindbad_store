@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const Adresses = () => {
   const data = [
     {
@@ -29,7 +31,7 @@ const Adresses = () => {
       {data.map((itm) => (
         <>
           <h1 className="text-right line-clamp-3 px-3 max-md:text-[10px] max-md:line-clamp-4 mt-9">
-            {itm.title}
+            <Link href={"/Orderdetail"}>{itm.title}</Link>
           </h1>
           <h1 className="m-auto text-gray-500 px-3 line-clamp-3 text-right max-md:text-xs max-md:line-clamp-4 mt-9">
           {itm.price}
@@ -41,7 +43,7 @@ const Adresses = () => {
           {itm.state}
           </h1>
           <h1 className="m-auto mt-9 line-clamp-3 text-blue-400 max-sm:text-xs">
-          {itm.track}
+          <Link href={"/OrderTrack"}>{itm.track}</Link>
           </h1>
         </>
       ))}
