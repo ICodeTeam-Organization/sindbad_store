@@ -9,7 +9,7 @@ const Hero = () => {
       <Header />
       <div className="relative -z-50">
         <Image
-          src={"images/smalSndbadHomeBack.svg"}
+          src={"images/HeadBackground.svg"}
           width={2000}
           height={200}
           alt="hero-image"
