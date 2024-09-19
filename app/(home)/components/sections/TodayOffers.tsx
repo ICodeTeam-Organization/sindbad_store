@@ -13,8 +13,7 @@ import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 const TodayOffers = async () => {
   const Offersproducts = await getApi<any>(
-    // change the url later
-    "Product/Market/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/10"
+    "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/1"
   );
   if (!Offersproducts) return notFound();
 
