@@ -8,10 +8,10 @@ import CardHero from "./CardHero";
 const Cards = () => {
   const cards = [
     { name: "طلب خاص", image: specialrequist, href: "/SpecialOrder/" },
-    { name: "العروض", image: discounts, href: "/shop/" },
-    { name: "المتجر ", image: shoppingStore, href: "/shop/" },
+    { name: "العروض", image: discounts, href: "/shop" },
+    { name: "المتجر ", image: shoppingStore, href: "/stores/" },
     { name: "المحلات", image: Stores, href: "/stores" },
-    { name: "متاجر الكترونية", image: onlineStores, href: "/stores" },
+    { name: "متاجر الكترونية", image: onlineStores, href: "/e-commerce/" },
     { name: "قسم العاب", image: wholesaleSection, href: "/" },
     { name: "قسم الجملة", image: wholesaleSection, href: "/" },
   ];

@@ -40,7 +40,7 @@ const LoginForm: React.FC = () => {
             <Label className={`font-bold text-lg `} htmlFor="passowrd">
               كلمة المرور
             </Label>
-            <Link href={""} className="text-sky-500">
+            <Link href={"/forget/"} className="text-sky-500">
               نسيت كلمة المرور
             </Link>
           </div>

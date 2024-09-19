@@ -1,4 +1,4 @@
- module.exports = {
+module.exports = {
   images: {
     remotePatterns: [
       {
@@ -12,8 +12,13 @@
         hostname: "img-cdn.pixlr.com",
         port: "",
         pathname: "/image-generator/history/**",
-      }
-
+      },
+      {
+        protocol: "https",
+        hostname: "example.com",
+        port: "",
+        pathname: "/images/**",
+      },
     ],
   },
 };
