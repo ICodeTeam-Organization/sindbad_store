@@ -14,15 +14,15 @@ export default function Home() {
     <section className="w-full">
       <Hero />
       <Cards />
-      <Categories />
-      <TodayOffers />
+      {/* <Categories /> */}
+      {/* <TodayOffers />
       <ShoppingNow />
       <AllStores />
       <BeastSeller />
       <Ads />
       <RecentlyAdded />
       <ShoppingNow />
-      <AllStores />
+      <AllStores /> */}
       <Feature />
     </section>
   );
