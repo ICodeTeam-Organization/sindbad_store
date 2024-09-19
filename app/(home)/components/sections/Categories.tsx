@@ -6,7 +6,7 @@ import { Category } from "@/types/storeTypes";
 
 const Categories = async () => {
   const categories = await getApi<any>(
-    "https://icode-sendbad-store.runasp.net/api/Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/30"
+    "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/30"
   );
 
   return (

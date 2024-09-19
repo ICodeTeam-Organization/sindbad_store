@@ -2,14 +2,14 @@ import { Button } from "@/components/ui/button";
 import { getApi } from "@/lib/http";
 import { Category } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
-import { Loader } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 const MainCategory = () => {
   const { data, error, isLoading } = useQuery<any>({
     queryKey: ["main-category"],
     queryFn: () =>
       getApi(
-        "Market/Category/GetAllMainCategoriesWithPaginationForViewInCategoriesPage"
+        "Market/categories/GetNumberOfMainCategoriesForViewInMarketHomePage/100"
       ),
   });
 
@@ -17,7 +17,7 @@ const MainCategory = () => {
     <div className="border sm:w-40 md:w-60 lg:w-1/2 p-2">
       <h1 className="font-bold text-xl text-center mb-4">الرئيسية</h1>
       {isLoading ? (
-        <Loader className="mx-auto mt-36 text-center" />
+        <Loader2 className="mx-auto mt-36 text-center" />
       ) : error ? (
         <span className="block text-red-500  text-center font-bold mt-36">
           هناك خطأ اثناء جلب البيانات
