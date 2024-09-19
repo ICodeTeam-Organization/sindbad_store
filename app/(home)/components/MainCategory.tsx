@@ -17,7 +17,7 @@ const MainCategory = () => {
     <div className="border sm:w-40 md:w-60 lg:w-1/2 p-2">
       <h1 className="font-bold text-xl text-center mb-4">الرئيسية</h1>
       {isLoading ? (
-        <Loader2 className="mx-auto mt-36 text-center" />
+        <Loader2 className="mx-auto mt-36 text-center animate-spin" />
       ) : error ? (
         <span className="block text-red-500  text-center font-bold mt-36">
           هناك خطأ اثناء جلب البيانات
