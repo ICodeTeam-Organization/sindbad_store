@@ -32,7 +32,8 @@ const Categories = async () => {
                   key={category.id}
                   id={category.id}
                   name={category.name}
-                  imageUrl={category.imageUrl!}
+                  // imageUrl={category.imageUrl!}
+                  imageUrl="/images/shoppingStore.svg"
                 />
               </div>
             )

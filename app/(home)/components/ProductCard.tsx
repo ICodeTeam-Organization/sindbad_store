@@ -7,10 +7,17 @@ type props = {
   productName: string;
   price: number;
   oldPrice?: number;
+  ProductDet: number;
 };
-const ProductCard = ({ image, productName, price, oldPrice }: props) => {
+const ProductCard = ({
+  image,
+  productName,
+  price,
+  oldPrice,
+  ProductDet,
+}: props) => {
   return (
-    <Link href={"/shop"}>
+    <Link href={`/shop/productDetils/${ProductDet}`}>
       <div className="m-auto rounded-t-[8px] w-[230px] max-md:w-[150px] max-sm:w-28 max-lg:w-44 max-lg:h-60  max-md:h-[183px] h-[339px]">
         <Image
           className="h-[210px] max-lg:h-28 max-sm:h-20 rounded-t-[8px]"
