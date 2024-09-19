@@ -6,6 +6,7 @@ import { useState } from "react";
 import MyNewOrders from "./Components/MyNewOrders";
 import OrdersWaitingForAcceptPrice from "./Components/OrdersWaitingForAcceptPrice";
 import PreviousOrder from "./Components/PreviousOrder";
+import BreadCrumb from "@/components/BreadCrumb";
 
 const page = () => {
   const [MyNewOrder, setMyNewOrder] = useState<boolean>(true);
@@ -29,6 +30,7 @@ const page = () => {
   };
   return (
     <>
+    <BreadCrumb SecondName="المتجر"SecondDir="" ThirdName="طلب خاص" ThirdDir=""/>
       <AddSpecialOrder />
       <Card className="m-auto w-11/12 pt-0 border-0">
         <CardHeader className="pt-0 px-0 m-auto ">

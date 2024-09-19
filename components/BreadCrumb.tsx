@@ -28,7 +28,7 @@ const BreadCrumb = ({
   FifthDir = "",
 }: Props) => {
   return (
-    <Breadcrumb>
+    <Breadcrumb className="mb-4">
       <BreadcrumbList className="bg-gray-100 py-5 pr-14">
         <BreadcrumbItem>
           <Link className="flex justify-between items-center" href="/">
@@ -45,7 +45,15 @@ const BreadCrumb = ({
                   className="flex justify-between items-center"
                   href={SecondDir}
                 >
-                  <h3>{SecondName}</h3>
+                  <h3
+                    className={
+                      !ForthName && !FifthName && !ThirdName
+                        ? `text-[#F58634]`
+                        : ``
+                    }
+                  >
+                    {SecondName}
+                  </h3>
                 </Link>
               </>
             )}
@@ -58,7 +66,11 @@ const BreadCrumb = ({
                   className="flex justify-between items-center"
                   href={ThirdDir}
                 >
-                  <h3>{ThirdName}</h3>
+                  <h3
+                    className={!ForthName && !FifthName ? `text-[#F58634]` : ``}
+                  >
+                    {ThirdName}
+                  </h3>
                 </Link>
               </>
             )}
@@ -71,7 +83,9 @@ const BreadCrumb = ({
                   className="flex justify-between items-center"
                   href={ForthDir}
                 >
-                  <h3>{ForthName}</h3>
+                  <h3 className={!FifthName ? `text-[#F58634]` : ``}>
+                    {ForthName}
+                  </h3>
                 </Link>
               </>
             )}
@@ -84,7 +98,7 @@ const BreadCrumb = ({
                   className="flex justify-between items-center"
                   href={FifthDir}
                 >
-                  <h3>{FifthName}</h3>
+                  <h3 className="text-[#F58634]">{FifthName}</h3>
                 </Link>
               </>
             )}

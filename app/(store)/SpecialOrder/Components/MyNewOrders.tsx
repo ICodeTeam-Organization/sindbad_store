@@ -4,11 +4,12 @@ import { HiMinusSm } from "react-icons/hi";
 import { IoMdAdd } from "react-icons/io";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import DropZone from "./DropZone";
+
+import OrderDetails from "./OrderDetails";
+import Quantity from "./Quantity";
 
 const MyNewOrder = () => {
-  const [Quantity, setQuantity] = useState(1);
+  
 
   return (
     <Card className="rounded-none border-black p-6">
@@ -30,27 +31,7 @@ const MyNewOrder = () => {
         <div>
           <div className="flex items-center justify-around mb-3">
             <p>الكمية المطلوبة</p>
-            <div
-              className={
-                Quantity === 1
-                  ? "flex items-center bg-gray-200 w-16"
-                  : `flex items-center bg-gray-200 w-24`
-              }
-            >
-              <IoMdAdd
-                onClick={() => setQuantity(Quantity + 1)}
-                className="cursor-pointer m-auto"
-              />
-              <span className="text-center w-8 bg-white  border-y">
-                {Quantity}
-              </span>
-              {Quantity === 1 ? null : (
-                <HiMinusSm
-                  onClick={() => setQuantity(Quantity - 1)}
-                  className="cursor-pointer m-auto "
-                />
-              )}
-            </div>
+            <Quantity/>
           </div>
           <div className="bg-[#C0C0C0] p-4 m-auto my-4">
             <div className="flex justify-end items-center m-auto my-2">
@@ -93,31 +74,7 @@ const MyNewOrder = () => {
             </div>
           </div>
         </div>
-        <div className="border-2 w-1/2 max-md:w-full max-md:m-4 py-2 px-4 grid grid-cols-4 text-end">
-          <p className="text-nowrap ml-2 my-1 max-lg:text-[10px] max-md:text-nowrap">
-            المنتج المطلوب :
-          </p>
-          <input
-            className="border w-full rounded-sm col-span-3 my-1 p-2"
-            type="text"
-          />
-
-          <p className="text-nowrap ml-2 my-1 max-lg:text-xs max-md:text-nowrap">
-            تفاصيل أكثر :
-          </p>
-          <Textarea className="col-span-3 my-1" />
-          <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
-            رابط :
-          </p>
-          <input
-            className="border w-full rounded-sm col-span-3 my-3 p-2"
-            type="text"
-          />
-          <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
-            الصور
-          </p>
-          <DropZone />
-        </div>
+        <OrderDetails/>
       </div>
     </Card>
   );
