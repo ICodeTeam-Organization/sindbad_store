@@ -27,6 +27,8 @@ const PasswordInput: React.FC<PasswordComponentProps> = ({
       <Input
         {...(fieldName && register && { ...register(fieldName) })}
         {...rest}
+        dir="ltr"
+        className="text-end"
         type={showPassword ? "text" : "password"}
       />
       <BsEye

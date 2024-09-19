@@ -5,6 +5,7 @@ import ClientProviders from "@/components/client-providers";
 import Subscribe from "@/components/Subscribe";
 import Footer from "@/components/Footer";
 import About from "@/components/About";
+import { NextAuthProvider } from "@/components/session-providers";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,11 +35,13 @@ export default function RootLayout({
         dir="rtl"
       >
         <main>
-          <ClientProviders>{children}</ClientProviders>
+          <NextAuthProvider>
+            <ClientProviders>{children}</ClientProviders>
+          </NextAuthProvider>
         </main>
-        <Subscribe/>
-        <About/>
-        <Footer/>
+        <Subscribe />
+        <About />
+        <Footer />
       </body>
     </html>
   );

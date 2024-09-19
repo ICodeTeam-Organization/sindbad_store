@@ -17,9 +17,10 @@ export const registrationSchema = z
   });
 
 export const LoginSchema = z.object({
-  email: z.string().email("يرجى إدخال بريد إلكتروني صحيح"),
+  phone: z.string().min(9, "يجب ادخال رقم هاتف صحيح"),
   password: z.string().min(6, "كلمة المرور مطلوبة"),
 });
+
 export const ForgetPasswordSchema = z.object({
   phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
 });
