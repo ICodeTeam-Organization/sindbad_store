@@ -28,7 +28,7 @@ const Dropdown = ({ name }: props) => {
           <BiChevronDown className="w-6 h-6" width={0} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent className={name ? `w-56`:`w-96`}>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
