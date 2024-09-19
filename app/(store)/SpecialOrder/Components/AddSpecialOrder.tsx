@@ -29,6 +29,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Dropdown from "./Dropdown";
+import OrderDetails from "./OrderDetails";
 const AddSpecialOrder = () => {
   const form = useForm<z.infer<typeof AddshipingadressSchema>>({
     resolver: zodResolver(AddshipingadressSchema),
@@ -60,132 +62,34 @@ const AddSpecialOrder = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <DialogHeader>
-              <div className="m-auto p-8">
-                <FormField
-                  control={form.control}
-                  name="title"
-                  render={({ field }) => (
-                    <FormItem className="my-4 text-right">
-                      <FormLabel className="m-auto text-3xl font-bold mb-2">
-                        <p>العنوان</p>
-                      </FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormLabel className="m-auto text-3xl font-bold mb-2">
-                  <p className=" text-right">المنطقة</p>
-                </FormLabel>
-                <div className="grid grid-cols-3 gap-2 ">
-                  <FormField
-                    control={form.control}
-                    name="state"
-                    render={({ field }) => (
-                      <FormItem className="text-center">
-                        <FormControl>
-                          <Select onValueChange={field.onChange}>
-                            <SelectTrigger className="text-xl">
-                              <SelectValue placeholder="المحافظة" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup {...field}>
-                                <SelectItem value="est">حضرموت</SelectItem>
-                                <SelectItem value="cst">عدن</SelectItem>
-                                <SelectItem value="mst">صنعاء</SelectItem>
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="city"
-                    render={({ field }) => (
-                      <FormItem className="text-center">
-                        <FormControl>
-                          <Select onValueChange={field.onChange}>
-                            <SelectTrigger className="text-xl">
-                              <SelectValue placeholder="المديرية" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup {...field}>
-                                <SelectItem value="est">حضرموت</SelectItem>
-                                <SelectItem value="cst">عدن</SelectItem>
-                                <SelectItem value="mst">صنعاء</SelectItem>
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="place"
-                    render={({ field }) => (
-                      <FormItem className="text-center">
-                        <FormControl>
-                          <Select onValueChange={field.onChange}>
-                            <SelectTrigger className="text-xl">
-                              <SelectValue placeholder="المنطقة" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup {...field}>
-                                <SelectItem value="est">حضرموت</SelectItem>
-                                <SelectItem value="cst">عدن</SelectItem>
-                                <SelectItem value="mst">صنعاء</SelectItem>
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={form.control}
-                  name="reciver"
-                  render={({ field }) => (
-                    <FormItem className="my-4 text-right">
-                      <FormLabel className="m-auto text-3xl font-bold mb-2">
-                        <p>المستلم</p>
-                      </FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem className="my-4 text-right">
-                      <FormLabel className="m-auto text-3xl font-bold mb-2">
-                        <p>رقم التلفون</p>
-                      </FormLabel>
-                      <FormControl>
-                        <Input {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+              <div className="border-2 border-black w-full m-auto py-3 text-center text-2xl">
+                <p>طلب خاص جديد</p>
               </div>
+              <div className="flex items-center justify-between px-2 border-2 border-black w-full m-auto py-3 text-center text-2xl">
+                <div className="text-center w-1/3">
+                  <p className="mb-3">نوع الطلب</p>
+                  <div className="flex items-center justify-around">
+                    <Button className="px-7 h-7 bg-green-400 hover:bg-green-600 text-black">منتج</Button>
+                    <Button className="px-7 h-7 bg-green-400 hover:bg-green-600 text-black">خدمة</Button>
+                    <Button className="h-7 bg-green-400 hover:bg-green-600 text-black">رابط متجر</Button>
+                  </div>
+                </div>
+                <div>
+                  <div className="flex items-center m-auto">
+                    <h1 className="ml-2 m-auto">الفئة الرئيسية :</h1>
+                    <Dropdown name="" />
+                  </div>
+                  <div className="flex items-center m-auto mt-3">
+                    <h1 className="ml-2 m-auto">الفئة الفرعية :</h1>
+                    <Dropdown />
+                  </div>
+                </div>
+              </div>
+              <OrderDetails classname={"w-full"}/>
             </DialogHeader>
 
             <DialogFooter>
-              <Button type="submit">حفظ التعديلات</Button>
+              <Button className="bg-primary-background px-10" type="submit">حفظ الطلب</Button>
             </DialogFooter>
           </form>
         </Form>

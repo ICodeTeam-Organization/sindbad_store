@@ -4,7 +4,7 @@ import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 const BeastSeller = async () => {
   const BeastSellerInWeek = await getApi<any>(
-    "Product/Market/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/5"
+    "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/5"
   );
   if (!BeastSellerInWeek) return notFound();
 

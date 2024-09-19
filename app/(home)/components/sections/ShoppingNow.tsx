@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 const ShoppingNow = async () => {
   const products = await getApi<any>(
     // change the url later
-    "Product/Market/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/5"
+    "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/5"
   );
   if (!products) return notFound();
 

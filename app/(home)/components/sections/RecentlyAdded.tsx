@@ -4,7 +4,7 @@ import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 const RecentlyAdded = async () => {
   const RecentlyProducts = await getApi<any>(
-    "Product/Market/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/5"
+    "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/5"
   );
   if (!RecentlyProducts) return notFound();
 
