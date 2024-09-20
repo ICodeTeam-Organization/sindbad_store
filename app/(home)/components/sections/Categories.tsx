@@ -27,14 +27,12 @@ const Categories = async () => {
         {categories.data.map(
           (category: Category, index: number) =>
             index < 6 && (
-              <div key={category.id} className=" md:block">
-                <CategoryCard
-                  key={category.id}
-                  id={category.id}
-                  name={category.name}
-                  imageUrl="/images/shoppingStore.svg"
-                />
-              </div>
+              <CategoryCard
+                key={category.id}
+                id={category.id}
+                name={category.name}
+                imageUrl="/images/shoppingStore.svg"
+              />
             )
         )}
       </div>
