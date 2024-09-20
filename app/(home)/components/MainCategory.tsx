@@ -4,7 +4,11 @@ import { Category } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 
-const MainCategory = () => {
+type Props = {
+  onClick: (id: number) => void;
+};
+
+const MainCategory = ({ onClick }: Props) => {
   const { data, error, isLoading } = useQuery<any>({
     queryKey: ["main-category"],
     queryFn: () =>
@@ -27,7 +31,7 @@ const MainCategory = () => {
           {data.data.map((category: Category) => (
             <Button
               className="w-40 md:w-72 lg:w-full mb-3 bg-gray-400 lg:text-xl"
-              onClick={() => {}}
+              onClick={() => onClick(category.id)}
               key={category.id}
             >
               {category.name}
