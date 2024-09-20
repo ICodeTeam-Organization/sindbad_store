@@ -14,9 +14,28 @@ import { AlertDialogDescription } from "@radix-ui/react-alert-dialog";
 import { useState } from "react";
 import MainCategory from "./MainCategory";
 import { Category } from "@/types/storeTypes";
+import SubCategories from "./SubCategories";
+import { useQuery } from "@tanstack/react-query";
+import { getApi } from "@/lib/http";
 
 const CategoriesDialog = () => {
-  const [branches, setBranches] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<any>([]);
+
+  const { data } = useQuery<any>({
+    queryKey: ["branch-category"],
+    queryFn: () =>
+      getApi(
+        "Market/categories/GetAllMainCategoriesWithSubCategoriesForViewInSpecialProductsPage/1/1"
+      ),
+  });
+
+  const handleSubCategory = (id: number) => {
+    const subCategories: Category[] = data.data.find(
+      (main) => main.id === id
+    ).subCategoriesForVeiw;
+
+    setSubCategories(() => [...subCategories]);
+  };
 
   return (
     <AlertDialog>
@@ -36,27 +55,8 @@ const CategoriesDialog = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="pt-2 flex flex-row md:gap-1 lg:gap-3  ">
-          <MainCategory />
-          <div className="border sm:w-40 md:w-60 lg:w-1/2 p-2  ">
-            <h1 className="font-bold text-xl text-center mb-4">الفرعية</h1>
-            <div className="h-80 p-2 text-center  overflow-auto">
-              {branches.length > 0 ? (
-                branches.map((category) => (
-                  <Button
-                    variant={"outline"}
-                    className="w-40 md:w-72 lg:w-full mb-3   lg:text-xl"
-                    key={category.id}
-                  >
-                    {category.name}
-                  </Button>
-                ))
-              ) : (
-                <p className="font-bold mt-20 min-w-40 ">
-                  لا تتوفر اي فئة فرعية في الوقت الحالي
-                </p>
-              )}
-            </div>
-          </div>
+          <MainCategory onClick={handleSubCategory} />
+          <SubCategories subCategories={subCategories} />
         </div>
         <AlertDialogFooter>
           <AlertDialogCancel>أغلاق</AlertDialogCancel>
