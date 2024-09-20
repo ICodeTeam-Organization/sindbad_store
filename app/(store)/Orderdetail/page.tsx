@@ -8,7 +8,7 @@ const OrderDetail = () => {
     <>
       <BreadCrumb
         SecondName="طلباتي"
-        SecondDir=""
+        SecondDir="/Orders"
         ThirdName="تفاصيل الطلب"
         ThirdDir=""
       />

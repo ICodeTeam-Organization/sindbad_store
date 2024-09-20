@@ -16,9 +16,10 @@ import MainCategory from "./MainCategory";
 import { Category } from "@/types/storeTypes";
 import { getApi } from "@/lib/http";
 import { useQuery } from "@tanstack/react-query";
+import SubCategories from "./SubCategories";
 
 const CategoriesDialog = () => {
-  const [branches, setBranches] = useState<any>([]);
+  const [subCategories, setSubCategories] = useState<any>([]);
 
   const { data } = useQuery<any>({
     queryKey: ["branch-category"],
@@ -29,14 +30,11 @@ const CategoriesDialog = () => {
   });
 
   const handleSubCategory = (id: number) => {
-    setBranches(
-      (prevData) =>
-        (prevData = [
-          data.data.filter((main: any) => main.id === id).subCategoriesForVeiw,
-        ])
-    );
+    const subCategories: Category[] = data.data.find(
+      (main) => main.id === id
+    ).subCategoriesForVeiw;
 
-    console.log(branches);
+    setSubCategories(() => [...subCategories]);
   };
 
   return (
@@ -47,7 +45,7 @@ const CategoriesDialog = () => {
           <h3 className="mr-2">عرض الكل</h3>
         </Button>
       </AlertDialogTrigger>
-      <AlertDialogContent className="h-4/5 ">
+      <AlertDialogContent className="h-4/5 overflow-auto">
         <AlertDialogHeader>
           <AlertDialogTitle className="text-center text-xl font-bold">
             جميع الفئات
@@ -56,28 +54,9 @@ const CategoriesDialog = () => {
             تصفح جميع الفئات الرئيسية و الفرعية
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <div className="pt-2 flex flex-row md:gap-1 lg:gap-3  ">
+        <div className="pt-2 flex flex-col md:flex-row justify-around md:gap-1 lg:gap-3  ">
           <MainCategory onClick={handleSubCategory} />
-          <div className="border sm:w-40 md:w-60 lg:w-1/2 p-2  ">
-            <h1 className="font-bold text-xl text-center mb-4">الفرعية</h1>
-            <div className="h-80 p-2 text-center  overflow-auto">
-              {/* {branches && branches.length > 0 ? (
-                branches.map((category: Category) => (
-                  <Button
-                    variant={"outline"}
-                    className="w-40 md:w-72 lg:w-full mb-3   lg:text-xl"
-                    key={category.id}
-                  >
-                    {category.name}
-                  </Button>
-                ))
-              ) : (
-                <p className="font-bold mt-20 min-w-40 ">
-                  لا تتوفر اي فئة فرعية في الوقت الحالي
-                </p>
-              )} */}
-            </div>
-          </div>
+          <SubCategories subCategories={subCategories} />
         </div>
         <AlertDialogFooter>
           <AlertDialogCancel>أغلاق</AlertDialogCancel>

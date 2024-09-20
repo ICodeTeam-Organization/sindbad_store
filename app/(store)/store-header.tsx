@@ -64,10 +64,10 @@ const StoreHeader = () => {
             <SelectItem value="place3">محل2</SelectItem>
           </SelectContent>
         </Select>
-        <Link href={"#"} className="flex gap-2 items-center">
+        <Link href={"/OrderTrack"} className="flex gap-2 items-center">
           متابعة طلب <BiLocationPlus size={20} />
         </Link>
-        <Link href={"#"} className="flex gap-2 items-center">
+        <Link href={"/SpecialOrder"} className="flex gap-2 items-center">
           طلب خاص <BiHeadphone size={20} />
         </Link>
         <Link href={"#"} className="flex gap-2 items-center">

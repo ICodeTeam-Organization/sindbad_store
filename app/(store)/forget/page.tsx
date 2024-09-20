@@ -41,7 +41,7 @@ const forgetPass = () => {
         <hr />
         <p className="text-start text-[#475156] mt-6">
           يمكنك الإتصال
-          <Link className="text-[#F58634]" href={""}>
+          <Link className="text-[#F58634] mx-1" href={""}>
             بخدمة العملاء
           </Link>
           للحصول على المساعدة في استعادة الوصول إلى حسابك

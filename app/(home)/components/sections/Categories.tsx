@@ -23,7 +23,7 @@ const Categories = async () => {
           <CategoriesDialog />
         </div>
       </div>
-      <div className="py-4 px-4 flex justify-center gap-3 ">
+      <div className="py-4 px-4 flex flex-wrap justify-center gap-y-5 gap-x-3 lg:gap-x-14 ">
         {categories.data.map(
           (category: Category, index: number) =>
             index < 6 && (
@@ -32,7 +32,8 @@ const Categories = async () => {
                   key={category.id}
                   id={category.id}
                   name={category.name}
-                  imageUrl={"/images/laptop-main.svg"}
+                  // imageUrl={category.imageUrl!}
+                  imageUrl="/images/shoppingStore.svg"
                 />
               </div>
             )

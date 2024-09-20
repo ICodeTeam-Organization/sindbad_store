@@ -18,7 +18,7 @@ const MainCategory = ({ onClick }: Props) => {
   });
 
   return (
-    <div className="border sm:w-40 md:w-60 lg:w-1/2 p-2">
+    <div className="border sm:w-40 md:w-1/2 p-2">
       <h1 className="font-bold text-xl text-center mb-4">الرئيسية</h1>
       {isLoading ? (
         <Loader2 className="mx-auto mt-36 text-center animate-spin" />
@@ -27,7 +27,7 @@ const MainCategory = ({ onClick }: Props) => {
           هناك خطأ اثناء جلب البيانات
         </span>
       ) : (
-        <div className="h-80 p-2 overflow-auto">
+        <div className="h-auto lg:h-80 p-2 overflow-auto">
           {data.data.map((category: Category) => (
             <Button
               className="w-40 md:w-72 lg:w-full mb-3 bg-gray-400 lg:text-xl"

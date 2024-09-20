@@ -1,16 +1,11 @@
 import { Card } from "@/components/ui/card";
 import Dropdown from "./Dropdown";
-import { HiMinusSm } from "react-icons/hi";
-import { IoMdAdd } from "react-icons/io";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
 import OrderDetails from "./OrderDetails";
 import Quantity from "./Quantity";
 
 const MyNewOrder = () => {
-  
-
   return (
     <Card className="rounded-none border-black p-6">
       <div className="flex justify-around items-center border m-auto border-black  py-2">
@@ -27,8 +22,8 @@ const MyNewOrder = () => {
           <Dropdown />
         </div>
       </div>
-      <div className="flex justify-around items-center max-md:flex-col mt-3">
-        <div>
+      <div className="flex justify-around w-full items-center max-md:flex-col mt-3">
+        {/* <div>
           <div className="flex items-center justify-around mb-3">
             <p>الكمية المطلوبة</p>
             <Quantity/>
@@ -73,8 +68,8 @@ const MyNewOrder = () => {
               </Button>
             </div>
           </div>
-        </div>
-        <OrderDetails/>
+        </div> */}
+        <OrderDetails classname="ttt" />
       </div>
     </Card>
   );

@@ -1,15 +1,15 @@
 import React from "react";
 import Image from "next/image";
-import { StoreCardProps } from "../typest";
+import { StoreCardProps } from "../../../typest";
 import { IoMdHeartEmpty } from "react-icons/io";
 
-const StoreCard = ({ image, title, description }: StoreCardProps) => {
+const StoreDetailsCard = ({ image, title, description }: StoreCardProps) => {
   return (
-    <a href={`/stores/storeDetails/3`} className="border rounded-lg shadow-sm relative w-full max-w-[380px] mx-auto text-center">
+    <div className="border px-12 py-6 rounded-lg shadow-sm relative w-full  m-auto text-center">
       <Image
         src={image}
         alt={title}
-        className="w-full h-[250px] object-cover rounded-lg"
+        className="w-full h-[400px] object-cover rounded-lg"
       />
       <div className="m-4">
         <h2 className="font-bold mt-2 text-center">{title}</h2>
@@ -29,8 +29,8 @@ const StoreCard = ({ image, title, description }: StoreCardProps) => {
           </button>
         </div>
       </div>
-    </a>
+    </div>
   );
 };
 
-export default StoreCard;
+export default StoreDetailsCard;

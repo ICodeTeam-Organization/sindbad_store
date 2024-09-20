@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  id: string;
+  id: number;
   name: string;
   imageUrl: string;
 };
@@ -16,7 +16,7 @@ const CategoryCard = ({ name, imageUrl }: Props) => {
             src={imageUrl}
             height={100}
             width={100}
-            className="w-10 h-10"
+            className="w-10 h-10 md:w-12 md:h-12"
             alt="صورة الصنف"
           />
         </div>

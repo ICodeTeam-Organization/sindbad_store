@@ -1,7 +1,7 @@
 import ImageGallery from './components/ImageGallery';
 import ProductDetails from './components/ProductDetails';
 
-// `params` will automatically include the `productId` from the URL
+
 const ProductPage = ({ params }: { params: { productId: string } }) => {
   const productImages = [
     "/images/01.svg",

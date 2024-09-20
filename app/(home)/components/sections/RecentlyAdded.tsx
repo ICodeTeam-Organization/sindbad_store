@@ -19,6 +19,7 @@ const RecentlyAdded = async () => {
               image={product.mainImageUrl}
               productName={product.name}
               price={product.price}
+              ProductDet={product.id}
             />
           ))}
         </div>
