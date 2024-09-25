@@ -7,8 +7,22 @@ import { Label } from "@radix-ui/react-label";
 import { registrationSchema } from "../schema";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { registerUser } from "../helpers";
+import { Loader2 } from "lucide-react";
 
 const SignUpForm: React.FC = () => {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const { mutate, isPending } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => router.push("/"),
+    onError: (err) => setError(err.message),
+  });
+
+  //validate form fields
   const {
     register,
     handleSubmit,
@@ -17,13 +31,14 @@ const SignUpForm: React.FC = () => {
     resolver: zodResolver(registrationSchema),
   });
 
-  const onsubmit: SubmitHandler<registerFormField> = (data) => {
-    console.log(data);
+  const onsubmit: SubmitHandler<registerFormField> = (formData) => {
+    mutate(formData);
   };
 
   return (
     <form onSubmit={handleSubmit(onsubmit)}>
       <CardContent className="space-y-4">
+        {error && <div className="p-2 bg-red-100 text-red-600">{error}</div>}
         <div className="space-y-2">
           <Label className={`font-bold text-lg `} htmlFor="name">
             الاسم
@@ -94,7 +109,14 @@ const SignUpForm: React.FC = () => {
       </CardContent>
       <CardFooter>
         <Button className="w-full hover:bg-orange-600 bg-primary-background transition-colors">
-          أنشاء حساب
+          {isPending ? (
+            <>
+              يرجى الانتظار
+              <Loader2 className="animate-spin" />
+            </>
+          ) : (
+            "أنشاء حساب"
+          )}
         </Button>
       </CardFooter>
     </form>

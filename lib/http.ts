@@ -1,6 +1,10 @@
 // import { getServerSession } from "next-auth";
 // import { getSession } from "next-auth/react";
 import { notFound } from "next/navigation";
+import { isClient } from "./utils";
+import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authOption } from "./authOption";
 //import { authOptions } from './auth-options';
 // import { isClient } from "./utils";
 // import cookies from "js-cookie";
@@ -17,19 +21,18 @@ async function http<T>(
 ) {
   const endpoint = process.env.NEXT_PUBLIC_BASE_URL + url;
 
-  //----------- comment this code because not found stringifyParams in utils file ----------------------
-  //   if (params) {
-  //     endpoint += ?${decodeURIComponent(stringifyParams(params))};
-  //   }
-
-  // let session;
-  // const locale = cookies.get("NEXT_LOCALE") || "ar";
-
-  // if (isClient()) {
-  //   session = await getSession();
-  // } else {
-  //   session = await getServerSession(); //-----update this line  remove authOptions argument, stringifyParams not found
+  // if (params) {
+  //   endpoint += ?${decodeURIComponent(stringifyParams(params))};
   // }
+
+  // const locale = cookies.get("NEXT_LOCALE") || "ar";
+  let session;
+
+  if (isClient()) {
+    session = await getSession();
+  } else {
+    session = await getServerSession(authOption);
+  }
 
   const isFormData = config?.body instanceof FormData;
   const response: Response = await fetch(endpoint, {
@@ -37,10 +40,10 @@ async function http<T>(
     ...config,
     body: isFormData ? (config.body as FormData) : JSON.stringify(config?.body),
     headers: {
-      // "Accept-Language": "ar",
+      "Accept-Language": "ar",
       ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...config?.headers,
-      // ...(session && { "Access-Token": session.jwt }), // ----- here error in jwt check
+      ...(session && { "Access-Token": session.user.data.token }), // ----- here error in jwt check
     },
   });
 

@@ -8,8 +8,21 @@ import { LoginSchema } from "../schema";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { loginUser } from "../helpers";
 
 const LoginForm: React.FC = () => {
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const { mutate, isPending } = useMutation({
+    mutationFn: loginUser,
+    onSuccess: () => router.push("/"),
+    onError: (err) => setError(err.message),
+  });
+  // valdiate form fields
   const {
     register,
     handleSubmit,
@@ -18,20 +31,23 @@ const LoginForm: React.FC = () => {
     resolver: zodResolver(LoginSchema),
   });
 
-  const onsubmit: SubmitHandler<registerFormField> = (data) => {
-    console.log(data);
+  const onsubmit: SubmitHandler<registerFormField> = async (formData) => {
+    setError(null);
+    mutate(formData);
   };
+
   return (
     <form onSubmit={handleSubmit(onsubmit)}>
       <CardContent className="space-y-4">
+        {error && <div className="p-2 bg-red-100 text-red-600">{error}</div>}
         <div className="space-y-2">
           <Label className={`font-bold text-lg `} htmlFor="name">
-            البريد الألكتروني
+            رقم الهاتف
           </Label>
-          <Input {...register("email")} id="email" name="email" type="text" />
-          {errors.email?.message && (
+          <Input {...register("phone")} id="phone" name="phone" type="text" />
+          {errors.phone?.message && (
             <span className="text-sm text-red-500 ">
-              {errors.email?.message}
+              {errors.phone?.message}
             </span>
           )}
         </div>
@@ -53,8 +69,18 @@ const LoginForm: React.FC = () => {
         </div>
       </CardContent>
       <CardFooter>
-        <Button className="w-full hover:bg-orange-600 bg-primary-background transition-colors">
-          تسجيل الدخول
+        <Button
+          disabled={isPending}
+          className="w-full hover:bg-orange-600 bg-primary-background transition-colors"
+        >
+          {isPending ? (
+            <>
+              يرجى الانتظار
+              <Loader2 className="animate-spin" />
+            </>
+          ) : (
+            "تسجيل الدخول"
+          )}
         </Button>
       </CardFooter>
     </form>

@@ -9,8 +9,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
+import { Loader2 } from "lucide-react";
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,7 +25,7 @@ const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, []);
+  }, [status]);
   return (
     <div
       className={cn(
@@ -65,8 +69,15 @@ const Header = () => {
               </div>
               <div className="flex items-end ">
                 <div className="md:ml-2 sm:ml-1  text-xs sm:text-sm md:text-md">
-                  <p className="text-gray-500 hidden lg:block ">مرحبا بك</p>
-                  <h3 className="text-xs md:text-sm">تسجيل الدخول</h3>
+                  {status === "loading" ? (
+                    <Loader2 className="animate-spin" />
+                  ) : status === "authenticated" ? (
+                    <p className="text-gray-500 hidden lg:block ">
+                      {session.user.data.fullName}مرحبا بك
+                    </p>
+                  ) : (
+                    <h3 className="text-xs md:text-sm">تسجيل الدخول</h3>
+                  )}
                 </div>
                 <FaAngleDown size={15} />
               </div>
