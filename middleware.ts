@@ -4,13 +4,19 @@ import { getToken } from "next-auth/jwt";
 
 export default withAuth(
   async function middleware(request: NextRequest) {
-    const isAuth = await getToken({ req: request });
-    const pathName = request.nextUrl.pathname;
-    const paths = ["/shopping-card"];
-    const isProtected = paths.some((d) => pathName.startsWith(d));
-    if (!isAuth && isProtected) {
+    const token = await getToken({ req: request });
+    const { pathname } = request.nextUrl;
+
+    const protectedPaths = ["/shopping-card"];
+    const isProtected = protectedPaths.some((path) =>
+      pathname.startsWith(path)
+    );
+
+    if (isProtected && !token) {
       return NextResponse.redirect(new URL("/auth", request.url));
     }
+
+    return NextResponse.next();
   },
   {
     callbacks: {
@@ -22,5 +28,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/shopping-card/:path"],
+  matcher: ["/shopping-card/:path*"],
 };
