@@ -3,7 +3,10 @@ import * as z from "zod";
 export const registrationSchema = z
   .object({
     name: z.string().min(1, "الاسم مطلوب"),
-    phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
+    phone: z
+      .string()
+      .min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام")
+      .regex(/^\d+$/, "المدخل يجب أن يحتوي على أرقام فقط"),
     email: z.string().email("يرجى إدخال بريد إلكتروني صحيح"),
     password: z.string().min(6, "كلمة المرور يجب أن تكون على الأقل 6 أحرف"),
     confirmPassword: z.string().min(6, "كلمة المرور غير مطابقة"),
@@ -17,7 +20,10 @@ export const registrationSchema = z
   });
 
 export const LoginSchema = z.object({
-  phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
+  phone: z
+    .string()
+    .min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام")
+    .regex(/^\d+$/, "المدخل يجب أن يحتوي على أرقام فقط"),
   password: z.string().min(6, "كلمة المرور مطلوبة"),
 });
 
