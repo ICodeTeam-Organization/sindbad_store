@@ -1,6 +1,8 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import DetailsTap from "./DetailsTap";
 import ProductFeaturesTable from "./FeaturesTap";
+import ProductReviewsTap from "./ReviewsTap";
+
 const TabsComponent = () => (
   <Tabs.Root defaultValue="details" className="w-full px-12">
     <Tabs.List
@@ -29,16 +31,25 @@ const TabsComponent = () => (
 
     {/* Tabs Content */}
     <div className="pt-4 w-full">
-      <Tabs.Content value="reviews" className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4">
-        <p>Make changes to your account.</p>
+      <Tabs.Content
+        value="details"
+        className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
+      >
+        <DetailsTap />
       </Tabs.Content>
 
-      <Tabs.Content value="features" className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4">
+      <Tabs.Content
+        value="features"
+        className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
+      >
         <ProductFeaturesTable />
       </Tabs.Content>
 
-      <Tabs.Content value="details" className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4">
-        <DetailsTap />
+      <Tabs.Content
+        value="reviews"
+        className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
+      >
+        < ProductReviewsTap />
       </Tabs.Content>
     </div>
   </Tabs.Root>
