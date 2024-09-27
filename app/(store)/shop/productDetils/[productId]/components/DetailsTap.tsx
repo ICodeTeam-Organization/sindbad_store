@@ -1,0 +1,27 @@
+import React from 'react';
+import Image from 'next/image';
+import iPhone from '../../../../../../public/images/iPhone.svg';
+const DetailsTap = () => {
+  return (
+    <section className="bg-white">
+      <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+        <div className="mr-auto place-self-center lg:col-span-7 text-right">
+          <h3 className="max-w-2xl mb-4 text-2xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl">
+            أداء سلس
+          </h3>
+          <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+            يتميز هذا الهاتف الذكي من ابل بشاشة ليكويد رتينا يبلغ حجمها 6.1 انش تعمل بتقنية اتش دي وتوفر صورًا واضحة ومفصلة لتوصيل متعة الترفيه إلى المستوى الجديد بالكامل. شاهد أفلامك المفضلة أو الأحداث الرياضية المثيرة أو تصفح محتويات مختلفة على الإنترنت واستمتع بها على أكمل وجه بفضل الدمج الاستثنائي بين تقنية ترو تون ودولبي اتموس. يوفر هاتف ابل ايفون 11 صوراً بأعلى جودة ويجعلها تنبض بالحياة بفضل الدقة التي تبلغ 1792 × 828 بكسل. تضمن الطبقة المضادة للزيوت ومقاومة لبصمات الأصابع عدم وجود علامات غير مرغوب فيها على الشاشة، حتى بعد الاستخدام المكثف. بالإضافة إلى ذلك، يحتوي هذا الهاتف الذكي على بطارية قوية تدوم طويلًا توفر ساعات من الترفيه غير المنقطع، مما يجعله شريك السفر المثالي.
+          </p>
+          <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">
+            يحتوي هذا الهاتف من ايفون على ذاكرة وصول عشوائية تبلغ سعتها 4 جيجابايت تجعل من تعدد المهام أسرع من أي وقت مضى؛ كما أنها تحمّل ألعاب الرسومية ذات المساحات الكبيرة وتطبيقات تحرير الفيديو بسرعة. يمكنك تخزين المزيد من محتويات الترفيه دون حذف أي من بياناتك أو صورك المخزنة سابقاً، وذلك بفضل سعة الذاكرة المدمجة التي يوفرها هذا الهاتف الذكي بسعة 128 جيجابايت. يتميز هاتف ابل ايفون 11 بنظام التشغيل اي او اس 13 الذي يجعل استخدامه فرحة لا مثيل لها. يضيف هذا النظام للتشغيل لمسة من الإثارة بميزات مثل الوضع المظلم على نطاق النظام وتسجيل الدخول باستخدام خيار ابل وواجهة جديدة لتحرير الصور.
+          </p>
+        </div>
+        <div className="hidden lg:mt-0 lg:col-span-5 lg:flex  items-start">
+          <Image src={iPhone} alt="mockup" />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default DetailsTap;
