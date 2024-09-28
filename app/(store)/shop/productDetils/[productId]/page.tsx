@@ -1,23 +1,24 @@
-// import ImageGallery from './components/ImageGallery';
+// app/store/shop/productDetails/[productId]/page.tsx
+
+import React from 'react';
 import ProductDetails from './components/ProductDetails';
 import TabsComponent from './components/taps';
 
-const ProductPage = ({ params }: { params: { productId: string } }) => {
-  // const productImages = [
-  //   "/images/01.svg",
-  //   "/images/02.svg",
-  //   "/images/03.svg",
-  //   "/images/04.svg",
-  //   "/images/05.svg",
-  //   "/images/06.svg",
-  // ];
+type ProductPageProps = {
+  params: {
+    productId: string;
+  };
+};
 
-  return <>
-   <ProductDetails params={params} />
-   <TabsComponent />
-  </>
-  
-  
+const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
+  const { productId } = params; // Extract productId from params
+
+  return (
+    <>
+      <ProductDetails params={params} />
+      <TabsComponent productId={productId} /> {/* Pass productId as prop */}
+    </>
+  );
 };
 
 export default ProductPage;

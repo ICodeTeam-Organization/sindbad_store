@@ -54,9 +54,10 @@ export interface ProductCardProps {
     features: ProductFeature[];
   }
   export interface ReviewProps {
-    reviewer: string;
-    date: string;
-    rating: string;
-    comment: string;
+    customerName: string;
+    reviewText: string;
+    reviewDate: string;
+    customerImage: string | null;
+    numOfRate: number;
   };
   

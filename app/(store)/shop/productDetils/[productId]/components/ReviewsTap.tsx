@@ -1,39 +1,54 @@
-import React from "react";
+'use client'
+import React, { useEffect, useState } from "react";
 import ReviewForm from './ReviewForm';
 import ReviewComment from './ReviewComment';
-import  { ReviewProps } from '../types';
+import { ReviewProps } from '../types';
+import { getApi } from "@/lib/http"; // Ensure this function is correctly implemented
 
-const ProductReviewsTap: React.FC = () => {
-  const reviews: ReviewProps[] = [
-    {
-      reviewer: "محمد خالد",
-      date: "13/10/2020",
-      rating: "⭐⭐⭐⭐⭐",
-      comment:
-        "استخدمنا سلة قبل أربع سنوات ثم غادرناها قبل أن يكون فيها خيارات ترقية مدفوعة. خسرنا مبالغ كبيرة جداً في عمل متجر وتوزيع جداً في التعامل مع المبرمجين. ثم عدنا لمنصة سلة ووجدنا تطورا هائلاً",
-    },
-    {
-      reviewer: "علي أحمد",
-      date: "05/11/2021",
-      rating: "⭐⭐⭐⭐",
-      comment:
-        "تجربة جيدة مع منصة سلة، خدمة العملاء رائعة لكن هناك بعض المميزات التي لا تزال بحاجة إلى تحسين.",
-    },
-    {
-      reviewer: "سارة محمد",
-      date: "22/07/2022",
-      rating: "⭐⭐⭐⭐⭐",
-      comment:
-        "منصة ممتازة، سهلة الاستخدام وتوفر الكثير من المميزات التي ساعدتني على تطوير متجري.",
-    },
-  ];
+type ProductReviewsTapProps = {
+  productId: string;
+};
+
+const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
+  const [reviews, setReviews] = useState<ReviewProps[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch reviews from API
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await getApi<any>(
+          `CommentsAndRates/GetReviewsOfProductForViewInProductDetailsPage/${productId}/3`
+        );
+
+        if (response?.success) {
+          setReviews(response.data);
+        } else {
+          setError('Failed to fetch reviews');
+        }
+      } catch (err) {
+        console.error("Error fetching reviews:", err);
+        setError('An error occurred while fetching reviews.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (productId) {
+      fetchReviews();
+    }
+  }, [productId]);
+
+  if (loading) return <div>Loading reviews...</div>;
+  if (error) return <div>{error}</div>;
 
   return (
     <div className="grid grid-cols-3 gap-6" dir="rtl">
       <div className="bg-gray-50 border border-gray-300 rounded-md p-4">
         <div className="text-center mb-4">
           <div className="text-3xl font-bold">4.5 من 5</div>
-          <p className="text-gray-500">60 تقييم على المنتج</p>
+          <p className="text-gray-500">{reviews.length} تقييم على المنتج</p>
         </div>
         <ReviewForm />
       </div>
@@ -53,12 +68,19 @@ const ProductReviewsTap: React.FC = () => {
         {reviews.map((review, index) => (
           <ReviewComment
             key={index}
-            reviewer={review.reviewer}
-            date={review.date}
-            rating={review.rating}
-            comment={review.comment}
+            reviewer={review.customerName}
+            date={new Date(review.reviewDate).toLocaleDateString()}
+            rating={`⭐`.repeat(review.numOfRate)}
+            comment={review.reviewText}
           />
         ))}
+
+        {/* Add "Load More" functionality */}
+        <div className="flex justify-center mt-4">
+          <button className="bg-orange-500 text-white px-4 py-2 rounded-md">
+            عرض المزيد
+          </button>
+        </div>
       </div>
     </div>
   );
