@@ -9,18 +9,21 @@ import location from "@/public/images/location.svg";
 import requestAvailable from "@/public/images/requestAvailable.svg";
 import isTrue from "@/public/images/isTrue.svg";
 import date from "@/public/images/date.svg";
-import Progresses from "./components/Progresses";
+import Progresses from "../components/Progresses";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import BreadCrumb from "@/components/BreadCrumb";
 
-const OrderTrack = async () => {
+interface OrderTrack {
+  params: { MyOrderTrack: string };
+}
+const page = async ({ params }: OrderTrack) => {
   const OrderTrack = await getApi<any>(
-    "Orders/Market/OrdersPage/TrackOrder?orderId=6"
+    `Orders/Market/OrdersPage/TrackOrder?orderId=${params.MyOrderTrack}`
   );
   if (!OrderTrack) return notFound();
-
   const data = OrderTrack.data;
+  console.log(params.MyOrderTrack);
   return (
     <>
       <BreadCrumb
@@ -30,12 +33,14 @@ const OrderTrack = async () => {
         ThirdDir=""
       />
       <div className="m-auto border-2 w-10/12 p-4 my-6 rounded-sm">
+
+      {/* Order info */}
         <div className="bg-yellow-50 border-yellow-100 border-2 flex justify-between items-center m-auto p-4">
           <div>
             <h1 className="font-bold">#{data.id}</h1>
             <div className="flex justify-end text-gray-500 text-center">
               <p>
-                منتجات <span>4</span>
+                منتجات <span>{data.numOfOrderDetails}</span>
               </p>
               <span className="mx-2">•</span>
               <p>
@@ -47,9 +52,12 @@ const OrderTrack = async () => {
             {data.totalPrice}ر.س
           </h1>
         </div>
+
         <div className="mt-3">
           <h1>Order expected arrival 23 Jan, 2021</h1>
-          <Progresses progress={""} />
+          <Progresses progress={data.orderStatus} />
+
+        {/* Progress details */}
           <div className="grid grid-cols-4 justify-items-center mt-3">
             <div className="m-auto grid justify-items-center">
               <Image src={Notebook} alt="Notebook" />
@@ -68,8 +76,14 @@ const OrderTrack = async () => {
               <h1>تم تسليمه</h1>
             </div>
           </div>
+
+
+
         </div>
+
+
         <hr />
+       {/* مراحل طلبك  */}
         <div className="py-4">
           <h1 className="text-xl">مراحل تنفيذ طلبك</h1>
           <div className="flex mt-4">
@@ -127,9 +141,13 @@ const OrderTrack = async () => {
             </div>
           </div>
         </div>
+
+
+
+
       </div>
     </>
   );
 };
 
-export default OrderTrack;
+export default page;

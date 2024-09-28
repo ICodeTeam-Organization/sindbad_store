@@ -5,9 +5,9 @@ type props = {
 };
 const Progresses = ({ progress }: props) => {
   let data: number = 0;
-  data = 67;
-  if (progress === "ssss") {
-    data = 37;
+  data = 100;
+  if (progress === "Accepted") {
+    data = 33;
   } else if (progress === "sssss") {
     data = 50;
   } else if (progress === "sssss") {
