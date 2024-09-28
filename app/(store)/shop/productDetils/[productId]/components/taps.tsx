@@ -1,6 +1,6 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import DetailsTap from "./DetailsTap";
-import ProductFeaturesTable from "./FeaturesTap";
+import ProductFeaturesTap from "./FeaturesTap";
 import ProductReviewsTap from "./ReviewsTap";
 
 const TabsComponent = () => (
@@ -42,7 +42,7 @@ const TabsComponent = () => (
         value="features"
         className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
       >
-        <ProductFeaturesTable />
+        <ProductFeaturesTap />
       </Tabs.Content>
 
       <Tabs.Content

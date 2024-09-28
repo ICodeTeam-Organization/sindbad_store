@@ -45,6 +45,14 @@ export interface ProductCardProps {
     value2: string;
   }
 
+  export interface ProductFeature {
+    label: string;
+    value: string;
+  }
+
+  export interface ProductFeaturesTableProps {
+    features: ProductFeature[];
+  }
   export interface ReviewProps {
     reviewer: string;
     date: string;
