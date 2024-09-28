@@ -50,7 +50,8 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
           <div className="text-3xl font-bold">4.5 من 5</div>
           <p className="text-gray-500">{reviews.length} تقييم على المنتج</p>
         </div>
-        <ReviewForm />
+        {/* Pass productId as a prop to ReviewForm */}
+        <ReviewForm productId={Number(productId)} />
       </div>
 
       <div className="col-span-2">
