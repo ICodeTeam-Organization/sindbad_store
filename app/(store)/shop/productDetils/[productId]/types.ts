@@ -44,4 +44,11 @@ export interface ProductCardProps {
     label2: string;
     value2: string;
   }
+
+  export interface ReviewProps {
+    reviewer: string;
+    date: string;
+    rating: string;
+    comment: string;
+  };
   
