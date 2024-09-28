@@ -14,7 +14,6 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Fetch reviews from API
   useEffect(() => {
     const fetchReviews = async () => {
       try {
@@ -50,7 +49,6 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
           <div className="text-3xl font-bold">4.5 من 5</div>
           <p className="text-gray-500">{reviews.length} تقييم على المنتج</p>
         </div>
-        {/* Pass productId as a prop to ReviewForm */}
         <ReviewForm productId={Number(productId)} />
       </div>
 
@@ -76,7 +74,6 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
           />
         ))}
 
-        {/* Add "Load More" functionality */}
         <div className="flex justify-center mt-4">
           <button className="bg-orange-500 text-white px-4 py-2 rounded-md">
             عرض المزيد

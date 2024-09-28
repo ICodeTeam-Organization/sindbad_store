@@ -32,7 +32,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
       const response = await getApi<any>(
         `ProductsProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`
       );
-      console.log("Product Data:", response?.data); // Log to check the data
+      console.log("Product Data:", response?.data);
 
       if (response?.success && response?.data) {
         setProduct(response.data);

@@ -8,14 +8,12 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const [loading, setLoading] = useState(false); 
   const [error, setError] = useState<string | null>(null);
 
-  // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
 
     try {
-      // Make the API request to add the review
       const response = await axios.post(
         "https://icode-sendbad-store.runasp.net/api/CommentsAndRates/AddReviewToProduct",
         {
@@ -25,7 +23,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
         }
       );
 
-      // Handle success
       console.log("Review added successfully", response.data);
       setReviewText("");
       setRate(5);       

@@ -55,7 +55,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ productId }) => (
         value="reviews"
         className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
       >
-        <ProductReviewsTap productId={productId} /> {/* Pass productId */}
+        <ProductReviewsTap productId={productId} />
       </Tabs.Content>
     </div>
   </Tabs.Root>

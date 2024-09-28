@@ -5,7 +5,6 @@ import { AiFillStar } from "react-icons/ai";
 
 const ReviewComment: React.FC<ReviewProps> = ({ reviewer, date, rating, comment, customerImage }) => {
   
-  // Function to generate star icons based on the rating
   const renderStars = () => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
