@@ -1,8 +1,11 @@
+import Link from "next/link";
 import { AiOutlineHeart } from "react-icons/ai";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 
 const AddToBasket = () => {
   return (
+    <Link href={`/Orders`}>
+
     <div className="cursor-pointer my-1 flex justify-around max-md:justify-between items-center w-full">
       <div className="hover:bg-[#F55157] hover:text-white transition-all duration-700 max-md:w-[107px] max-md:h-[30px] w-[159px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center">
         <MdOutlineLocalGroceryStore className="w-[17.39px] h-[15px]" />
@@ -12,6 +15,7 @@ const AddToBasket = () => {
         <AiOutlineHeart className="w-[20px] h-[20px]" color="#D5D5D5" />
       </div>
     </div>
+    </Link>
   );
 };
 
