@@ -17,8 +17,10 @@ type ProductDetailsProps = {
 
 const ProductDetails = ({ params }: ProductDetailsProps) => {
   const { productId } = params;
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<any>(null);
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
 
   useEffect(() => {
     if (productId) {
@@ -48,6 +50,36 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
   const handleIncrement = () => setQuantity(quantity + 1);
   const handleDecrement = () => {
     if (quantity > 1) setQuantity(quantity - 1);
+  };
+
+  const addToCart = async () => {
+    setLoading(true);
+    setMessage(null);
+    try {
+      const response = await fetch(
+        `https://icode-sendbad-store.runasp.net/AddProductToCart?productId=${productId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ quantity }), // Include quantity if your API supports it
+        }
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setMessage("تم إضافة المنتج إلى السلة بنجاح!"); // Success message in Arabic
+      } else {
+        setMessage(data.message || "حدث خطأ أثناء إضافة المنتج إلى السلة.");
+      }
+    } catch (error) {
+      console.error("Error adding product to cart:", error);
+      setMessage("حدث خطأ أثناء إضافة المنتج إلى السلة.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!product) {
@@ -131,11 +163,17 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
               +
             </button>
           </div>
-          <button className="min-w-[200px] h-[50px] bg-orange-500 text-white text-xl rounded-md flex justify-center items-center mb-2 md:mb-0">
+          <button
+            className="min-w-[200px] h-[50px] bg-orange-500 text-white text-xl rounded-md flex justify-center items-center mb-2 md:mb-0"
+            onClick={addToCart}
+            disabled={loading}
+          >
             <LiaShoppingCartSolid className="w-8 h-8 mr-2" />
-            <p>اضف للسلة</p>
+            <p>{loading ? "جارٍ إضافة المنتج..." : "اضف للسلة"}</p>
           </button>
         </div>
+
+        {message && <p className="text-red-500 mt-4">{message}</p>} {/* Changed color to red for error messages */}
       </div>
     </div>
   );
