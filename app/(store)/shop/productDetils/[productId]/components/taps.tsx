@@ -1,9 +1,15 @@
+// components/taps.tsx
+
 import * as Tabs from "@radix-ui/react-tabs";
 import DetailsTap from "./DetailsTap";
 import ProductFeaturesTap from "./FeaturesTap";
 import ProductReviewsTap from "./ReviewsTap";
 
-const TabsComponent = () => (
+type TabsComponentProps = {
+  productId: string;
+};
+
+const TabsComponent: React.FC<TabsComponentProps> = ({ productId }) => (
   <Tabs.Root defaultValue="details" className="w-full px-12">
     <Tabs.List
       className="flex items-start space-x-reverse space-x-4 border-b-2 border-orange-500 pb-2 w-full justify-start"
@@ -49,7 +55,7 @@ const TabsComponent = () => (
         value="reviews"
         className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
       >
-        < ProductReviewsTap />
+        <ProductReviewsTap productId={productId} />
       </Tabs.Content>
     </div>
   </Tabs.Root>
