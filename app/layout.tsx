@@ -7,6 +7,7 @@ import About from "@/components/About";
 import { Almarai } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { NextAuthProvider } from "@/components/session-providers";
+import { Toaster } from "@/components/ui/toaster";
 
 const sansFont = Almarai({
   weight: ["400", "700"],
@@ -39,6 +40,8 @@ export default function RootLayout({
         </NextAuthProvider>
         <About />
         <Footer />
+        {/* to show toaster messages */}
+        <Toaster />
       </body>
     </html>
   );

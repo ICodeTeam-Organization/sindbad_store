@@ -3,6 +3,7 @@ import AddToBasket from "./AddToBasket";
 import Link from "next/link";
 
 type props = {
+  id: string;
   image: string;
   productName: string;
   price: number;
@@ -10,6 +11,7 @@ type props = {
   ProductDet: number;
 };
 const ProductCard = ({
+  id,
   image,
   productName,
   price,
@@ -28,20 +30,20 @@ const ProductCard = ({
         />
       </Link>
       <div className="border-[1px] border-t-0 border-[#C3C3C3]  max-md:pr-1 pr-2">
-      <Link href={`/shop/productDetils/${ProductDet}`}>
-        <p className=" line-clamp-2 font-[Tajawal] text-[#007580] text-lg max-md:text-xs text-right">
-          <strong>{productName}</strong>
-        </p>
-        <div className="text-right flex justify-start">
-          <p className="max-md:pr-3 pr-5 max-md:text-xs text-xl text-[#F55157]">
-            <strong>{price}</strong>
+        <Link href={`/shop/productDetils/${ProductDet}`}>
+          <p className=" line-clamp-2 font-[Tajawal] text-[#007580] text-lg max-md:text-xs text-right">
+            <strong>{productName}</strong>
           </p>
-          <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px] line-through">
-            {oldPrice}
-          </p>
-        </div>
+          <div className="text-right flex justify-start">
+            <p className="max-md:pr-3 pr-5 max-md:text-xs text-xl text-[#F55157]">
+              <strong>{price}</strong>
+            </p>
+            <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px] line-through">
+              {oldPrice}
+            </p>
+          </div>
         </Link>
-        <AddToBasket />
+        <AddToBasket id={id} />
       </div>
     </div>
   );

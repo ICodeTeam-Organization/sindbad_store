@@ -16,6 +16,7 @@ const RecentlyAdded = async () => {
           {RecentlyProducts.data.map((product: any) => (
             <ProductCard
               key={product.id}
+              id={product.id}
               image={product.mainImageUrl}
               productName={product.name}
               price={product.price}

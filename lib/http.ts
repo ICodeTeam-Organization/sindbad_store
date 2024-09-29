@@ -43,7 +43,7 @@ async function http<T>(
       "Accept-Language": "ar",
       ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...config?.headers,
-      ...(session && { "Access-Token": session.user.data.token }), // ----- here error in jwt check
+      ...(session && { Authorization: `Bearer ${session?.user.data.token}` }), // ----- here error in jwt check
     },
   });
 

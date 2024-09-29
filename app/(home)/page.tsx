@@ -14,7 +14,7 @@ export default function Home() {
     <section className="w-full">
       <Hero />
       <Cards />
-      <Categories />
+      {/* <Categories /> */}
       <TodayOffers />
       <ShoppingNow />
       <AllStores />
