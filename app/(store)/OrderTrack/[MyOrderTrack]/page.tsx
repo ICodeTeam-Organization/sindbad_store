@@ -13,7 +13,7 @@ import Progresses from "../components/Progresses";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import BreadCrumb from "@/components/BreadCrumb";
-
+import React from "react";
 interface OrderTrack {
   params: { MyOrderTrack: string };
 }
@@ -23,7 +23,7 @@ const page = async ({ params }: OrderTrack) => {
   );
   if (!OrderTrack) return notFound();
   const data = OrderTrack.data;
-  console.log(params.MyOrderTrack);
+  console.log(OrderTrack);
   return (
     <>
       <BreadCrumb
@@ -33,8 +33,7 @@ const page = async ({ params }: OrderTrack) => {
         ThirdDir=""
       />
       <div className="m-auto border-2 w-10/12 p-4 my-6 rounded-sm">
-
-      {/* Order info */}
+        {/* Order info */}
         <div className="bg-yellow-50 border-yellow-100 border-2 flex justify-between items-center m-auto p-4">
           <div>
             <h1 className="font-bold">#{data.id}</h1>
@@ -57,7 +56,7 @@ const page = async ({ params }: OrderTrack) => {
           <h1>Order expected arrival 23 Jan, 2021</h1>
           <Progresses progress={data.orderStatus} />
 
-        {/* Progress details */}
+          {/* Progress details */}
           <div className="grid grid-cols-4 justify-items-center mt-3">
             <div className="m-auto grid justify-items-center">
               <Image src={Notebook} alt="Notebook" />
@@ -76,14 +75,10 @@ const page = async ({ params }: OrderTrack) => {
               <h1>تم تسليمه</h1>
             </div>
           </div>
-
-
-
         </div>
-
-
+        <br />
         <hr />
-       {/* مراحل طلبك  */}
+        {/* مراحل طلبك  */}
         <div className="py-4">
           <h1 className="text-xl">مراحل تنفيذ طلبك</h1>
           <div className="flex mt-4">
@@ -91,7 +86,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">تم تسليم طلبك</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                23 Jan, 2021 at 7:32 PM
+              {data.approvedAt}
               </p>
             </div>
           </div>
@@ -100,7 +95,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">وصول طلبك الى منطقة التوزيع</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                23 Jan, 2021 at 2:00 PM
+              {data.arrivedAtDistributionArea}
               </p>
             </div>
           </div>
@@ -109,7 +104,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">تم شحن طلبك</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                22 Jan, 2021 at 8:00 AM
+              {data.deliveredAt}
               </p>
             </div>
           </div>
@@ -118,7 +113,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">تم توفير طلبك للشحن</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                21, 2021 at 5:32 AM
+              {data.deliveredAt}
               </p>
             </div>
           </div>
@@ -127,7 +122,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">تم تأكيد سند الاستلام</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                20 Jan, 2021 at 7:32 PM
+                {data.bondConfirmedAt}
               </p>
             </div>
           </div>
@@ -136,15 +131,11 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">تم استلام طلبك</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                19 Jan, 2021 at 2:61 PM
+              {data.arrivedToCustomerAt}
               </p>
             </div>
           </div>
         </div>
-
-
-
-
       </div>
     </>
   );
