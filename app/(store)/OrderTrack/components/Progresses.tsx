@@ -6,14 +6,14 @@ type props = {
 const Progresses = ({ progress }: props) => {
   let data: number = 0;
   data = 100;
-  if (progress === "Accepted") {
-    data = 33;
-  } else if (progress === "sssss") {
-    data = 50;
-  } else if (progress === "sssss") {
-    data = 60;
-  } else if (progress === "sssss") {
+  if (progress === "InWaiting") {
     data = 100;
+  } else if (progress === "Shipped") {
+    data = 67;
+  } else if (progress === "Accepted") {
+    data = 33;
+  } else if (progress === "Delivered") {
+    data = 0;
   }
 
   return (
