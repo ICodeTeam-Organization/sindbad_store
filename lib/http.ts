@@ -5,9 +5,6 @@ import { isClient } from "./utils";
 import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOption } from "./authOption";
-//import { authOptions } from './auth-options';
-// import { isClient } from "./utils";
-// import cookies from "js-cookie";
 
 type Config = Omit<RequestInit, "body"> & {
   body?: FormData | Record<string, unknown>; // --------- change any to unkonwn to avoid an error
