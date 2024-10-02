@@ -1,9 +1,7 @@
 import { Card } from "@/components/ui/card";
 import Dropdown from "./Dropdown";
-import { Button } from "@/components/ui/button";
 
 import OrderDetails from "./OrderDetails";
-import Quantity from "./Quantity";
 
 const MyNewOrder = () => {
   return (

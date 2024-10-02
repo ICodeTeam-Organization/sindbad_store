@@ -1,5 +1,5 @@
 export interface StoreCardProps {
-  id: string;
+  id?: string;
   image: string;
   title: string;
   description: string;

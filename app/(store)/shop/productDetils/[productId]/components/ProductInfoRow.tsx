@@ -1,7 +1,6 @@
-import { ProductInfoRowProps } from '../types';
+// import { ProductInfoRowProps } from '../types';
 
-
-const ProductInfoRow = ({ label1, value1, label2, value2 } : ProductInfoRowProps) => {
+const ProductInfoRow = ({ label1, value1, label2, value2 }: any) => {
   return (
     <div className="grid grid-cols-2 text-sm text-gray-700">
       <div className="flex items-center">

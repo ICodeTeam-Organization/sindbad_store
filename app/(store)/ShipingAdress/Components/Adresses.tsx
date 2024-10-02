@@ -1,3 +1,4 @@
+import React from "react";
 import { GrTrash } from "react-icons/gr";
 
 const Adresses = () => {
@@ -20,7 +21,7 @@ const Adresses = () => {
 
       {/* fetch api from here */}
       {arr.map((itm) => (
-        <>
+        <React.Fragment key={itm}>
           <h1 className="text-right line-clamp-3 px-3 pt-3 col-span-2 max-md:text-xs max-md:line-clamp-4">
             بجانب مستشفى البرج بجانب مستشفى البرج بجانب مستشفى البرج بجانب
             مستشفى البرج بجانب مستشفى البرج بجانب مستشفى البرج بجانب مستشفى
@@ -47,7 +48,7 @@ const Adresses = () => {
               size={25}
             />
           </div>
-        </>
+        </React.Fragment>
       ))}
     </div>
   );

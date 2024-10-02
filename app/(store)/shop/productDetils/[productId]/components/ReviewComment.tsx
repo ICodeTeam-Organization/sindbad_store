@@ -1,10 +1,15 @@
 import React from "react";
-import { ReviewProps } from '../types';
+// import { ReviewProps } from "../types";
 import Image from "next/image";
 import { AiFillStar } from "react-icons/ai";
 
-const ReviewComment: React.FC<ReviewProps> = ({ reviewer, date, rating, comment, customerImage }) => {
-  
+const ReviewComment = ({
+  reviewer,
+  date,
+  rating,
+  comment,
+  customerImage,
+}: any) => {
   const renderStars = () => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -36,7 +41,7 @@ const ReviewComment: React.FC<ReviewProps> = ({ reviewer, date, rating, comment,
           <div>
             <h4 className="font-semibold">{reviewer}</h4>
             <div className="flex items-center">
-              {renderStars()} 
+              {renderStars()}
               <span className="ml-1 text-sm text-yellow-500">{rating}</span>
             </div>
           </div>

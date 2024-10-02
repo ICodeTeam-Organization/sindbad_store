@@ -4,22 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { AddshipingadressSchema } from "@/app/auth/schema";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Form } from "@/components/ui/form";
 import {
   Dialog,
   DialogContent,
@@ -27,7 +12,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
+// import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Dropdown from "./Dropdown";
 import OrderDetails from "./OrderDetails";
@@ -69,9 +54,15 @@ const AddSpecialOrder = () => {
                 <div className="text-center w-1/3">
                   <p className="mb-3">نوع الطلب</p>
                   <div className="flex items-center justify-around">
-                    <Button className="px-7 h-7 bg-green-400 hover:bg-green-600 text-black">منتج</Button>
-                    <Button className="px-7 h-7 bg-green-400 hover:bg-green-600 text-black">خدمة</Button>
-                    <Button className="h-7 bg-green-400 hover:bg-green-600 text-black">رابط متجر</Button>
+                    <Button className="px-7 h-7 bg-green-400 hover:bg-green-600 text-black">
+                      منتج
+                    </Button>
+                    <Button className="px-7 h-7 bg-green-400 hover:bg-green-600 text-black">
+                      خدمة
+                    </Button>
+                    <Button className="h-7 bg-green-400 hover:bg-green-600 text-black">
+                      رابط متجر
+                    </Button>
                   </div>
                 </div>
                 <div>
@@ -85,11 +76,13 @@ const AddSpecialOrder = () => {
                   </div>
                 </div>
               </div>
-              <OrderDetails classname={"w-full"}/>
+              <OrderDetails classname={"w-full"} />
             </DialogHeader>
 
             <DialogFooter>
-              <Button className="bg-primary-background px-10" type="submit">حفظ الطلب</Button>
+              <Button className="bg-primary-background px-10" type="submit">
+                حفظ الطلب
+              </Button>
             </DialogFooter>
           </form>
         </Form>
