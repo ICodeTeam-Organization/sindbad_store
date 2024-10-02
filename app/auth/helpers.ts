@@ -38,7 +38,7 @@ export async function registerUser(formData: registerFormField) {
     }
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "فشلت عملية التسجيل حاول مجددا"
+      (error as any).response?.data?.message || "فشلت عملية التسجيل حاول مجددا"
     );
   }
 }

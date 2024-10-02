@@ -93,21 +93,18 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
       </div>
       <div className="lg:w-1/2">
         <ProductTitle description={product.description} rating={5} />
-
         <ProductInfoRow
           label1="التوفر"
           value1="In Stock"
           label2="رقم المنتج"
           value2={product.number}
         />
-
         <ProductInfoRow
           label1="الفئة"
           value1={product.categoryName}
           label2="الماركة"
           value2={product.brandName || "N/A"}
         />
-
         <PriceSection
           discountedPrice={`${product.priceAfterOffer} ر.س`}
           originalPrice={`${product.priceBeforOffer} ر.س`}
@@ -117,16 +114,14 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
               100
           )}
         />
-
         <hr className="my-4 border-gray-300" />
-
         <ProductInfoRow
           label1="الألوان"
           value1={
             <select className="border border-gray-300 rounded-md p-2">
               {product.attributesWithValues
-                .find((attr) => attr.attributeName === "Color")
-                ?.values.map((color, index) => (
+                .find((attr: any) => attr.attributeName === "Color")
+                ?.values.map((color: any, index: any) => (
                   <option key={index} value={color}>
                     {color}
                   </option>
@@ -137,8 +132,8 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
           value2={
             <select className="border border-gray-300 rounded-md p-2">
               {product.attributesWithValues
-                .find((attr) => attr.attributeName === "Size")
-                ?.values.map((size, index) => (
+                .find((attr: any) => attr.attributeName === "Size")
+                ?.values.map((size: any, index: any) => (
                   <option key={index} value={size}>
                     {size}
                   </option>
@@ -146,7 +141,6 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
             </select>
           }
         />
-
         <div className="flex items-center gap-4 mt-8">
           <div className="flex items-center gap-4">
             <button
@@ -172,8 +166,8 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
             <p>{loading ? "جارٍ إضافة المنتج..." : "اضف للسلة"}</p>
           </button>
         </div>
-
-        {message && <p className="text-red-500 mt-4">{message}</p>} {/* Changed color to red for error messages */}
+        {message && <p className="text-red-500 mt-4">{message}</p>}{" "}
+        {/* Changed color to red for error messages */}
       </div>
     </div>
   );

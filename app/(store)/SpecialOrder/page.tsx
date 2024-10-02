@@ -1,18 +1,18 @@
 "use client";
+import React from "react";
 import AddSpecialOrder from "./Components/AddSpecialOrder";
 import { Card, CardHeader } from "@/components/ui/card";
 import TabButton from "./Components/TabButton";
-import { useState } from "react";
 import MyNewOrders from "./Components/MyNewOrders";
 import OrdersWaitingForAcceptPrice from "./Components/OrdersWaitingForAcceptPrice";
 import PreviousOrder from "./Components/PreviousOrder";
 import BreadCrumb from "@/components/BreadCrumb";
 
-const page = () => {
-  const [MyNewOrder, setMyNewOrder] = useState<boolean>(true);
+const SpecialOrderPage = () => {
+  const [MyNewOrder, setMyNewOrder] = React.useState<boolean>(true);
   const [OrdersWaitingForAccept, setOrdersWaitingForAccept] =
-    useState<boolean>(false);
-  const [PreviousOrders, setPreviousOrders] = useState<boolean>(false);
+    React.useState<boolean>(false);
+  const [PreviousOrders, setPreviousOrders] = React.useState<boolean>(false);
   const handleChangeForm = () => {
     setMyNewOrder(true);
     setOrdersWaitingForAccept(false);
@@ -60,4 +60,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default SpecialOrderPage;

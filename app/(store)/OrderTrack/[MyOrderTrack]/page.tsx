@@ -85,9 +85,7 @@ const page = async ({ params }: OrderTrack) => {
             <Image src={doubletrue} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم تسليم طلبك</p>
-              <p className="text-xs text-gray-500 mt-0.5">
-              {data.approvedAt}
-              </p>
+              <p className="text-xs text-gray-500 mt-0.5">{data.approvedAt}</p>
             </div>
           </div>
           <div className="flex mt-4">
@@ -95,7 +93,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">وصول طلبك الى منطقة التوزيع</p>
               <p className="text-xs text-gray-500 mt-0.5">
-              {data.arrivedAtDistributionArea}
+                {data.arrivedAtDistributionArea}
               </p>
             </div>
           </div>
@@ -103,18 +101,14 @@ const page = async ({ params }: OrderTrack) => {
             <Image src={location} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم شحن طلبك</p>
-              <p className="text-xs text-gray-500 mt-0.5">
-              {data.deliveredAt}
-              </p>
+              <p className="text-xs text-gray-500 mt-0.5">{data.deliveredAt}</p>
             </div>
           </div>
           <div className="flex mt-4">
             <Image src={requestAvailable} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم توفير طلبك للشحن</p>
-              <p className="text-xs text-gray-500 mt-0.5">
-              {data.deliveredAt}
-              </p>
+              <p className="text-xs text-gray-500 mt-0.5">{data.deliveredAt}</p>
             </div>
           </div>
           <div className="flex mt-4">
@@ -131,7 +125,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">تم استلام طلبك</p>
               <p className="text-xs text-gray-500 mt-0.5">
-              {data.arrivedToCustomerAt}
+                {data.arrivedToCustomerAt}
               </p>
             </div>
           </div>

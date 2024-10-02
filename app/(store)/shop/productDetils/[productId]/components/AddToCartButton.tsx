@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-interface AddToCartButtonProps {
-  onClick: () => void;
-}
+// interface AddToCartButtonProps {
+//   onClick: () => void;
+// }
 
 const AddToCartButton = () => {
   return (
@@ -13,4 +13,3 @@ const AddToCartButton = () => {
 };
 
 export default AddToCartButton;
-

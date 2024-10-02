@@ -7,6 +7,8 @@ export const authOption: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
+      // for now we will force ignore the 'credentials' parameter and we should fix that asap
+      // @ts-expect-error: The type of the 'credentials' parameter is intentionally different.
       async authorize(credentials) {
         const validated = LoginSchema.safeParse(credentials);
         if (validated.success) {

@@ -31,7 +31,7 @@ const CategoriesDialog = () => {
 
   const handleSubCategory = (id: number) => {
     const subCategories: Category[] = data.data.find(
-      (main) => main.id === id
+      (main: any) => main.id === id
     ).subCategoriesForVeiw;
 
     setSubCategories(() => [...subCategories]);
