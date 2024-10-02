@@ -1,6 +1,6 @@
 export interface StoreCardProps {
-  id?: string;
-  image: string;
-  title: string;
-  description: string;
+  id: string;
+  name: string;
+  imagesUrl: string[];
+  description?: string;
 }
