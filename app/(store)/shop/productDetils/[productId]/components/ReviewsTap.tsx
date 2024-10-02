@@ -1,9 +1,10 @@
-"use client";
+'use client';
+
 import React, { useEffect, useState } from "react";
 import ReviewForm from "./ReviewForm";
 import ReviewComment from "./ReviewComment";
 import { ReviewProps } from "../types";
-import { getApi } from "@/lib/http"; // Ensure this function is correctly implemented
+import { getApi } from "@/lib/http";
 
 type ProductReviewsTapProps = {
   productId: string;
@@ -13,6 +14,8 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
   const [reviews, setReviews] = useState<ReviewProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [totalRating, setTotalRating] = useState<number>(0);
+  const [visibleReviewsCount, setVisibleReviewsCount] = useState<number>(3); // Initially show 3 reviews
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -34,19 +37,43 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
       }
     };
 
+    const fetchTotalRating = async () => {
+      try {
+        const response = await getApi<any>(
+          `CommentsAndRates/GetTotalRateOfProduct/productId?productId=${productId}`
+        );
+
+        if (response?.success) {
+          setTotalRating(response.data);
+        } else {
+          setError("Failed to fetch total rating");
+        }
+      } catch (err) {
+        console.error("Error fetching total rating:", err);
+        setError("An error occurred while fetching total rating.");
+      }
+    };
+
     if (productId) {
       fetchReviews();
+      fetchTotalRating();
     }
   }, [productId]);
 
+  const handleShowMore = () => {
+    setVisibleReviewsCount((prevCount) => prevCount + 3);
+  };
+
   if (loading) return <div>Loading reviews...</div>;
   if (error) return <div>{error}</div>;
+
+  const shouldShowMoreButton = visibleReviewsCount < reviews.length;
 
   return (
     <div className="grid grid-cols-3 gap-6" dir="rtl">
       <div className="bg-gray-50 border border-gray-300 rounded-md p-4">
         <div className="text-center mb-4">
-          <div className="text-3xl font-bold">4.5 من 5</div>
+          <div className="text-3xl font-bold">{totalRating} من 5</div>
           <p className="text-gray-500">{reviews.length} تقييم على المنتج</p>
         </div>
         <ReviewForm productId={Number(productId)} />
@@ -64,21 +91,34 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
           </div>
         </div>
 
-        {reviews.map((review, index) => (
-          <ReviewComment
-            key={index}
-            reviewer={review.customerName}
-            date={new Date(review.reviewDate).toLocaleDateString()}
-            rating={`⭐`.repeat(review.numOfRate)}
-            comment={review.reviewText}
-          />
-        ))}
+        {reviews.length === 0 ? (
+          <div className="text-center text-gray-500">
+            لا توجد تعليقات
+          </div>
+        ) : (
+          <>
+            {reviews.slice(0, visibleReviewsCount).map((review, index) => (
+              <ReviewComment
+                key={index}
+                reviewer={review.customerName}
+                date={new Date(review.reviewDate).toLocaleDateString()}
+                rating={`⭐`.repeat(review.numOfRate)}
+                comment={review.reviewText}
+              />
+            ))}
 
-        <div className="flex justify-center mt-4">
-          <button className="bg-orange-500 text-white px-4 py-2 rounded-md">
-            عرض المزيد
-          </button>
-        </div>
+            {shouldShowMoreButton && (
+              <div className="flex justify-center mt-4">
+                <button
+                  className="bg-orange-500 text-white px-4 py-2 rounded-md"
+                  onClick={handleShowMore}
+                >
+                  عرض المزيد
+                </button>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
