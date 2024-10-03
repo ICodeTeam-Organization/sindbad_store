@@ -13,6 +13,7 @@ import Progresses from "../components/Progresses";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import BreadCrumb from "@/components/BreadCrumb";
+import React from "react";
 
 interface OrderTrack {
   params: { MyOrderTrack: string };
@@ -23,7 +24,6 @@ const page = async ({ params }: OrderTrack) => {
   );
   if (!OrderTrack) return notFound();
   const data = OrderTrack.data;
-  console.log(params.MyOrderTrack);
   return (
     <>
       <BreadCrumb
@@ -33,11 +33,10 @@ const page = async ({ params }: OrderTrack) => {
         ThirdDir=""
       />
       <div className="m-auto border-2 w-10/12 p-4 my-6 rounded-sm">
-
-      {/* Order info */}
+        {/* Order info */}
         <div className="bg-yellow-50 border-yellow-100 border-2 flex justify-between items-center m-auto p-4">
           <div>
-            <h1 className="font-bold">#{data.id}</h1>
+            <h1 className="font-bold">#{data.orderNumber}</h1>
             <div className="flex justify-end text-gray-500 text-center">
               <p>
                 منتجات <span>{data.numOfOrderDetails}</span>
@@ -57,7 +56,7 @@ const page = async ({ params }: OrderTrack) => {
           <h1>Order expected arrival 23 Jan, 2021</h1>
           <Progresses progress={data.orderStatus} />
 
-        {/* Progress details */}
+          {/* Progress details */}
           <div className="grid grid-cols-4 justify-items-center mt-3">
             <div className="m-auto grid justify-items-center">
               <Image src={Notebook} alt="Notebook" />
@@ -76,14 +75,10 @@ const page = async ({ params }: OrderTrack) => {
               <h1>تم تسليمه</h1>
             </div>
           </div>
-
-
-
         </div>
 
-
         <hr />
-       {/* مراحل طلبك  */}
+        {/* مراحل طلبك  */}
         <div className="py-4">
           <h1 className="text-xl">مراحل تنفيذ طلبك</h1>
           <div className="flex mt-4">
@@ -141,10 +136,6 @@ const page = async ({ params }: OrderTrack) => {
             </div>
           </div>
         </div>
-
-
-
-
       </div>
     </>
   );

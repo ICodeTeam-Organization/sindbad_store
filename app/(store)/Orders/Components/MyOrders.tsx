@@ -26,7 +26,7 @@ const MyOrders = async () => {
           className="grid grid-cols-5 text-center items-center font-bold w-full"
         >
           <h1 className="text-center line-clamp-3 px-3 max-md:text-[10px] max-md:line-clamp-4 mt-9">
-            <Link href={"/Orderdetail"}>{itm.orderNumber}</Link>
+            <Link href={`/Orderdetail/${itm.id}`}>{itm.orderNumber}</Link>
           </h1>
           <h1 className="m-auto text-gray-500 px-3 line-clamp-3 text-right max-md:text-xs max-md:line-clamp-4 mt-9">
             {itm.totalPrice}
