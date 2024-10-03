@@ -1,8 +1,8 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
-import ReviewForm from './ReviewForm';
-import ReviewComment from './ReviewComment';
-import { ReviewProps } from '../types';
+import ReviewForm from "./ReviewForm";
+import ReviewComment from "./ReviewComment";
+import { ReviewProps } from "../types";
 import { getApi } from "@/lib/http"; // Ensure this function is correctly implemented
 
 type ProductReviewsTapProps = {
@@ -24,11 +24,11 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
         if (response?.success) {
           setReviews(response.data);
         } else {
-          setError('Failed to fetch reviews');
+          setError("Failed to fetch reviews");
         }
       } catch (err) {
         console.error("Error fetching reviews:", err);
-        setError('An error occurred while fetching reviews.');
+        setError("An error occurred while fetching reviews.");
       } finally {
         setLoading(false);
       }

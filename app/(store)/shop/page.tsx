@@ -7,7 +7,7 @@ import { getApi } from "@/lib/http";
 import { console } from "inspector";
 
 const ProductPage = async () => {
-  let products = await getApi<any>(
+  const products = await getApi<any>(
     `products/HomePage/GetProductsOfOurStore/${20}`
   );
 

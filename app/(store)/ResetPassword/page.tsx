@@ -1,5 +1,6 @@
 import BreadCrumb from "@/components/BreadCrumb";
 import PasswordValidation from "./components/PasswordValidation";
+import React from "react";
 
 const resetPass = () => {
   return (

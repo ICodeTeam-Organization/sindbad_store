@@ -24,6 +24,7 @@ const page = async ({ params }: OrderTrack) => {
   );
   if (!OrderTrack) return notFound();
   const data = OrderTrack.data;
+
   return (
     <>
       <BreadCrumb
@@ -77,6 +78,8 @@ const page = async ({ params }: OrderTrack) => {
           </div>
         </div>
 
+        <br />
+
         <hr />
         {/* مراحل طلبك  */}
         <div className="py-4">
@@ -85,9 +88,7 @@ const page = async ({ params }: OrderTrack) => {
             <Image src={doubletrue} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم تسليم طلبك</p>
-              <p className="text-xs text-gray-500 mt-0.5">
-                23 Jan, 2021 at 7:32 PM
-              </p>
+              <p className="text-xs text-gray-500 mt-0.5">{data.approvedAt}</p>
             </div>
           </div>
           <div className="flex mt-4">
@@ -95,7 +96,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">وصول طلبك الى منطقة التوزيع</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                23 Jan, 2021 at 2:00 PM
+                {data.arrivedAtDistributionArea}
               </p>
             </div>
           </div>
@@ -103,18 +104,14 @@ const page = async ({ params }: OrderTrack) => {
             <Image src={location} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم شحن طلبك</p>
-              <p className="text-xs text-gray-500 mt-0.5">
-                22 Jan, 2021 at 8:00 AM
-              </p>
+              <p className="text-xs text-gray-500 mt-0.5">{data.deliveredAt}</p>
             </div>
           </div>
           <div className="flex mt-4">
             <Image src={requestAvailable} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم توفير طلبك للشحن</p>
-              <p className="text-xs text-gray-500 mt-0.5">
-                21, 2021 at 5:32 AM
-              </p>
+              <p className="text-xs text-gray-500 mt-0.5">{data.deliveredAt}</p>
             </div>
           </div>
           <div className="flex mt-4">
@@ -122,7 +119,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">تم تأكيد سند الاستلام</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                20 Jan, 2021 at 7:32 PM
+                {data.bondConfirmedAt}
               </p>
             </div>
           </div>
@@ -131,7 +128,7 @@ const page = async ({ params }: OrderTrack) => {
             <div className="mr-4">
               <p className="text-lg">تم استلام طلبك</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                19 Jan, 2021 at 2:61 PM
+                {data.arrivedToCustomerAt}
               </p>
             </div>
           </div>
