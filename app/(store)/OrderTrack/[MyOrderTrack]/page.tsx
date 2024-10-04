@@ -14,6 +14,7 @@ import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import BreadCrumb from "@/components/BreadCrumb";
 import React from "react";
+
 interface OrderTrack {
   params: { MyOrderTrack: string };
 }
@@ -23,7 +24,6 @@ const page = async ({ params }: OrderTrack) => {
   );
   if (!OrderTrack) return notFound();
   const data = OrderTrack.data;
-  console.log(OrderTrack);
 
   return (
     <>
@@ -37,7 +37,7 @@ const page = async ({ params }: OrderTrack) => {
         {/* Order info */}
         <div className="bg-yellow-50 border-yellow-100 border-2 flex justify-between items-center m-auto p-4">
           <div>
-            <h1 className="font-bold">#{data.id}</h1>
+            <h1 className="font-bold">#{data.orderNumber}</h1>
             <div className="flex justify-end text-gray-500 text-center">
               <p>
                 منتجات <span>{data.numOfOrderDetails}</span>
@@ -77,7 +77,9 @@ const page = async ({ params }: OrderTrack) => {
             </div>
           </div>
         </div>
+
         <br />
+
         <hr />
         {/* مراحل طلبك  */}
         <div className="py-4">

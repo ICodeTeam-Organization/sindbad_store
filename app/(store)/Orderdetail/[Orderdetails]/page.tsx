@@ -6,11 +6,13 @@ import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 
 interface Detail {
-  params: { MyOrderdetail: string };
+  params: { Orderdetails: string };
 }
 const OrderDetail = async ({ params }: Detail) => {
   const OrderDetails = await getApi<any>(
-    `Orders/Market/OrdersPage/GetOrderDetailsForViewInOrderDetailsPage?orderId=${params.MyOrderdetail}`
+    `Orders/Market/OrdersPage/GetOrderDetailsForViewInOrderDetailsPage`,{
+      orderId:params.Orderdetails
+    }
   );
   if (!OrderDetails) return notFound();
   const data = OrderDetails.data;
@@ -38,6 +40,7 @@ const OrderDetail = async ({ params }: Detail) => {
               <p className="pr-3 font-bold text-gray-700">{data.orderStatus}</p>
             </div>
           </div>
+
           <Orderdetails detail={data.orderDetails} />
         </div>
       </div>
