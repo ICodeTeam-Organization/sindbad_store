@@ -2,6 +2,7 @@ import Cards from "./components/Cards";
 import Ads from "./components/sections/Ads";
 import AllStores from "./components/sections/AllStores";
 import BeastSeller from "./components/sections/BeastSeller";
+import Categories from "./components/sections/Categories";
 import Feature from "./components/sections/Feature";
 import Hero from "./components/sections/Hero";
 import RecentlyAdded from "./components/sections/RecentlyAdded";
@@ -13,7 +14,7 @@ export default function Home() {
     <section className="w-full">
       <Hero />
       <Cards />
-      {/* <Categories /> */}
+      <Categories />
       <TodayOffers />
       <ShoppingNow />
       <AllStores />
