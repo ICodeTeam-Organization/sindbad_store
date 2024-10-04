@@ -10,7 +10,9 @@ interface Detail {
 }
 const OrderDetail = async ({ params }: Detail) => {
   const OrderDetails = await getApi<any>(
-    `Orders/Market/OrdersPage/GetOrderDetailsForViewInOrderDetailsPage?orderId=${params.Orderdetails}`
+    `Orders/Market/OrdersPage/GetOrderDetailsForViewInOrderDetailsPage`,{
+      orderId:params.Orderdetails
+    }
   );
   if (!OrderDetails) return notFound();
   const data = OrderDetails.data;

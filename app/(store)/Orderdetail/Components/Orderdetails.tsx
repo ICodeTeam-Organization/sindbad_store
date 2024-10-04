@@ -4,13 +4,13 @@ import React from "react";
 import { number, string } from "zod";
 
 type Detail = {
-  detail: Array<{
+  detail: {
     productId: number;
     productName: string;
     price: number;
     quantity: number;
     imageUrl: string;
-  }>;
+  }[];
 };
 
 const Orderdetails = ({ detail }: Detail) => {
@@ -41,7 +41,6 @@ const Orderdetails = ({ detail }: Detail) => {
               <Image
                 src={details.imageUrl}
                 alt={details.productName}
-                className=""
                 width={50}
                 height={0}
               />
