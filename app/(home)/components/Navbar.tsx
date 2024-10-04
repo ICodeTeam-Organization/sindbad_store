@@ -11,7 +11,10 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import { GoPerson } from "react-icons/go";
+import SignOutButton from "./SignOutButton";
+import { useSession } from "next-auth/react";
 const Navbar = () => {
+  const session = useSession();
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -45,15 +48,12 @@ const Navbar = () => {
               إضافة عنوان جديد
             </Label>
           </Link>
-          <Link className="mt-2 absolute bottom-8" href={"#"}>
-            <Label
-              htmlFor="username"
-              className="text-right text-2xl cursor-pointer text-red-500"
-            >
-              تسجيل الخروج
-            </Label>
-          </Link>
         </div>
+        {session.status === "authenticated" && (
+          <div className="absolute bottom-8">
+            <SignOutButton />
+          </div>
+        )}
         <SheetFooter>
           <SheetClose asChild>
             {/* <Button type="submit">Save changes</Button> */}

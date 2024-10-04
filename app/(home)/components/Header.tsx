@@ -1,21 +1,27 @@
 "use client";
-
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { BiSearch } from "react-icons/bi";
 import Navbar from "./Navbar";
-import { GoPerson } from "react-icons/go";
-import { FaAngleDown } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import PersonButton from "./PersonButton";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
+import React from "react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import useSignOut from "@/hooks/useSignOut";
+
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
-
   const { data: session, status } = useSession();
-
+  const mutation = useSignOut();
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -24,7 +30,7 @@ const Header = () => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [status]);
+  }, []);
   return (
     <div
       className={cn(
@@ -59,28 +65,39 @@ const Header = () => {
 
         <div className=" ml-2 md:-ml-0 md:mr-5 xl:mr-8 flex items-center justify-end md:justify-normal w-full md:w-fit">
           <div className="flex">
-            <Link
-              href={"/auth/"}
-              className="flex justify-between items-center hover:cursor-pointer"
-            >
-              <div className=" p-3 ml-3 bg-neutral-100 rounded-full">
-                <GoPerson className="text-[18px] md:text-[25px]" />
-              </div>
-              <div className="flex items-end ">
-                <div className="md:ml-2 sm:ml-1  text-xs sm:text-sm md:text-md">
-                  {status === "loading" ? (
-                    <Loader2 className="animate-spin" />
-                  ) : status === "authenticated" ? (
-                    <p className="text-gray-500 hidden lg:block ">
-                      {session.user.data.fullName}مرحبا بك
-                    </p>
-                  ) : (
-                    <h3 className="text-xs md:text-sm">تسجيل الدخول</h3>
-                  )}
-                </div>
-                <FaAngleDown size={15} />
-              </div>
-            </Link>
+            {status === "loading" ? (
+              <Loader2 className="animate-spin" />
+            ) : status === "authenticated" ? (
+              <Popover>
+                <PopoverTrigger>
+                  <PersonButton status={status} session={session} />
+                </PopoverTrigger>
+                <PopoverContent className="flex flex-col md:flex-row justify-evenly">
+                  <Button
+                    onClick={() => mutation.mutate()}
+                    variant={"outline"}
+                    disabled={mutation.isPending}
+                  >
+                    {mutation.isPending ? (
+                      <Loader2 className="animate-spin" />
+                    ) : (
+                      "تسجيل الخروج"
+                    )}
+                  </Button>
+                  <Link
+                    className="text-base btn border border-gray-200 rounded text-center w-20 p-2  mr-3 hover:bg-slate-200 transition-colors"
+                    href="/Orders"
+                  >
+                    طلباتي
+                  </Link>
+                </PopoverContent>
+              </Popover>
+            ) : (
+              <Link className="" href={"/auth"}>
+                <PersonButton status={status} session={session} />
+              </Link>
+            )}
+
             <Link href={"/shopping-card/"}>
               <div className="relative p-3 mr-3 md:mr-5 w-fit bg-neutral-100 rounded-full hover:cursor-pointer ">
                 <MdOutlineLocalGroceryStore className="text-[18px] md:text-[25px]" />
