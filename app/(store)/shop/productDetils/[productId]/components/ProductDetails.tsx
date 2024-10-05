@@ -31,7 +31,9 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
       const response = await getApi<any>(
         `ProductsProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`
       );
+      console.log('Fetched Response:', response); // Log the full response object
       if (response?.success && response?.data) {
+        console.log('Product Data:', response.data); // Log the actual product data
         setProduct(response.data);
       } else {
         notFound();
@@ -41,6 +43,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
       notFound();
     }
   };
+  
 
   const handleIncrement = () => setQuantity(quantity + 1);
   const handleDecrement = () => {
@@ -54,7 +57,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-12 px-12">
       <div className="lg:w-1/3 ml-8">
-        <ImageGallery image={`/${product.mainImageUrl}`} />
+        <ImageGallery image={`${product.mainImageUrl}`} />
       </div>
       <div className="lg:w-1/2">
         <ProductTitle description={product.description} rating={5} />

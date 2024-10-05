@@ -15,7 +15,6 @@ import { ProductCardProps } from '../types';
 const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
   const { toast } = useToast();
 
-  // Mutation for adding product to favorites
   const mutation = useMutation({
     mutationFn: async () => {
       const res = await axios.post(
@@ -25,7 +24,7 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
           headers: {
             'Accept-Language': 'ar',
             'Content-Type': 'application/json',
-            Authorization: `Bearer YOUR_TOKEN_HERE`, // Replace with actual token if needed
+            Authorization: `Bearer YOUR_TOKEN_HERE`,
           },
         }
       );
@@ -56,7 +55,6 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
 
   return (
     <div className="border rounded-lg shadow-sm relative max-w-[230px] mx-auto text-center cursor-pointer">
-      {/* Only the image and title are wrapped in an anchor tag to allow navigation */}
       <a href={`/shop/productDetils/${product.id}`}>
         <Image
           src={product?.mainImageUrl || productImg}
@@ -86,7 +84,6 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
           )}
         </div>
 
-        {/* Buttons for Add to Cart and Add to Favorites */}
         <div className="flex flex-col md:flex-row justify-between items-center mt-6">
           <button className="min-w-[160px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center mb-2 md:mb-0">
             <LiaShoppingCartSolid className="w-4 h-4 mr-2" />
@@ -95,8 +92,8 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
           <button
             className="min-w-[40px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center"
             onClick={(e) => {
-              e.stopPropagation(); // Prevent the click from bubbling up
-              mutation.mutate(); // Trigger the mutation
+              e.stopPropagation(); 
+              mutation.mutate();
             }}
             disabled={isLoading}
           >

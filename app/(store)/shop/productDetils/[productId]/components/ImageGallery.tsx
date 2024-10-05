@@ -17,10 +17,10 @@ const ImageGallery = ({ image }: { image: any }) => {
     <div className="flex flex-col">
       <Image
         src={image}
-        width={100}
-        height={80}
+        width={400}
+        height={50}
         alt="Product"
-        className="w-full h-[450px] object-cover border-1 border-gray-400 px-8"
+        className=" object-cover border-1 border-gray-400 px-8"
       />
       {/* <div className="flex gap-2 mt-4 justify-center">
         {productImages.map((img, index:number) => (
