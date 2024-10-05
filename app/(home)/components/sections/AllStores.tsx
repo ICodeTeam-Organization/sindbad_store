@@ -18,7 +18,6 @@ const AllStores = async () => {
   );
   if (!Allstores) return notFound();
 
-  console.log("🚀 ~ AllStores ~ Allstores:", Allstores);
   return (
     <div className="bg-[#F8F8F8] w-full max-md:h-[270px] h-[331px]">
       <div className="container  max-sm:px-4 md:px-8 lg:px-16 xl:px-32 pt-10">

@@ -12,6 +12,7 @@ import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import React from "react";
 const TodayOffers = async () => {
   const Offersproducts = await getApi<any>(
     "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/1"

@@ -2,6 +2,7 @@ import SectionTitle from "../SectionTitle";
 import ProductCard from "../ProductCard";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
+import React from "react";
 const ShoppingNow = async () => {
   const products = await getApi<any>(
     // change the url later
