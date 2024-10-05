@@ -3,17 +3,23 @@ import Image from "next/image";
 import { StoreCardProps } from "../typest";
 import { IoMdHeartEmpty } from "react-icons/io";
 
-const StoreCard = ({ image, title, description }: StoreCardProps) => {
+const StoreCard = ({ id, name, imagesUrl }: StoreCardProps) => {
+  const storeImage = imagesUrl.length > 0 ? imagesUrl[0] : '/path/to/placeholder/image.jpg';
+
   return (
-    <a href={`/stores/storeDetails/3`} className="border rounded-lg shadow-sm relative w-full max-w-[380px] mx-auto text-center">
+    <a
+      href={`/stores/storeDetails/${id}`}
+      className="border rounded-lg shadow-sm relative w-full max-w-[380px] mx-auto text-center"
+    >
       <Image
-        src={image}
-        alt={title}
+        src={storeImage}
+        alt={name}
         className="w-full h-[250px] object-cover rounded-lg"
+        width={380}
+        height={250}
       />
       <div className="m-4">
-        <h2 className="font-bold mt-2 text-center">{title}</h2>
-        <p className="text-gray-extr-light mt-2">{description}</p>
+        <h2 className="font-bold mt-2 text-center">{name}</h2>
         <div className="flex flex-wrap justify-evenly items-center w-full mt-6 px-4">
           <button className="flex-1 min-w-[70px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
             المتجر
@@ -21,11 +27,11 @@ const StoreCard = ({ image, title, description }: StoreCardProps) => {
           <button className="flex-1 min-w-[70px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
             الصور
           </button>
-          <button className="flex-1 min-w-[70px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
+          <button className="flex-1 min-w-[80px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
             متجر المحل
           </button>
           <button className="flex-1 min-w-[40px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-            <IoMdHeartEmpty className="w-4 h-4 " />
+            <IoMdHeartEmpty className="w-4 h-4" />
           </button>
         </div>
       </div>
