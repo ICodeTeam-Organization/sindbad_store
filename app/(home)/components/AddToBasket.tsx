@@ -9,6 +9,7 @@ import { ToastAction } from "@radix-ui/react-toast";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
+import React from "react";
 
 type Props = {
   id: string;
@@ -19,7 +20,7 @@ const AddToBasket = ({ id }: Props) => {
   const { toast } = useToast();
   const mutation = useMutation({
     mutationFn: async () => {
-      const res = await axios.post(
+      await axios.post(
         "https://icode-sendbad-store.runasp.net/AddProductToCart?productId=" +
           id,
         {
@@ -33,8 +34,6 @@ const AddToBasket = ({ id }: Props) => {
           },
         }
       );
-
-      console.log(res);
     },
     onSuccess: () => {
       toast({

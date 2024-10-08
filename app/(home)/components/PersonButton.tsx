@@ -18,7 +18,7 @@ const PersonButton = ({ session, status }: Props) => {
         <div className="md:ml-2 sm:ml-1  text-xs sm:text-sm md:text-md">
           {status === "authenticated" ? (
             <p className="text-gray-500 hidden lg:block ">
-              {session?.user.data.fullName}مرحبا بك
+              {session?.user.data.fullName}
             </p>
           ) : (
             <h3 className="text-xs md:text-sm">تسجيل الدخول</h3>
