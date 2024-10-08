@@ -7,21 +7,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getApi } from "@/lib/http";
 
-type shipping = {
-  id: number;
-  address: string;
+type AddressType = {
+  addressName: string;
 };
 
-const SelectShppingAdress = () => {
-  const banks: shipping[] = [
-    { id: 1, address: "الراجحي" },
-    { id: 2, address: "القرشي" },
-    { id: 3, address: "بنك الكويت" },
-    { id: 4, address: "بنك جيزان" },
-    { id: 5, address: "بنك عسفان" },
-    { id: 6, address: "STS" },
-  ];
+const SelectShppingAdress = async () => {
+  const addresses = await getApi<any>(
+    "Cart/GetCustomnerAddressesForViewInCartPage"
+  );
 
   return (
     <div className="w-72 ml-10 ">
@@ -32,11 +27,18 @@ const SelectShppingAdress = () => {
         <SelectContent>
           <SelectGroup>
             <SelectLabel>عنوان الشحن</SelectLabel>
-            {banks.map((bank) => (
-              <SelectItem key={bank.id} value={bank.address}>
-                {bank.address}
-              </SelectItem>
-            ))}
+            {addresses ? (
+              addresses.data.map((address: AddressType) => (
+                <SelectItem
+                  key={address.addressName}
+                  value={address.addressName}
+                >
+                  {address.addressName}
+                </SelectItem>
+              ))
+            ) : (
+              <SelectItem value="">لا يتوفر اي عنوان شحن</SelectItem>
+            )}
           </SelectGroup>
         </SelectContent>
       </Select>
