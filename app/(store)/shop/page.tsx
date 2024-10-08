@@ -11,7 +11,6 @@ const ProductPage = async () => {
     `products/HomePage/GetProductsOfOurStore/${20}`
   );
 
-  // console.log('ProductPage');
   // console.log(products);
 
   return (

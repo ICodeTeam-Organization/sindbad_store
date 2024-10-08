@@ -45,9 +45,10 @@ const ShopProductsGrid = ({ allProducts }: any) => {
   return (
     <div className="mb-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {allProducts?.data?.length > 0 ? (
-        allProducts.data.map((product: any, index: number) => (
-          <ShopProductsCard key={index} product={product} />
-        ))
+        allProducts.data.map((product: any, index: number) => {
+          console.log(product);
+          return <ShopProductsCard key={index} product={product} />
+})
       ) : (
         <p className="text-center text-xl font-bold py-12">
           لايتوفر أي منتج في الوقت الحالي

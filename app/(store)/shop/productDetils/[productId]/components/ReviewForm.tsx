@@ -1,46 +1,74 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
 import { ReviewFormProps } from "../types";
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const [reviewText, setReviewText] = useState("");
   const [rate, setRate] = useState(3);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const response = await axios.post(
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const res = await axios.post(
         "https://icode-sendbad-store.runasp.net/api/CommentsAndRates/AddReviewToProduct",
         {
           productId: productId,
           rate: rate,
           reviewText: reviewText,
+        },
+        {
+          headers: {
+            "Accept-Language": "ar",
+            "Content-Type": "application/json",
+          },
         }
       );
-
-      console.log("Review added successfully", response.data);
+      return res;
+    },
+    onSuccess: () => {
       setReviewText("");
-      setRate(5);
-      alert("تم نشر تعليقك بنجاح!");
-    } catch (error: any) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        setError(error.response.data.message);
-      } else {
-        setError("حدث خطأ أثناء إضافة تعليقك. حاول مرة أخرى.");
-      }
-      console.error("Failed to add review", error);
-    } finally {
-      setLoading(false);
+      setRate(3);
+      setValidationError(null);
+
+      toast({
+        variant: "default",
+        description: "تم نشر تعليقك بنجاح!",
+        style: {
+          backgroundColor: "green",
+        },
+      });
+    },
+    onError: (error: any) => {
+      const errorMessage = error?.response?.data?.message || "حدث خطأ أثناء إضافة تعليقك. حاول مرة أخرى.";
+      
+      toast({
+        variant: "destructive",
+        description: errorMessage,
+        action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+      });
+    },
+  });
+
+  const { isLoading } = mutation;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (reviewText.trim() === "") {
+      setValidationError("يرجى إضافة تعليق قبل النشر.");
+      return;
     }
+
+    if (rate < 1 || rate > 5) {
+      setValidationError("يرجى اختيار تقييم بين 1 و 5.");
+      return;
+    }
+    setValidationError(null);
+    mutation.mutate();
   };
 
   return (
@@ -69,15 +97,16 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
           <option value={5}>⭐⭐⭐⭐⭐</option>
         </select>
       </div>
+
+      {validationError && <p className="text-red-500 text-sm">{validationError}</p>}
+
       <button
         className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600"
         type="submit"
-        disabled={loading}
+        disabled={isLoading}
       >
-        {loading ? "جارٍ نشر تعليقك..." : "نشر تعليقك"}
+        {isLoading ? "جارٍ نشر تعليقك..." : "نشر تعليقك"}
       </button>
-
-      {error && <p className="text-red-500 text-sm">{error}</p>}
     </form>
   );
 };

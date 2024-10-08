@@ -5,8 +5,11 @@ import Image from "next/image";
 
 const Hero = () => {
   return (
-    <div className="container mx-auto">
-      <Header />
+    <div>
+      <div className="container mx-auto">
+        <Header />
+      </div>
+
       <div className="relative -z-50">
         <Image
           src={"images/HeadBackground.svg"}
@@ -17,6 +20,7 @@ const Hero = () => {
         />
       </div>
     </div>
+
   );
 };
 

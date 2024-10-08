@@ -1,4 +1,3 @@
-// app/store/shop/productDetails/[productId]/page.tsx
 
 import React from 'react';
 import ProductDetails from './components/ProductDetails';
@@ -11,12 +10,11 @@ type ProductPageProps = {
 };
 
 const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
-  const { productId } = params; // Extract productId from params
-
+  const { productId } = params;
   return (
     <>
       <ProductDetails params={params} />
-      <TabsComponent productId={productId} /> {/* Pass productId as prop */}
+      <TabsComponent productId={productId} />
     </>
   );
 };
