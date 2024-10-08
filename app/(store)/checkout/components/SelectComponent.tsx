@@ -7,27 +7,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CheckoutType } from "@/types/checkout";
+import { getApi } from "@/lib/http";
+import { Bank, CheckoutType } from "@/types/checkout";
+import { useQuery } from "@tanstack/react-query";
 import { UseFormRegister } from "react-hook-form";
-
-type Banks = {
-  id: number;
-  name: string;
-};
 
 type SelectComponentProps = {
   register: UseFormRegister<CheckoutType>;
 };
 
 const SelectComponent: React.FC<SelectComponentProps> = ({ register }) => {
-  const banks: Banks[] = [
-    { id: 1, name: "الراجحي" },
-    { id: 2, name: "القرشي" },
-    { id: 3, name: "بنك الكويت" },
-    { id: 4, name: "بنك جيزان" },
-    { id: 5, name: "بنك عسفان" },
-    { id: 6, name: "STS" },
-  ];
+  const { data: banks, error } = useQuery<any>({
+    queryKey: ["banks"],
+    queryFn: async () => await getApi("Cart/GetAllBanksForViewInCartPage"),
+  });
 
   return (
     <div>
@@ -37,10 +30,18 @@ const SelectComponent: React.FC<SelectComponentProps> = ({ register }) => {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>أختر المصرف أو البنك</SelectLabel>
-            {banks.map((bank) => (
-              <SelectItem key={bank.id} {...register("bank")} value={bank.name}>
-                {bank.name}
+            <SelectLabel>
+              {error
+                ? "حدث خطأ اثناء جلب الينوك المتاحة للدفع"
+                : "أختر المصرف أو البنك"}
+            </SelectLabel>
+            {banks?.data?.map((bank: Bank) => (
+              <SelectItem
+                key={bank.id}
+                value={bank.id.toString()}
+                {...register("bank", { valueAsNumber: true })}
+              >
+                {bank.bankName}
               </SelectItem>
             ))}
           </SelectGroup>

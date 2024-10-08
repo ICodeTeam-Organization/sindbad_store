@@ -13,6 +13,12 @@ import { checkoutSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { CheckoutType } from "@/types/checkout";
+import { useMutation } from "@tanstack/react-query";
+import { postApi } from "@/lib/http";
+import { Loader2 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
+//import { useRouter } from "next/navigation";
 
 const CheckoutForm = () => {
   const {
@@ -23,8 +29,39 @@ const CheckoutForm = () => {
     resolver: zodResolver(checkoutSchema),
   });
 
+  const { toast } = useToast();
+  //  const router = useRouter();
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["upload-bound"],
+    mutationFn: (data: CheckoutType) =>
+      postApi("Orders/CompleteCustomerPurchase", {
+        body: {
+          bankId: 2,
+          note: data.note,
+          bondNumber: data.number,
+          bondDate: data.date,
+          boundType: 1,
+          bondImageUrl: data.image.name,
+          isUrgenOrder: true,
+        },
+        isPage: false,
+      }),
+    onError: (err) => {
+      console.log(err);
+      toast({
+        variant: "destructive",
+        description: err.message,
+        action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+      });
+    },
+    onSuccess: (res) => {
+      console.log(res);
+      //router.push("/checkout-success")
+    },
+  });
+
   const onsubmit: SubmitHandler<CheckoutType> = (data) => {
-    console.log(data);
+    mutate(data);
   };
 
   return (
@@ -32,7 +69,7 @@ const CheckoutForm = () => {
       <CardHeader>
         <h1 className="font-bold text-xl text-center">أجراءات الدفع</h1>
       </CardHeader>
-      <form onSubmit={handleSubmit(onsubmit)}>
+      <form onSubmit={handleSubmit(onsubmit)} encType="multipart/form-data">
         <CardContent className="space-y-4">
           <div className="space-y-2">
             <Label className={`font-bold text-lg `} htmlFor="name">
@@ -60,6 +97,7 @@ const CheckoutForm = () => {
               </span>
             )}
           </div>
+
           <div className="space-y-2">
             <Label className={`font-bold text-lg `} htmlFor="name">
               تاريخ السند <span className="mr-2 text-red-400">*</span>
@@ -86,10 +124,28 @@ const CheckoutForm = () => {
               </span>
             )}
           </div>
+          <div className="space-y-2">
+            <Label className={`font-bold text-lg `} htmlFor="name">
+              ملاحظة<span className="mr-2 text-red-400">*</span>
+            </Label>
+            <Input
+              type="text"
+              placeholder="اكتب ملاحظة"
+              {...register("note")}
+            />
+            {errors.note?.message && (
+              <span className="text-sm text-red-500 ">
+                {errors.note?.message}
+              </span>
+            )}
+          </div>
         </CardContent>
         <CardFooter>
-          <Button className="w-full hover:bg-orange-600 bg-primary-background transition-colors">
-            رفع السند
+          <Button
+            disabled={isPending}
+            className="w-full hover:bg-orange-600 bg-primary-background transition-colors"
+          >
+            {isPending ? <Loader2 className="animate-spin" /> : "رفع السند"}
           </Button>
         </CardFooter>
       </form>
