@@ -1,9 +1,9 @@
-import React from 'react';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
-import { useToast } from '@/hooks/use-toast';
-import { ToastAction } from '@radix-ui/react-toast';
-import { Loader2 } from 'lucide-react';
+import React from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
+import { Loader2 } from "lucide-react";
 
 type AddToBasketProps = {
   productId: string;
@@ -20,8 +20,8 @@ const AddToBasket = ({ productId, quantity }: AddToBasketProps) => {
         { quantity },
         {
           headers: {
-            'Accept-Language': 'ar',
-            'Content-Type': 'application/json',
+            "Accept-Language": "ar",
+            "Content-Type": "application/json",
           },
         }
       );
@@ -29,31 +29,31 @@ const AddToBasket = ({ productId, quantity }: AddToBasketProps) => {
     },
     onSuccess: () => {
       toast({
-        variant: 'default',
-        description: 'تمت الاضافة الى السلة بنجاح',
+        variant: "default",
+        description: "تمت الاضافة الى السلة بنجاح",
         style: {
-          backgroundColor: 'green',
+          backgroundColor: "green",
         },
       });
     },
     onError: () => {
       toast({
-        variant: 'destructive',
-        description: 'حدث خطأ اثناء عملية الاضافة الى السلة',
+        variant: "destructive",
+        description: "حدث خطأ اثناء عملية الاضافة الى السلة",
         action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
       });
     },
   });
 
-  const { isLoading } = mutation;
+  const { isPending } = mutation;
 
   return (
     <button
       className="min-w-[200px] h-[50px] bg-orange-500 text-white text-xl rounded-md flex justify-center items-center mb-2 md:mb-0"
       onClick={() => mutation.mutate()}
-      disabled={isLoading}
+      disabled={isPending}
     >
-      {isLoading ? <Loader2 className="animate-spin" /> : <p>اضف للسلة</p>}
+      {isPending ? <Loader2 className="animate-spin" /> : <p>اضف للسلة</p>}
     </button>
   );
 };
