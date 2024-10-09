@@ -19,6 +19,12 @@ module.exports = {
         port: "",
         pathname: "/150/0000FF/808080?text=/**",
       },
+      {
+        protocol: "https",
+        hostname: "th.bing.com",
+        port: "",
+        pathname: "/th/id/**",
+      },
     ],
   },
 };
