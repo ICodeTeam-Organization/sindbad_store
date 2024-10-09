@@ -1,84 +1,16 @@
-"use client";
-
-import { CartItem, Product } from "@/types/storeTypes";
+import { CartItem } from "@/types/storeTypes";
 import ProductRow from "./ProductRow";
 import { Card } from "@/components/ui/card";
-import { useCartStore } from "@/app/stores/cartStore";
-import { useEffect } from "react";
+import { getApi } from "@/lib/http";
 
-const CartTable = () => {
-  const cartItems = useCartStore((state) => state.items);
-  const addItem = useCartStore((state) => state.addItem);
-
-  useEffect(() => {
-    const products: Product[] = [
-      {
-        id: "asfdawefdcsc",
-        name: "شاششة تلفاز 120 بوصة تحتوي على قاعدة",
-        price: 150,
-        image: "store.svg",
-      },
-      {
-        id: "assfdawdefdcsc",
-        name: "أيفون 16 برو مكس",
-        price: 25,
-        image: "store.svg",
-      },
-      {
-        id: "assfdawefdecsc",
-        name: "أيفون 16 برو مكس",
-        price: 25,
-        image: "store.svg",
-      },
-      {
-        id: "assfdawefbdcsc",
-        name: "أيفون 16 برو مكس",
-        price: 25,
-        image: "store.svg",
-      },
-      {
-        id: "assfdawefdchsc",
-        name: "أيفون 16 برو مكس",
-        price: 25,
-        image: "store.svg",
-      },
-      {
-        id: "assfdawefdcisc",
-        name: "أيفون 16 برو مكس",
-        price: 25,
-        image: "store.svg",
-      },
-      {
-        id: "assfdawefdcpsc",
-        name: "أيفون 16 برو مكس",
-        price: 25,
-        image: "store.svg",
-      },
-      {
-        id: "assfdawefdcqsc",
-        name: "أيفون 16 برو مكس",
-        price: 25,
-        image: "store.svg",
-      },
-      {
-        id: "assfdawefdcqqqsc",
-        name: "أيفون 16 برو مكس",
-        price: 25,
-        image: "store.svg",
-      },
-    ];
-    products.forEach((prod) => {
-      const item: CartItem = {
-        product: prod,
-        quantity: 1,
-      };
-      addItem(item);
-    });
-  }, [addItem]);
+const CartTable = async () => {
+  const items = await getApi<any>(
+    "Cart/GetAllCustomerProductsInCartForViewInCartPage"
+  );
 
   return (
     <Card className="p-6 mb-4">
-      {cartItems.length > 0 ? (
+      {items.data.length > 0 ? (
         <table className="w-full">
           <thead>
             <tr className="bg-gray-300">
@@ -90,14 +22,14 @@ const CartTable = () => {
             </tr>
           </thead>
           <tbody className=" h-72 overflow-auto">
-            {cartItems.map((item) => (
+            {items.data.map((item: CartItem) => (
               <ProductRow
-                key={item.product.id}
-                id={item.product.id}
-                name={item.product.name}
-                price={item.product.price}
+                key={item.id}
+                id={item.id}
+                name={item.name}
+                price={item.price}
                 quantity={item.quantity}
-                image={item.product.image}
+                image={item.imageUrl}
               />
             ))}
           </tbody>
