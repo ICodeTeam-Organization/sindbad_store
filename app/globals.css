@@ -81,6 +81,11 @@ body {
     --chart-5: 340 75% 55%;
   }
 }
+.oneLIineText {
+  overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
 @layer base {
   * {
