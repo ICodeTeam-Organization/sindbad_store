@@ -101,9 +101,6 @@ const Header = () => {
             <Link href={"/shopping-card/"}>
               <div className="relative p-3 mr-3 md:mr-5 w-fit bg-neutral-100 rounded-full hover:cursor-pointer ">
                 <MdOutlineLocalGroceryStore className="text-[18px] md:text-[25px]" />
-                <div className="flex justify-center items-center bg-[#F55157] w-[13px] h-[13px] md:w-[18px] md:h-[18px] rounded-full absolute top-0 right-0 ">
-                  <p className="m-auto text-white text-[10px] md:text-xs">2</p>
-                </div>
               </div>
             </Link>
           </div>
