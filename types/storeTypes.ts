@@ -14,7 +14,7 @@ export type Product = {
 //////////////////////
 
 export type CartItem = {
-  id: number;
+  cartId: number;
   name: string;
   price: number;
   priceAfterDiscount: number | null;

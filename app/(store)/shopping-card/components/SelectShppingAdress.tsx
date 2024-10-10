@@ -14,20 +14,19 @@ type AddressType = {
 };
 
 const SelectShppingAdress = async () => {
-  const addresses = await getApi<any>(
-    "Cart/GetCustomnerAddressesForViewInCartPage"
-  );
-
+  const addresses = await getApi<any>("CustomerAddress/GetCustomerAddress");
   return (
     <div className="w-72 ml-10 ">
       <Select dir="rtl">
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="عنوان الشحن" />
+          <SelectValue placeholder={"عنوان الشحن"} />
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>عنوان الشحن</SelectLabel>
-            {addresses ? (
+            <SelectLabel>
+              {addresses.data ? "عنوان الشحن" : addresses.message}
+            </SelectLabel>
+            {addresses.data &&
               addresses.data.map((address: AddressType) => (
                 <SelectItem
                   key={address.addressName}
@@ -35,10 +34,7 @@ const SelectShppingAdress = async () => {
                 >
                   {address.addressName}
                 </SelectItem>
-              ))
-            ) : (
-              <SelectItem value="">لا يتوفر اي عنوان شحن</SelectItem>
-            )}
+              ))}
           </SelectGroup>
         </SelectContent>
       </Select>

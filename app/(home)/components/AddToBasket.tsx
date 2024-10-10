@@ -44,10 +44,10 @@ const AddToBasket = ({ id }: Props) => {
         },
       });
     },
-    onError: () => {
+    onError: (res: any) => {
       toast({
         variant: "destructive",
-        description: "حدث خطأ اثناء عملية الاضافة الى السلة",
+        description: res.response.data.message,
         action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
       });
     },
