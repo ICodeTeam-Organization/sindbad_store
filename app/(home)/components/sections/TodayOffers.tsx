@@ -24,7 +24,7 @@ const TodayOffers = async () => {
       <div className="container mx-auto sm:px-4 xl:px-32 pt-10">
         <SectionTitle title={"عروض اليوم"} />
       </div>
-      <Carousel className="m-auto cursor-pointer max-md:w-[265px] md:w-[650px] max-sm:w-[280px] sm:w-[500px] lg:w-[930px] xl:w-[1200px]">
+      <Carousel className="m-auto cursor-pointer max-md:w-[265px] md:w-[650px] max-sm:w-[260px] sm:w-[500px] lg:w-[930px] xl:w-[1200px]">
         <CarouselContent dir="ltr" className="">
           {Offersproducts.data.map((product: any) => (
             <CarouselItem
