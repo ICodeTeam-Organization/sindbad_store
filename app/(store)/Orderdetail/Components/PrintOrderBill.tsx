@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 const PrintOrderBill = ({ Bill }: any) => {
@@ -24,7 +25,10 @@ const PrintOrderBill = ({ Bill }: any) => {
           <p>الإجمالي:</p>
           <p className="mr-3">{Bill.totalPrice} ر.س</p>
         </div>
-        <button className="bg-primary-background text-white py-2 px-3 rounded-sm hover:bg-orange-600 transition-all duration-700">
+        <button
+          onClick={() => window.print()}
+          className="bg-primary-background text-white py-2 px-3 rounded-sm hover:bg-orange-600 transition-all duration-700"
+        >
           تصدير PDF
         </button>
       </div>
