@@ -8,6 +8,7 @@ import { Almarai } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
+import ProgressBarProvider from "@/components/progress-bar-providers";
 
 const sansFont = Almarai({
   weight: ["400", "700"],
@@ -32,16 +33,18 @@ export default function RootLayout({
         className={cn(sansFont.variable, "font-sans antialiased")}
         dir="rtl"
       >
-        <NextAuthProvider>
-          <main>
-            <ClientProviders>{children}</ClientProviders>
-          </main>
-          <Subscribe />
-        </NextAuthProvider>
-        <About />
-        <Footer />
-        {/* to show toaster messages */}
-        <Toaster />
+        <ProgressBarProvider>
+          <NextAuthProvider>
+            <main>
+              <ClientProviders>{children}</ClientProviders>
+            </main>
+            <Subscribe />
+          </NextAuthProvider>
+          <About />
+          <Footer />
+          {/* to show toaster messages */}
+          <Toaster />
+        </ProgressBarProvider>
       </body>
     </html>
   );
