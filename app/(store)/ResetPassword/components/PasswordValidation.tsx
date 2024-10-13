@@ -17,41 +17,66 @@ import { AiOutlineArrowLeft } from "react-icons/ai";
 import React from "react";
 import PasswordInput from "@/components/PasswordInput";
 import { Input } from "@/components/ui/input";
+import { putApi } from "@/lib/http";
+import { useMutation } from "@tanstack/react-query";
+
+type resetfiled = {
+  currentPassword: string;
+  newPassword: string;
+};
 
 const PasswordValidation = () => {
+  const { mutate, error } = useMutation({
+    mutationFn: async ({ currentPassword, newPassword }: resetfiled) =>
+      await putApi<any>("Auth/change-passwordAsync", {
+        body: {
+          currentPassword,
+          newPassword,
+        },
+      }),
+    onSuccess: () => console.log("first password hhhhhhhhhhhhhh"),
+  });
+
   const form = useForm<z.infer<typeof ResetPassSchema>>({
     resolver: zodResolver(ResetPassSchema),
     defaultValues: {
-      password: "",
+      CurrentPassword: "",
+      Newpassword: "",
       confirmPassword: "",
-      activation: "",
     },
   });
-  function onSubmit(values: z.infer<typeof ResetPassSchema>) {
-    console.log(values);
-  }
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit((data) =>
+          mutate({
+            currentPassword: data.CurrentPassword,
+            newPassword: data.Newpassword,
+          })
+        )}
+        className="space-y-8"
+      >
         <FormField
           control={form.control}
-          name="activation"
+          name="CurrentPassword"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">رمز التفعيل</FormLabel>
+              <FormLabel className="text-xl">كلمة المرور الحالية</FormLabel>
               <FormControl>
                 <Input {...field} />
+                {/* {error && console.log(error)} */}
               </FormControl>
+              
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="password"
+          name="Newpassword"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">كلمة المرور</FormLabel>
+              <FormLabel className="text-xl">كلمة المرور الجديدة</FormLabel>
               <FormControl>
                 <PasswordInput {...field} />
               </FormControl>

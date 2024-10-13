@@ -48,6 +48,14 @@ const Navbar = () => {
               إضافة عنوان جديد
             </Label>
           </Link>
+          <Link className="mt-2" href={"/ResetPassword"}>
+            <Label
+              htmlFor="username"
+              className="text-right text-2xl cursor-pointer"
+            >
+              تغيير كلمة المرور
+            </Label>
+          </Link>
         </div>
         {session.status === "authenticated" && (
           <div className="absolute bottom-8">
