@@ -20,5 +20,5 @@ export type CartItem = {
   priceAfterDiscount: number | null;
   imageUrl: string;
   quantity: number;
-  shopCost: number;
+  shipCost: number;
 };

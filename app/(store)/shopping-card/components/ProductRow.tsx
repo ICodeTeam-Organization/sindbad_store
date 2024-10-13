@@ -2,12 +2,13 @@ import Image from "next/image";
 import { BiTrash } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import { HiMinusSm } from "react-icons/hi";
-import { useMutation } from "@tanstack/react-query";
-import { deleteApi, putApi } from "@/lib/http";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { Loader2 } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useMutation } from "@tanstack/react-query";
+import { deleteApi, putApi } from "@/lib/http";
 
 type Props = {
   id: number;
@@ -15,9 +16,13 @@ type Props = {
   image?: string;
   price: number;
   quantity: number;
+  shipCost: number;
+  refreshItems: () => void;
 };
 
 const ProductRow = ({ ...props }: Props) => {
+  const [quantity, setQuantity] = useState<number>(props.quantity);
+  const [isUpdated, setIsUpdated] = useState<boolean>(false);
   const { toast } = useToast();
 
   const updateQuantity = useMutation({
@@ -34,15 +39,7 @@ const ProductRow = ({ ...props }: Props) => {
           quantity: quantity,
         },
       }),
-    onSuccess: (res: any) => {
-      toast({
-        variant: "default",
-        description: res.message,
-        style: {
-          backgroundColor: "green",
-        },
-      });
-    },
+    onSuccess: () => props.refreshItems(),
     onError: (res) => {
       toast({
         variant: "destructive",
@@ -51,18 +48,12 @@ const ProductRow = ({ ...props }: Props) => {
       });
     },
   });
+
   const deleteItem = useMutation({
     mutationFn: async (id: number) =>
-      await deleteApi("Cart/DeleteCart?cartProductId=" + id),
-    onSuccess: (res: any) => {
-      toast({
-        variant: "default",
-        description: res.message,
-        style: {
-          backgroundColor: "greenyellow",
-        },
-      });
-    },
+      await deleteApi("Cart/DeleteCart?cartId=" + id),
+
+    onSuccess: () => props.refreshItems(),
     onError: (res: any) => {
       toast({
         variant: "destructive",
@@ -72,15 +63,23 @@ const ProductRow = ({ ...props }: Props) => {
     },
   });
 
-  const handleQuantity = (id: number, quantity: number) => {
-    console.log("quna" + quantity, id);
-    updateQuantity.mutate({
-      cartId: id,
-      quantity: quantity,
-    });
+  const handleQuantity = (quantity: number) => {
+    setIsUpdated(true);
+    setQuantity(quantity);
   };
 
-  const handleDeleteItem = (id: number) => {
+  const debounceQuantity = useDebounce(quantity, 500);
+  useEffect(() => {
+    if (debounceQuantity && isUpdated) {
+      setIsUpdated(false);
+      updateQuantity.mutate({
+        cartId: props.id,
+        quantity: quantity,
+      });
+    }
+  }, [debounceQuantity]);
+
+  const handleDeleteItem = async (id: number) => {
     deleteItem.mutate(id);
   };
 
@@ -101,24 +100,19 @@ const ProductRow = ({ ...props }: Props) => {
       <td className="py-4">{props.price.toFixed(2)} رس</td>
       <td className="py-4">
         <div className="flex items-center">
-          {updateQuantity.isPending ? (
-            <Loader2 className="animate-spin" />
-          ) : (
-            <>
-              <IoMdAdd
-                onClick={() => handleQuantity(props.id, props.quantity + 1)}
-                className="cursor-pointer"
-              />
-              <span className="text-center w-8">{props.quantity}</span>
-              <HiMinusSm
-                onClick={() => handleQuantity(props.id, props.quantity - 1)}
-                className="cursor-pointer"
-              />
-            </>
-          )}
+          <IoMdAdd
+            onClick={() => handleQuantity(quantity + 1)}
+            className="cursor-pointer"
+          />
+          <span className="w-5 mx-2 text-center">{quantity}</span>
+
+          <HiMinusSm
+            onClick={() => handleQuantity(quantity - 1)}
+            className="cursor-pointer"
+          />
         </div>
       </td>
-      <td className="py-4">{(props.price * props.quantity).toFixed(2)} رس</td>
+      <td className="py-4">{props.shipCost} رس</td>
       <td className="py-4">
         {deleteItem.isPending ? (
           <Loader2 className="animate-spin" />

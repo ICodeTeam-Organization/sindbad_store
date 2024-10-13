@@ -21,7 +21,7 @@ const AddToBasket = ({ id }: Props) => {
   const mutation = useMutation({
     mutationFn: async () => {
       await axios.post(
-        "https://icode-sendbad-store.runasp.net/AddProductToCart?productId=" +
+        "https://icode-sendbad-store.runasp.net/api/Cart/AddProductToCart?productId=" +
           id,
         {
           quantity: 1,
