@@ -81,8 +81,8 @@ export function getApi<T>(
 
 export function putApi<T>(
   url: string,
-  method: string = "PUT",
-  config?: Config
+  config?: Config,
+  method: string = "PUT"
 ) {
   return http<T>(url, undefined, { ...config, method: method });
 }

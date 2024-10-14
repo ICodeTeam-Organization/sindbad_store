@@ -19,6 +19,7 @@ import PasswordInput from "@/components/PasswordInput";
 import { Input } from "@/components/ui/input";
 import { putApi } from "@/lib/http";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
 
 type resetfiled = {
   currentPassword: string;
@@ -34,9 +35,9 @@ const PasswordValidation = () => {
           newPassword,
         },
       }),
-    onSuccess: () => console.log("first password hhhhhhhhhhhhhh"),
+    onSuccess: (value) => toast.success(value.message),
+    onError: () => toast.error("كلمة المرور الحالية غير صحيحة"),
   });
-
   const form = useForm<z.infer<typeof ResetPassSchema>>({
     resolver: zodResolver(ResetPassSchema),
     defaultValues: {
@@ -64,9 +65,7 @@ const PasswordValidation = () => {
               <FormLabel className="text-xl">كلمة المرور الحالية</FormLabel>
               <FormControl>
                 <Input {...field} />
-                {/* {error && console.log(error)} */}
               </FormControl>
-              
               <FormMessage />
             </FormItem>
           )}
