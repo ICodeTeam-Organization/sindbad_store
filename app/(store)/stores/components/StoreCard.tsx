@@ -4,7 +4,8 @@ import { StoreCardProps } from "../typest";
 import { IoMdHeartEmpty } from "react-icons/io";
 
 const StoreCard = ({ id, name, imagesUrl }: StoreCardProps) => {
-  const storeImage = imagesUrl.length > 0 ? imagesUrl[0] : '/path/to/placeholder/image.jpg';
+  const storeImage = imagesUrl.length > 0 ? imagesUrl[0] : '';
+  // const storeImage = imagesUrl[0] ;
 
   return (
     <a

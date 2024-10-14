@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import { getApi } from '@/lib/http';
-import { notFound } from 'next/navigation';
-import ProductTitle from './ProductTitle';
-import ProductInfoRow from './ProductInfoRow';
-import PriceSection from './PriceSection';
-import ImageGallery from './ImageGallery';
-import AddToBasket from './AddToBasket'; 
+import React, { useState, useEffect } from "react";
+import { getApi } from "@/lib/http";
+import { notFound } from "next/navigation";
+import ProductTitle from "./ProductTitle";
+import ProductInfoRow from "./ProductInfoRow";
+import PriceSection from "./PriceSection";
+import ImageGallery from "./ImageGallery";
+import AddToBasket from "./AddToBasket";
 
 type ProductDetailsProps = {
   params: {
@@ -31,19 +31,18 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
       const response = await getApi<any>(
         `ProductsProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`
       );
-      console.log('Fetched Response:', response); // Log the full response object
+      console.log("Fetched Response:", response);
       if (response?.success && response?.data) {
-        console.log('Product Data:', response.data); // Log the actual product data
+        console.log("Product Data:", response.data);
         setProduct(response.data);
       } else {
         notFound();
       }
     } catch (error) {
-      console.error('Error fetching product details:', error);
+      console.error("Error fetching product details:", error);
       notFound();
     }
   };
-  
 
   const handleIncrement = () => setQuantity(quantity + 1);
   const handleDecrement = () => {
@@ -57,7 +56,9 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-12 px-12">
       <div className="lg:w-1/3 ml-8">
-        <ImageGallery image={`${product.mainImageUrl}`} />
+        <ImageGallery
+          images={product.productImages.map((img: any) => img.imageUrl)}
+        />
       </div>
       <div className="lg:w-1/2">
         <ProductTitle description={product.description} rating={5} />
@@ -71,13 +72,15 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
           label1="الفئة"
           value1={product.categoryName}
           label2="الماركة"
-          value2={product.brandName || 'N/A'}
+          value2={product.brandName || "N/A"}
         />
         <PriceSection
           discountedPrice={`${product.priceAfterOffer} ر.س`}
           originalPrice={`${product.priceBeforOffer} ر.س`}
           discount={Math.round(
-            ((product.priceBeforOffer - product.priceAfterOffer) / product.priceBeforOffer) * 100
+            ((product.priceBeforOffer - product.priceAfterOffer) /
+              product.priceBeforOffer) *
+              100
           )}
         />
         <hr className="my-4 border-gray-300" />
@@ -86,7 +89,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
           value1={
             <select className="border border-gray-300 rounded-md p-2">
               {product.attributesWithValues
-                .find((attr: any) => attr.attributeName === 'Color')
+                .find((attr: any) => attr.attributeName === "Color")
                 ?.values.map((color: any, index: any) => (
                   <option key={index} value={color}>
                     {color}
@@ -98,7 +101,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
           value2={
             <select className="border border-gray-300 rounded-md p-2">
               {product.attributesWithValues
-                .find((attr: any) => attr.attributeName === 'Size')
+                .find((attr: any) => attr.attributeName === "Size")
                 ?.values.map((size: any, index: any) => (
                   <option key={index} value={size}>
                     {size}
@@ -109,11 +112,17 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
         />
         <div className="flex items-center gap-4 mt-8">
           <div className="flex items-center gap-4">
-            <button className="bg-gray-200 py-2 px-4 text-lg" onClick={handleDecrement}>
+            <button
+              className="bg-gray-200 py-2 px-4 text-lg"
+              onClick={handleDecrement}
+            >
               -
             </button>
             <span>{quantity}</span>
-            <button className="bg-gray-200 py-2 px-4 text-lg" onClick={handleIncrement}>
+            <button
+              className="bg-gray-200 py-2 px-4 text-lg"
+              onClick={handleIncrement}
+            >
               +
             </button>
           </div>
