@@ -4,6 +4,7 @@ export type CheckoutType = {
   date: string;
   image: File;
   note: string;
+  amount: number;
 };
 export type Bank = {
   id: number;

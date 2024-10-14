@@ -18,6 +18,7 @@ import { postApi } from "@/lib/http";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
+import { useRouter } from "next/navigation";
 //import { useRouter } from "next/navigation";
 
 const CheckoutForm = () => {
@@ -30,18 +31,19 @@ const CheckoutForm = () => {
   });
 
   const { toast } = useToast();
-  //  const router = useRouter();
+  const router = useRouter();
   const { mutate, isPending } = useMutation({
     mutationKey: ["upload-bound"],
     mutationFn: (data: CheckoutType) =>
       postApi("Orders/CompleteCustomerPurchase", {
         body: {
-          bankId: 2,
+          bankId: 3,
           note: data.note,
+          amount: data.amount,
           bondNumber: data.number,
           bondDate: data.date,
-          boundType: 1,
-          bondImageUrl: data.image.name,
+          bondImageUrl: "image name",
+          bondTyep: 1,
           isUrgenOrder: true,
         },
         isPage: false,
@@ -54,9 +56,8 @@ const CheckoutForm = () => {
         action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
       });
     },
-    onSuccess: (res) => {
-      console.log(res);
-      //router.push("/checkout-success")
+    onSuccess: () => {
+      router.push("/checkout-success");
     },
   });
 
@@ -79,6 +80,21 @@ const CheckoutForm = () => {
             {errors.bank?.message && (
               <span className="text-sm text-red-500 ">
                 {errors.bank?.message}
+              </span>
+            )}
+          </div>
+          <div className="space-y-2">
+            <Label className={`font-bold text-lg `}>
+              المبلغ المدفوع<span className="mr-2 text-red-400">*</span>
+            </Label>
+            <Input
+              type="number"
+              {...register("amount")}
+              placeholder="يجب اخال قيمة المبلغ الذي تم دفعه"
+            />
+            {errors.amount?.message && (
+              <span className="text-sm text-red-500 ">
+                {errors.amount?.message}
               </span>
             )}
           </div>
