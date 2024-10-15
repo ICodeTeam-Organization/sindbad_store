@@ -31,7 +31,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, putApi } from "@/lib/http";
-import City from "./City";
 import { useState } from "react";
 
 const AddShipingAdresses = ({ governorate }: any) => {
@@ -43,7 +42,7 @@ const AddShipingAdresses = ({ governorate }: any) => {
       reciver: "محمد علي سالم عبدالله",
       phone: "770700718",
       stateid: "",
-      cityid: "",
+      city: "",
       place: "",
     },
   });
@@ -51,7 +50,7 @@ const AddShipingAdresses = ({ governorate }: any) => {
   const { isPending, error, data } = useQuery({
     queryKey: ["city"],
     queryFn: () =>
-      getApi<any>(`Locations/GetDirectoratesByGovernorate/${stateid}`),
+      getApi<any>(`Locations/GetGovernorateWithChildren?id=${stateid}`),
   });
   console.log(data);
   if (isPending) return "Loading...";
@@ -133,7 +132,7 @@ const AddShipingAdresses = ({ governorate }: any) => {
                   />
                   <FormField
                     control={form.control}
-                    name="cityid"
+                    name="city"
                     render={({ field }) => (
                       <FormItem className="text-center">
                         <FormControl>
@@ -143,10 +142,10 @@ const AddShipingAdresses = ({ governorate }: any) => {
                             </SelectTrigger>
                             <SelectContent>
                               <SelectGroup {...field}>
-                                {data.data.map((city: any) => (
+                                {data.data.directorates.map((city: any) => (
                                   <SelectItem
                                     key={city.id}
-                                    value={city.id.toString()}
+                                    value={city.name}
                                   >
                                     {city.name}
                                   </SelectItem>

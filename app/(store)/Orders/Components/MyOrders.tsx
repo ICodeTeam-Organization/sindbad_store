@@ -5,7 +5,7 @@ import React from "react";
 
 const MyOrders = async () => {
   const Orders = await getApi<any>(
-    "Orders/Market/OrdersPage/GetAllCustomerOrdersForViewInOrdersPage"
+    "Orders/Market/OrdersPage/GetAllCustomerOrdersForViewInOrdersPage?pageNumber=1&pageSize=10"
   );
   if (!Orders) return notFound();
   return (
@@ -20,7 +20,7 @@ const MyOrders = async () => {
         <h1 className="bg-gray-200 py-1 border-t-2 border-b-2">تتبع</h1>
       </div>
       {/* fetch api from here */}
-      {Orders.data.map((itm: any) => (
+      {Orders.data.items.map((itm: any) => (
         <div
           key={itm.id}
           className="grid grid-cols-5 text-center items-center font-bold w-full"
