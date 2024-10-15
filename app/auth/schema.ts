@@ -60,6 +60,6 @@ export const AddshipingadressSchema = z.object({
   phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
   // state: z.string().min(1, "اختر المحافظة"),
   stateid: z.string().min(1, "اختر المحافظة"),
-  cityid: z.string().min(1, "اختر المدينة"),
+  city: z.string().min(1, "اختر المدينة"),
   place: z.string().min(1, "اختر المنطقة"),
 });
