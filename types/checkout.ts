@@ -2,7 +2,7 @@ export type CheckoutType = {
   bank: number;
   number: number;
   date: string;
-  image: File;
+  image: File[];
   note: string;
   amount: number;
 };

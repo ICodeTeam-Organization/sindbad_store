@@ -42,14 +42,13 @@ const CheckoutForm = () => {
           amount: data.amount,
           bondNumber: data.number,
           bondDate: data.date,
-          bondImageUrl: "image name",
+          bondImageUrl: data.image[0].bytes,
           bondTyep: 1,
           isUrgenOrder: true,
         },
         isPage: false,
       }),
     onError: (err) => {
-      console.log(err);
       toast({
         variant: "destructive",
         description: err.message,
@@ -62,6 +61,7 @@ const CheckoutForm = () => {
   });
 
   const onsubmit: SubmitHandler<CheckoutType> = (data) => {
+    console.log(data.image);
     mutate(data);
   };
 
