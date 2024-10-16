@@ -25,6 +25,12 @@ module.exports = {
         port: "",
         pathname: "/th/id/**",
       },
+      {
+        protocol: "https",
+        hostname: "img.freepik.com",
+        port: "",
+        pathname: "/free-vector/**",
+      },
     ],
   },
 };

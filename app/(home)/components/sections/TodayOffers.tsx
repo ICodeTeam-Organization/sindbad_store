@@ -13,6 +13,7 @@ import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import React from "react";
+import AddToBasket from "../AddToBasket";
 const TodayOffers = async () => {
   const Offersproducts = await getApi<any>(
     "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/1"
@@ -25,7 +26,7 @@ const TodayOffers = async () => {
         <SectionTitle title={"عروض اليوم"} />
       </div>
       <Carousel className="m-auto cursor-pointer max-md:w-[265px] md:w-[650px] max-sm:w-[260px] sm:w-[500px] lg:w-[930px] xl:w-[1200px]">
-        <CarouselContent dir="ltr" className="">
+        <CarouselContent dir="ltr">
           {Offersproducts.data.map((product: any) => (
             <CarouselItem
               key={product.id}
@@ -39,7 +40,9 @@ const TodayOffers = async () => {
                   width={400}
                   height={0}
                 />
-                <div className="border-[1px] border-[#C3C3C3] border-t-0 pr-1">
+              </Link>
+              <div className="border-[1px] border-[#C3C3C3] border-t-0 pr-1">
+                <Link href={`/shop/productDetils/${product.id}`}>
                   <p className="line-clamp-2 font-[Tajawal] xl:pr-1 text-[#007580] text-[20px] max-md:text-[12px] md:text-[14px] text-right ">
                     <strong>{product.name}</strong>
                   </p>
@@ -51,20 +54,11 @@ const TodayOffers = async () => {
                       <strong>{product.priceAfterOffer}</strong>
                     </p>
                   </div>
-                  <div className="my-1 flex justify-around max-md:justify-between items-center w-full">
-                    <div className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-700 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] ml-[6px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center">
-                      <AiOutlineHeart
-                        className="w-[20px] h-[20px]"
-                        color="#D5D5D5"
-                      />
-                    </div>
-                    <div className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-700 max-md:w-32 max-md:h-[30px] w-[159px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center">
-                      <MdOutlineLocalGroceryStore className="w-[17.39px] h-[15px]" />
-                      <p className="max-md:text-[7px]">اضف للسلة</p>
-                    </div>
-                  </div>
+                </Link>
+                <div dir="rtl">
+                  <AddToBasket id={product.id} />
                 </div>
-              </Link>
+              </div>
             </CarouselItem>
           ))}
         </CarouselContent>

@@ -3,6 +3,7 @@ import AddToBasket from "./AddToBasket";
 import Link from "next/link";
 
 type props = {
+  cn?: string;  
   id: string;
   image: string;
   productName: string;
@@ -11,6 +12,7 @@ type props = {
   ProductDet: number;
 };
 const ProductCard = ({
+  cn,
   id,
   image,
   productName,
@@ -19,7 +21,7 @@ const ProductCard = ({
   ProductDet,
 }: props) => {
   return (
-    <div className="m-auto rounded-t-[8px] w-[230px] max-md:w-[150px] max-sm:w-28 max-lg:w-44 max-lg:h-60  max-md:h-[183px] h-[339px]">
+    <div className={cn +` m-auto rounded-t-[8px] w-[230px] max-md:w-[150px] max-sm:w-28 max-lg:w-44 max-lg:h-60  max-md:h-[183px] h-[339px]`}>
       <Link href={`/shop/productDetils/${ProductDet}`}>
         <Image
           className="h-[210px] max-lg:h-28 max-sm:h-20 rounded-t-[8px]"

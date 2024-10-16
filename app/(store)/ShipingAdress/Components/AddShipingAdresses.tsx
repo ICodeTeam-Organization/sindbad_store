@@ -29,20 +29,41 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-const AddShipingAdresses = () => {
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getApi, putApi } from "@/lib/http";
+import { useState } from "react";
+
+const AddShipingAdresses = ({ governorate }: any) => {
+  const [stateid, setstateid] = useState("4");
   const form = useForm<z.infer<typeof AddshipingadressSchema>>({
     resolver: zodResolver(AddshipingadressSchema),
     defaultValues: {
       title: "",
-      reciver: "",
-      phone: "",
-      state: "",
+      reciver: "محمد علي سالم عبدالله",
+      phone: "770700718",
+      stateid: "",
       city: "",
       place: "",
     },
   });
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["city"],
+    queryFn: () =>
+      getApi<any>(`Locations/GetGovernorateWithChildren?id=${stateid}`),
+  });
+  console.log(data);
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
   function onSubmit(values: z.infer<typeof AddshipingadressSchema>) {
-    console.log(values);
+    setstateid(values.stateid);
+    // mutate({
+    //   stateId: governorate.id,
+    //   city: values.city,
+    // });
+    console.log({ values });
   }
   return (
     <Dialog>
@@ -83,7 +104,7 @@ const AddShipingAdresses = () => {
                 <div className="grid grid-cols-3 gap-2 ">
                   <FormField
                     control={form.control}
-                    name="state"
+                    name="stateid"
                     render={({ field }) => (
                       <FormItem className="text-center">
                         <FormControl>
@@ -93,9 +114,14 @@ const AddShipingAdresses = () => {
                             </SelectTrigger>
                             <SelectContent>
                               <SelectGroup {...field}>
-                                <SelectItem value="est">حضرموت</SelectItem>
-                                <SelectItem value="cst">عدن</SelectItem>
-                                <SelectItem value="mst">صنعاء</SelectItem>
+                                {governorate.map((itm: any) => (
+                                  <SelectItem
+                                    key={itm.id}
+                                    value={itm.id.toString()}
+                                  >
+                                    {itm.name}
+                                  </SelectItem>
+                                ))}
                               </SelectGroup>
                             </SelectContent>
                           </Select>
@@ -116,9 +142,14 @@ const AddShipingAdresses = () => {
                             </SelectTrigger>
                             <SelectContent>
                               <SelectGroup {...field}>
-                                <SelectItem value="est">حضرموت</SelectItem>
-                                <SelectItem value="cst">عدن</SelectItem>
-                                <SelectItem value="mst">صنعاء</SelectItem>
+                                {data.data.directorates.map((city: any) => (
+                                  <SelectItem
+                                    key={city.id}
+                                    value={city.name}
+                                  >
+                                    {city.name}
+                                  </SelectItem>
+                                ))}
                               </SelectGroup>
                             </SelectContent>
                           </Select>
@@ -160,7 +191,7 @@ const AddShipingAdresses = () => {
                         <p>المستلم</p>
                       </FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input disabled {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -175,7 +206,7 @@ const AddShipingAdresses = () => {
                         <p>رقم التلفون</p>
                       </FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input disabled {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
