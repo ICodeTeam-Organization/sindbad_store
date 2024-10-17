@@ -33,12 +33,16 @@ const ProductRow = ({ ...props }: Props) => {
       quantity: number;
       cartId: number;
     }) =>
-      await putApi("Cart/UpdateCart", "PATCH", {
-        body: {
-          cartId: cartId,
-          quantity: quantity,
+      await putApi(
+        "Cart/UpdateCart",
+        {
+          body: {
+            cartId: cartId,
+            quantity: quantity,
+          },
         },
-      }),
+        "PATCH"
+      ),
     onSuccess: () => props.refreshItems(),
     onError: (res) => {
       toast({
