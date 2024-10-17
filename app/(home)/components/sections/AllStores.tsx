@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 
 const AllStores = async () => {
   // Get all stores for slider in market homepage
@@ -40,20 +41,23 @@ const AllStores = async () => {
               className="flex items-center pl-0  ml-4 xl:basis-1/2 max-md:basis-1/2 md:basis-1/2 border-[2px] border-black rounded-sm bg-white w-[520px] h-56 max-md:h-[130px]  hover:border-[#F58634] transition-all duration-700"
             >
               <div className="w-full flex justify-center items-center">
-                <Image
-                  className="w-full md:h-56 lg:h-56 h-[120px]"
-                  src={store.imagesUrl}
-                  alt={""}
-                  width={0}
-                  height={0}
-                />
+                {store.mainImageUrl === null ? (
+                  <h1>لاتوجد صورة للمتجر</h1>
+                ) : (
+                  <Image
+                    src={store.mainImageUrl}
+                    alt={""}
+                    width={330}
+                    height={200}
+                  />
+                )}
               </div>
-              <div className="max-md:w-[300px] max-sm:w-[100px] md:w-[300px] max-sm:pr-1  lg:w-[650px] max-md:mt-0 md:mt-0 mt-6">
+              <div className="max-md:w-[300px] max-sm:w-[100px] md:w-[300px] max-sm:pr-1 mr-2  lg:w-[650px] max-md:mt-0 md:mt-0 mt-6">
                 <h1 className="text-[25px] max-md:text-[15px] max-sm:mt-1 max-sm:text-xs font-bold text-right line-clamp-2">
                   {store.name}
                 </h1>
                 <p className="text-[17px] max-sm:text-[10px] line-clamp-2 text-[#666666]">
-                  مستلزمات الاطفال
+                  {store.description}
                 </p>
                 <div className="flex items-center max-md:mt-0 md:mt-2 mt-1 max-sm:w-20 max-sm:mt-0">
                   <AiFillStar className="text-[#FFC62A]" />
@@ -61,14 +65,30 @@ const AllStores = async () => {
                   <AiFillStar className="text-[#FFC62A]" />
                   <AiFillStar className="text-[#FFC62A]" />
                   <AiFillStar className="text-[#D6D6D6]" />
-                  <p className="text-[#A5A5A5] max-sm:text-[10px] mr-3">(4.5)</p>
+                  <p className="text-[#A5A5A5] max-sm:text-[10px] mr-3">
+                    (4.5)
+                  </p>
                 </div>
-                <div className="max-md:w-[110px] max-sm:w-[70px] md:w-[150px] max-md:h-[25px] md:h-[47px] cursor-pointer xl:w-[260px] h-[56px] text-xl max-lg:w-[200px] rounded-sm border-[1px] hover:bg-[#F58634] hover:text-white transition-all duration-700 flex justify-center items-center border-black">
-                  <h1 className="max-md:text-[15px] font-bold max-sm:text-[7px]">
-                    زيارة المتجر
-                  </h1>
-                  <IoIosArrowBack />
-                </div>
+                {store.websiteLink === null ? (
+                  <div
+                    aria-disabled
+                    className="max-md:w-[110px] max-sm:w-[70px] md:w-[150px] max-md:h-[25px] md:h-[47px] cursor-pointer xl:w-[260px] h-[56px] text-xl max-lg:w-[200px] rounded-sm border-[1px] bg-gray-400 transition-all duration-700 flex justify-center items-center border-black"
+                  >
+                    <h1 className="max-md:text-[15px] font-bold max-sm:text-[7px]">
+                      لايوجد رابط إلى المتجر
+                    </h1>
+                    <IoIosArrowBack />
+                  </div>
+                ) : (
+                  <Link href={store.websiteLink}>
+                    <div className="max-md:w-[110px] max-sm:w-[70px] md:w-[150px] max-md:h-[25px] md:h-[47px] cursor-pointer xl:w-[260px] h-[56px] text-xl max-lg:w-[200px] rounded-sm border-[1px] hover:bg-[#F58634] hover:text-white transition-all duration-700 flex justify-center items-center border-black">
+                      <h1 className="max-md:text-[15px] font-bold max-sm:text-[7px]">
+                        زيارة المتجر
+                      </h1>
+                      <IoIosArrowBack />
+                    </div>
+                  </Link>
+                )}
               </div>
             </CarouselItem>
           ))}

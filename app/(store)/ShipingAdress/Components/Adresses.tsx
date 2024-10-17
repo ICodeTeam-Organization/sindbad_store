@@ -1,11 +1,12 @@
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import React from "react";
-import { GrTrash } from "react-icons/gr";
+import DeleteAdress from "./DeleteAdress";
 
 const Adresses = async () => {
   const address = await getApi<any>("CustomerAddress/GetCustomerAddress");
   if (!address) return notFound();
+
   const data = address.data;
   return (
     <div className="grid grid-cols-9 text-center items-center font-bold w-full text-gray-600">
@@ -24,7 +25,7 @@ const Adresses = async () => {
       <h1 className="bg-gray-200 py-1 border-t-2 border-b-2">حذف</h1>
 
       {/* fetch api from here */}
-      {data.map((itm: any) => (
+      {data?.map((itm: any) => (
         <React.Fragment key={itm.customerAddressId}>
           <h1 className="text-right line-clamp-3 px-3 pt-3 col-span-2 max-md:text-xs max-md:line-clamp-4">
             {itm.location}
@@ -42,12 +43,7 @@ const Adresses = async () => {
               770700718
             </h1>
           </div>
-          <div className=" pt-3">
-            <GrTrash
-              className="max-sm:size-4 cursor-pointer m-auto"
-              size={25}
-            />
-          </div>
+          <DeleteAdress id={itm.customerAddressId} />
         </React.Fragment>
       ))}
     </div>
