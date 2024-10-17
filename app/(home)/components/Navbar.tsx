@@ -40,6 +40,15 @@ const Navbar = () => {
             </Label>
           </Link>
 
+          <Link href={"/Favorites"}>
+            <Label
+              htmlFor="name"
+              className="text-right text-2xl cursor-pointer"
+            >
+              المفضلة
+            </Label>
+          </Link>
+
           <Link className="mt-2" href={"/ShipingAdress"}>
             <Label
               htmlFor="username"
