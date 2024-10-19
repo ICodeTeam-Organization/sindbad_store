@@ -10,19 +10,21 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import React from "react";
+import { number } from 'zod';
 
 type Props = {
-  id: string;
+  id: string | number;
 };
 const AddToBasket = ({ id }: Props) => {
   const redirct = useRouter();
   const { data: session, status } = useSession();
   const { toast } = useToast();
+
   const mutation = useMutation({
     mutationFn: async () => {
       await axios.post(
         "https://icode-sendbad-store.runasp.net/api/Cart/AddProductToCart?productId=" +
-          id,
+        id,
         {
           quantity: 1,
         },
@@ -53,10 +55,55 @@ const AddToBasket = ({ id }: Props) => {
     },
   });
 
+  // add to favorite
+  const mutationFav = useMutation({
+    mutationFn: async () => {
+      const res = await axios.post(
+        `https://icode-sendbad-store.runasp.net/api/Favorites/AddProductToFavorite/${product.id}`,
+        {},
+        {
+          headers: {
+            "Accept-Language": "ar",
+            "Content-type": "multipart/form-data",
+            Authorization: `Bearer ${session?.user.data.token}`,
+          },
+        }
+      );
+      return res.data;
+    },
+    onSuccess: () => {
+      toast({
+        variant: 'default',
+        description: 'تم إضافة المنتج إلى المفضلة بنجاح',
+        style: {
+          backgroundColor: 'green',
+        },
+      });
+    },
+    onError: (error: any) => {
+      const errorMessage =
+        error.response?.data?.message || 'حدث خطأ أثناء إضافة المنتج إلى المفضلة';
+
+      toast({
+        variant: 'destructive',
+        description: `خطأ: ${errorMessage}`,
+        action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
+      });
+    },
+  });
+
+
   const handleAddToCart = () => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
       mutation.mutate();
+    }
+  };
+
+  const handleAddToFav = () => {
+    if (status === "unauthenticated") redirct.push("/auth");
+    else if (status === "authenticated") {
+      mutationFav.mutate();
     }
   };
 
@@ -77,9 +124,21 @@ const AddToBasket = ({ id }: Props) => {
           </>
         )}
       </Button>
-      <div className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] ml-[6px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center">
-        <AiOutlineHeart className="w-[20px] h-[20px]" color="#D5D5D5" />
-      </div>
+
+      <Button
+        disabled={mutationFav.isPending}
+        variant={"outline"}
+        onClick={() => handleAddToFav()}
+        className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] mr-[4px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1"
+      >
+        {
+          mutationFav.isPending? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            <AiOutlineHeart className="w-[20px] h-[20px]" color="#D5D5D5"/>
+          )
+        }
+      </Button>
     </div>
   );
 };
