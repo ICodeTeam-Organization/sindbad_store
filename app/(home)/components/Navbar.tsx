@@ -73,7 +73,6 @@ const Navbar = () => {
         )}
         <SheetFooter>
           <SheetClose asChild>
-            {/* <Button type="submit">Save changes</Button> */}
           </SheetClose>
         </SheetFooter>
       </SheetContent>

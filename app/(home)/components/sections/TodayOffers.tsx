@@ -27,7 +27,7 @@ const TodayOffers = async () => {
       </div>
       <Carousel className="m-auto cursor-pointer max-md:w-[265px] md:w-[650px] max-sm:w-[260px] sm:w-[500px] lg:w-[930px] xl:w-[1200px]">
         <CarouselContent dir="ltr">
-          {Offersproducts.data.map((product: any) => (
+          {Offersproducts?.data?.map((product: any) => (
             <CarouselItem
               key={product.id}
               className="pl-0 ml-4 lg:basis-1/6 max-md:basis-1/3 max-sm:basis-1/2  md:basis-1/4  xl:basis-1/6 rounded-t-[8px]"
