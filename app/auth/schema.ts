@@ -22,7 +22,7 @@ export const registrationSchema = z
 export const LoginSchema = z.object({
   phone: z
     .string()
-    .min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام")
+    .min(6, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام")
     .regex(/^\d+$/, "المدخل يجب أن يحتوي على أرقام فقط"),
   password: z.string().min(6, "كلمة المرور مطلوبة"),
 });

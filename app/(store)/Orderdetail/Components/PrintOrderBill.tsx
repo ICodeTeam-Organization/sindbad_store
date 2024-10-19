@@ -26,7 +26,7 @@ const PrintOrderBill = ({ Bill }: any) => {
         </div>
         <div className="flex">
           <p className="text-gray-600">الخصم :</p>
-          <p className="mr-3">24 ر.س</p>
+          <p className="mr-3">{Bill.totalDiscount} ر.س</p>
         </div>
       </div>
       <hr className="w-1/2" />
