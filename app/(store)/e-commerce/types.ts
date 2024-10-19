@@ -1,5 +1,8 @@
 export interface E_commerceCardProps {
-    image: string;
-    title: string;
-    description: string;
+    id: string,
+    name: string,
+    imagesUrl: string[],
+    mainImageUrl: string,
+    storeCategories: string[],
+    LinkOFStore?: string
 }

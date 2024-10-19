@@ -1,11 +1,19 @@
 import React from 'react';
 import E_commerceGrid from './components/E_commerceGrid';
 import Pagination from '../../../components/Pagination';
+import { getApi } from '@/lib/http';
 
-function E_commercePage() {
+const E_commercePage=  async ()=> {
+  
+  const Ecommerces = await getApi<any>(
+    'Market/Store/GetAllStoresThatHasLinksToOnlineWebsite'
+  )
+
+
+
   return (
     <div className='mt-12'>
-      <E_commerceGrid />
+      <E_commerceGrid allEcommerces={Ecommerces} />
       <Pagination />
     </div>
   );
