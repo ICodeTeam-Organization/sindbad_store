@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@radix-ui/react-toast';
 import { Loader2 } from 'lucide-react';
 import { ProductCardProps } from '../types';
+import AddToBasket from '@/app/(home)/components/AddToBasket';
 
 const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
   const { toast } = useToast();
@@ -67,7 +68,7 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
       </a>
 
       <div className="m-4">
-        <div className="mt-2">
+        <div className="my-3">
           {product.price ? (
             <div className="flex items-center justify-center mt-1">
               <span className="text-red-500 font-bold text-lg">
@@ -83,8 +84,10 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
             </div>
           )}
         </div>
+        
+          <AddToBasket id={product.id} />
 
-        <div className="flex flex-col md:flex-row justify-between items-center mt-6">
+        {/* <div className="flex flex-col md:flex-row justify-between items-center mt-6">
           <button className="min-w-[160px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center mb-2 md:mb-0">
             <LiaShoppingCartSolid className="w-4 h-4 mr-2" />
             <p>اضف للسلة</p>
@@ -99,7 +102,7 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
           >
             {isLoading ? <Loader2 className="animate-spin" /> : <IoMdHeartEmpty className="w-4 h-4" />}
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );
