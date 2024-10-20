@@ -1,5 +1,4 @@
 "use client";
-import { AiOutlineHeart } from "react-icons/ai";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -11,6 +10,7 @@ import { Loader2 } from "lucide-react";
 import axios from "axios";
 import React from "react";
 import { number } from 'zod';
+import AddToFavorite from "./AddToFavorite";
 
 type Props = {
   id: string | number;
@@ -55,43 +55,6 @@ const AddToBasket = ({ id }: Props) => {
     },
   });
 
-  // add to favorite
-  const mutationFav = useMutation({
-    mutationFn: async () => {
-      const res = await axios.post(
-        `https://icode-sendbad-store.runasp.net/api/Favorites/AddProductToFavorite/${product.id}`,
-        {},
-        {
-          headers: {
-            "Accept-Language": "ar",
-            "Content-type": "multipart/form-data",
-            Authorization: `Bearer ${session?.user.data.token}`,
-          },
-        }
-      );
-      return res.data;
-    },
-    onSuccess: () => {
-      toast({
-        variant: 'default',
-        description: 'تم إضافة المنتج إلى المفضلة بنجاح',
-        style: {
-          backgroundColor: 'green',
-        },
-      });
-    },
-    onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message || 'حدث خطأ أثناء إضافة المنتج إلى المفضلة';
-
-      toast({
-        variant: 'destructive',
-        description: `خطأ: ${errorMessage}`,
-        action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-      });
-    },
-  });
-
 
   const handleAddToCart = () => {
     if (status === "unauthenticated") redirct.push("/auth");
@@ -100,12 +63,7 @@ const AddToBasket = ({ id }: Props) => {
     }
   };
 
-  const handleAddToFav = () => {
-    if (status === "unauthenticated") redirct.push("/auth");
-    else if (status === "authenticated") {
-      mutationFav.mutate();
-    }
-  };
+
 
   return (
     <div className="cursor-pointer my-1 flex justify-around max-md:justify-between items-center w-full">
@@ -125,7 +83,9 @@ const AddToBasket = ({ id }: Props) => {
         )}
       </Button>
 
-      <Button
+      <AddToFavorite id={id} />
+
+      {/* <Button
         disabled={mutationFav.isPending}
         variant={"outline"}
         onClick={() => handleAddToFav()}
@@ -138,7 +98,7 @@ const AddToBasket = ({ id }: Props) => {
             <AiOutlineHeart className="w-[20px] h-[20px]" color="#D5D5D5"/>
           )
         }
-      </Button>
+      </Button> */}
     </div>
   );
 };

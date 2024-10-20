@@ -52,7 +52,7 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
     },
   });
 
-  const { isLoading } = mutation;
+  // const { isLoading } = mutation;
 
   return (
     <div className="border rounded-lg shadow-sm relative max-w-[230px] mx-auto text-center cursor-pointer">
