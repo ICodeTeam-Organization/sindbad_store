@@ -31,10 +31,12 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/http";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { SelectLabel } from "@radix-ui/react-select";
 
 const AddShipingAdresses = ({ governorate }: any) => {
-  const [stateid, setstateid] = useState("4");
+  const [directorates, setDirectorates] = useState<any[]>([]);
+  //const [regions, setRegions] = useState<any>([]);
   const form = useForm<z.infer<typeof AddshipingadressSchema>>({
     resolver: zodResolver(AddshipingadressSchema),
     defaultValues: {
@@ -49,22 +51,45 @@ const AddShipingAdresses = ({ governorate }: any) => {
 
   const { isPending, error, data } = useQuery({
     queryKey: ["city"],
-    queryFn: () =>
-      getApi<any>(`Locations/GetGovernorateWithChildren?id=${stateid}`),
+    queryFn: () => getApi<any>(`Locations/GetGovernorateWithChildren`),
   });
-  console.log(data);
-  if (isPending) return "Loading...";
 
-  if (error) return "An error has occurred: " + error.message;
+  const selectedState = form.watch("stateid");
+  const selectedCity = form.watch("city");
+
+  useEffect(() => {
+    if (selectedState) {
+      const newDirectorates = data.data.find(
+        (state: any) => state.id === parseInt(selectedState)
+      ).directorates;
+
+      setDirectorates(() => [...newDirectorates]);
+    }
+  }, [selectedState]);
+
+  //-----------------this for get regions
+  // useEffect(() => {
+  //   if (selectedCity) {
+  //     console.log(selectedCity);
+  //     const newRegions = directorates.find(
+  //       (city: any) => city.id === parseInt(selectedCity)
+  //     ).regions;
+  //     setRegions(() => [...newRegions]);
+  //   }
+  // }, [selectedCity]);
 
   function onSubmit(values: z.infer<typeof AddshipingadressSchema>) {
-    setstateid(values.stateid);
     // mutate({
     //   stateId: governorate.id,
     //   city: values.city,
     // });
     console.log({ values });
   }
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -114,7 +139,7 @@ const AddShipingAdresses = ({ governorate }: any) => {
                             </SelectTrigger>
                             <SelectContent>
                               <SelectGroup {...field}>
-                                {governorate.map((itm: any) => (
+                                {data.data.map((itm: any) => (
                                   <SelectItem
                                     key={itm.id}
                                     value={itm.id.toString()}
@@ -142,11 +167,17 @@ const AddShipingAdresses = ({ governorate }: any) => {
                             </SelectTrigger>
                             <SelectContent>
                               <SelectGroup {...field}>
-                                {data.data.directorates.map((city: any) => (
-                                  <SelectItem key={city.id} value={city.name}>
-                                    {city.name}
-                                  </SelectItem>
-                                ))}
+                                <SelectLabel>
+                                  {directorates.length > 0
+                                    ? "المديريات"
+                                    : "يجب اختيار المحاظة اولا"}
+                                </SelectLabel>
+                                {directorates.length > 0 &&
+                                  directorates.map((city: any) => (
+                                    <SelectItem key={city.id} value={city.name}>
+                                      {city.name}
+                                    </SelectItem>
+                                  ))}
                               </SelectGroup>
                             </SelectContent>
                           </Select>
