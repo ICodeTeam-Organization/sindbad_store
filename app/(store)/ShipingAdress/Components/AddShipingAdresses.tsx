@@ -29,8 +29,8 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getApi, putApi } from "@/lib/http";
+import { useQuery } from "@tanstack/react-query";
+import { getApi } from "@/lib/http";
 import { useState } from "react";
 
 const AddShipingAdresses = ({ governorate }: any) => {
@@ -143,10 +143,7 @@ const AddShipingAdresses = ({ governorate }: any) => {
                             <SelectContent>
                               <SelectGroup {...field}>
                                 {data.data.directorates.map((city: any) => (
-                                  <SelectItem
-                                    key={city.id}
-                                    value={city.name}
-                                  >
+                                  <SelectItem key={city.id} value={city.name}>
                                     {city.name}
                                   </SelectItem>
                                 ))}

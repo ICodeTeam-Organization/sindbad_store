@@ -34,7 +34,7 @@ const AllStores = async () => {
         <CarouselPrevious className=" absolute -top-7 max-md:left-[0px] md:left-[0px] lg:left-[60px]  xl:left-[200px] text-[#F58634]" />
         <CarouselNext className=" absolute -top-7 max-md:left-[35px] md:left-[35px] lg:left-[100px] xl:left-[250px] text-[#F58634]" />
         <CarouselContent>
-          {Allstores.data.map((store: any) => (
+          {Allstores?.data?.map((store: any) => (
             <CarouselItem
               key={store.id}
               dir="rtl"
@@ -46,7 +46,7 @@ const AllStores = async () => {
                 ) : (
                   <Image
                     src={store.mainImageUrl}
-                    alt={""}
+                    alt={"store"}
                     width={330}
                     height={200}
                   />

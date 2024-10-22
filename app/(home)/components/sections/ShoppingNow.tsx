@@ -16,7 +16,7 @@ const ShoppingNow = async () => {
         <SectionTitle title={"تسوق الآن"} />
         <div className="container ">
           <div className="grid 2xl:grid-cols-5 lg:grid-cols-4 max-lg:grid-cols-4 max-sm:grid-cols-3 gap-y-5 2xl:gap-[25px] max-sm:gap-x-1 max-lg:gap-x-5  max-md:m-auto  py-4 mr-2 ">
-            {products.data.map((product: any) => (
+            {products?.data?.map((product: any) => (
               <ProductCard
                 key={product.id}
                 id={product.id}

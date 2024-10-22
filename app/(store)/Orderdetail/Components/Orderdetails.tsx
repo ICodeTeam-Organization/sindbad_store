@@ -32,7 +32,7 @@ const Orderdetails = ({ detail }: Detail) => {
       </div>
       <div>
         {/* fetch api from here */}
-        {detail.map((details: any) => (
+        {detail?.map((details: any) => (
           <div
             key={details.productId}
             className="grid grid-cols-6 text-center items-center font-bold w-full text-gray-600"

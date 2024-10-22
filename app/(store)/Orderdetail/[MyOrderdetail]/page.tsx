@@ -27,18 +27,18 @@ const OrderDetail = async ({ params }: Detail) => {
           <div className="flex justify-between items-center border-2 p-3 max-md:text-xs text-lg">
             <div className="flex max-sm:flex-wrap justify-center m-auto">
               <p className="text-gray-600">رقم الطلب :</p>
-              <p className="pr-3 font-bold text-gray-700">{params.MyOrderdetail}</p>
+              <p className="pr-3 font-bold text-gray-700">{data.orderNumber}</p>
             </div>
             <div className="flex max-sm:flex-wrap  justify-between items-center m-auto">
               <p className="text-gray-600">تاريخ الطلب :</p>
-              {/* <p className="pr-3 font-bold text-gray-700">{data.orderDate}</p> */}
+              <p className="pr-3 font-bold text-gray-700">{data.orderDate}</p>
             </div>
             <div className="flex max-sm:flex-wrap  justify-start items-center m-auto">
               <p className="text-gray-600">حالة الطلب :</p>
-              {/* <p className="pr-3 font-bold text-gray-700">{data.orderStatus}</p> */}
+              <p className="pr-3 font-bold text-gray-700">{data.orderStatus}</p>
             </div>
           </div>
-          <Orderdetails detail={data.items} />
+          <Orderdetails detail={data.pagedOrderDetails.items} />
         </div>
       </div>
       <PrintOrderBill Bill={data} />

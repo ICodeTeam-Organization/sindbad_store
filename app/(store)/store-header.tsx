@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+
 import {
   BiCart,
   BiHeadphone,
@@ -38,9 +39,17 @@ const StoreHeader = () => {
           </Link>
 
           <div className="flex gap-6">
+            <Link href={"/shopping-card"}>
             <BiCart size={40} className="cursor-pointer" />
+            </Link>
+            <Link href={"/Favorites"}>
             <BiHeart size={40} className="cursor-pointer" />
+            </Link>
+            <Link href={"/Orders"}>
             <BiUser size={40} className="cursor-pointer" />
+            </Link>
+            
+            
           </div>
         </div>
       </div>

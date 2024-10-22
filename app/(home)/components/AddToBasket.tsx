@@ -1,5 +1,4 @@
 "use client";
-import { AiOutlineHeart } from "react-icons/ai";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -10,19 +9,22 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import React from "react";
+import { number } from 'zod';
+import AddToFavorite from "./AddToFavorite";
 
 type Props = {
-  id: string;
+  id: string | number;
 };
 const AddToBasket = ({ id }: Props) => {
   const redirct = useRouter();
   const { data: session, status } = useSession();
   const { toast } = useToast();
+
   const mutation = useMutation({
     mutationFn: async () => {
       await axios.post(
         "https://icode-sendbad-store.runasp.net/api/Cart/AddProductToCart?productId=" +
-          id,
+        id,
         {
           quantity: 1,
         },
@@ -53,12 +55,15 @@ const AddToBasket = ({ id }: Props) => {
     },
   });
 
+
   const handleAddToCart = () => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
       mutation.mutate();
     }
   };
+
+
 
   return (
     <div className="cursor-pointer my-1 flex justify-around max-md:justify-between items-center w-full">
@@ -77,9 +82,23 @@ const AddToBasket = ({ id }: Props) => {
           </>
         )}
       </Button>
-      <div className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] ml-[6px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center">
-        <AiOutlineHeart className="w-[20px] h-[20px]" color="#D5D5D5" />
-      </div>
+
+      <AddToFavorite id={id} />
+
+      {/* <Button
+        disabled={mutationFav.isPending}
+        variant={"outline"}
+        onClick={() => handleAddToFav()}
+        className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] mr-[4px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1"
+      >
+        {
+          mutationFav.isPending? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            <AiOutlineHeart className="w-[20px] h-[20px]" color="#D5D5D5"/>
+          )
+        }
+      </Button> */}
     </div>
   );
 };
