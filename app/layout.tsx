@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
-import { Toaster as SonanerToaster, toast } from "sonner";
+import { Toaster as SonanerToaster } from "sonner";
 
 const sansFont = Almarai({
   weight: ["400", "700"],

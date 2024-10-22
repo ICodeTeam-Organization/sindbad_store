@@ -1,12 +1,12 @@
 export type CheckoutType = {
-  bank: number;
-  number: number;
+  bank: string;
+  number: string;
   date: string;
-  image: File[];
+  image: string;
   note: string;
-  amount: number;
+  amount: string;
 };
 export type Bank = {
-  id: number;
+  id: string;
   bankName: string;
 };
