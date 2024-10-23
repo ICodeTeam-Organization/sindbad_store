@@ -87,7 +87,7 @@ export function putApi<T>(
   return http<T>(url, undefined, { ...config, method: method });
 }
 
-export function postApi<T>(url: string, config?: Config) {
+export function postApi<T>(url: string, config?: Config, p0?: {}) {
   return http<T>(url, undefined, { ...config, method: "POST" });
 }
 
