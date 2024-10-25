@@ -6,27 +6,28 @@ import alibaba from '../../../../public/images/alibaba.svg';
 import Image from "next/image";
 
 interface SpecialProduct {
-  id: number;
-  requiredProductName: string;
-  moreDetailsAboutProduct: string;
-  linkUrl: string;
-  specialProductImageForViews: Array<{
+  id?: number;
+  requiredProductName?: string;
+  moreDetailsAboutProduct?: string;
+  linkUrl?: string;
+  specialProductImageForViews?: Array<{
       imageUrl: string;
       id: number;
   }>;
-  specialProductType: string;
-  shippingCost: number;
-  price: number;
-  totalPrice: number;
-  quantity: number;
-  specialProductStatus: string;
-  createdate: string; // يمكن استخدام نوع Date إذا كنت ترغب في معالجة التاريخ
+  specialProductType?: string;
+  shippingCost?: number;
+  price?: number;
+  totalPrice?: number;
+  quantity?: number;
+  specialProductStatus?: string;
+  createdate?: string; // يمكن استخدام نوع Date إذا كنت ترغب في معالجة التاريخ
 }
 
-type props = {
-  classname?: string;
-};
-const OrderDetails = ({ classname }: props) => {
+
+const OrderDetails = ( {OrderDetails}:{OrderDetails : SpecialProduct}) => {
+  // console.log("---------------------------------------")
+  // console.log(OrderDetails.requiredProductName)
+
   return (
     <div className=" my-2">
       {/* <div>
@@ -79,7 +80,7 @@ const OrderDetails = ({ classname }: props) => {
 
       <div
         className={
-          classname +
+          
           " border-2  max-md:w-full max-md:m-4 py-2 px-4 grid grid-cols-4 "
         }
       >
@@ -91,14 +92,22 @@ const OrderDetails = ({ classname }: props) => {
         type="text"
       /> */}
         <span className="border w-full rounded-sm col-span-3 my-1 p-2">
-          hi
+          {OrderDetails?.requiredProductName}
+        </span>
+
+        <p className="text-nowrap ml-2 my-1 max-lg:text-[10px] max-md:text-nowrap">
+          نوع المنتج :
+        </p>
+
+        <span className="border w-full rounded-sm col-span-3 my-1 p-2">
+          {OrderDetails?.specialProductType}
         </span>
 
         <p className="text-nowrap ml-2 my-1 max-lg:text-xs max-md:text-nowrap">
           تفاصيل أكثر :
         </p>
         <span className="border w-full rounded-sm col-span-3 my-1 p-2">
-          hi
+          {OrderDetails?.moreDetailsAboutProduct}
         </span>
 
         {/* {classname ? 
@@ -111,38 +120,48 @@ const OrderDetails = ({ classname }: props) => {
           الكمية :
         </p>
         <span className="border w-full rounded-sm col-span-3 my-1 p-2">
-          hi
+          {OrderDetails?.quantity}
         </span>
 
         <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
           رابط :
         </p>
         <span className="border w-full rounded-sm col-span-3 my-1 p-2">
-          hi
+          {OrderDetails?.linkUrl}
+        </span>
+
+        <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
+          تاريخ الطلب :
+        </p>
+        <span className="border w-full rounded-sm col-span-3 my-1 p-2">
+          {OrderDetails?.createdate}
+        </span>
+
+        <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
+          حالة الطلب :
+        </p>
+        <span className="border w-full rounded-sm col-span-3 my-1 p-2">
+          {OrderDetails?.specialProductStatus}
         </span>
 
         <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
           الصور
         </p>
         <div className="flex w-max">
-          <div className="w-[150px] h-[150px] m-2">
-            <Image
-              src={alibaba}
-              alt={"dd"}
-              className="w-full object-cover rounded-lg border"
-              width={50}
-              height={50}
-            />
-          </div>
-          <div className="w-[150px] h-[150px] m-2">
-            <Image
-              src={alibaba}
-              alt={"dd"}
-              className="w-full object-cover rounded-lg border"
-              width={50}
-              height={50}
-            />
-          </div>
+          {
+            OrderDetails?.specialProductImageForViews?.map((image, index) => (
+              <div key={index} className="w-[150px] h-[150px] m-2">
+                <img
+                  src={image.imageUrl}
+                  alt={image.imageUrl}
+                  className="w-full object-cover rounded-lg border"
+                  width={50}
+                  height={50}
+                />
+              </div>
+            ))
+          }
+
         </div>
         {/* <DropZone /> */}
       </div>
