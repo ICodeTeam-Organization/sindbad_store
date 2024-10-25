@@ -1,9 +1,14 @@
 import { Card } from "@/components/ui/card";
 import Dropdown from "./Dropdown";
-
+import { getApi } from '@/lib/http';
 import OrderDetails from "./OrderDetails";
 
-const MyNewOrder = () => {
+const MyNewOrder = async () => {
+
+  const AllNewOrders = await getApi<any>(
+    'SpecialProducts/GetAllSpecialProductsForViewInSpecialProductsPageByFilter?searchKeyWord=0&PageSize=15&PageNumber=1'
+  )
+  
   return (
     <Card className="rounded-none border-black p-6">
       <div className="flex justify-around items-center border m-auto border-black  py-2">
@@ -20,53 +25,8 @@ const MyNewOrder = () => {
           <Dropdown />
         </div>
       </div>
-      <div className="flex justify-around w-full items-center max-md:flex-col mt-3">
-        {/* <div>
-          <div className="flex items-center justify-around mb-3">
-            <p>الكمية المطلوبة</p>
-            <Quantity/>
-          </div>
-          <div className="bg-[#C0C0C0] p-4 m-auto my-4">
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">رقم الطلب :</h1>
-              <div className="bg-[#C8C8C8] rounded-sm text-center w-32 mr-2">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">تاريخ الطلب :</h1>
-              <div className="bg-[#C8C8C8] rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">السعر :</h1>
-              <div className="bg-white rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">الإجمالي :</h1>
-              <div className="bg-white rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">حالة الطلب :</h1>
-              <div className="bg-[#C8C8C8] rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-between items-center">
-              <Button className="w-24-ctext-center w-32 m-auto h-8 mt-4 bg-green-700">
-                قبول
-              </Button>
-              <Button className="w-24-ctext-center w-32 m-auto h-8 mt-4 bg-red-700">
-                رفض
-              </Button>
-            </div>
-          </div>
-        </div> */}
+      <div className="row">
+        
         <OrderDetails classname="ttt" />
       </div>
     </Card>
