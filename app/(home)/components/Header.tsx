@@ -1,12 +1,12 @@
 "use client";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { BiSearch } from "react-icons/bi";
-import Navbar from "./Navbar";
+import Navbar from "./navbar";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import PersonButton from "./PersonButton";
+import PersonButton from "./person-button";
 import { useSession } from "next-auth/react";
 import { Loader2 } from "lucide-react";
 import React from "react";

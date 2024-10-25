@@ -1,5 +1,5 @@
 import React from 'react';
-import E_commerceGrid from './components/E_commerceGrid';
+import E_commerceGrid from './components/e-commerce-grid';
 import Pagination from '../../../components/Pagination';
 import { getApi } from '@/lib/http';
 

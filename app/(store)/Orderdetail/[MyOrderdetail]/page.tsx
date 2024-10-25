@@ -1,6 +1,6 @@
 import React from "react";
-import Orderdetails from "../Components/Orderdetails";
-import PrintOrderBill from "../Components/PrintOrderBill";
+import Orderdetails from "../components/order-details";
+import PrintOrderBill from "../components/print-order-bill";
 import BreadCrumb from "@/components/BreadCrumb";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";

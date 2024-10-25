@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import Categories from "./Categories";
-import PriceRange from "./PriceRange";
-import Brands from "./Brands";
-import PopularTags from "./PopularTags";
+import Categories from "./categories";
+import PriceRange from "./price-range";
+import Brands from "./brands";
+import PopularTags from "./popular-tags";
 
 const Sidebar = () => {
   const categoryList = [

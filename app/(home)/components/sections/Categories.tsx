@@ -1,6 +1,6 @@
-import CategoryCard from "../CategoryCard";
+import CategoryCard from "../category-card";
 import styles from "../SectionTitle.module.css";
-import CategoriesDialog from "../CategoriesDialog";
+import CategoriesDialog from "../categories-dialog";
 import { getApi } from "@/lib/http";
 import { Category } from "@/types/storeTypes";
 

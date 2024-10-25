@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sheet";
 import Link from "next/link";
 import { GoPerson } from "react-icons/go";
-import SignOutButton from "./SignOutButton";
+import SignOutButton from "./sign-out-button";
 import { useSession } from "next-auth/react";
 const Navbar = () => {
   const session = useSession();
@@ -31,7 +31,7 @@ const Navbar = () => {
         <br />
         <br />
         <div className="grid gap-4 py-4">
-          <Link href={"/Orders"}>
+          <Link href={"/orders"}>
             <Label
               htmlFor="name"
               className="text-right text-2xl cursor-pointer"
@@ -40,7 +40,7 @@ const Navbar = () => {
             </Label>
           </Link>
 
-          <Link href={"/Favorites"}>
+          <Link href={"/favorites"}>
             <Label
               htmlFor="name"
               className="text-right text-2xl cursor-pointer"
@@ -49,7 +49,7 @@ const Navbar = () => {
             </Label>
           </Link>
 
-          <Link className="mt-2" href={"/ShipingAdress"}>
+          <Link className="mt-2" href={"/shiping-adress"}>
             <Label
               htmlFor="username"
               className="text-right text-2xl cursor-pointer"
@@ -57,7 +57,7 @@ const Navbar = () => {
               إضافة عنوان جديد
             </Label>
           </Link>
-          <Link className="mt-2" href={"/ResetPassword"}>
+          <Link className="mt-2" href={"/reset-password"}>
             <Label
               htmlFor="username"
               className="text-right text-2xl cursor-pointer"

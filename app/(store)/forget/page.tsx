@@ -1,5 +1,5 @@
 import Link from "next/link";
-import PhoneValidation from "./components/PhoneValidation";
+import PhoneValidation from "./components/phone-validation";
 import BreadCrumb from "@/components/BreadCrumb";
 const forgetPass = () => {
   return (

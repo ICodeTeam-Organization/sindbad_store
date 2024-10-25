@@ -1,5 +1,5 @@
 import BreadCrumb from "@/components/BreadCrumb";
-import MyOrders from "./Components/MyOrders";
+import MyOrders from "./components/my-orders";
 import Pagination from "@/components/Pagination";
 import React from "react";
 

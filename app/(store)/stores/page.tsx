@@ -1,5 +1,5 @@
 import React from "react";
-import StoreGrid from "./components/StoreGrid";
+import StoreGrid from "./components/store-grid";
 import { getApi } from "@/lib/http";
 
 const StoresPage = async () => {

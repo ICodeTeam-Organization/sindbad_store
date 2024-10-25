@@ -1,4 +1,4 @@
-import CheckoutForm from "./components/CheckoutForm";
+import CheckoutForm from "./components/checkout-form";
 
 const page = () => {
   return (
