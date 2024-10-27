@@ -4,15 +4,15 @@ import DropZone from "./drop-zone";
 import Quantity from "./quantity";
 import alibaba from '../../../../public/images/alibaba.svg';
 import Image from "next/image";
-
+import { Button } from "@/components/ui/button";
 interface SpecialProduct {
   id?: number;
   requiredProductName?: string;
   moreDetailsAboutProduct?: string;
   linkUrl?: string;
   specialProductImageForViews?: Array<{
-      imageUrl: string;
-      id: number;
+    imageUrl: string;
+    id: number;
   }>;
   specialProductType?: string;
   shippingCost?: number;
@@ -20,71 +20,75 @@ interface SpecialProduct {
   totalPrice?: number;
   quantity?: number;
   specialProductStatus?: string;
-  createdate?: string; // يمكن استخدام نوع Date إذا كنت ترغب في معالجة التاريخ
+  createdate?: string; 
 }
 
-
-const OrderDetails = ( {OrderDetails}:{OrderDetails : SpecialProduct}) => {
+interface OrderDetailsProps {
+  OrderDetails: SpecialProduct;
+  DisplayPrice?: string; 
+  DisplayButton?: string; 
+}
+const OrderDetails: React.FC<OrderDetailsProps> = ({ OrderDetails, DisplayPrice, DisplayButton }) => {
   // console.log("---------------------------------------")
   // console.log(OrderDetails.requiredProductName)
 
   return (
-    <div className=" my-2">
-      {/* <div>
-          <div className="flex items-center justify-around mb-3">
-            <p>الكمية المطلوبة</p>
-            <Quantity/>
-          </div>
-          <div className="bg-[#C0C0C0] p-4 m-auto my-4">
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">رقم الطلب :</h1>
-              <div className="bg-[#C8C8C8] rounded-sm text-center w-32 mr-2">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">تاريخ الطلب :</h1>
-              <div className="bg-[#C8C8C8] rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">السعر :</h1>
-              <div className="bg-white rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">الإجمالي :</h1>
-              <div className="bg-white rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">حالة الطلب :</h1>
-              <div className="bg-[#C8C8C8] rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-between items-center">
-              <Button className="w-24-ctext-center w-32 m-auto h-8 mt-4 bg-green-700">
-                قبول
-              </Button>
-              <Button className="w-24-ctext-center w-32 m-auto h-8 mt-4 bg-red-700">
-                رفض
-              </Button>
+    <div className="block lg:flex gap-2  border-2  my-2">
+      {<div className={DisplayPrice}>
+        {/* <div className="flex items-center justify-around mb-3">
+          <p>الكمية المطلوبة</p>
+          <Quantity />
+        </div> */}
+        <div className="p-4 m-auto ">
+          <div className="flex  items-center m-auto my-2">
+            <h1 className="max-sm:text-[10px]">رقم الطلب :</h1>
+            <div className=" rounded-sm text-center w-32 mr-2">
+              <strong>{OrderDetails?.id}</strong>
             </div>
           </div>
-        </div> */
+          {/* <div className="flex  items-center m-auto my-2">
+            <h1 className="max-sm:text-[10px]">تاريخ الطلب :</h1>
+            <div className=" rounded-sm text-center w-32 mr-2 ">
+              <strong>555</strong>
+            </div>
+          </div> */}
+          <div className="flex  items-center m-auto my-2">
+            <h1 className="max-sm:text-[10px]">السعر :</h1>
+            <div className="bg-white rounded-sm text-center w-32 mr-2 ">
+              <strong>{OrderDetails?.price}</strong>
+            </div>
+          </div>
+          <div className="flex  items-center m-auto my-2">
+            <h1 className="max-sm:text-[10px]">الإجمالي :</h1>
+            <div className="bg-white rounded-sm text-center w-32 mr-2 ">
+              <strong>{OrderDetails?.totalPrice}</strong>
+            </div>
+          </div>
+          {/* <div className="flex  items-center m-auto my-2">
+            <h1 className="max-sm:text-[10px]">حالة الطلب :</h1>
+            <div className=" rounded-sm text-center w-32 mr-2 ">
+              <strong>555</strong>
+            </div>
+          </div> */}
+          <div className={DisplayButton + " flex justify-between items-center"}>
+            <Button className="w-24-ctext-center w-32 m-auto h-8 mt-4 bg-green-700">
+              قبول
+            </Button>
+            <Button className="w-24-ctext-center w-32 m-auto h-8 mt-4 bg-red-700">
+              رفض
+            </Button>
+          </div>
+        </div>
+      </div>
       }
 
       <div
         className={
-          
-          " border-2  max-md:w-full max-md:m-4 py-2 px-4 grid grid-cols-4 "
+
+          " max-md:w-full max-md:m-4 py-2 px-4 grid grid-cols-4 "
         }
       >
-        <p className="text-nowrap ml-2 my-1 max-lg:text-[10px] max-md:text-nowrap">
+        <p className="text-nowrap ml-2 my-1 max-lg:text-[14px] max-md:text-nowrap">
           المنتج المطلوب :
         </p>
         {/* <input
@@ -95,7 +99,7 @@ const OrderDetails = ( {OrderDetails}:{OrderDetails : SpecialProduct}) => {
           {OrderDetails?.requiredProductName}
         </span>
 
-        <p className="text-nowrap ml-2 my-1 max-lg:text-[10px] max-md:text-nowrap">
+        <p className="text-nowrap ml-2 my-1 max-lg:text-[14px] max-md:text-nowrap">
           نوع المنتج :
         </p>
 
