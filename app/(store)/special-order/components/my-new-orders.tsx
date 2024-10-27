@@ -24,10 +24,10 @@ const MyNewOrder = () => {
       ),
   });
 
-  console.log("---------------$$-----------------")
-  console.log(AllNewOrders?.data?.items)
-  console.log("--------------##-----------------")
-  console.log(AllNewOrders)
+  // console.log("---------------$$-----------------")
+  // console.log(AllNewOrders?.data?.items)
+  // console.log("--------------##-----------------")
+  // console.log(AllNewOrders)
   return (
     <Card className="rounded-none border-black p-6">
       <div className="flex justify-around items-center border m-auto border-black  py-2">
@@ -48,9 +48,13 @@ const MyNewOrder = () => {
         {isPending?(
           <Loader2 className="animate-spin text-center mx-auto" />
         ):(
-          AllNewOrders?.data?.items?.map(( NewOrder :any) =>{
-            return <OrderDetails OrderDetails={ NewOrder } />
-          })
+          AllNewOrders?.data?.items?(
+            AllNewOrders?.data?.items?.map(( NewOrder :any) =>{
+              return <OrderDetails OrderDetails={ NewOrder } DisplayPrice={"hidden"}/>
+            })
+          ):(
+            <h1 className="text-center">لاتوجد طلبات حاليا</h1>
+          )
         )}
 
         
