@@ -1,10 +1,23 @@
+"use client";
 import { Card } from "@/components/ui/card";
 import Dropdown from "./dropdown";
-
+import { getApi } from '@/lib/http';
 import OrderDetails from "./order-details";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
 import Quantity from "./quantity";
 
 const PreviousOrder = () => {
+  const {
+    data: AllPreviousOrders,
+    isPending,
+    refetch,
+  } = useQuery({
+    queryKey: ["AllPreviousOrdersdata"],
+    queryFn: async () =>
+      await getApi<any>("SpecialProducts/GetAllSpecialProductsForViewInSpecialProductsPageByFilter?searchKeyWord=2&PageSize=10&PageNumber=1"
+      ),
+  });
   return (
     <Card className="rounded-none border-black p-6">
       <div className="flex justify-around items-center border m-auto border-black  py-2">
@@ -21,55 +34,20 @@ const PreviousOrder = () => {
           <Dropdown />
         </div>
       </div>
-      <div className="flex justify-around items-center max-md:flex-col mt-3">
-        <div>
-          <div className="flex items-center justify-around mb-3">
-            <p>الكمية المطلوبة</p>
-            <Quantity />
-          </div>
-          <div className="bg-[#C0C0C0] p-4 m-auto my-4">
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">رقم الطلب :</h1>
-              <div className="bg-[#C8C8C8] rounded-sm text-center w-32 mr-2">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">تاريخ الطلب :</h1>
-              <div className="bg-[#C8C8C8] rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">السعر :</h1>
-              <div className="bg-white rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">الإجمالي :</h1>
-              <div className="bg-white rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            <div className="flex justify-end items-center m-auto my-2">
-              <h1 className="max-sm:text-[10px]">حالة الطلب :</h1>
-              <div className="bg-[#C8C8C8] rounded-sm text-center w-32 mr-2 ">
-                <strong>555</strong>
-              </div>
-            </div>
-            {/* <div className="flex justify-between items-center">
-              <Button className="w-24-ctext-center w-32 m-auto h-8 mt-4 bg-green-700">
-                قبول
-              </Button>
-              <Button className="w-24-ctext-center w-32 m-auto h-8 mt-4 bg-red-700">
-                رفض
-              </Button>
-            </div> */}
-          </div>
-        </div>
-        <OrderDetails />
+      <div className="row">
+      {isPending?(
+          <Loader2 className="animate-spin text-center mx-auto" />
+        ):(
+          AllPreviousOrders?.data?.items?(
+            AllPreviousOrders?.data?.items?.map(( PreviousOrder :any) =>{
+              return <OrderDetails OrderDetails={ PreviousOrder } DisplayButton={"hidden"}/>
+            })
+          ):(
+            <h1 className="text-center">لاتوجد طلبات حاليا</h1>
+          )
+        )}
       </div>
+
     </Card>
   );
 };
