@@ -20,7 +20,7 @@ const Dropdown = ({ name }: props) => {
       <DropdownMenuTrigger asChild>
         <Button
           className={`${
-            !name && "w-96 "
+            !name && " "
           }flex items-end text-lg justify-between bg-gray-200`}
           variant="outline"
         >
