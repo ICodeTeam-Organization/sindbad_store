@@ -107,7 +107,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ OrderDetails, DisplayPrice,
           {OrderDetails?.specialProductType}
         </span>
 
-        <p className="text-nowrap ml-2 my-1 max-lg:text-xs max-md:text-nowrap">
+        <p className="text-nowrap ml-2 my-1  max-md:text-nowrap">
           تفاصيل أكثر :
         </p>
         <span className="border w-full rounded-sm col-span-3 my-1 p-2">
@@ -120,35 +120,35 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ OrderDetails, DisplayPrice,
 
         <Quantity classname="" />
       </div> : null} */}
-        <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
+        <p className="text-nowrap ml-2 my-3  max-md:text-nowrap">
           الكمية :
         </p>
         <span className="border w-full rounded-sm col-span-3 my-1 p-2">
           {OrderDetails?.quantity}
         </span>
 
-        <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
+        <p className="text-nowrap ml-2 my-3  max-md:text-nowrap">
           رابط :
         </p>
         <span className="border w-full rounded-sm col-span-3 my-1 p-2">
           {OrderDetails?.linkUrl}
         </span>
 
-        <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
+        <p className="text-nowrap ml-2 my-3  max-md:text-nowrap">
           تاريخ الطلب :
         </p>
         <span className="border w-full rounded-sm col-span-3 my-1 p-2">
           {OrderDetails?.createdate}
         </span>
 
-        <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
+        <p className="text-nowrap ml-2 my-3  max-md:text-nowrap">
           حالة الطلب :
         </p>
         <span className="border w-full rounded-sm col-span-3 my-1 p-2">
           {OrderDetails?.specialProductStatus}
         </span>
 
-        <p className="text-nowrap ml-2 my-3 max-lg:text-xs max-md:text-nowrap">
+        <p className="text-nowrap ml-2 my-3  max-md:text-nowrap">
           الصور
         </p>
         <div className="flex w-max">
