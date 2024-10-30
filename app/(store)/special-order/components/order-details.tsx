@@ -158,7 +158,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ OrderDetails, DisplayPrice,
                 <img
                   src={image.imageUrl}
                   alt={image.imageUrl}
-                  className="w-full object-cover rounded-lg border"
+                  className="w-full  h-full object-cover rounded-lg border"
                   width={50}
                   height={50}
                 />

@@ -7,6 +7,7 @@ import OrderDetails from "./order-details";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
+import LoadMoreButton from "@/components/LoadMoreButton";
 
 interface SpecialProduct {
   id?: number;
@@ -23,9 +24,8 @@ interface SpecialProduct {
   totalPrice?: number;
   quantity?: number;
   specialProductStatus?: string;
-  createdate?: string; 
+  createdate?: string;
 }
-// واجهة تمثل استجابة API
 interface ApiResponse {
   success: boolean;
   message: string;
@@ -45,59 +45,43 @@ const fetchProducts = async (pageNumber = 1, pageSize = 15): Promise<ApiResponse
 
 const MyNewOrder = () => {
 
-  // const AllNewOrders = await getApi<any>(
-  //   'SpecialProducts/GetAllSpecialProductsForViewInSpecialProductsPageByFilter?searchKeyWord=0&PageSize=15&PageNumber=1'
-  // )
-
-  // const {
-  //   data: AllNewOrders,
-  //   isPending,
-  //   refetch,
-  // } = useQuery({
-  //   queryKey: ["rdata"],
-  //   queryFn: async () =>
-  //     await getApi<any>("SpecialProducts/GetAllSpecialProductsForViewInSpecialProductsPageByFilter?searchKeyWord=0&PageSize=10&PageNumber=1"
-  //     ),
-  // });
-
   const [AllNewOrders, setAllNewOrders] = useState<SpecialProduct[]>([]);
-  const pageSize = 10;
-  const [pageNumber, setPageNumber] = useState(1); 
+  const pageSize = 15;
+  const [pageNumber, setPageNumber] = useState(1);
+  const [isLoadingMore, setIsLoadingMore] = useState(false); // حالة تحميل المزيد
+  const [hiddenLoadingMore, setHiddenLoadingMore] = useState(false); // حالة تحميل المزيد
+
 
   const {
     data: newOrders,
-    isPending,
+    isLoading,
     refetch,
   } = useQuery<ApiResponse>({
-    queryKey: ["rdata", pageNumber, pageSize],
+    queryKey: ["newSpecialOrder", pageNumber, pageSize],
     queryFn: () => fetchProducts(pageNumber, pageSize),
-
-
+    // enabled: false, // عدم تفعيل الاستعلام تلقائيًا
   });
 
-   // دمج البيانات الجديدة مع القديمة عند استرجاعها
-  //  if (newOrders && Array.isArray(newOrders)) {
-  //   setAllNewOrders((prevOrders) => [...prevOrders, ...newOrders?.data?.items]);
-  // }
 
-    // دمج البيانات الجديدة مع القديمة عند استرجاعها
-    useEffect(() => {
-      if (newOrders && newOrders.success) {
-        setAllNewOrders((prevOrders) => [...prevOrders, ...newOrders.data.items]);
+  // دمج البيانات الجديدة مع القديمة عند استرجاعها
+  useEffect(() => {
+    if (newOrders && newOrders.success) {
+      setAllNewOrders((prevOrders) => [...prevOrders, ...newOrders.data.items]);
+      if (newOrders?.data?.currentPage == newOrders?.data?.totalPages) {
+        console.log("setHiddenLoadingMore --------------------------------")
+        setHiddenLoadingMore(true);
       }
-    }, [newOrders]);
+      setIsLoadingMore(false); // إيقاف حالة التحميل بعد تحميل البيانات
+    }
 
-    const loadMore = () => {
-      setPageNumber((prev) => prev + 1); // زيادة رقم الصفحة
-      refetch(); // استرجاع البيانات مرة أخرى
-    };
+  }, [newOrders]);
 
-  console.log("---------------$$-----------------")
-  console.log(newOrders?.data?.items)
-  // console.log("--------------##newOrders-----------------")
-  // console.log(newOrders)
-  console.log("--------------##AllNewOrders-----------------")
-  console.log(AllNewOrders)
+  const loadMore = () => {
+    setIsLoadingMore(true); // تفعيل حالة التحميل
+    const nextPage = pageNumber + 1;
+    setPageNumber(nextPage); // زيادة رقم الصفحة
+    refetch(); // استرجاع البيانات للصفحة الجديدة
+  };
 
   return (
     <Card className="rounded-none border-black p-6">
@@ -112,29 +96,32 @@ const MyNewOrder = () => {
         </div>
         <div className="flex items-center m-auto">
           <h1 className="ml-2 m-auto">الفئة الفرعية :</h1>
-          <Dropdown name="اختر الفئة"/>
+          <Dropdown name="اختر الفئة" />
         </div>
       </div>
       <div className="row">
-        {isPending?(
+        {isLoading && !isLoadingMore ? (
           <Loader2 className="animate-spin text-center mx-auto" />
-        ):(
+        ) : (
 
-          AllNewOrders?(
+          AllNewOrders ? (
             <>
-            {AllNewOrders.map((NewOrder: any) => (
-              <OrderDetails key={NewOrder.id} OrderDetails={NewOrder} DisplayPrice={"hidden"} />
-            ))}
-            <button onClick={loadMore}>
-              الصفحة التالية
-            </button>
-          </>
-          ):(
+              {AllNewOrders.map((NewOrder: any) => (
+                <OrderDetails key={NewOrder.id} OrderDetails={NewOrder} DisplayPrice={"hidden"} />
+              ))}
+
+              {hiddenLoadingMore? (
+                null
+              ): (<LoadMoreButton onClick={loadMore} isLoading={isLoadingMore} />)}
+
+
+            </>
+          ) : (
             <h1 className="text-center">لاتوجد طلبات حاليا</h1>
           )
         )}
 
-        
+
       </div>
     </Card>
   );
