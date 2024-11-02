@@ -31,6 +31,12 @@ module.exports = {
         port: "",
         pathname: "/free-vector/**",
       },
+      {
+        protocol: 'http',
+        hostname: 'example.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
 };

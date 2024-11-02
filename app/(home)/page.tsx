@@ -1,13 +1,13 @@
-import Cards from "./components/Cards";
-import Ads from "./components/sections/Ads";
-import AllStores from "./components/sections/AllStores";
-import BeastSeller from "./components/sections/BeastSeller";
-import Categories from "./components/sections/Categories";
-import Feature from "./components/sections/Feature";
-import Hero from "./components/sections/Hero";
-import RecentlyAdded from "./components/sections/RecentlyAdded";
-import ShoppingNow from "./components/sections/ShoppingNow";
-import TodayOffers from "./components/sections/TodayOffers";
+import Cards from "./components/cards";
+import Ads from "./components/sections/ads";
+import AllStores from "./components/sections/all-stores";
+import BeastSeller from "./components/sections/beast-seller";
+import Categories from "./components/sections/categories";
+import Feature from "./components/sections/feature";
+import Hero from "./components/sections/hero";
+import RecentlyAdded from "./components/sections/recently-added";
+import ShoppingNow from "./components/sections/shopping-now";
+import TodayOffers from "./components/sections/today-offers";
 
 export default function Home() {
   return (

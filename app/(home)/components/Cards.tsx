@@ -4,10 +4,10 @@ import discounts from "@/public/images/discounts.svg";
 import onlineStores from "@/public/images/onlineStores.svg";
 import shoppingStore from "@/public/images/shoppingStore.svg";
 import wholesaleSection from "@/public/images/wholesaleSection.svg";
-import CardHero from "./CardHero";
+import CardHero from "./card-hero";
 const Cards = () => {
   const cards = [
-    { name: "طلب خاص", image: specialrequist, href: "/SpecialOrder/" },
+    { name: "طلب خاص", image: specialrequist, href: "/special-order/" },
     { name: "العروض", image: discounts, href: "/shop" },
     { name: "المتجر ", image: shoppingStore, href: "/shop/" },
     { name: "المحلات", image: Stores, href: "/stores" },

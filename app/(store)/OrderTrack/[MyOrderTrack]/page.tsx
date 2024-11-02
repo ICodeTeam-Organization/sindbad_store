@@ -9,7 +9,7 @@ import location from "@/public/images/location.svg";
 import requestAvailable from "@/public/images/requestAvailable.svg";
 import isTrue from "@/public/images/isTrue.svg";
 import date from "@/public/images/date.svg";
-import Progresses from "../components/Progresses";
+import Progresses from "../components/progresses";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import BreadCrumb from "@/components/BreadCrumb";

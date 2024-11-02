@@ -1,7 +1,7 @@
 import React from "react";
-import Sidebar from "./components/Sidebar";
-import SearchResultsHeader from "./components/SearchResultsHeader";
-import ShopProductsGrid from "./components/ShopProductsGrid";
+import Sidebar from "./components/sidebar";
+import SearchResultsHeader from "./components/search-results-header";
+import ShopProductsGrid from "./components/shop-products-grid";
 import Pagination from "../../../components/Pagination";
 import { getApi } from "@/lib/http";
 import { console } from "inspector";
