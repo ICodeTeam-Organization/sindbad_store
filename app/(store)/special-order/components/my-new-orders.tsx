@@ -1,8 +1,7 @@
-
 "use client";
 import { Card } from "@/components/ui/card";
 import Dropdown from "./dropdown";
-import { getApi } from '@/lib/http';
+import { getApi } from "@/lib/http";
 import OrderDetails from "./order-details";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
@@ -38,49 +37,47 @@ interface ApiResponse {
   };
 }
 
-const fetchProducts = async (pageNumber = 1, pageSize = 15): Promise<ApiResponse> => {
-  const response = await getApi(`SpecialProducts/GetAllSpecialProductsForViewInSpecialProductsPageByFilter?searchKeyWord=0&PageSize=${pageSize}&PageNumber=${pageNumber}`);
+const fetchProducts = async (pageNumber: number, pageSize: number) => {
+  const response = await getApi<ApiResponse>(
+    `SpecialProducts/GetAllSpecialProductsForViewInSpecialProductsPageByFilter?searchKeyWord=0&PageSize=${pageSize}&PageNumber=${pageNumber}`
+  );
   return response;
 };
 
 const MyNewOrder = () => {
-
   const [AllNewOrders, setAllNewOrders] = useState<SpecialProduct[]>([]);
-  const pageSize = 15;
+  const pageSize = 5;
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false); // حالة تحميل المزيد
   const [hiddenLoadingMore, setHiddenLoadingMore] = useState(false); // حالة تحميل المزيد
 
-
   const {
     data: newOrders,
     isLoading,
-    refetch,
-  } = useQuery<ApiResponse>({
+    // refetch,
+  } = useQuery({
     queryKey: ["newSpecialOrder", pageNumber, pageSize],
     queryFn: () => fetchProducts(pageNumber, pageSize),
     // enabled: false, // عدم تفعيل الاستعلام تلقائيًا
   });
-
 
   // دمج البيانات الجديدة مع القديمة عند استرجاعها
   useEffect(() => {
     if (newOrders && newOrders.success) {
       setAllNewOrders((prevOrders) => [...prevOrders, ...newOrders.data.items]);
       if (newOrders?.data?.currentPage == newOrders?.data?.totalPages) {
-        console.log("setHiddenLoadingMore --------------------------------")
+        // console.log("setHiddenLoadingMore --------------------------------");
         setHiddenLoadingMore(true);
       }
       setIsLoadingMore(false); // إيقاف حالة التحميل بعد تحميل البيانات
     }
-
   }, [newOrders]);
 
   const loadMore = () => {
     setIsLoadingMore(true); // تفعيل حالة التحميل
     const nextPage = pageNumber + 1;
     setPageNumber(nextPage); // زيادة رقم الصفحة
-    refetch(); // استرجاع البيانات للصفحة الجديدة
+    // refetch(); // استرجاع البيانات للصفحة الجديدة
   };
 
   return (
@@ -102,26 +99,23 @@ const MyNewOrder = () => {
       <div className="row">
         {isLoading && !isLoadingMore ? (
           <Loader2 className="animate-spin text-center mx-auto" />
+        ) : AllNewOrders ? (
+          <>
+            {AllNewOrders.map((NewOrder: any) => (
+              <OrderDetails
+                key={NewOrder.id}
+                OrderDetails={NewOrder}
+                DisplayPrice={"hidden"}
+              />
+            ))}
+
+            {hiddenLoadingMore ? null : (
+              <LoadMoreButton onClick={loadMore} isLoading={isLoadingMore} />
+            )}
+          </>
         ) : (
-
-          AllNewOrders ? (
-            <>
-              {AllNewOrders.map((NewOrder: any) => (
-                <OrderDetails key={NewOrder.id} OrderDetails={NewOrder} DisplayPrice={"hidden"} />
-              ))}
-
-              {hiddenLoadingMore? (
-                null
-              ): (<LoadMoreButton onClick={loadMore} isLoading={isLoadingMore} />)}
-
-
-            </>
-          ) : (
-            <h1 className="text-center">لاتوجد طلبات حاليا</h1>
-          )
+          <h1 className="text-center">لاتوجد طلبات حاليا</h1>
         )}
-
-
       </div>
     </Card>
   );
