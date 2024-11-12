@@ -44,8 +44,8 @@ import ShopProductsCard from "./shop-products-card";
 const ShopProductsGrid = ({ allProducts }: any) => {
   return (
     <div className="mb-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {allProducts?.data?.length > 0 ? (
-        allProducts.data.map((product: any, index: number) => {
+      {allProducts?.data?.products?.length > 0 ? (
+        allProducts.data.products.map((product: any, index: number) => {
           console.log(product);
           return <ShopProductsCard key={index} product={product} />
 })

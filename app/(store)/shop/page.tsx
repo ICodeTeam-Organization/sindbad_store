@@ -8,7 +8,7 @@ import { console } from "inspector";
 
 const ProductPage = async () => {
   const products = await getApi<any>(
-    `products/HomePage/GetProductsOfOurStore/${20}`
+    `products/HomePage/GetProductsOfOurStore/${20}/1`
   );
 
   // console.log(products);
