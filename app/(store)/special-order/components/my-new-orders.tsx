@@ -49,7 +49,7 @@ const MyNewOrder = () => {
   const pageSize = 5;
   const [pageNumber, setPageNumber] = useState(1);
   const [isLoadingMore, setIsLoadingMore] = useState(false); // حالة تحميل المزيد
-  const [hiddenLoadingMore, setHiddenLoadingMore] = useState(false); // حالة تحميل المزيد
+  const [hiddenLoadingMore, setHiddenLoadingMore] = useState(true); // حالة تحميل المزيد
 
   const {
     data: newOrders,
@@ -65,9 +65,12 @@ const MyNewOrder = () => {
   useEffect(() => {
     if (newOrders && newOrders.success) {
       setAllNewOrders((prevOrders) => [...prevOrders, ...newOrders.data.items]);
-      if (newOrders?.data?.currentPage == newOrders?.data?.totalPages) {
-        // console.log("setHiddenLoadingMore --------------------------------");
+      if (
+        newOrders?.data?.currentPage == newOrders?.data?.totalPages
+      ) {
         setHiddenLoadingMore(true);
+      }else{
+        setHiddenLoadingMore(false);
       }
       setIsLoadingMore(false); // إيقاف حالة التحميل بعد تحميل البيانات
     }
@@ -109,7 +112,7 @@ const MyNewOrder = () => {
               />
             ))}
 
-            {hiddenLoadingMore ? null : (
+            {hiddenLoadingMore ? <h1 className="text-center">لاتوجد طلبات حاليا</h1> : (
               <LoadMoreButton onClick={loadMore} isLoading={isLoadingMore} />
             )}
           </>
