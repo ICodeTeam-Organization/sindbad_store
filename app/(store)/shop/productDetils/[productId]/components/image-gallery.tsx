@@ -19,7 +19,7 @@ const ImageGallery = ({ images }: { images: string[] }) => {
 
       {/* Thumbnails */}
       <div className="flex gap-2 mt-4 justify-center">
-        {images.map((img, index: number) => (
+        {images?.slice(0, 3).map((img, index: number) => (
           <Image
             key={index}
             src={img}
