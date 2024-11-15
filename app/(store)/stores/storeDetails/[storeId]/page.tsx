@@ -5,8 +5,8 @@ import StoreDetailsCard from './components/store-details-card';
 const Storedetails = () => {
   const storeDetails = 
     {
-      image: store,
-      title: "شركة ايكيا للاثاث",
+      imagesUrl: store,
+      name: "شركة ايكيا للاثاث",
       description: "اواني منزلية - اكسسوارات - اواني منزلية - اكسسوارات - اواني منزلية - اكسسوارات - اواني منزلية - اكسسوارات - اواني منزلية - اكسسوارات ",
     };
 
