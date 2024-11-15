@@ -1,6 +1,12 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "@typescript-eslint/no-explicit-any": "off"
-  }
+    "@typescript-eslint/no-explicit-any": "off",
+    "no-unused-vars": "warn", // تحذير عند وجود متغيرات غير مستخدمة
+    "import/named": "error", // خطأ عند وجود استيرادات غير صحيحة
+    "import/default": "error", // خطأ عند وجود استيرادات غير صحيحة
+    "import/namespace": "error", // خطأ عند وجود استيرادات غير صحيحة
+    "import/no-unresolved": "error" // خطأ عند وجود استيرادات غير موجودة
+  },
+  "plugins": ["import"]
 }
