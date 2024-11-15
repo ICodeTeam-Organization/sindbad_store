@@ -5,7 +5,7 @@ import Pagination from "../../../components/Pagination";
 import { getApi } from "@/lib/http";
 import { console } from "inspector";
 import Sidebar from "./components/Sidebar";
- 
+
 const ProductPage = async () => {
   const products = await getApi<any>(
     `products/HomePage/GetProductsOfOurStore/${20}/1`
