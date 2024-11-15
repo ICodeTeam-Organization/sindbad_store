@@ -10,7 +10,6 @@ const OrdersWaitingForAcceptPrice = () => {
   const {
     data: AllWaitingOrders,
     isPending,
-    refetch,
   } = useQuery({
     queryKey: ["AllWaitingOrders"],
     queryFn: async () =>

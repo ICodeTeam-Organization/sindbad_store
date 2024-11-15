@@ -1,5 +1,3 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import SelectShppingAdress from "./components/select-shpping-adress";
 import ShoppingCart from "./components/shopping-card";
 
 const page = () => {
