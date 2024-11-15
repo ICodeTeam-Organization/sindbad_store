@@ -17,7 +17,7 @@ const E_commerceCard = ({ eCommerce}:{eCommerce : E_commerceCardProps}) => {
       <div className="m-4">
         <h2 className="font-bold mt-2 text-center">{eCommerce?.name}</h2>
         <p className="text-gray-extr-light mt-2">{
-          eCommerce?.storeCategories?.map((category:any , index:number) =>{
+          eCommerce?.storeCategories?.map((category:any ) =>{
             return `${category} - ` 
           })
           }</p>
