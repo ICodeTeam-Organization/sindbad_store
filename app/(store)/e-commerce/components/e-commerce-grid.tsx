@@ -1,6 +1,5 @@
 import React from 'react';
 import E_commerceCard from './e-comm-card';
-import alibaba from '../../../../public/images/alibaba.svg';
 
 // const e_commers = [
 //     {

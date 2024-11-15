@@ -1,7 +1,5 @@
 import Image from "next/image";
-import Stores from "@/public/images/Stores.svg";
 import React from "react";
-import { number, string } from "zod";
 
 type Detail = {
   detail: {

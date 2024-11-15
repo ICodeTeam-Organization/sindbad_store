@@ -27,7 +27,7 @@ type resetfiled = {
 };
 
 const PasswordValidation = () => {
-  const { mutate, error } = useMutation({
+  const { mutate } = useMutation({
     mutationFn: async ({ currentPassword, newPassword }: resetfiled) =>
       await putApi<any>("Auth/change-passwordAsync", {
         body: {
