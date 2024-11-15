@@ -53,7 +53,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
     },
   });
 
-  const { isLoading } = mutation;
+  const { isPending } = mutation;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,9 +103,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       <button
         className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600"
         type="submit"
-        disabled={isLoading}
+        disabled={isPending}
       >
-        {isLoading ? "جارٍ نشر تعليقك..." : "نشر تعليقك"}
+        {isPending ? "جارٍ نشر تعليقك..." : "نشر تعليقك"}
       </button>
     </form>
   );
