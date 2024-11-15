@@ -1,9 +1,4 @@
-import { Textarea } from "@/components/ui/textarea";
 import React from "react";
-import DropZone from "./drop-zone";
-import Quantity from "./quantity";
-import alibaba from '../../../../public/images/alibaba.svg';
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
 interface SpecialProduct {
   id?: number;

@@ -5,13 +5,11 @@ import { getApi } from '@/lib/http';
 import OrderDetails from "./order-details";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import Quantity from "./quantity";
 
 const PreviousOrder = () => {
   const {
     data: AllPreviousOrders,
     isPending,
-    refetch,
   } = useQuery({
     queryKey: ["AllPreviousOrdersdata"],
     queryFn: async () =>

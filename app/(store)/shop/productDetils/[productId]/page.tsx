@@ -32,7 +32,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
         tabContent={{
           tap1: <DetailsTap />,
           tap2: <ProductFeaturesTap features={productFeatures} />,
-          tap3: <ProductReviewsTap productId={productId} quantity={1} />,
+          tap3: <ProductReviewsTap productId={productId}/>,
         }}
         productId={productId}
       />
