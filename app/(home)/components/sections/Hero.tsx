@@ -1,7 +1,7 @@
 import React from "react";
 
-import Header from "../header";
 import Image from "next/image";
+import Header from "../Header";
 
 const Hero = () => {
   return (
