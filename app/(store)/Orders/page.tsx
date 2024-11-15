@@ -1,7 +1,7 @@
 import BreadCrumb from "@/components/BreadCrumb";
 import Pagination from "@/components/Pagination";
 import React from "react";
-import MyOrders from "./components/my-orders";
+import MyOrders from "./components/MyOrders";
 
 const Orders = () => {
   return (
