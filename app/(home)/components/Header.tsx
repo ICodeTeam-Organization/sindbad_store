@@ -1,7 +1,6 @@
 "use client";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { BiSearch } from "react-icons/bi";
-import Navbar from "./navbar";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -17,6 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import useSignOut from "@/hooks/useSignOut";
+import Navbar from "./Navbar";
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
