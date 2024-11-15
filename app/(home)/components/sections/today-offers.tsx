@@ -1,4 +1,3 @@
-import { AiOutlineHeart } from "react-icons/ai";
 import SectionTitle from "../section-title";
 import Image from "next/image";
 import {
@@ -8,7 +7,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import Link from "next/link";

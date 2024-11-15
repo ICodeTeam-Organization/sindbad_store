@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import React from "react";
-import { number } from 'zod';
 import AddToFavorite from "./add-to-favorite";
 
 type Props = {

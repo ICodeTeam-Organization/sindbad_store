@@ -1,6 +1,5 @@
 "use client";
 import { AiOutlineHeart } from "react-icons/ai";
-import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";

@@ -3,7 +3,6 @@ import SearchResultsHeader from "./components/search-results-header";
 import ShopProductsGrid from "./components/shop-products-grid";
 import Pagination from "../../../components/Pagination";
 import { getApi } from "@/lib/http";
-import { console } from "inspector";
 import Sidebar from "./components/Sidebar";
 
 const ProductPage = async () => {
