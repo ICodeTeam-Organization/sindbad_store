@@ -3,12 +3,12 @@
 import { registerFormField } from "@/types/authTypes";
 import { Input } from "./ui/input";
 import { InputHTMLAttributes, useState } from "react";
-import { UseFormRegister } from "react-hook-form";
+import { Register } from "react-hook-form"; // تعديل هنا
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 type PasswordComponentProps = {
   fieldName?: keyof registerFormField;
-  register?: UseFormRegister<registerFormField>;
+  register?: Register<registerFormField>; // تعديل هنا
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const PasswordInput: React.FC<PasswordComponentProps> = ({
@@ -18,7 +18,7 @@ const PasswordInput: React.FC<PasswordComponentProps> = ({
 }) => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const handleShowPasword = () => {
+  const handleShowPassword = () => {
     setShowPassword((prev) => !prev);
   };
 
@@ -31,12 +31,12 @@ const PasswordInput: React.FC<PasswordComponentProps> = ({
       />
       {showPassword ? (
         <BsEyeSlash
-          onClick={handleShowPasword}
+          onClick={handleShowPassword}
           className="absolute left-2 top-3 bg-white cursor-pointer"
         />
       ) : (
         <BsEye
-          onClick={handleShowPasword}
+          onClick={handleShowPassword}
           className="absolute left-2 top-3 bg-white cursor-pointer"
         />
       )}
