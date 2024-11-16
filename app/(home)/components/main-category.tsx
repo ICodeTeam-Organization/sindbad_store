@@ -7,23 +7,26 @@ import { Loader2 } from "lucide-react";
 type Props = {
   onClick: (id: number) => void;
 };
-
+type ApiResponse<T> = {
+  success: boolean;
+  message: string;
+  data: T;
+};
 const MainCategory = ({ onClick }: Props) => {
-  const { data, error, isLoading } = useQuery<any>({
+
+  const { data, error, isLoading } = useQuery<ApiResponse<Category[]>>({
     queryKey: ["main-category"],
     queryFn: () =>
-      getApi(
-        "Market/categories/GetNumberOfMainCategoriesForViewInMarketHomePage/100"
-      ),
+      getApi("Market/categories/GetNumberOfMainCategoriesForViewInMarketHomePage/100"),
   });
 
-  return (
+return (
     <div className="border sm:w-40 md:w-1/2 p-2">
       <h1 className="font-bold text-xl text-center mb-4">الرئيسية</h1>
       {isLoading ? (
         <Loader2 className="mx-auto mt-36 text-center animate-spin" />
-      ) : error ? (
-        <span className="block text-red-500  text-center font-bold mt-36">
+      ) : error || !data?.success ? (
+        <span className="block text-red-500 text-center font-bold mt-36">
           هناك خطأ اثناء جلب البيانات
         </span>
       ) : (
