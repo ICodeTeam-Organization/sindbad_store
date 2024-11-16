@@ -9,7 +9,7 @@ import {
 
 import { checkoutSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm, Controller } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { Bank, CheckoutType } from "@/types/checkout";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, postApi } from "@/lib/http";
