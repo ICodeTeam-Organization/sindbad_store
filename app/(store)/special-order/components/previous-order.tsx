@@ -13,39 +13,42 @@ const PreviousOrder = () => {
   } = useQuery({
     queryKey: ["AllPreviousOrdersdata"],
     queryFn: async () =>
-      await getApi<any>("SpecialProducts/GetAllSpecialProductsForViewInSpecialProductsPageByFilter?searchKeyWord=2&PageSize=10&PageNumber=1"
-      ),
+      await getApi<any>("SpecialProducts/GetAllSpecialProductsForViewInSpecialProductsPageByFilter?searchKeyWord=2&PageSize=10&PageNumber=1"),
   });
+
   return (
     <Card className="rounded-none border-black p-6">
-      <div className="flex justify-around items-center border m-auto border-black  py-2">
+      <div className="flex justify-around items-center border m-auto border-black py-2">
         <div className="flex items-center m-auto">
-          <h1 className="ml-2 m-auto">نوع الطلب</h1>
+          <h1 className="ml-2">نوع الطلب</h1>
           <Dropdown name="منتج" />
         </div>
         <div className="flex items-center m-auto">
-          <h1 className="ml-2 m-auto">الفئة الرئيسية :</h1>
+          <h1 className="ml-2">الفئة الرئيسية :</h1>
           <Dropdown name="" />
         </div>
         <div className="flex items-center m-auto">
-          <h1 className="ml-2 m-auto">الفئة الفرعية :</h1>
+          <h1 className="ml-2">الفئة الفرعية :</h1>
           <Dropdown />
         </div>
       </div>
       <div className="row">
-      {isPending?(
+        {isPending ? (
           <Loader2 className="animate-spin text-center mx-auto" />
-        ):(
-          AllPreviousOrders?.data?.items?(
-            AllPreviousOrders?.data?.items?.map(( PreviousOrder :any) =>{
-              return <OrderDetails OrderDetails={ PreviousOrder } DisplayButton={"hidden"}/>
-            })
-          ):(
+        ) : (
+          AllPreviousOrders?.data?.items ? (
+            AllPreviousOrders.data.items.map((previousOrder: any) => (
+              <OrderDetails 
+                key={previousOrder.id}  // تأكد من استخدام معرف فريد هنا
+                OrderDetails={previousOrder} 
+                DisplayButton={"hidden"} 
+              />
+            ))
+          ) : (
             <h1 className="text-center">لاتوجد طلبات حاليا</h1>
           )
         )}
       </div>
-
     </Card>
   );
 };
