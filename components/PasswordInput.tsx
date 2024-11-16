@@ -3,12 +3,12 @@
 import { registerFormField } from "@/types/authTypes";
 import { Input } from "./ui/input";
 import { InputHTMLAttributes, useState } from "react";
-import { Register } from "react-hook-form"; // تعديل هنا
+import { UseFormRegister } from "react-hook-form"; // تعديل هنا
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 type PasswordComponentProps = {
   fieldName?: keyof registerFormField;
-  register?: Register<registerFormField>; // تعديل هنا
+  register?: UseFormRegister<registerFormField>; // تعديل هنا
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const PasswordInput: React.FC<PasswordComponentProps> = ({
