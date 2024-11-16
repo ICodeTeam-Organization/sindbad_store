@@ -9,7 +9,7 @@ import {
 
 import { checkoutSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, Controller } from "react-hook-form";
 import { Bank, CheckoutType } from "@/types/checkout";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, postApi } from "@/lib/http";
@@ -60,7 +60,6 @@ const CheckoutForm = () => {
     mutationFn: (data: z.infer<typeof checkoutSchema>) =>
       postApi("Orders/CompleteCustomerPurchase", {
         body: {
-          // bankId: data.bank, // استخدام قيمة البنك من البيانات المدخلة
           bankId: 3, 
           note: data.note,
           amount: data.amount,
@@ -100,7 +99,7 @@ const CheckoutForm = () => {
             <FormField
               control={form.control}
               name="bank"
-              render={({ field }) => (
+              render={({ field }: { field: any }) => ( // تحديد نوع field هنا
                 <FormItem className="w-full">
                   <Select dir="rtl" onValueChange={field.onChange} value={field.value}>
                     <FormControl>
