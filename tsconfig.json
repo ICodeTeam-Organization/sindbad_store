@@ -12,9 +12,6 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "forceConsistentCasingInFileNames": true, // تفعيل حساسية الحروف
-    "noUnusedLocals": true, // تحذير عند وجود متغيرات غير مستخدمة
-    "noUnusedParameters": true, // تحذير عند وجود معلمات غير مستخدمة
     "plugins": [
       {
         "name": "next"

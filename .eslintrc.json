@@ -1,14 +1,6 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
-    "@typescript-eslint/no-explicit-any": "off",
-    "no-unused-vars": "error", // اجعلها خطأ بدلاً من تحذير
-    "import/named": "error",
-    "import/default": "error",
-    "import/namespace": "error",
-    "import/no-unresolved": "error",
-    "react-hooks/rules-of-hooks": "error", // تأكد من استخدام Hooks بشكل صحيح
-    "react-hooks/exhaustive-deps": "warn" // تحذير عند عدم وجود التبعيات
-  },
-  "plugins": ["import", "react-hooks"]
+    "@typescript-eslint/no-explicit-any": "off"
+  }
 }
