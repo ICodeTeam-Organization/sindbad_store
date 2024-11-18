@@ -4,18 +4,24 @@ import ClientProviders from "@/components/client-providers";
 import Subscribe from "@/components/Subscribe";
 import Footer from "@/components/Footer";
 import About from "@/components/About";
-import { Almarai } from "next/font/google";
+import { Almarai, Noto_Kufi_Arabic, Tajawal } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
 import { Toaster as SonanerToaster } from "sonner";
 
-const sansFont = Almarai({
+const Noto_Kufi = Noto_Kufi_Arabic({
   weight: ["400", "700"],
   subsets: ["arabic"],
   display: "swap",
-  variable: "--font-sans",
+  variable: "--font-noto",
+});
+const tajawal = Tajawal({
+  weight: ["400", "700"],
+  subsets: ["arabic"],
+  display: "swap",
+  variable: "--font-tajawal",
 });
 
 export const metadata: Metadata = {
@@ -31,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(sansFont.variable, "font-sans antialiased")}
+        className={`${Noto_Kufi.variable} ${tajawal.variable}`}
         dir="rtl"
       >
         <ProgressBarProvider>
@@ -39,10 +45,10 @@ export default function RootLayout({
             <main>
               <ClientProviders>{children}</ClientProviders>
             </main>
-            <Subscribe />
+            {/* <Subscribe /> */}
           </NextAuthProvider>
-          <About />
-          <Footer />
+          {/* <About />
+          <Footer /> */}
           {/* to show toaster messages */}
           <Toaster />
           <SonanerToaster richColors />

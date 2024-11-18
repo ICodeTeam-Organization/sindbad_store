@@ -13,7 +13,7 @@ import Autoplay from "embla-carousel-autoplay"
 import Link from "next/link";
 import { useState } from "react";
 
-const AllStores =  ({Allstores}:{Allstores:any}) => {
+const AllEShops =  ({AllEShops}:{AllEShops:any}) => {
  
   
   const [IsHover, setIsHover] = useState(true)
@@ -22,7 +22,7 @@ const AllStores =  ({Allstores}:{Allstores:any}) => {
     <div className="bg-[#F8F8F8] w-full">
      <div className="xl:container mx-auto relative" >
      <div className=" mx-4 pt-10">
-        <h1 className="text-[#333333] text-[24px]">جميع المحلات</h1>
+        <h1 className="text-[#333333] text-[24px]">جميع المتاجر</h1>
         <p className="text-[16px] text-[#666666]">
           تسوق احدث المنتجات المميزة المضافة جديد
         </p>
@@ -38,8 +38,7 @@ const AllStores =  ({Allstores}:{Allstores:any}) => {
           setIsHover(true)
         }}
         opts={{
-          direction:"rtl",
-          
+          direction:"rtl"
         }}
          plugins={[
           Autoplay({
@@ -48,16 +47,16 @@ const AllStores =  ({Allstores}:{Allstores:any}) => {
           }),
         ]}
       >
-        <div className="absolute rotate-180 left-16 -top-10 flex items-center justify-center z-10 " >
+         <div className="absolute rotate-180 left-16 -top-10 flex items-center justify-center z-10 " >
         <CarouselPrevious className=" -left-6 text-[#F58634]"  />
         <CarouselNext className="  text-[#F58634]" />
         </div>
         <CarouselContent>
-          {Allstores?.data?.map((store: any) => (
+          {AllEShops?.data?.map((store: any) => (
             <CarouselItem
               key={store.id}
               dir="rtl"
-              className="group hover:cursor-pointer flex items-center pl-0  ml-4 xl:basis-1/3 mdHalf:basis-1/2 basis-1/1 border-[1px] border-gray-300 rounded-sm bg-white sm:w-[520px] w-[90vw]   hover:border-[#F58634] transition-all duration-700"
+              className=" group hover:cursor-pointer flex items-center pl-0  ml-4 xl:basis-1/3 mdHalf:basis-1/2 basis-1/1 border-[2px] border-black rounded-sm bg-white sm:w-[520px] w-[90vw]   hover:border-[#F58634] transition-all duration-700"
             >
               <div className=" flex justify-center items-center mdHalf:w-[196px] mdHalf:h-[140px] w-[156px] h-[100px] relative">
                 {store.mainImageUrl === null ? (
@@ -117,4 +116,4 @@ const AllStores =  ({Allstores}:{Allstores:any}) => {
   );
 };
 
-export default AllStores;
+export default AllEShops;

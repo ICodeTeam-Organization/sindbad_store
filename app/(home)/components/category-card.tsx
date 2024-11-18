@@ -11,7 +11,7 @@ const CategoryCard = ({ name, imageUrl }: Props) => {
   return (
     <Link href={"/shop/"}>
       <div className="text-center w-28">
-        <div className="p-8 w-full h-full bg-neutral-100 rounded-full flex justify-center items-center hover:cursor-pointer hover:scale-105  transition-transform duration-300 hover:shadow-lg hover:outline hover:outline-2 hover:outline-sky-500 ">
+        <div className="p-8 w-full h-full bg-neutral-100 rounded-full border-2 group-hover:border-sky-500 border-transparent transition-[border,shadow]  flex justify-center items-center group-hover:cursor-pointer    group-hover:shadow-lg  ">
           <Image
             src={imageUrl}
             height={100}
@@ -20,7 +20,7 @@ const CategoryCard = ({ name, imageUrl }: Props) => {
             alt="صورة الصنف"
           />
         </div>
-        <h2 className="  text-xs md:text-sm  mt-4 ">{name}</h2>
+        <h2 className="  text-xs  mt-4 ">{name}</h2>
       </div>
     </Link>
   );

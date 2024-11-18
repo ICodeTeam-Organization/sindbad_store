@@ -7,9 +7,9 @@ import { getApi } from "@/lib/http";
 import { console } from "inspector";
 
 const ProductPage = async () => {
-  // const products = await getApi<any>(
-  //   `products/HomePage/GetProductsOfOurStore/${20}`
-  // );
+  const products = await getApi<any>(
+    `products/HomePage/GetProductsOfOurStore/${20}`
+  );
 
   // console.log(products);
 
@@ -21,11 +21,11 @@ const ProductPage = async () => {
         {/* Main content */}
         <main className="w-full md:w-3/4">
           {/* Tags and Results */}
-          <SearchResultsHeader products={[]} />
+          <SearchResultsHeader products={products} />
 
           {/* Products Section */}
           <section>
-            <ShopProductsGrid allProducts={[]} />
+            <ShopProductsGrid allProducts={products} />
             <Pagination />
           </section>
         </main>

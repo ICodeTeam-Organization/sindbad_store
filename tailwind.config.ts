@@ -8,7 +8,11 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    
     extend: {
+      backgroundImage: {
+        'header-gradient': 'linear-gradient(to right, #FFE0DC, #FEEFEB, #F8F4E5, #F4EEE4, #EEEAE9)',
+      },
       fontFamily: {
         sans: ["var(--font-sans)"],
       },
@@ -59,6 +63,11 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      screens: {
+        'mdHalf': '934px',
+        'xlHalf': '1530px',
+
       },
     },
   },

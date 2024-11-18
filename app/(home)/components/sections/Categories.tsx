@@ -1,16 +1,25 @@
+"use client"
 import CategoryCard from "../category-card";
 import styles from "../SectionTitle.module.css";
 import CategoriesDialog from "../categories-dialog";
 import { getApi } from "@/lib/http";
 import { Category } from "@/types/storeTypes";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay"
+import { useState } from "react";
 
-const Categories = async () => {
-  const categories = await getApi<any>(
-    "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/30"
-  );
+const Categories = ({categories}:{categories:any}) => {
+
+  const [IsHover, setIsHover] = useState(true)
 
   return (
-    <div className="container mx-auto sm:px-4 md:px-8 lg:px-16 xl:px-32 mt-10 ">
+    <div className=" sm:px-4  mt-10 ">
       <div className="py-5 w-full">
         <div className="flex justify-between items-center ">
           <div>
@@ -23,10 +32,52 @@ const Categories = async () => {
           <CategoriesDialog />
         </div>
       </div>
-      <div className="py-4 px-4 flex flex-wrap justify-center gap-y-5 gap-x-3 lg:gap-x-14 ">
+      <div className="w-full" >
+      <Carousel 
+      onMouseEnter={()=>{
+        setIsHover(false)
+      }}
+      onMouseLeave={()=>{
+        setIsHover(true)
+      }}
+      opts={{
+        direction:"rtl"
+      }}
+       plugins={[
+        Autoplay({
+          delay: 2000,
+          active:IsHover
+        }),
+      ]}
+      className="m-auto md:w-[90%] w-[100%]"  >
+        <CarouselContent dir="rtl">
+          {categories.data.map(
+          (category: Category, index: number) => index < 20 && (
+            <CarouselItem
+              key={category.id}
+              className="basis-1/10 group"
+            >
+               <CategoryCard
+                key={category.id}
+                id={category.id}
+                name={category.name}
+                imageUrl="/images/shoppingStore.svg"
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <div  className="hidden md:block" >
+        <CarouselPrevious 
+         />
+        <CarouselNext 
+         />
+        </div>
+      </Carousel>
+      </div>
+      {/* <div className="py-4 px-4 bg-slate-500 flex flex-wrap justify-center gap-y-5 gap-x-3 lg:gap-x-14 ">
         {categories.data.map(
           (category: Category, index: number) =>
-            index < 6 && (
+            index < 10 && (
               <CategoryCard
                 key={category.id}
                 id={category.id}
@@ -35,7 +86,7 @@ const Categories = async () => {
               />
             )
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

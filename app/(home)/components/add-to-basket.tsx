@@ -66,19 +66,19 @@ const AddToBasket = ({ id }: Props) => {
 
 
   return (
-    <div className="cursor-pointer my-1 flex justify-around max-md:justify-between items-center w-full">
+    <div className="cursor-pointer tajawal my-1 flex gap-x-2 px-2 mb-2   ">
       <Button
         disabled={mutation.isPending}
         variant={"outline"}
         onClick={() => handleAddToCart()}
-        className="hover:bg-[#F55157] hover:text-white max-md:w-[107px] max-md:h-[30px] w-[159px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center"
+        className="hover:bg-[#F55157] flex-1 hover:text-white max-md:w-[107px] max-md:h-[30px]  h-[40px] rounded-[5px] border-[1px] flex justify-center items-center"
       >
         {mutation.isPending ? (
           <Loader2 className="animate-spin" />
         ) : (
           <>
             <MdOutlineLocalGroceryStore className="w-[17.39px] h-[15px]" />
-            <p className="max-md:text-[7px]">اضف للسلة</p>
+            <p className="max-md:text-[7px] ">اضف للسلة</p>
           </>
         )}
       </Button>
