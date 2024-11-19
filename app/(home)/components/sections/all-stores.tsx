@@ -70,15 +70,14 @@ const AllStores = async () => {
                   </p>
                 </div>
                 {store.websiteLink === null ? (
-                  <div
-                    aria-disabled
-                    className="max-md:w-[110px] max-sm:w-[70px] md:w-[150px] max-md:h-[25px] md:h-[47px] cursor-pointer xl:w-[260px] h-[56px] text-xl max-lg:w-[200px] rounded-sm border-[1px] bg-gray-400 transition-all duration-700 flex justify-center items-center border-black"
-                  >
+                  <Link href={"/"}>
+                  <div className="max-md:w-[110px] max-sm:w-[70px] md:w-[150px] max-md:h-[25px] md:h-[47px] cursor-pointer xl:w-[260px] h-[56px] text-xl max-lg:w-[200px] rounded-sm border-[1px] hover:bg-[#F58634] hover:text-white transition-all duration-700 flex justify-center items-center border-black">
                     <h1 className="max-md:text-[15px] font-bold max-sm:text-[7px]">
-                      لايوجد رابط إلى المتجر
+                    لايوجد رابط
                     </h1>
                     <IoIosArrowBack />
                   </div>
+                </Link>
                 ) : (
                   <Link href={store.websiteLink}>
                     <div className="max-md:w-[110px] max-sm:w-[70px] md:w-[150px] max-md:h-[25px] md:h-[47px] cursor-pointer xl:w-[260px] h-[56px] text-xl max-lg:w-[200px] rounded-sm border-[1px] hover:bg-[#F58634] hover:text-white transition-all duration-700 flex justify-center items-center border-black">
