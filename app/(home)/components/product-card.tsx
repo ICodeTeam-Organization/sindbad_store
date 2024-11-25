@@ -24,30 +24,39 @@ const ProductCard = ({
     <div
       className={
         cn +
-        ` m-auto rounded-t-[8px] w-[230px] max-md:w-[150px] max-sm:w-28 max-lg:w-44 max-lg:h-60  max-md:h-[183px] h-[339px]`
+        ` m-auto rounded-t-[8px] border `
       }
     >
-      <Link href={`/shop/productDetils/${ProductDet}`}>
-        <Image
-          className="h-[210px] max-lg:h-28 max-sm:h-20 rounded-t-[8px]"
+      <Link href={`/shop/productDetils/${ProductDet}`} className="overflow-hidden relative" >
+         <div className="w-full h-[180px]" >
+            <Image
+              className="  max-sm:h-28 rounded-t-[8px] object-cover"
+              src={image}
+              alt={""}
+              fill
+              priority
+            />
+         </div>
+         {/* <Image
+          className=" mdHalf:hidden block  h-[210px] max-lg:h-[180px]  max-sm:h-28 rounded-t-[8px]"
           src={image}
           alt={""}
-          width={250}
+          width={240}
           height={0}
           priority
-        />
+        /> */}
       </Link>
-      <div className="border-[1px] border-t-0 border-[#C3C3C3]  max-md:pr-1 pr-2">
+      <div className="">
         <Link href={`/shop/productDetils/${ProductDet}`}>
-          <p className=" line-clamp-2 font-[Tajawal] text-[#007580] text-lg max-md:text-xs text-right">
+          <p className=" line-clamp-2  h-10 font-[Tajawal] text-[#007580] text-sm mt-1 mx-2 tajawal max-md:text-xs text-right flex items-center">
             <strong>{productName}</strong>
           </p>
-          <div className="text-right flex justify-start">
+          <div className="text-right flex justify-start items-center ">
             <p className="max-md:pr-3 pr-5 max-md:text-xs text-xl text-[#F55157]">
               <strong>{price}</strong>
             </p>
-            <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px] line-through">
-              {oldPrice}
+            <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px] line-through text-[#9C9C9C]">
+              {oldPrice} 100
             </p>
           </div>
         </Link>

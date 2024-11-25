@@ -71,7 +71,7 @@ const AddToFavorite = ({ id }: Props) => {
             disabled={mutationFav.isPending}
             variant={"outline"}
             onClick={() => handleAddToFav()}
-            className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] mr-[4px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1"
+            className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1"
         >
             {
                 mutationFav.isPending ? (

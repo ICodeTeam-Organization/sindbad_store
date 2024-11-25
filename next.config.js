@@ -32,6 +32,12 @@ module.exports = {
         pathname: "/free-vector/**",
       },
       {
+        protocol: "https",
+        hostname: "img.freepik.com",
+        port: "",
+        pathname: "/free-photo/**",
+      },
+      {
         protocol: 'http',
         hostname: 'example.com',
         port: '',

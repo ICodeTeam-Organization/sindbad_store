@@ -65,7 +65,7 @@ const AddToBasket = ({ id }: Props) => {
 
 
   return (
-    <div className="cursor-pointer my-1 flex justify-around max-md:justify-between items-center w-full">
+    <div className="cursor-pointer tajawal my-1 flex gap-x-2 px-2 mb-2   ">
       <Button
         disabled={mutation.isPending}
         variant={"outline"}
@@ -77,7 +77,7 @@ const AddToBasket = ({ id }: Props) => {
         ) : (
           <>
             <MdOutlineLocalGroceryStore className="w-[17.39px] h-[15px]" />
-            <p className="max-md:text-[7px]">اضف للسلة</p>
+            <p className="max-md:text-[7px] ">اضف للسلة</p>
           </>
         )}
       </Button>

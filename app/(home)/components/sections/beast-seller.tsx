@@ -1,30 +1,98 @@
+"use client"
 import SectionTitle from "../section-title";
 import ProductCard from "../product-card";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
-const BeastSeller = async () => {
-  const BeastSellerInWeek = await getApi<any>(
-    "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/5"
-  );
-  if (!BeastSellerInWeek) return notFound();
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { useState } from "react";
+import Autoplay from "embla-carousel-autoplay"
+
+const BeastSeller =  ({BeastSellerInWeek={data:[]}}) => {
+  
+  // if (!BeastSellerInWeek) return notFound();
+
+  const [IsHover, setIsHover] = useState(true)
+
 
   return (
-    <div className="container pt-10 mx-autocontainer mx-auto sm:px-4 md:px8 lg:px16 xl:px-32">
+    <div className="container pt-10 mx-autocontainer mx-auto ">
       <SectionTitle title={"الاكثر مبيعا في اسبوع"} />
-      <div className="container ">
-        <div className="grid 2xl:grid-cols-5 lg:grid-cols-4 max-lg:grid-cols-4 max-sm:grid-cols-3 gap-y-5 2xl:gap-[25px] max-sm:gap-x-1 max-lg:gap-x-5  max-md:m-auto  py-4 mr-2 ">
+      <div className="w-full" >
+     <Carousel
+     
+     onMouseEnter={()=>{
+      setIsHover(false)
+    }}
+    onMouseLeave={()=>{
+      setIsHover(true)
+    }}
+    opts={{
+      direction:"rtl",
+      
+    }}
+     plugins={[
+      Autoplay({
+        delay: 1500,
+        active:IsHover,
+      }),
+    ]}
+      className="m-auto cursor-pointer md:w-[88%] sm:w-[85%] w-[100%]">
+        <CarouselContent dir="rtl">
           {BeastSellerInWeek?.data?.map((product: any) => (
-            <ProductCard
+            <CarouselItem
               key={product.id}
-              id={product.id}
-              image={product.mainImageUrl}
-              productName={product.name}
-              price={product.price}
-              ProductDet={product.id}
-            />
+              className="pl-0 ml-4 lg:basis-1/5 md:basis-1/4  xl:basis-1/6   sm:basis-1/3 max-sm:basis-[35%] basis-[39%]  rounded-t-[8px]"
+            >
+              <div className="" >
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                image={product.mainImageUrl}
+                productName={product.name}
+                price={product.price}
+                ProductDet={product.id}
+              />
+              </div>
+              {/* <Link href={`/shop/productDetils/${product.id}`}>
+                <Image
+                  className="h-[210px] max-md:h-[120px] md:h-[120px] xl:h-[150px] rounded-t-[8px]"
+                  src={product.mainImageUrl}
+                  alt={""}
+                  width={400}
+                  height={0}
+                />
+              </Link>
+              <div className="border-[1px] border-[#C3C3C3] border-t-0 pr-1">
+                <Link href={`/shop/productDetils/${product.id}`}>
+                  <p className="line-clamp-2 font-[Tajawal] xl:pr-1 text-[#007580] text-base max-md:text-[12px] md:text-[14px] text-right mt-1 ">
+                    <strong>{product.name}</strong>
+                  </p>
+                  <div className="max-md:mt-2 max-sm:pr-0 pr-5 lg:mt-4 xl:mb-2 md:mt-1 text-right max-md:gap-0 md:gap-0 max-md:text-[12px] gap-[7px] flex justify-end">
+                    <p className="pr-3 text-[12px] line-through">
+                      {product.priceBeforOffer}
+                    </p>
+                    <p className=" text-lg  text-[#F55157]">
+                      <strong>{product.priceAfterOffer}</strong>
+                    </p>
+                  </div>
+                </Link>
+                <div dir="rtl">
+                  <AddToBasket id={product.id} />
+                </div>
+              </div> */}
+            </CarouselItem>
           ))}
-        </div>
-      </div>
+        </CarouselContent>
+        <CarouselPrevious className="sm:flex hidden"/>
+        <CarouselNext className=" sm:flex hidden "/>
+      </Carousel>
+    </div>
     </div>
   );
 };

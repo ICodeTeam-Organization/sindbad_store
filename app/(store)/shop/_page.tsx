@@ -1,13 +1,14 @@
 import React from "react";
+import Sidebar from "./components/Sidebar";
 import SearchResultsHeader from "./components/search-results-header";
 import ShopProductsGrid from "./components/shop-products-grid";
 import Pagination from "../../../components/Pagination";
 import { getApi } from "@/lib/http";
-import Sidebar from "./components/Sidebar";
+import { console } from "inspector";
 
 const ProductPage = async () => {
   const products = await getApi<any>(
-    `products/HomePage/GetProductsOfOurStore/${20}/1`
+    `products/HomePage/GetProductsOfOurStore/${20}`
   );
 
   // console.log(products);
@@ -20,11 +21,11 @@ const ProductPage = async () => {
         {/* Main content */}
         <main className="w-full md:w-3/4">
           {/* Tags and Results */}
-          <SearchResultsHeader products={[]} />
+          <SearchResultsHeader products={products} />
 
           {/* Products Section */}
           <section>
-            <ShopProductsGrid allProducts={[]} />
+            <ShopProductsGrid allProducts={products} />
             <Pagination />
           </section>
         </main>

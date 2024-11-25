@@ -94,4 +94,29 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .nav-menus {
+    @apply flex flex-col gap-2 items-center mdHalf:justify-center mdHalf:p-2 text-base hover:bg-[#FF8F7E22] cursor-pointer transition;
+    
+  }
+
+  .nav-menus-label {
+    @apply flex w-full items-center  gap-x-2 mdHalf:p-0 p-2 justify-between px-6 text-xs
+  }
+}
+
+html,body {
+  font-family: var(--font-noto) !important;
+}
+ 
+.tajawal {
+  font-family: var(--font-tajawal);
+}
+
+  /* Custom class to hide scrollbar */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+}
+.hide-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
 }
