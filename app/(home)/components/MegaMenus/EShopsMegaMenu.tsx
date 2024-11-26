@@ -1,7 +1,5 @@
 "use clinet"
 import { cn } from '@/lib/utils';
-import { LucideShoppingBag } from 'lucide-react';
-import Link from 'next/link'
 import {useState} from 'react'
 import { BiCategoryAlt } from 'react-icons/bi';
 import { IoStorefrontOutline } from 'react-icons/io5';

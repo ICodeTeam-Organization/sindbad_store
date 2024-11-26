@@ -64,7 +64,7 @@ const AllStores =  ({Allstores}:{Allstores:any}) => {
                   <h1>لاتوجد صورة للمتجر</h1>
                 ) : (
                   <Image
-                    src={store.mainImageUrl}
+                    src={store?.mainImageUrl?.startsWith("http")?store.mainImageUrl:"/"+store.mainImageUrl}
                     alt={"store"}
                     layout="fill"
                   />
