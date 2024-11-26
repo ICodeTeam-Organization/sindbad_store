@@ -2,7 +2,6 @@
 import CategoryCard from "../category-card";
 import styles from "../SectionTitle.module.css";
 import CategoriesDialog from "../categories-dialog";
-import { getApi } from "@/lib/http";
 import { Category } from "@/types/storeTypes";
 import {
   Carousel,
@@ -14,7 +13,11 @@ import {
 import Autoplay from "embla-carousel-autoplay"
 import { useState } from "react";
 
-const Categories = ({categories}:{categories:any}) => {
+interface categoriesPropsInterface {
+  categories:Category[]
+}
+
+const Categories = ({categories}:categoriesPropsInterface) => {
 
   const [IsHover, setIsHover] = useState(true)
 
@@ -51,7 +54,7 @@ const Categories = ({categories}:{categories:any}) => {
       ]}
       className="m-auto md:w-[90%] w-[100%]"  >
         <CarouselContent dir="rtl">
-          {categories.data.map(
+          {categories.map(
           (category: Category, index: number) => index < 20 && (
             <CarouselItem
               key={category.id}

@@ -4,6 +4,22 @@ export type Category = {
   imageUrl?: string;
 };
 
+export type CategoryWithSub = {
+  id: number;
+  name: string;
+  imageUrl?: string;
+  subCategoriesForVeiw:[]
+};
+
+export interface MainCategory {
+  id: number;
+  name: string;
+  imageUrl: string;
+  categoryTypeName: string;
+  categoryTypeNumber: number;
+}
+
+
 //this Product type just for testing
 export type Product = {
   id: string;

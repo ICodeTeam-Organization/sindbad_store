@@ -2,8 +2,12 @@
 import Image from 'next/image'
 import React, { useRef } from 'react'
 import Link from 'next/link'
+import { MainCategory } from '@/types/storeTypes';
 
-function CategoriesSlider({categories={data:[]}}) {
+interface catProp {
+  categories:MainCategory[]
+}
+function CategoriesSlider({categories}:catProp) {
 
   const scrollRef = useRef<any>(null);
   
@@ -19,7 +23,7 @@ function CategoriesSlider({categories={data:[]}}) {
   };
   
 
-  const CategoryItem = ({item}:{item:any}) => (
+  const CategoryItem = ({item}:{item:MainCategory}) => (
     <Link href={"/"+item?.id} className="bg-[#FFFDF4] p-1 px-2 rounded shadow-sm  " >
        <p className="whitespace-nowrap tajawal min-w-[105px] text-center mdHalf:text-[11px] text-[10px] font-bold "> {item?.name} </p>
       </Link>
@@ -37,12 +41,12 @@ function CategoriesSlider({categories={data:[]}}) {
          </div>
          <div className='flex flex-col gap-y-2 hide-scrollbar  overflow-x-auto h-30 p-4 ' ref={scrollRef} >
             <div className="flex  items-center   gap-3   " >
-                {categories?.data?.filter((_,x)=>x%2==0).map((item:any)=>
+                {categories?.filter((_,x)=>x%2==0).map((item:any)=>
                   <CategoryItem item={item}  key={item?.id} />
                 )}
             </div>
             <div className="flex mr-14 items-center  gap-3  " >
-                {categories?.data?.filter((_,x)=>x%2!==0).map((item:any)=>
+                {categories?.filter((_,x)=>x%2!==0).map((item:any)=>
                   <CategoryItem item={item} key={item?.id} />
                 )}
             </div>

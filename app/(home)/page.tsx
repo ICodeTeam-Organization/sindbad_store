@@ -1,5 +1,4 @@
 import Hero from "./components/sections/Hero";
-import Image from "next/image";
 import CategoriesSlider from "./components/CategoriesSlider";
 import ServiceCard from "./components/ServiceCard/ServiceCard";
 import CardsInfo from "./components/sections/CardsInfo";
@@ -13,6 +12,7 @@ import RecentlyAdded from "./components/sections/recently-added";
 import Feature from "./components/sections/Feature";
 import { getApi } from "@/lib/http";
 import AllEShops from "./components/sections/all-Eshops";
+import { MainCategory } from "@/types/storeTypes";
 
 export default async function Home2() {
   const [
@@ -23,7 +23,7 @@ export default async function Home2() {
     RecentlyProducts,
     AllCategoriesWithSub,
   ] = await Promise.all([
-    getApi<any>(
+    getApi<{data:MainCategory[]}>(
       "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/50"
     ),
     getApi<any>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
@@ -45,10 +45,10 @@ export default async function Home2() {
     <section className="w-full     ">
       <Hero />
       <div className="w-full xl:container mx-auto ">
-        <CategoriesSlider categories={categories} />
+        <CategoriesSlider categories={categories.data} />
         <ServiceCard />
         <CardsInfo />
-        <Categories categories={categories} />
+        <Categories categories={categories?.data} />
         <TodayOffers Offersproducts={Offersproducts} />
         <ShoppingNow />
       </div>

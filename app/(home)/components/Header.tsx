@@ -1,19 +1,13 @@
 "use client";
-import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { BiMenu, BiSearch } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import PersonButton from "./person-button";
 import { useSession } from "next-auth/react";
 import {
-  ArrowBigLeft,
   ArrowRight,
-  ArrowRightCircle,
-  ArrowRightFromLine,
-  CarFront,
-  Loader2,
 } from "lucide-react";
 import React from "react";
 import {
@@ -23,31 +17,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 import useSignOut from "@/hooks/useSignOut";
-import Navbar from "./Navbar";
-
 import DropdownMenu from "@/components/DropDownMenu";
 import { IoChevronDownOutline, IoMenu } from "react-icons/io5";
 import { GoHeart } from "react-icons/go";
 import { BsCart } from "react-icons/bs";
-import CategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
 import StoresMegaMenu from "./MegaMenus/StoresMegaMenu";
 import EShopsMegaMenu from "./MegaMenus/EShopsMegaMenu";
 import { FaQuestionCircle } from "react-icons/fa";
-import { GrClose } from "react-icons/gr";
 import AllCategoriesMegaMenu from "./MegaMenus/AllCategoriesMegaMenu";
 import SpecialOrderMegaMenu from "./MegaMenus/SpecialOrderMegaMenu";
 import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
 const Header = () => {
-  const [scrolled, setScrolled] = useState(false);
+  // const [scrolled, setScrolled] = useState(false);
   const [openNav, setopenNav] = useState<boolean>(false);
 
   const { data: session, status } = useSession();
   const isAuth = status === "authenticated";
 
-  const mutation = useSignOut();
+  // const mutation = useSignOut();
 
   const questions = [
     {
@@ -335,7 +324,7 @@ const Header = () => {
                     <p className=""  >كل الفئات</p>
                   </div>
                   
-                  <AllCategoriesMegaMenu />
+                  <AllCategoriesMegaMenu  />
                 </div>
 
                 <div className="nav-menus group">
