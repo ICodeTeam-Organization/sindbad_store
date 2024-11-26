@@ -11,7 +11,7 @@ const SectionTitle = ({ title }: Props) => {
     <div className="py-5 w-full">
       <div className="flex justify-between items-center ">
         <div>
-          <h3 className={styles.title + "  text-2xl font-normal relative pr-3"}>
+          <h3 className={styles.title + "  lg:text-2xl text-lg font-normal relative pr-3"}>
             {title} :
           </h3>
         </div>

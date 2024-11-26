@@ -19,6 +19,7 @@ const AllStores = async () => {
   );
   if (!Allstores) return notFound();
 
+  
   return (
     <div className="bg-[#F8F8F8] w-full max-md:h-[270px] h-[331px]">
       <div className="container  max-sm:px-4 md:px-8 lg:px-16 xl:px-32 pt-10">
@@ -45,13 +46,14 @@ const AllStores = async () => {
                   <h1>لاتوجد صورة للمتجر</h1>
                 ) : (
                   <Image
-                    src={store.mainImageUrl}
+                    src={store?.mainImageUrl?.startsWith("http")?store.mainImageUrl:"/"+store.mainImageUrl}
                     alt={"store"}
                     width={330}
                     height={200}
                   />
                 )}
               </div>
+<<<<<<< Updated upstream
               <div className="max-md:w-[300px] max-sm:w-[100px] md:w-[300px] max-sm:pr-1 mr-2  lg:w-[650px] max-md:mt-0 md:mt-0 mt-6">
                 <h1 className="text-[25px] max-md:text-[15px] max-sm:mt-1 max-sm:text-xs font-bold text-right line-clamp-2">
                   {store.name}
@@ -82,6 +84,38 @@ const AllStores = async () => {
                   <Link href={store.websiteLink}>
                     <div className="max-md:w-[110px] max-sm:w-[70px] md:w-[150px] max-md:h-[25px] md:h-[47px] cursor-pointer xl:w-[260px] h-[56px] text-xl max-lg:w-[200px] rounded-sm border-[1px] hover:bg-[#F58634] hover:text-white transition-all duration-700 flex justify-center items-center border-black">
                       <h1 className="max-md:text-[15px] font-bold max-sm:text-[7px]">
+=======
+              <div className="flex-1 flex flex-col justify-between h-full py-2">
+                <div>
+                    <h1 className="mdHalf:text-md sm:text-sm text-[12px] font-bold text-right line-clamp-1 mt-1">
+                      {store.name} 
+                    </h1>
+                    <p className="mdHalf:text-sm text-[11px]  line-clamp-1 text-[#666666]">
+                      {store.description ? store.description : " ."}
+                    </p>
+                    <div className="flex items-center  max-sm:w-20 mb-1">
+                      <AiFillStar className="text-[#FFC62A] text-xs" />
+                      <AiFillStar className="text-[#FFC62A] text-xs" />
+                      <AiFillStar className="text-[#FFC62A] text-xs" />
+                      <AiFillStar className="text-[#FFC62A] text-xs" />
+                      <AiFillStar className="text-[#D6D6D6] text-xs" />
+                      <p className="text-[#A5A5A5] text-[12px] mr-3">
+                        (4.5)
+                      </p>
+                    </div>
+                </div>
+                {store.websiteLink === null ? (
+                 <div className=" w-[96%] p-2  cursor-pointer   rounded-sm border-[1px] group-hover:border-0 group-hover:bg-[#F58634] group-hover:text-white group-hover:border-transparent transition-all duration-300 flex justify-center items-center border-black">
+                 <h1 className="sm:text-base text-[12px]">
+                   لا يوجد رابط للمتجر
+                 </h1>
+                 <IoIosArrowBack />
+               </div>
+                ) : (
+                  <Link href={store.websiteLink}>
+                    <div className=" w-[96%] p-2 cursor-pointer  rounded-sm border-[1px] group-hover:border-0 group-hover:bg-[#F58634] group-hover:text-white group-hover:border-transparent transition-all duration-300 flex justify-center items-center border-black">
+                      <h1 className="sm:text-base text-[12px]">
+>>>>>>> Stashed changes
                         زيارة المتجر
                       </h1>
                       <IoIosArrowBack />

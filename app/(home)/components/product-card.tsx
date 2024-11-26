@@ -24,7 +24,11 @@ const ProductCard = ({
     <div
       className={
         cn +
+<<<<<<< Updated upstream
         ` m-auto rounded-t-[8px] w-[230px] max-md:w-[150px] max-sm:w-28 max-lg:w-44 max-lg:h-60  max-md:h-[183px] h-[339px]`
+=======
+        ` m-auto rounded-t-[8px] border hover:border-purple-600 hover:border ho transition-all hover:-translate-y-1 hover:shadow `
+>>>>>>> Stashed changes
       }
     >
       <Link href={`/shop/productDetils/${ProductDet}`}>

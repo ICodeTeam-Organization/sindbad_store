@@ -60,6 +60,18 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+<<<<<<< Updated upstream
+=======
+      screens: {
+        'mdHalf': '934px',
+        'xlHalf': '1530px',
+        '2lg': '1130px',
+        '2sm': '732px',
+        '2xs': '500px',
+        '1xs': '350px',
+
+      },
+>>>>>>> Stashed changes
     },
   },
   plugins: [require("tailwindcss-animate")],

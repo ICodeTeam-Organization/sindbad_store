@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import ClientProviders from "@/components/client-providers";
 import Subscribe from "@/components/Subscribe";
 import Footer from "@/components/Footer";

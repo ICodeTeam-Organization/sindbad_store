@@ -14,8 +14,16 @@ const ShoppingNow = async () => {
     <>
       <div className="container pt-10 mx-auto sm:px-4 md:px8  lg:px16 xl:px-32">
         <SectionTitle title={"تسوق الآن"} />
+<<<<<<< Updated upstream
         <div className="container ">
           <div className="grid 2xl:grid-cols-5 lg:grid-cols-4 max-lg:grid-cols-4 max-sm:grid-cols-3 gap-y-5 2xl:gap-[25px] max-sm:gap-x-1 max-lg:gap-x-5  max-md:m-auto  py-4 mr-2 ">
+=======
+        <div className="md:px8  lg:px-8  ">
+          <div 
+          // className="grid 2xl:grid-cols-5 lg:grid-cols-4 justify-items-center justify-center lg:gap-[25px] sm:grid-cols-3 grid-cols-2  2xl:gap-[25px]  max-lg:gap-x-5  max-md:m-auto  py-4 mr-2 gap-2 px-2 "
+          className="flex flex-wrap xl:gap-4 sm:gap-7 gap-4 items-center justify-center"
+          >
+>>>>>>> Stashed changes
             {products?.data?.map((product: any) => (
               <ProductCard
                 key={product.id}
