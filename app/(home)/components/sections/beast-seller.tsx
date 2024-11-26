@@ -1,8 +1,6 @@
 "use client"
 import SectionTitle from "../section-title";
 import ProductCard from "../product-card";
-import { getApi } from "@/lib/http";
-import { notFound } from "next/navigation";
 import {
   Carousel,
   CarouselContent,
@@ -47,9 +45,9 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}) => {
           {BeastSellerInWeek?.data?.map((product: any) => (
             <CarouselItem
               key={product.id}
-              className="pl-0 ml-4 lg:basis-1/5 md:basis-1/4  xl:basis-1/6   sm:basis-1/3 max-sm:basis-[35%] basis-[39%]  rounded-t-[8px]"
+              className="pl-0 ml-4 xlHalf:basis-1/6 2lg:basis-[22%] mdHalf:basis-[25%] 2sm:basis-[35%] sm:basis-[42%] 2xs:basis-[34%] 1xs:basis-[45%] basis-1/2 rounded-t-[8px]"
             >
-              <div className="" >
+              <div className="sm:w-[220px]  1xs:w-[180px] w-full" >
               <ProductCard
                 key={product.id}
                 id={product.id}

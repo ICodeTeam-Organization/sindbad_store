@@ -24,7 +24,7 @@ const ProductCard = ({
     <div
       className={
         cn +
-        ` m-auto rounded-t-[8px] border `
+        `m-auto rounded-t-[8px] border hover:border-purple-600 hover:border ho transition-all hover:-translate-y-1 hover:shadow  `
       }
     >
       <Link href={`/shop/productDetils/${ProductDet}`} className="overflow-hidden relative" >

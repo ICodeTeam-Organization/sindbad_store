@@ -52,16 +52,23 @@ export default async function Home2() {
         <TodayOffers Offersproducts={Offersproducts} />
         <ShoppingNow />
       </div>
-      <div className="mb-10">
+      <div className="my-10">
         <AllStores Allstores={Allstores} />
       </div>
-      <BeastSeller BeastSellerInWeek={BeastSellerInWeek} />
+      <div className="w-full xl:container mx-auto ">
+        <BeastSeller BeastSellerInWeek={BeastSellerInWeek} />
+      </div>
       <div className="my-8">
         <Ads />
       </div>
-      <RecentlyAdded RecentlyProducts={RecentlyProducts} />
-      <ShoppingNow />
-      <AllEShops AllEShops={Allstores} />
+      <div className="w-full xl:container mx-auto mb-10 ">
+        <RecentlyAdded RecentlyProducts={RecentlyProducts} />
+        <div className="mb-10" />
+        <ShoppingNow />
+      </div>
+      <div className="my-10">
+        <AllEShops AllEShops={Allstores} />
+      </div>
       <Feature />
     </section>
   );

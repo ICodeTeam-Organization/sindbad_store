@@ -67,7 +67,10 @@ const config: Config = {
       screens: {
         'mdHalf': '934px',
         'xlHalf': '1530px',
-
+        '2lg': '1130px',
+        '2sm': '732px',
+        '2xs': '500px',
+        '1xs': '350px',
       },
     },
   },
