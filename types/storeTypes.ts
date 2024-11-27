@@ -17,6 +17,23 @@ export interface MainCategory {
   imageUrl: string;
   categoryTypeName: string;
   categoryTypeNumber: number;
+  subCategories?:MainCategory[]
+  parentCategoryId?:number
+}
+
+// for e shops
+interface EcommerceStoreImage {
+  id: number;
+  imageUrl: string;
+}
+
+export interface Shop {
+  id: number;
+  name: string;
+  urlLinkOfStore: string;
+  description: string;
+  logo: string;
+  ecommerceStoreImages: EcommerceStoreImage[];
 }
 
 

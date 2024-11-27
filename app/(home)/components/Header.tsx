@@ -29,8 +29,12 @@ import AllCategoriesMegaMenu from "./MegaMenus/AllCategoriesMegaMenu";
 import SpecialOrderMegaMenu from "./MegaMenus/SpecialOrderMegaMenu";
 import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
+
 const Header = () => {
   // const [scrolled, setScrolled] = useState(false);
+
+  
+
   const [openNav, setopenNav] = useState<boolean>(false);
 
   const { data: session, status } = useSession();

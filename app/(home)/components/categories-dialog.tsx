@@ -25,7 +25,7 @@ const CategoriesDialog = () => {
     queryKey: ["branch-category"],
     queryFn: () =>
       getApi(
-        "Market/categories/GetAllMainCategoriesWithSubCategoriesForViewInSpecialProductsPage/1/1"
+        "Market/categories/GetMainCategoriesWithSubCategories/1/1"
       ),
   });
 

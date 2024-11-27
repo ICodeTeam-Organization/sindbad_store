@@ -13,6 +13,7 @@ import Feature from "./components/sections/Feature";
 import { getApi } from "@/lib/http";
 import AllEShops from "./components/sections/all-Eshops";
 import { MainCategory } from "@/types/storeTypes";
+import SetCategoriesInLocalStorage from "./components/SetCategoriesInLocalStorage";
 
 export default async function Home2() {
   const [
@@ -36,13 +37,16 @@ export default async function Home2() {
     getApi<any>(
       "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/10"
     ),
-    getApi<any>(
-      "Market/categories/GetAllMainCategoriesWithSubCategoriesForViewInSpecialProductsPage/1/1000"
+    getApi<{data:{items:MainCategory[]}}>(
+      "Categories/GetAllMainCategoriesWithSubCategories/1/10000"
     ),
   ]);
 
   return (
     <section className="w-full     ">
+
+      <SetCategoriesInLocalStorage AllCategoriesWihtSubcategories={AllCategoriesWithSub?.data?.items} />
+
       <Hero />
       <div className="w-full xl:container mx-auto ">
         <CategoriesSlider categories={categories.data} />
