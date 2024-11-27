@@ -24,7 +24,7 @@ function CategoriesSlider({categories}:catProp) {
   
 
   const CategoryItem = ({item}:{item:MainCategory}) => (
-    <Link href={"/"+item?.id} className="bg-[#FFFDF4] p-1 px-2 rounded shadow-sm  " >
+    <Link href={"/shop?subCat="+item?.id} className="bg-[#FFFDF4] p-1 px-2 rounded shadow-sm  " >
        <p className="whitespace-nowrap tajawal min-w-[105px] text-center mdHalf:text-[11px] text-[10px] font-bold "> {item?.name} </p>
       </Link>
   )

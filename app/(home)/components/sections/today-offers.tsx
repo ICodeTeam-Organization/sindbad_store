@@ -10,8 +10,9 @@ import {
 import React, { useState } from "react";
 import ProductCard from "../product-card";
 import Autoplay from "embla-carousel-autoplay"
+import { Product } from "@/types/storeTypes";
 
-const TodayOffers = ({Offersproducts={data:[]}}) => {
+const TodayOffers = ({Offersproducts={data:[]}}:{Offersproducts:{data:Product[]}}) => {
   // const Offersproducts = await getApi<any>(
   //   "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/4"
   // );

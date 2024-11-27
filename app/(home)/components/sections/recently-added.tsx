@@ -11,9 +11,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useState } from "react";
+import { Product } from "@/types/storeTypes";
 
 
-const RecentlyAdded =  ({RecentlyProducts={data:[]}}) => {
+const RecentlyAdded =  ({RecentlyProducts={data:[]}}:{RecentlyProducts:{data:Product[]}}) => {
   // const RecentlyProducts = await getApi<any>(
   //   "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/5"
   // );

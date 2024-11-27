@@ -6,9 +6,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import PersonButton from "./person-button";
 import { useSession } from "next-auth/react";
-import {
-  ArrowRight,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import React from "react";
 import {
   Select,
@@ -29,16 +27,45 @@ import AllCategoriesMegaMenu from "./MegaMenus/AllCategoriesMegaMenu";
 import SpecialOrderMegaMenu from "./MegaMenus/SpecialOrderMegaMenu";
 import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
+import {useRouter} from "next/navigation";
+
+const SearchComponent = ({
+  searchKeyword = "",
+  setsearchKeyword = (str: string) => {},
+}) => {
+
+
+  return (
+    <div className="flex  px-1 h-[46px]  xl:w-full   border-[0px] rounded-[9px] shadow justify-between gap-x-1  bg-white w-full">
+      <input
+        className="pr-2 w-full h-full text-sm mdHalf:text-md  outline-none rounded-full"
+        type="text"
+        placeholder=" ابحث  عن منتج"
+        value={searchKeyword}
+        onChange={(e) => {
+          setsearchKeyword(e.target.value);
+        }}
+        
+      />
+      <Link
+        href={"/shop?skw="+searchKeyword}
+        className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
+      >
+        <BiSearch color="black " size={24} />
+      </Link>
+    </div>
+  );
+};
 
 const Header = () => {
   // const [scrolled, setScrolled] = useState(false);
 
-  
-
   const [openNav, setopenNav] = useState<boolean>(false);
-
+  const [searchKeyword, setsearchKeyword] = useState("");
   const { data: session, status } = useSession();
   const isAuth = status === "authenticated";
+  const router = useRouter()
+
 
   // const mutation = useSignOut();
 
@@ -126,8 +153,6 @@ const Header = () => {
     },
   ];
 
-  
-
   // useEffect(() => {
   //   const handleScroll = () => {
   //     // setScrolled(window.scrollY > 50);
@@ -138,30 +163,17 @@ const Header = () => {
   //   };
   // }, []);
 
-  const SearchComponent = () => (
-    <div className="flex  px-1 h-[46px]  xl:w-full   border-[0px] rounded-[9px] shadow justify-between gap-x-1  bg-white w-full">
-      <input
-        className="pr-2 w-full h-full text-sm mdHalf:text-md  outline-none rounded-full"
-        type="text"
-        placeholder=" ابحث  عن منتج"
-      />
-      <div className="  px-2  flex items-center justify-center">
-        <BiSearch color="black " size={24} />
-      </div>
-    </div>
-  );
-
   const OrderFromAndHow = () => {
     return (
       <div className="flex mdHalf:flex-row flex-col-reverse xl:gap-6 gap-4 mdHalf:items-center  mdHalf:p-0">
         <div className="mdHalf:flex flex-row items-center mdHalf:justify-center mdHalf:p-0 px-6">
-          <p className=" mdHalf:text-sm text-base mdHalf:m-0 mb-1" > اطلب من </p>
+          <p className=" mdHalf:text-sm text-base mdHalf:m-0 mb-1"> اطلب من </p>
           <div className="flex items-center justify-center gap-2 mdHalf:mr-1 mdHalf:px-1 mdHalf:pr-2  cursor-pointer rounded">
             <Select dir="rtl">
               <SelectTrigger className="bg-transparent mdHalf:px-3 outline-none selection:outline-none">
                 <SelectValue placeholder="اليمن" />
               </SelectTrigger>
-              <SelectContent className="z-[99999999]" >
+              <SelectContent className="z-[99999999]">
                 <SelectItem value="place1">اليمن</SelectItem>
                 <SelectItem value="place2">السعودية</SelectItem>
                 <SelectItem value="place3">مصر</SelectItem>
@@ -172,39 +184,42 @@ const Header = () => {
         <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
 
         <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0 mt-2 mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] pt-3 ">
-          
-          <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 " >
-            <p className="mdHalf:text-sm text-base mdHalf:m-0 " > كيف ؟ </p>
+          <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
+            <p className="mdHalf:text-sm text-base mdHalf:m-0 "> كيف ؟ </p>
             <IoChevronDownOutline className="group-hover:rotate-180 transition-transform text-base" />
           </div>
 
           {/* web */}
-          <div className="hidden mdHalf:block" >
+          <div className="hidden mdHalf:block">
             <DropdownMenu menu={questions} dir="right" />
           </div>
           {/* mobile */}
-          <div className="mdHalf:hidden block" >
+          <div className="mdHalf:hidden block">
             <ul
-            role="menu"
-                className={cn(" mt-2 opacity-0 invisible  group-hover:visible group-hover:opacity-100 hidden group-hover:block transition-all top-12 z-[999999] min-w-[180px] overflow-y-scroll overflow-x-hidden  bg-white focus:outline-none h-[200px] border-b")}
+              role="menu"
+              className={cn(
+                " mt-2 opacity-0 invisible  group-hover:visible group-hover:opacity-100 hidden group-hover:block transition-all top-12 z-[999999] min-w-[180px] overflow-y-scroll overflow-x-hidden  bg-white focus:outline-none h-[200px] border-b"
+              )}
             >
-                {questions.map((item, index) => (
-                  item.invisible 
-                  ? <></>
-                  : <React.Fragment key={index}>
-                        <li
-                            className="cursor-pointer text-slate-800 flex w-full gap-x-2 text-sm items-center rounded-md p-2 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100 mr-4 "
-                            onClick={item.onclickFun}
-                        >
-                            {item.icon}
-                            <p className="text-slate-800 font-medium ml-2 whitespace-nowrap ">{item.title}</p>
-                        </li>
-                    </React.Fragment>
-                  
-                ))}
+              {questions.map((item, index) =>
+                item.invisible ? (
+                  <></>
+                ) : (
+                  <React.Fragment key={index}>
+                    <li
+                      className="cursor-pointer text-slate-800 flex w-full gap-x-2 text-sm items-center rounded-md p-2 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100 mr-4 "
+                      onClick={item.onclickFun}
+                    >
+                      {item.icon}
+                      <p className="text-slate-800 font-medium ml-2 whitespace-nowrap ">
+                        {item.title}
+                      </p>
+                    </li>
+                  </React.Fragment>
+                )
+              )}
             </ul>
           </div>
-
         </div>
       </div>
     );
@@ -249,13 +264,16 @@ const Header = () => {
         <div className="flex flex-col md:w-full   ">
           {/* top section */}
           <div className="flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center mx-5 mdHalf:mr-[170px]  ">
-           
-             <div className="hidden mdHalf:block" >
+            <div className="hidden mdHalf:block">
               <OrderFromAndHow />
-             </div>
+            </div>
 
             <div className="hidden md:block mdHalf:w-auto flex-1 ">
-              <SearchComponent />
+              <SearchComponent
+                searchKeyword={searchKeyword}
+                setsearchKeyword={setsearchKeyword}
+                
+              />
             </div>
 
             <div className="flex flex-row items-center xl:gap-6 md:gap-2 gap-3">
@@ -265,13 +283,13 @@ const Header = () => {
                     href="/Favorites"
                     className="cursor-pointer bg-[#66666611] md:bg-transparent md:p-0 p-2 rounded-full"
                   >
-                    <GoHeart className="text-[#666666] mdHalf:text-[22px] text-sm "  />
+                    <GoHeart className="text-[#666666] mdHalf:text-[22px] text-sm " />
                   </Link>
                   <Link
                     href="/shopping-card"
                     className="cursor-pointer bg-[#66666611] md:bg-transparent md:p-0 p-2 rounded-full"
                   >
-                    <BsCart className="text-[#666666] mdHalf:text-[22px] text-sm "  />
+                    <BsCart className="text-[#666666] mdHalf:text-[22px] text-sm " />
                   </Link>
                 </>
               )}
@@ -325,10 +343,10 @@ const Header = () => {
                 <div className="nav-menus group">
                   <div className="nav-menus-label">
                     <IoMenu size={22} className="hidden lg:block" />
-                    <p className=""  >كل الفئات</p>
+                    <p className="">كل الفئات</p>
                   </div>
-                  
-                  <AllCategoriesMegaMenu  />
+
+                  <AllCategoriesMegaMenu />
                 </div>
 
                 <div className="nav-menus group">
@@ -341,7 +359,7 @@ const Header = () => {
                     linkAll="/"
                     title="فئات الطلب الخاص"
                   /> */}
-                  <SpecialOrderMegaMenu/>
+                  <SpecialOrderMegaMenu />
                 </div>
 
                 <div className="nav-menus group ">
@@ -349,7 +367,7 @@ const Header = () => {
                     <p> طلب من متجر إلكتروني </p>
                     <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
                   </div>
-                  <OrderFromEshopMegaMenu/>
+                  <OrderFromEshopMegaMenu />
                 </div>
 
                 <div className="nav-menus group">
@@ -390,16 +408,19 @@ const Header = () => {
                   </div>
                 </div>
               </div>
-             <div className="mdHalf:hidden block z-[9999999] relative" >
-               <OrderFromAndHow/>
-             </div>
+              <div className="mdHalf:hidden block z-[9999999] relative">
+                <OrderFromAndHow />
+              </div>
             </div>
           </div>
         </div>
       </div>
       {/* serach component for mobiles */}
       <div className="md:hidden block mx-5 ">
-        <SearchComponent />
+        <SearchComponent
+          searchKeyword={searchKeyword}
+          setsearchKeyword={setsearchKeyword}
+        />
       </div>
     </div>
   );

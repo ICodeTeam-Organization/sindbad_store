@@ -16,10 +16,9 @@ const setCategories = useCategoriesDataStore((state) => state.setCategories);
     if (localStorage.getItem("categories")) {
         setCategories(JSON.parse(localStorage.getItem("categories") || '[]') || [])
     }else{
-        localStorage.setItem("categories", JSON.stringify(AllCategoriesWihtSubcategories));
         setCategories(AllCategoriesWihtSubcategories || [])
     }
-  }, [AllCategoriesWihtSubcategories]);
+  }, []);
 
   return null; // No UI needed
 }

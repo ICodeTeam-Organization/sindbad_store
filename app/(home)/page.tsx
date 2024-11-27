@@ -12,7 +12,7 @@ import RecentlyAdded from "./components/sections/recently-added";
 import Feature from "./components/sections/Feature";
 import { getApi } from "@/lib/http";
 import AllEShops from "./components/sections/all-Eshops";
-import { MainCategory } from "@/types/storeTypes";
+import { MainCategory, Product, Store } from "@/types/storeTypes";
 import SetCategoriesInLocalStorage from "./components/SetCategoriesInLocalStorage";
 
 export default async function Home2() {
@@ -27,14 +27,14 @@ export default async function Home2() {
     getApi<{data:MainCategory[]}>(
       "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/50"
     ),
-    getApi<any>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
-    getApi<any>(
+    getApi<{data:Store[]}>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
+    getApi<{data:Product[]}>(
       "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/10"
     ),
-    getApi<any>(
+    getApi<{data:Product[]}>(
       "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/10"
     ),
-    getApi<any>(
+    getApi<{data:Product[]}>(
       "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/10"
     ),
     getApi<{data:{items:MainCategory[]}}>(

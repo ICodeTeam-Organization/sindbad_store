@@ -27,6 +27,16 @@ interface EcommerceStoreImage {
   imageUrl: string;
 }
 
+
+export interface Store {
+  id: number;
+  name: string;
+  websiteLink: string;
+  description: string;
+  mainImageUrl: string;
+  imagesUrl:[string];
+}
+
 export interface Shop {
   id: number;
   name: string;

@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/carousel";
 import { useState } from "react";
 import Autoplay from "embla-carousel-autoplay"
+import { Product } from "@/types/storeTypes";
 
-const BeastSeller =  ({BeastSellerInWeek={data:[]}}) => {
+const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Product[]}}) => {
   
   // if (!BeastSellerInWeek) return notFound();
 
