@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import React, { ReactInstance, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
 interface MenuItem {
     title: string;
