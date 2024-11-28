@@ -27,7 +27,7 @@ import AllCategoriesMegaMenu from "./MegaMenus/AllCategoriesMegaMenu";
 import SpecialOrderMegaMenu from "./MegaMenus/SpecialOrderMegaMenu";
 import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
-import {useRouter} from "next/navigation";
+// import {useRouter} from "next/navigation";
 
 const SearchComponent = ({
   searchKeyword = "",
