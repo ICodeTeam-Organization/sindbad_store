@@ -11,18 +11,18 @@ const Hero = () => {
       </div>
 
       <div className="xl:container mx-auto" >
-      <div className="absolute top-0 -z-50 xl:container mx-auto">
-        <Image
-          src={"/images/sndbadBG.svg"}
-          width={2000}
-          height={200}
-          alt="hero-image"
-          className="object-contain "
-        />
-      </div>
+        <div className="absolute top-0 -z-50 xl:container mx-auto">
+          <Image
+            src={"/images/sndbadBG.svg"}
+            width={2000}
+            height={200}
+            alt="hero-image"
+            className="object-contain "
+          />
+        </div>
       </div>
 
-      
+
     </div>
 
   );
