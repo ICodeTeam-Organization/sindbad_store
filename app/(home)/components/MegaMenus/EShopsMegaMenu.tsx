@@ -33,7 +33,7 @@ function EShopsMegaMenu() {
     if (allMainCat.length > 0) {
         setParams(o=>({...o,selectedCategory:allMainCat[0]?.id}))
     }
-  },[categories])
+  },[allMainCat, categories])
 
   return (
   <div className="transition-all duration-200 right-0 opacity-0 invisible hidden  mdHalf:block  group-hover:block  translate-y-5  group-hover:-translate-y-0 mdHalf:w-[85%] w-full group-hover:opacity-100 group-hover:visible mdHalf:mt-1 -mt-2 rounded top-10 left-0   max-h-[400px] mdHalf:overflow-y-hidden overflow-y-scroll z-[99999]  bg-white  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute   ">
