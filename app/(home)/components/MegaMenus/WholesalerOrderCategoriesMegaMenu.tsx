@@ -22,7 +22,7 @@ function WholesalerOrderCategoriesMegaMenu() {
        ? <div className='grid lg:grid-cols-6 mdHalf:grid-cols-5 mdHalf:grid-rows-4 gap-x-4  mb-5 ' >
             {
                wholesalerCateg?.map((i:MainCategory)=>(
-                    <p onClick={()=>{}}  className=' text-[11px] my-[2px] hover:bg-gray-200 font-bold transition-colors duration-200 px-2 p-1 rounded mdHalf:whitespace-nowrap text-black ' > {i.name} </p>
+                    <p  key={i.id} onClick={()=>{}}  className=' text-[11px] my-[2px] hover:bg-gray-200 font-bold transition-colors duration-200 px-2 p-1 rounded mdHalf:whitespace-nowrap text-black ' > {i.name} </p>
                 ))
             }
         </div>

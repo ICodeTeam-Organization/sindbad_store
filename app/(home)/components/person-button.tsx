@@ -18,7 +18,7 @@ type Props = {
   status: "authenticated" | "loading" | "unauthenticated";
 };
 
-const PersonButton = ({ session, status }: Props) => {
+const PersonButton = ({ status }: Props) => {
   const menu = [
     {
       title: "معلومات الحساب",
