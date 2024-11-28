@@ -4,7 +4,7 @@ import SearchResultsHeader from "./components/search-results-header";
 import ShopProductsGrid from "./components/shop-products-grid";
 import Pagination from "../../../components/Pagination";
 import { getApi } from "@/lib/http";
-import { console } from "inspector";
+// import { console } from "inspector";
 
 const ProductPage = async () => {
   const products = await getApi<any>(

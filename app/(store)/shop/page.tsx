@@ -7,7 +7,7 @@ import Sidebar from "./components/Sidebar";
 
 const ProductPage = async () => {
   const products = await getApi<any>(
-    `products/HomePage/GetProductsOfOurStore/${20}/1`
+    `products/HomePage/GetProductsOfOurStore/${15}/1`
   );
 
   // console.log(products);
@@ -24,7 +24,7 @@ const ProductPage = async () => {
 
           {/* Products Section */}
           <section>
-            <ShopProductsGrid allProducts={[]} />
+            <ShopProductsGrid allProducts={products} />
             <Pagination />
           </section>
         </main>
