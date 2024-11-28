@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import "./serviceCard.css";
 import Image from "next/image";
 import specialrequist from "@/public/images/specialrequist.svg";
-import Stores from "@/public/images/Stores.svg";
+// import Stores from "@/public/images/Stores.svg";
 import discounts from "@/public/images/discounts.svg";
 import onlineStores from "@/public/images/onlineStores.svg";
 import shoppingStore from "@/public/images/shoppingStore.svg";
-import wholesaleSection from "@/public/images/wholesaleSection.svg";
+// import wholesaleSection from "@/public/images/wholesaleSection.svg";
 import Link from "next/link";
 
 function ServiceCard() {
@@ -58,6 +58,7 @@ function ServiceCard() {
         const isHovered = isHover >= 0 && x == isHover;
         return (
           <div
+          key={x}
             onMouseEnter={() => setIsHovered(x)}
             onMouseLeave={() => setIsHovered(-1)}
           >
