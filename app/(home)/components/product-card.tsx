@@ -1,6 +1,8 @@
 import Image from "next/image";
 import AddToBasket from "./add-to-basket";
 import Link from "next/link";
+import SafeImage from "@/components/SafeImage";
+
 
 type props = {
   cn?: string;
@@ -28,16 +30,24 @@ const ProductCard = ({
       }
     >
       <Link href={`/shop/productDetils/${ProductDet}`} className="overflow-hidden relative" >
-         <div className="w-full h-[180px]" >
-            <Image
-              className="  max-sm:h-28 rounded-t-[8px] object-cover"
-              src={image}
-              alt={""}
-              fill
-              priority
-            />
-         </div>
-         {/* <Image
+        <div className="w-full h-[180px]" >
+        <SafeImage
+            src={image} // رابط الصورة
+            alt="صورة منتج"
+            className="max-sm:h-28 rounded-t-[8px] object-cover"
+            fill
+            loading="lazy" 
+          />
+
+          {/* <Image
+            className="  max-sm:h-28 rounded-t-[8px] object-cover"
+            src={image}
+            alt={""}
+            fill
+            priority
+          /> */}
+        </div>
+        {/* <Image
           className=" mdHalf:hidden block  h-[210px] max-lg:h-[180px]  max-sm:h-28 rounded-t-[8px]"
           src={image}
           alt={""}
