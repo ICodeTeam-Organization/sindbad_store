@@ -15,7 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useSignOut from "@/hooks/useSignOut";
+// import useSignOut from "@/hooks/useSignOut";
 import DropdownMenu from "@/components/DropDownMenu";
 import { IoChevronDownOutline, IoMenu } from "react-icons/io5";
 import { GoHeart } from "react-icons/go";
@@ -31,7 +31,9 @@ import {useRouter} from "next/navigation";
 
 const SearchComponent = ({
   searchKeyword = "",
-  setsearchKeyword = (str: string) => {},
+  setsearchKeyword = (str: string) => {
+    searchKeyword = str;
+  },
 }) => {
 
 
@@ -64,7 +66,7 @@ const Header = () => {
   const [searchKeyword, setsearchKeyword] = useState("");
   const { data: session, status } = useSession();
   const isAuth = status === "authenticated";
-  const router = useRouter()
+  // const router = useRouter()
 
 
   // const mutation = useSignOut();
