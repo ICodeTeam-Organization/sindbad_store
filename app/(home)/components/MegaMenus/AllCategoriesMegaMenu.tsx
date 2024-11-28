@@ -1,8 +1,8 @@
 "use client";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import { getApi } from "@/lib/http";
-import { cn, isClient } from "@/lib/utils";
-import { Category, MainCategory } from "@/types/storeTypes";
+// import { getApi } from "@/lib/http";
+import { cn } from "@/lib/utils";
+import { MainCategory } from "@/types/storeTypes";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -32,7 +32,7 @@ function AllCategoriesMegaMenu() {
       setselectedCategory(allMainCat[0]?.id)
       setSubCategories(allMainCat[0]?.subCategories || [])
     }
-  },[categories])
+  },[allMainCat, categories])
 
   return (
     <div className="transition-all duration-200 right-0 opacity-0 invisible hidden  mdHalf:block  group-hover:block  translate-y-5  group-hover:-translate-y-0 mdHalf:w-[85%] w-full group-hover:opacity-100 group-hover:visible mdHalf:mt-1 -mt-2 rounded top-10 left-0   max-h-[400px] mdHalf:overflow-y-hidden overflow-y-scroll z-[99999]  bg-white  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute   ">
@@ -52,6 +52,7 @@ function AllCategoriesMegaMenu() {
           <div className="mdHalf:grid lg:grid-cols-1 flex  mdHalf:place-content-start  mdHalf:overflow-y-scroll mdHalf:overflow-x-hidden overflow-x-scroll  gap-x-4  mdHalf:mb-5 mb-2  mdHalf:h-[75%]">
             {allMainCat?.map((i: any) => (
               <Link
+              key={i.id}
                href={`/shop?cat=${i.id}`}
                 onMouseEnter={() => {
                   setselectedCategory(i.id);
@@ -83,7 +84,7 @@ function AllCategoriesMegaMenu() {
           {subCategories.length != 0 ? (
             <div className="mdHalf:grid xl:grid-cols-7 lg:grid-cols-6 mdHalf:grid-cols-4 grid-cols-1 place-content-start  gap-x-4   overflow-y-scrol overflow-x-hidden h-[75%]">
               {subCategories?.map((i: MainCategory) => (
-                <Link href={`/shop?subCat=${i.id}`} className=" block text-[11px] my-[2px] h-fit hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded lg:whitespace-nowrap">
+                <Link key={i.id} href={`/shop?subCat=${i.id}`} className=" block text-[11px] my-[2px] h-fit hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded lg:whitespace-nowrap">
                   {" "}
                   {i.name}{" "}
                 </Link>
