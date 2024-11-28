@@ -24,7 +24,7 @@ const ShoppingNow = async () => {
           className="flex flex-wrap xl:gap-4 sm:gap-7 gap-4 items-center justify-center"
           >
             {products?.data?.map((product: any) => (
-              <div className="sm:w-[220px]  w-[180px]  " >
+              <div key={product.id} className="sm:w-[220px]  w-[180px]  " >
                 <ProductCard
                   key={product.id}
                   id={product.id}
