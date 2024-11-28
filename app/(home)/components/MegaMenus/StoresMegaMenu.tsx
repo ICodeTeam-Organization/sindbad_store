@@ -2,7 +2,7 @@
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { getApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
-import { MainCategory, Shop, Store } from "@/types/storeTypes";
+import { MainCategory, Store } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -35,7 +35,7 @@ function StoresMegaMenu() {
     if (allMainCat.length > 0) {
         setParams(o=>({...o,selectedCategory:allMainCat[0]?.id}))
     }
-  },[categories])
+  },[allMainCat,categories])
 
   return (
     <div className="transition-all duration-200 right-0 opacity-0 invisible hidden  mdHalf:block  group-hover:block  translate-y-5  group-hover:-translate-y-0 mdHalf:w-[85%] w-full group-hover:opacity-100 group-hover:visible mdHalf:mt-1 -mt-2 rounded top-10 left-0   max-h-[400px] mdHalf:overflow-y-hidden overflow-y-scroll z-[99999]  bg-white  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute   ">
@@ -49,6 +49,7 @@ function StoresMegaMenu() {
           className="mdHalf:grid lg:grid-cols-1 flex  mdHalf:place-content-start  mdHalf:overflow-y-scroll mdHalf:overflow-x-hidden overflow-x-scroll  gap-x-4  mdHalf:mb-5 mb-2  mdHalf:h-[75%]">
             {allMainCat.map((i) => (
               <p 
+              key={i.id}
                 onClick={()=>{
                   setParams((o) => ({ ...o, selectedCategory: i.id }));
                 }} 

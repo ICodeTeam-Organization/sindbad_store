@@ -1,6 +1,6 @@
 import { useCategoriesDataStore } from '@/app/stores/categoriesStore';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
+// import Link from 'next/link';
 import React from 'react'
 ;
 
@@ -23,7 +23,7 @@ export default function SpecialOrderMegaMenu() {
          ? <div className='grid 2xl:grid-cols-5 lg:grid-cols-3 max-lg: mdHalf:grid-cols-3 mdHalf:grid-rows-4 gap-x-4  mb-5 ' >
               {
                 categories.filter((i)=>i.categoryTypeNumber==2)?.map((i)=>(
-                    <p  className='text-[11px] font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </p>
+                    <p  key={i.id}  className='text-[11px] font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </p>
                 ))
               }
           </div>
@@ -43,7 +43,7 @@ export default function SpecialOrderMegaMenu() {
          ? <div className='grid 2xl:grid-cols-5 lg:grid-cols-3 mdHalf:grid-cols-3 mdHalf:grid-rows-4 gap-x-4  mb-5 ' >
               {
                   categories.filter((i)=>i.categoryTypeNumber==3)?.map((i)=>(
-                      <p onClick={()=>{}}  className='text-[11px] font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </p>
+                      <p  key={i.id} onClick={()=>{}}  className='text-[11px] font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </p>
                   ))
               }
           </div>
