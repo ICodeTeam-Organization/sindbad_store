@@ -20,6 +20,9 @@ type Props = {
 };
 
 const PersonButton = ({ status }: Props) => {
+
+  const mutation = useSignOut()
+
   const menu = [
     {
       title: "معلومات الحساب",
@@ -60,7 +63,7 @@ const PersonButton = ({ status }: Props) => {
       title: "تسجيل الخروج",
       icon: <BiLogOutCircle />,
       onclickFun: () => {
-        // mutation.mutate()
+        mutation.mutate()
       },
       isLogout: true,
     },
