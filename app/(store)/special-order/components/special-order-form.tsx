@@ -30,8 +30,8 @@ const tabs = [
   { id: 3, label: "رابط متجر" },
 ];
 
-const SpecialOrderForm = () => {
-  const [curentTab, setCurentTab] = React.useState(1);
+const SpecialOrderForm = ({tabType=1,category="0",onClose=()=>{}}) => {
+  const [curentTab, setCurentTab] = React.useState(tabType);
 
   const { toast } = useToast(); // @todo: find a better way to implement the toast notification
 
@@ -252,6 +252,13 @@ const SpecialOrderForm = () => {
           disabled={handleOnSubmit.isPending}
         >
           حفظ الطلب
+        </Button>
+        <Button
+          className="bg-slate-900  px-10 mx-4"
+          onClick={onClose}
+          disabled={handleOnSubmit.isPending}
+        >
+         إلغاء
         </Button>
       </form>
     </Form>

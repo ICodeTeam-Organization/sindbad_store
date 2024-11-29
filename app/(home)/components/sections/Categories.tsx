@@ -64,7 +64,7 @@ const Categories = ({categories}:categoriesPropsInterface) => {
                 key={category.id}
                 id={category.id}
                 name={category.name}
-                imageUrl="/images/shoppingStore.svg"
+                imageUrl={category.imageUrl || ""}
               />
             </CarouselItem>
           ))}
