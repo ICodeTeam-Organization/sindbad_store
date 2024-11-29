@@ -22,11 +22,12 @@ import { GoHeart } from "react-icons/go";
 import { BsCart } from "react-icons/bs";
 import StoresMegaMenu from "./MegaMenus/StoresMegaMenu";
 import EShopsMegaMenu from "./MegaMenus/EShopsMegaMenu";
-import { FaQuestionCircle } from "react-icons/fa";
+import { FaBoxes, FaQuestionCircle } from "react-icons/fa";
 import AllCategoriesMegaMenu from "./MegaMenus/AllCategoriesMegaMenu";
 import SpecialOrderMegaMenu from "./MegaMenus/SpecialOrderMegaMenu";
 import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
+import { IoMdNotificationsOutline } from "react-icons/io";
 // import {useRouter} from "next/navigation";
 
 const SearchComponent = ({
@@ -35,8 +36,6 @@ const SearchComponent = ({
     searchKeyword = str;
   },
 }) => {
-
-
   return (
     <div className="flex  px-1 h-[46px]  xl:w-full   border-[0px] rounded-[9px] shadow justify-between gap-x-1  bg-white w-full">
       <input
@@ -47,10 +46,9 @@ const SearchComponent = ({
         onChange={(e) => {
           setsearchKeyword(e.target.value);
         }}
-        
       />
       <Link
-        href={"/shop?skw="+searchKeyword}
+        href={"/shop?skw=" + searchKeyword}
         className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
       >
         <BiSearch color="black " size={24} />
@@ -169,7 +167,7 @@ const Header = () => {
     return (
       <div className="flex mdHalf:flex-row flex-col-reverse xl:gap-6 gap-4 mdHalf:items-center  mdHalf:p-0">
         <div className="mdHalf:flex flex-row items-center mdHalf:justify-center mdHalf:p-0 px-6">
-          <p className=" mdHalf:text-sm text-base mdHalf:m-0 mb-1"> اطلب من </p>
+          <p className=" mdHalf:text-sm text-[12px] mdHalf:m-0 mb-1"> اطلب من </p>
           <div className="flex items-center justify-center gap-2 mdHalf:mr-1 mdHalf:px-1 mdHalf:pr-2  cursor-pointer rounded">
             <Select dir="rtl">
               <SelectTrigger className="bg-transparent mdHalf:px-3 outline-none selection:outline-none">
@@ -183,12 +181,24 @@ const Header = () => {
             </Select>
           </div>
         </div>
+
+        <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
+
+        <div>
+          <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0 mt-2 mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] pt-3 ">
+            <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
+              {/* <FaBoxes  className="me-1 text-[12px]" /> */}
+              <p className="mdHalf:text-sm text-[12px] mdHalf:m-0 "> طلباتي </p>
+            </div>
+          </div>
+        </div>
+
         <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
 
         <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0 mt-2 mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] pt-3 ">
           <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
-            <p className="mdHalf:text-sm text-base mdHalf:m-0 "> كيف ؟ </p>
-            <IoChevronDownOutline className="group-hover:rotate-180 transition-transform text-base" />
+            <p className="mdHalf:text-sm text-[12px] mdHalf:m-0 "> كيف ؟ </p>
+            <IoChevronDownOutline className="group-hover:rotate-180 transition-transform text-[14px]" />
           </div>
 
           {/* web */}
@@ -265,7 +275,7 @@ const Header = () => {
         {/* header => top,down */}
         <div className="flex flex-col md:w-full   ">
           {/* top section */}
-          <div className="flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center mx-5 mdHalf:mr-[170px]  ">
+          <div className="flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center ms-5 mdHalf:mr-[170px]  ">
             <div className="hidden mdHalf:block">
               <OrderFromAndHow />
             </div>
@@ -274,24 +284,29 @@ const Header = () => {
               <SearchComponent
                 searchKeyword={searchKeyword}
                 setsearchKeyword={setsearchKeyword}
-                
               />
             </div>
 
-            <div className="flex flex-row items-center xl:gap-6 md:gap-2 gap-3">
+            <div className="flex flex-row items-center  md:gap-2 gap-6">
               {isAuth && (
                 <>
                   <Link
                     href="/Favorites"
-                    className="cursor-pointer bg-[#66666611] md:bg-transparent md:p-0 p-2 rounded-full"
+                    className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500  hover:bg-[#66666611]  rounded-full"
                   >
-                    <GoHeart className="text-[#666666] mdHalf:text-[22px] text-sm " />
+                    <IoMdNotificationsOutline className="text-[#666666]  text-[20px] m-2 " />
+                  </Link>
+                  <Link
+                    href="/Favorites"
+                    className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
+                  >
+                    <GoHeart className="text-[#666666]  text-[20px] m-2 " />
                   </Link>
                   <Link
                     href="/shopping-card"
-                    className="cursor-pointer bg-[#66666611] md:bg-transparent md:p-0 p-2 rounded-full"
+                    className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
                   >
-                    <BsCart className="text-[#666666] mdHalf:text-[22px] text-sm " />
+                    <BsCart className="text-[#666666]  text-[20px] m-2 " />
                   </Link>
                 </>
               )}
@@ -399,15 +414,21 @@ const Header = () => {
 
               <div className=" flex flex-col mdHalf:flex-row justify-end lg:gap-x-5 lg:ml-5">
                 <div className="nav-menus ">
-                  <div className="nav-menus-label">
+                  <Link
+                    href={"/shop?todayoffers=true"}
+                    className="nav-menus-label"
+                  >
                     <p> عرض اليوم </p>
-                  </div>
+                  </Link>
                 </div>
 
                 <div className="nav-menus">
-                  <div className="nav-menus-label">
+                  <Link
+                    href={"/shop?newProducts=true"}
+                    className="nav-menus-label"
+                  >
                     <p> وصل حديث</p>
-                  </div>
+                  </Link>
                 </div>
               </div>
               <div className="mdHalf:hidden block z-[9999999] relative">

@@ -5,7 +5,7 @@ import React from "react";
 const ShoppingNow = async () => {
   const products = await getApi<any>(
     // change the url later
-    "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/15"
+    "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/18"
   );
   // if (!products) return notFound();
 //   const productList = Array.from({ length: 30 }, (v, i) => ({

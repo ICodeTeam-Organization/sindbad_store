@@ -20,7 +20,7 @@ function StoresMegaMenu() {
 
 
   const [params, setParams] = useState({
-    selectedCategory: allMainCat[0]?.id || 32,
+    selectedCategory: allMainCat[0]?.id ,
     pageNumber: 1,
     limit: 50,
   });
@@ -38,7 +38,7 @@ function StoresMegaMenu() {
   },[allMainCat,categories])
 
   return (
-    <div className="transition-all duration-200 right-0 opacity-0 invisible hidden  mdHalf:block  group-hover:block  translate-y-5  group-hover:-translate-y-0 mdHalf:w-[85%] w-full group-hover:opacity-100 group-hover:visible mdHalf:mt-1 -mt-2 rounded top-10 left-0   max-h-[400px] mdHalf:overflow-y-hidden overflow-y-scroll z-[99999]  bg-white  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute   ">
+    <div className="transition-all duration-200 right-0 opacity-0 invisible hidden  mdHalf:block  group-hover:block  translate-y-5  group-hover:-translate-y-0  w-full group-hover:opacity-100 group-hover:visible mdHalf:mt-1 -mt-2 rounded top-10 left-0   max-h-[400px] mdHalf:overflow-y-hidden overflow-y-scroll z-[99999]  bg-white  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute   ">
       <div className="flex mdHalf:flex-row flex-col px-4 py-5 mx-auto text-sm text-gray-500 dark:text-gray-400 md:px-6 gap-x-4 w-full">
         <div className="flex mdHalf:block  bg-white flex-col xl:w-[20%] mdHalf:w-[30%] justify-between mdHalf:max-h-[400px] overflow-hidden ">
           <div className="flex items-center  gap-2 mb-4  ">
@@ -77,7 +77,7 @@ function StoresMegaMenu() {
           ) : (data?.data?.items && data?.data?.items?.length != 0)? (
             <div className="mdHalf:grid xl:grid-cols-7 lg:grid-cols-6 mdHalf:grid-cols-4 grid-cols-1 place-content-start  gap-x-4   overflow-y-scrol overflow-x-hidden h-[75%] ">
               {data?.data?.items?.map((i) => (
-                <Link href={i.websiteLink||"#"} key={i.id} className=" text-[11px] my-[2px] h-fit hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded lg:whitespace-nowrap">
+                <Link href={i.websiteLink||"#"} key={i.id} className=" text-[12px] my-[2px] h-fit hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded lg:whitespace-nowrap">
                   {" "}
                   {i.name}{" "}
                 </Link>

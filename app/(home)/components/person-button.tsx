@@ -13,6 +13,7 @@ import { BiLogOutCircle } from "react-icons/bi";
 import DropdownMenu from "@/components/DropDownMenu";
 import Link from "next/link";
 import { IoChevronDownOutline } from "react-icons/io5";
+import useSignOut from "@/hooks/useSignOut";
 type Props = {
   session: Session | null;
   status: "authenticated" | "loading" | "unauthenticated";
@@ -59,7 +60,7 @@ const PersonButton = ({ status }: Props) => {
       title: "تسجيل الخروج",
       icon: <BiLogOutCircle />,
       onclickFun: () => {
-        /* Functionality for addresses */
+        // mutation.mutate()
       },
       isLogout: true,
     },
@@ -77,11 +78,11 @@ const PersonButton = ({ status }: Props) => {
             <img
               alt="tania andrew"
               src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=1480&amp;q=80"
-              className="relative inline-block mdHalf:h-10 mdHalf:w-10 w-9 h-w-9 cursor-pointer rounded-full object-cover object-center"
+              className="relative inline-block mdHalf:hidden mdHalf:h-10 mdHalf:w-10 w-9 h-w-9 cursor-pointer rounded-full object-cover object-center"
               data-popover-target="profile-menu"
             />
-            <div className="flex gap-2 items-center justify-center">
-              <p className="mdHalf:text-base text-xs" > حسابي </p>
+            <div className="mdHalf:flex gap-2 items-center justify-center hidden">
+              <p className="mdHalf:text-[14px] text-xs" > حسابي </p>
               <IoChevronDownOutline className="group-hover:rotate-180 transition-all"  />
             </div>
           </div>

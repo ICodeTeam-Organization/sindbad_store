@@ -1,29 +1,32 @@
 import { useCategoriesDataStore } from '@/app/stores/categoriesStore';
 import { cn } from '@/lib/utils';
-// import Link from 'next/link';
-import React from 'react'
+import Link from 'next/link';
+import React, { useState } from 'react'
 ;
 
 
 export default function SpecialOrderMegaMenu() {
 
   const { categories } = useCategoriesDataStore((state) => state);
-
+  const [CatType, setCatType] = useState('p')
 
   return (
     <div className={cn(
-        " transition-all duration-200 opacity-0 invisible hidden mdHalf:flex -mt-2  group-hover:flex  mdHalf:translate-y-5 translate-y-0  group-hover:-translate-y-0 group-hover:opacity-[1] group-hover:visible mdHalf:mt-1 rounded top-10  max-h-[400px]  overflow-y-scroll z-[99999]  bg-white  w-full  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute justify-center "
-        ,"right-0"
+        " transition-all duration-200  opacity-0 invisible hidden  mdHalf:flex -mt-2  group-hover:flex mdHalf:flex-row flex-col  mdHalf:translate-y-5 translate-y-0  group-hover:-translate-y-0 group-hover:opacity-[1] group-hover:visible mdHalf:mt-1 rounded top-10  h-[400px]  overflow-y-hidden z-[99999]  bg-white   xl:w-[30%] lg:w-[40%] mdHalf:w-[50%] w-full  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute  "
+        ,"right-15"
       )}>
-
-      <div className="flex  px-4 py-5  text-sm text-gray-500 dark:text-gray-400 md:grid-cols-3 md:px-6 gap-x-4">
-        <div className='w-full' >
-          <h3 className='mdHalf:text-md text-xs font-bold text-black mb-4 ' > فئات المنتجات </h3>
+      <div className='flex justify-center items-center mt-4 gap-8' >
+        <h3 className={cn('mdHalf:text-md text-xs font-bold text-black  px-2 py-1 mdHalf:hidden block mdHalf:bg-none ',CatType == 'p' && "bg-gray-200  rounded")} onClick={()=>setCatType("p")} > فئات المنتجات </h3>
+        <h3 className={cn('mdHalf:text-md text-xs font-bold text-black  px-2 py-1 mdHalf:hidden block mdHalf:bg-none ',CatType == 'k' && "bg-gray-200  rounded")} onClick={()=>setCatType("k")} > فئات الخدمات </h3>
+      </div>
+      <div className={cn("flex flex-col xl:w-[60%] mdHalf:w-[50%] w-full mdHalf:h-auto h-[90%]  px-4 py-5  text-sm text-gray-500 dark:text-gray-400 md:grid-cols-3 md:px-6 gap-x-4",CatType != 'p' && "mdHalf:flex hidden")}>
+        <h3 className='mdHalf:text-md text-xs font-bold text-black mb-4 me-3  mdHalf:block hidden ' > فئات المنتجات </h3>
+        <div className='w-full overflow-y-auto text-end ' dir='ltr' >
          { categories.filter((i)=>i.categoryTypeNumber==2).length != 0 
-         ? <div className='grid 2xl:grid-cols-5 lg:grid-cols-3 max-lg: mdHalf:grid-cols-3 mdHalf:grid-rows-4 gap-x-4  mb-5 ' >
+         ? <div className='grid gap-x-4  mb-5 ' >
               {
                 categories.filter((i)=>i.categoryTypeNumber==2)?.map((i)=>(
-                    <p  key={i.id}  className='text-[11px] font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </p>
+                    <Link href={"/special-order?sh=1&tab=1&category="+i.id}  className='text-[11px] me-2 font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </Link>
                 ))
               }
           </div>
@@ -36,14 +39,14 @@ export default function SpecialOrderMegaMenu() {
          
       </div>
 
-      <div className="flex  px-4 py-5  text-sm text-gray-500 dark:text-gray-400 md:grid-cols-3 md:px-6 gap-x-4">
-        <div className='w-full' >
-          <h3 className='mdHalf:text-md text-xs font-bold text-black mb-4  ' > فئات الخدمات </h3>
+      <div className={cn("flex flex-col xl:w-[60%] mdHalf:w-[50%] w-full mdHalf:h-auto h-[90%]  px-4 py-5  text-sm text-gray-500 dark:text-gray-400 md:grid-cols-3 md:px-6 gap-x-4",CatType != 'k' && "mdHalf:flex hidden")}>
+          <h3 className='mdHalf:text-md me-3 text-xs font-bold text-black mb-4 mdHalf:block hidden  ' > فئات الخدمات </h3>
+        <div className='w-full overflow-y-auto text-end ' dir='ltr'  >
          { categories.filter((i)=>i.categoryTypeNumber==3).length != 0 
-         ? <div className='grid 2xl:grid-cols-5 lg:grid-cols-3 mdHalf:grid-cols-3 mdHalf:grid-rows-4 gap-x-4  mb-5 ' >
+         ? <div className='grid  gap-x-4  mb-5 ' >
               {
                   categories.filter((i)=>i.categoryTypeNumber==3)?.map((i)=>(
-                      <p  key={i.id} onClick={()=>{}}  className='text-[11px] font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </p>
+                      <Link href={"/special-order?sh=1&tab=2&category="+i.id}  className='text-[11px] me-2 font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </Link>
                   ))
               }
           </div>
