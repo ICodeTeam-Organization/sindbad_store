@@ -4,9 +4,10 @@ import { IoIosArrowForward } from "react-icons/io";
 
 type Props = {
   title: string;
+  href:string
 };
 
-const SectionTitle = ({ title }: Props) => {
+const SectionTitle = ({ title,href="/shop" }: Props) => {
   return (
     <div className="py-5 w-full">
       <div className="flex justify-between items-center ">
@@ -15,7 +16,7 @@ const SectionTitle = ({ title }: Props) => {
             {title} :
           </h3>
         </div>
-        <Link href={"/shop"}>
+        <Link href={href}>
         <button className="btn flex items-center text-sm ml-3 ">
           <IoIosArrowForward className="text-sky-700" />
           <h3 className="mr-2">عرض الكل</h3>

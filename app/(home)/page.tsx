@@ -53,6 +53,7 @@ export default async function Home2() {
         <ServiceCard />
         <CardsInfo />
         <Categories categories={categories?.data} />
+        <div className="mb-10" />
         <TodayOffers Offersproducts={Offersproducts} />
         <ShoppingNow />
       </div>

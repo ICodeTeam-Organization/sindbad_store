@@ -23,6 +23,7 @@ import { getApi, postApi } from "@/lib/http";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 
 const tabs = [
   { id: 1, label: "منتج" },
@@ -45,13 +46,16 @@ const SpecialOrderForm = ({tabType=1,category="0",onClose=()=>{}}) => {
     resolver: zodResolver(specialOrderSchema),
     defaultValues: {
       Type: 1,
+      SpecialCategoryId:category
     },
   });
 
-  const { data: categories } = useQuery<any>({
-    queryKey: ["categories"],
-    queryFn: () => getApi(`SpecialCategories`),
-  });
+  // const { data: categories } = useQuery<any>({
+  //   queryKey: ["categories"],
+  //   queryFn: () => getApi(`SpecialCategories`),
+  // });
+
+  const {categories} = useCategoriesDataStore();
 
   const onSubmit = async (data: any) =>
     postApi<any>(`SpecialProducts/Market/AskNewSpecialProductByCustomer`, {
@@ -134,7 +138,7 @@ const SpecialOrderForm = ({tabType=1,category="0",onClose=()=>{}}) => {
                     </FormControl>
                     <SelectContent>
                       <SelectContent>
-                        {categories?.data?.map((category: any) => (
+                        {categories?.map((category: any) => (
                           <SelectItem
                             key={category.id}
                             value={category.id.toString()}

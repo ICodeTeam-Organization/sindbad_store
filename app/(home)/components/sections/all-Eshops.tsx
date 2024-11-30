@@ -58,7 +58,7 @@ const AllEShops =  ({AllEShops}:{AllEShops:any}) => {
               dir="rtl"
               className=" group hover:cursor-pointer flex items-center pl-0  ml-4 xl:basis-1/3 mdHalf:basis-1/2 basis-1/1 border-[2px] border-black rounded-sm bg-white sm:w-[520px] w-[90vw]   hover:border-[#F58634] transition-all duration-700"
             >
-              <div className=" flex justify-center items-center mdHalf:w-[196px] mdHalf:h-[140px] w-[156px] h-[100px] relative">
+              <div className=" flex justify-center items-center w-[35%] h-full  relative me-3 ">
                 {shop.mainImageUrl === null ? (
                   <h1>لاتوجد صورة للمتجر</h1>
                 ) : (
@@ -90,7 +90,7 @@ const AllEShops =  ({AllEShops}:{AllEShops:any}) => {
                     </div>
                 </div>
                 {shop.websiteLink === null ? (
-                 <div className=" w-[96%] p-2  cursor-pointer   rounded-sm border-[1px] group-hover:border-0 group-hover:bg-[#F58634] group-hover:text-white group-hover:border-transparent transition-all duration-300 flex justify-center items-center border-black">
+                 <div className=" w-[96%] p-2 cursor-pointer  rounded-sm border-[1px]  group-hover:bg-[#F58634] group-hover:border-[#F58634] group-hover:text-white  transition-all duration-300 flex justify-center items-center border-black">
                  <h1 className="text-base">
                    لا يوجد رابط للمتجر
                  </h1>
@@ -98,7 +98,7 @@ const AllEShops =  ({AllEShops}:{AllEShops:any}) => {
                </div>
                 ) : (
                   <Link href={shop.websiteLink}>
-                    <div className=" w-[96%] p-2 cursor-pointer  rounded-sm border-[1px] group-hover:border-0 group-hover:bg-[#F58634] group-hover:text-white group-hover:border-transparent transition-all duration-300 flex justify-center items-center border-black">
+                    <div className=" w-[96%] p-2 cursor-pointer  rounded-sm border-[1px]  group-hover:bg-[#F58634] group-hover:border-[#F58634] group-hover:text-white  transition-all duration-300 flex justify-center items-center border-black">
                       <h1 className="text-base">
                         زيارة المتجر
                       </h1>

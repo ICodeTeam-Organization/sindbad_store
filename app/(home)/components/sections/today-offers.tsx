@@ -25,7 +25,7 @@ const TodayOffers = ({Offersproducts={data:[]}}:{Offersproducts:{data:Product[]}
   return (
     <>
       <div className=" sm:px-4  ">
-        <SectionTitle title={"عروض اليوم"} />
+        <SectionTitle title={"عروض اليوم"} href="/shop?todayoffers=true" />
       </div>
      <div className="w-full" >
      <Carousel
@@ -47,7 +47,7 @@ const TodayOffers = ({Offersproducts={data:[]}}:{Offersproducts:{data:Product[]}
       }),
     ]}
       className="m-auto cursor-pointer md:w-[88%] sm:w-[85%] w-[100%]">
-        <CarouselContent dir="rtl">
+        <CarouselContent dir="rtl" className="py-10 " >
           {Offersproducts?.data?.map((product: any) => (
             <CarouselItem
               key={product.id}

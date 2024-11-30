@@ -17,7 +17,7 @@ const ShoppingNow = async () => {
   return (
     <>
       <div className="pt-10 mx-auto sm:px-4 ">
-        <SectionTitle title={"تسوق الآن"} />
+        <SectionTitle title={"تسوق الآن"} href="/shop" />
         <div className="md:px8  lg:px-8   ">
           <div 
           // className="grid 2xl:grid-cols-5 lg:grid-cols-4 justify-items-center justify-center lg:gap-[25px] sm:grid-cols-3 grid-cols-2  2xl:gap-[25px]  max-lg:gap-x-5  max-md:m-auto  py-4 mr-2 gap-2 px-2 "

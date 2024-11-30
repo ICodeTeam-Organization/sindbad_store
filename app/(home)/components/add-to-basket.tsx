@@ -70,15 +70,15 @@ const AddToBasket = ({ id }: Props) => {
         disabled={mutation.isPending}
         variant={"outline"}
         onClick={() => handleAddToCart()}
-        className="hover:bg-[#F55157] hover:text-white max-md:w-[107px] max-md:h-[30px] w-[159px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1"
+        className="hover:bg-[#F55157] hover:text-white w-full max-md:h-[30px]  h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1"
       >
         {mutation.isPending ? (
           <Loader2 className="animate-spin" />
         ) : (
-          <>
-            <MdOutlineLocalGroceryStore className="w-[17.39px] h-[15px]" />
-            <p className="max-md:text-[7px] ">اضف للسلة</p>
-          </>
+          <div className="flex items-center justify-center gap-2">
+            <MdOutlineLocalGroceryStore />
+            <p className="max-md:text-[10px] ">اضف للسلة</p>
+          </div>
         )}
       </Button>
 

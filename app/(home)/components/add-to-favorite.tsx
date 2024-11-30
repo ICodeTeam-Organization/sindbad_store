@@ -1,5 +1,5 @@
 "use client";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
@@ -71,14 +71,15 @@ const AddToFavorite = ({ id }: Props) => {
             disabled={mutationFav.isPending}
             variant={"outline"}
             onClick={() => handleAddToFav()}
-            className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1"
+            className="cursor-pointer group hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] w-[50px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1"
         >
             {
                 mutationFav.isPending ? (
                     <Loader2 className="animate-spin" />
-                ) : (
-                    <AiOutlineHeart className="w-[20px] h-[20px]" color="#D5D5D5" />
-                )
+                ) : (<>
+                    <AiOutlineHeart className="w-[20px] h-[20px]  group-hover:hidden" color="#D5D5D5" />
+                    <AiFillHeart className="w-[20px] h-[20px] hidden group-hover:block" color="#fff" />
+                    </> )
             }
         </Button>
     )

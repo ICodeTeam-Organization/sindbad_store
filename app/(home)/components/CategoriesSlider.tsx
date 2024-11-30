@@ -48,12 +48,12 @@ function CategoriesSlider() {
          </div>
          <div className='flex flex-col gap-y-2 hide-scrollbar  overflow-x-auto h-30 p-4 ' ref={scrollRef} >
             <div className="flex  items-center   gap-3   " >
-                {allSubCategories?.filter((_,x)=>x%2==0).map((item:any)=>
+                {allSubCategories?.filter((_,x)=>x%2==0).sort(() => Math.random() - 0.5).map((item:any)=>
                   <CategoryItem item={item}  key={item?.id} />
                 )}
             </div>
             <div className="flex mr-14 items-center  gap-3  " >
-                {allSubCategories?.filter((_,x)=>x%2!==0).map((item:any)=>
+                {allSubCategories?.filter((_,x)=>x%2!==0).sort(() => Math.random() - 0.5).map((item:any)=>
                   <CategoryItem item={item} key={item?.id} />
                 )}
             </div>
