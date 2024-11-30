@@ -10,20 +10,23 @@ import { Loader2 } from "lucide-react";
 import axios from "axios";
 import React from "react";
 import AddToFavorite from "./add-to-favorite";
+import { useCartStore } from "@/app/stores/cartStore";
 
 type Props = {
   id: string | number;
 };
 const AddToBasket = ({ id }: Props) => {
+
   const redirct = useRouter();
   const { data: session, status } = useSession();
   const { toast } = useToast();
 
+  const {addItem} = useCartStore()
+
   const mutation = useMutation({
     mutationFn: async () => {
-      await axios.post(
-        "https://icode-sendbad-store.runasp.net/api/Cart/AddProductToCart?productId=" +
-        id,
+    return  await axios.post(
+        "https://icode-sendbad-store.runasp.net/api/Cart/AddProductToCart?productId=" + id,
         {
           quantity: 1,
         },
@@ -36,16 +39,22 @@ const AddToBasket = ({ id }: Props) => {
         }
       );
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log(data);
+      
       toast({
         variant: "default",
         description: "تمت الاضافة الى السلة بنجاح",
         style: {
           backgroundColor: "green",
+          color:"#fff",
         },
       });
+      
     },
     onError: (res: any) => {
+      console.log(res);
+      
       toast({
         variant: "destructive",
         description: res.response.data.message,

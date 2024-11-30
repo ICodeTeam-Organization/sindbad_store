@@ -49,11 +49,24 @@ export interface Shop {
 
 //this Product type just for testing
 export type Product = {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-};
+    id: number;
+    name: string;
+    price: number;
+    priceAfterOffer: number;
+    amountYouShouldToBuyForGetOffer: number;
+    amountYouWillGetFromOffer: number;
+    offerSentence: string;
+    percentageOfDiscount: number;
+    offerStartDate: string; // Use `Date` if you want a Date object instead of ISO string
+    offerEndDate: string;   // Use `Date` if you want a Date object instead of ISO string
+    mainImageUrl: string;
+    oneStarCount: number;
+    twoStarCount: number;
+    threeStarCount: number;
+    fourStarCount: number;
+    fiveStarCount: number;
+  }
+  
 //////////////////////
 
 export type CartItem = {

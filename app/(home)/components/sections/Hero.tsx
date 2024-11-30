@@ -17,7 +17,7 @@ const Hero = () => {
             width={2000}
             height={200}
             alt="hero-image"
-            className="object-contain "
+            className="object-contain"
           />
         </div>
       </div>

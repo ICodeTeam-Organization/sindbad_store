@@ -13,9 +13,10 @@ import Feature from "./components/sections/Feature";
 import { getApi } from "@/lib/http";
 import AllEShops from "./components/sections/all-Eshops";
 import { MainCategory, Product, Store } from "@/types/storeTypes";
-import SetCategoriesInLocalStorage from "./components/SetCategoriesInLocalStorage";
+import SetCategoriesInLocalStorage from "./(getInitData)/SetCategoriesInLocalStorage";
+import GetFavorite from "./(getInitData)/GetFavorite";
+export default async function Home() {
 
-export default async function Home2() {
   const [
     categories,
     Allstores,
@@ -40,12 +41,16 @@ export default async function Home2() {
     getApi<{data:{items:MainCategory[]}}>(
       "Categories/GetAllMainCategoriesWithSubCategories/1/10000"
     ),
+    
   ]);
 
   return (
-    <section className="w-full     ">
+    <section className="w-full">
 
+      {/* components for init data */}
+      <GetFavorite  />
       <SetCategoriesInLocalStorage AllCategoriesWihtSubcategories={AllCategoriesWithSub?.data?.items} />
+
 
       <Hero />
       <div className="w-full xl:container mx-auto ">

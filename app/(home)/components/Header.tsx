@@ -28,6 +28,7 @@ import SpecialOrderMegaMenu from "./MegaMenus/SpecialOrderMegaMenu";
 import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
 import { IoMdNotificationsOutline } from "react-icons/io";
+import { useCartStore } from "@/app/stores/cartStore";
 // import {useRouter} from "next/navigation";
 
 const SearchComponent = ({
@@ -63,6 +64,7 @@ const Header = () => {
   const [openNav, setopenNav] = useState<boolean>(false);
   const [searchKeyword, setsearchKeyword] = useState("");
   const { data: session, status } = useSession();
+  const {items:cartItems} = useCartStore()
   const isAuth = status === "authenticated";
   // const router = useRouter()
 
@@ -242,14 +244,15 @@ const Header = () => {
       <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
         {/* logo section*/}
         <div>
-          <div className="p-2 px-0  lg:m-4 mdHalf:my-4 mdHalf:mx-1  hidden mdHalf:block absolute z-[999999] ">
+          <div className="p-2 px-0  cursor-pointer lg:m-4 mdHalf:my-4 mdHalf:mx-1  hidden mdHalf:block absolute z-[999999] ">
+            <Link href="/" >
             <Image
               className="block relative "
               src={"/images/sedebadLogo.svg"}
               width={130}
               height={100}
               alt=""
-            />
+            /></Link>
           </div>
 
           {/* this for mobile */}
@@ -263,13 +266,15 @@ const Header = () => {
             >
               <BiMenu className="cursor-pointer" size={40} />
             </div>
+            <Link href="/">
             <Image
-              className="block relative "
+              className="block relative cursor-pointer"
               src={"/images/sedebadLogo.svg"}
               width={80}
               height={80}
               alt=""
             />
+            </Link>
           </div>
         </div>
         {/* header => top,down */}
@@ -305,7 +310,7 @@ const Header = () => {
                   <Link
                     href="/shopping-card"
                     className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
-                  >
+                  > {cartItems.length > 0 && <div className="bg-red-600 text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute" >{cartItems.length}</div>}
                     <BsCart className="text-[#666666]  text-[20px] m-2 " />
                   </Link>
                 </>

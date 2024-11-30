@@ -13,12 +13,12 @@ const ProductPage = async () => {
   // console.log(products);
 
   return (
-    <div className="container mx-auto py-6 px-4">
+    <div className="xl:container mx-auto py-6 px-4">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Sidebar */}
         <Sidebar />
         {/* Main content */}
-        <main className="w-full md:w-3/4">
+        <main className="w-full md:w-[80%]">
           {/* Tags and Results */}
           <SearchResultsHeader products={[]} />
 

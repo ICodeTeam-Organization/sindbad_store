@@ -48,7 +48,7 @@ function EShopsMegaMenu() {
       className="mdHalf:grid lg:grid-cols-1 flex  mdHalf:place-content-start  mdHalf:overflow-y-scroll mdHalf:overflow-x-hidden overflow-x-scroll  gap-x-4  mdHalf:mb-5 mb-2  mdHalf:h-[80%]">
         {allMainCat.map((i,x) => (
           <p 
-            key={i.id+x}
+            key={i.id}
             onClick={() => {
               setParams((o) => ({ ...o, selectedCategory: i.id }));
             }}
@@ -74,9 +74,9 @@ function EShopsMegaMenu() {
               <Spinner/>
             </div>
           ) : data?.data?.items?.length != 0 ? (
-            <div className="mdHalf:grid xl:grid-cols-7 lg:grid-cols-6 mdHalf:grid-cols-4 grid-cols-1 place-content-start  gap-x-4   overflow-y-scrol overflow-x-hidden h-[75%] ">
+            <div className="mdHalf:grid  xl:grid-cols-5 2lg:grid-cols-4 mdHalf:grid-cols-3 grid-cols-1 place-content-start  gap-x-4   overflow-y-scrol overflow-x-hidden h-[75%] ">
               {data?.data?.items?.map((i,x:number) => (
-                 <Link  href={i?.urlLinkOfStore} target='_blank' key={i.id+x} className=" text-[11px] my-[2px] h-fit overflow-hidden hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded lg:whitespace-nowrap">
+                 <Link  href={i?.urlLinkOfStore} target='_blank' key={i.id} className=" text-[11px] my-[2px] h-fit overflow-hidden hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded lg:whitespace-nowrap">
                  <div className="flex gap-3 items-center " >
                    <div className="rounded-lg flex overflow-hidden w-12 border h-12 relative"  > 
                      <SafeImage
