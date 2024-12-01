@@ -34,7 +34,7 @@ export interface Store {
   websiteLink: string;
   description: string;
   mainImageUrl: string;
-  imagesUrl:[string];
+  imagesUrl:string[];
 }
 
 export interface Shop {
