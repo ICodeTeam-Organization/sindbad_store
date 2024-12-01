@@ -1,6 +1,6 @@
 "use clinet";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import { getApi } from "@/lib/http";
+import { getApi, postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { MainCategory, Store } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
@@ -28,7 +28,15 @@ function StoresMegaMenu() {
 
   const { data, isLoading } = useQuery<{data:{items:Store[]}}>({
     queryKey: [params.selectedCategory, params.pageNumber,"GetStoresByCategoryId"],
-    queryFn:()=>getApi(`Stores/GetStoresByCategoryId/${params.selectedCategory}/50/${params.pageNumber}`),
+    queryFn:()=>postApi(`Stores/FilterStoresByParentsCategories`,{
+      body:{
+        "parentsCategoriesIds": [
+          params.selectedCategory
+        ],
+        "pageSize": 50,
+        "pageNumber": params.pageNumber
+      }
+  }),
 
   });
 
