@@ -9,6 +9,12 @@ module.exports = {
       },
       {
         protocol: "https",
+        hostname: "icode-sendbad-store.runasp.net",
+        port: "",
+        pathname: "/images/**",
+      },
+      {
+        protocol: "https",
         hostname: "img-cdn.pixlr.com",
         port: "",
         pathname: "/image-generator/history/**",

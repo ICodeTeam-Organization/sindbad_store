@@ -11,6 +11,7 @@ import CategorySelector from "./CategorySelector";
 
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import CategoriesAndSubCheckBox from "./CategoriesAndSubCheckBox";
+import StoresSearchSelector from "./StoresSearchSelector";
 
 const Sidebar = () => {
   const categoryList = [
@@ -34,22 +35,26 @@ const Sidebar = () => {
   const { categories } = useCategoriesDataStore()
 
   return (
-    <aside className="hidden md:block w-[20%] p-4">
+    <aside className=" h-full ">
+      <StoresSearchSelector/>
       {/* <Categories categories={categoryList} /> */}
-      <div className="max-h-[50vh] overflow-auto " >
+      {/* <div className="max-h-[50vh] overflow-auto " >
       {categories.map((i)=>(
         <CategoriesAndSubCheckBox 
           key={i.id}  
           data={i} 
           parent  
-          onChecked={(ids,parent)=>{
-              console.log(ids,parent);
+          onChecked={(ids)=>{
+              console.log(ids);
           }} 
           />
       ))}
-      </div>
+      </div> */}
       {/* <CategorySelector/> */}
-      <PriceRange />
+      <PriceRange 
+        onChangeRange={(range)=>{
+        }}
+       />
       <Brands brands={brandList} />
       <PopularTags tags={tags} />
     </aside>
