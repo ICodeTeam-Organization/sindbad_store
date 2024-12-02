@@ -9,6 +9,9 @@ import React, { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useMutation } from "@tanstack/react-query";
 import { deleteApi, putApi } from "@/lib/http";
+import Spinner from "@/app/(home)/components/Spinner";
+import { useCartStore } from "@/app/stores/cartStore";
+import SafeImage from "@/components/SafeImage";
 
 type Props = {
   id: number;
@@ -21,6 +24,10 @@ type Props = {
 };
 
 const ProductRow = ({ ...props }: Props) => {
+
+
+  const {updateQuantity:updateQuantityInStore,removeItem} = useCartStore()
+
   const [quantity, setQuantity] = useState<number>(props.quantity);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
   const { toast } = useToast();
@@ -43,7 +50,10 @@ const ProductRow = ({ ...props }: Props) => {
         },
         "PATCH"
       ),
-    onSuccess: () => props.refreshItems(),
+    onSuccess: () => {
+      props.refreshItems();
+      updateQuantityInStore(quantity,props.id)
+    },
     onError: (res) => {
       toast({
         variant: "destructive",
@@ -54,10 +64,16 @@ const ProductRow = ({ ...props }: Props) => {
   });
 
   const deleteItem = useMutation({
-    mutationFn: async (id: number) =>
-      await deleteApi("Cart/DeleteCart?cartId=" + id),
+    mutationFn: async (id: number) =>{
+      
+      await deleteApi("Cart/DeleteCart?cartId=" + id);
+      return id;
+    },
 
-    onSuccess: () => props.refreshItems(),
+    onSuccess: (id) => {
+      props.refreshItems();
+      removeItem(id)
+    },
     onError: (res: any) => {
       toast({
         variant: "destructive",
@@ -76,10 +92,15 @@ const ProductRow = ({ ...props }: Props) => {
   useEffect(() => {
     if (debounceQuantity && isUpdated) {
       setIsUpdated(false);
-      updateQuantity.mutate({
-        cartId: props.id,
-        quantity: quantity,
-      });
+      if (quantity == 0) {
+        deleteItem.mutate(props.id);
+      } else {
+        updateQuantity.mutate({
+          cartId: props.id,
+          quantity: quantity,
+        });
+      }
+      
     }
   }, [debounceQuantity]);
 
@@ -91,24 +112,33 @@ const ProductRow = ({ ...props }: Props) => {
     <tr>
       <td className="py-4">
         <div className="flex items-center">
-          <Image
+          <SafeImage
             width={50}
             height={50}
             className="ml-3"
-            src={"/images/" + props.image}
+            src={props.image||""}
             alt="Product"
           />
-          <span className="font-semibold">{props.name}</span>
+          <span className="text-sm font-bold">{props.name}</span>
         </div>
       </td>
       <td className="py-4">{props.price.toFixed(2)} رس</td>
+      
       <td className="py-4">
         <div className="flex items-center">
           <IoMdAdd
             onClick={() => handleQuantity(quantity + 1)}
             className="cursor-pointer"
           />
-          <span className="w-5 mx-2 text-center">{quantity}</span>
+         {updateQuantity.isPending || deleteItem.isPending ? <div className="w-14 flex items-center justify-center " > <Spinner className="w-4 h-4" /> </div> :  <input
+              value={quantity}
+              type="number"
+              onChange={(e) => {
+                setQuantity(+e.target.value);
+                setIsUpdated(true)
+              }}
+              className="w-20 text-center remove-arrow outline-none"
+            />}
 
           <HiMinusSm
             onClick={() => handleQuantity(quantity - 1)}
@@ -116,7 +146,8 @@ const ProductRow = ({ ...props }: Props) => {
           />
         </div>
       </td>
-      <td className="py-4">{props.shipCost} رس</td>
+      <td className="py-4">{props.shipCost.toFixed(2)} رس</td>
+      <td className="py-4">{(quantity*props.price).toFixed(2)} رس</td>
       <td className="py-4">
         {deleteItem.isPending ? (
           <Loader2 className="animate-spin" />

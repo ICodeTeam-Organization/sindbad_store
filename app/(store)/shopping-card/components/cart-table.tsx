@@ -16,7 +16,6 @@ const CartTable = () => {
     queryFn: async () =>
       await getApi<any>("Cart/GetAllCustomerProductsInCartForViewInCartPage"),
   });
-  console.log(items);
   return (
     <Card className="p-6 mb-4">
       {isPending ? (
@@ -24,12 +23,13 @@ const CartTable = () => {
       ) : items.data.length > 0 ? (
         <table className="w-full">
           <thead>
-            <tr className="bg-gray-300">
-              <th className="text-right font-semibold">المنتج</th>
-              <th className="text-right font-semibold">السعر</th>
-              <th className="text-right font-semibold">الكمية</th>
-              <th className="text-right font-semibold">الأجمالي</th>
-              <th className="text-right font-semibold"></th>
+            <tr className=" text-right font-semibold text-sm">
+              <th className="">المنتج</th>
+              <th className="">السعر</th>
+              <th className="">الكمية</th>
+              <th className=""> تكلفة الشحن</th>
+              <th className="">الأجمالي</th>
+              <th className=""></th>
             </tr>
           </thead>
           <tbody className=" h-72 overflow-auto">
@@ -37,12 +37,12 @@ const CartTable = () => {
               <ProductRow
                 key={item.cartId}
                 id={item.cartId}
-                name={item.name}
-                price={item.price}
+                name={item.name || ""}
+                price={item.price || 0}
                 quantity={item.quantity}
                 image={item.imageUrl}
                 refreshItems={refetch}
-                shipCost={item.shipCost}
+                shipCost={item.shipCost || 0}
               />
             ))}
           </tbody>

@@ -71,10 +71,11 @@ export type Product = {
 
 export type CartItem = {
   cartId: number;
-  name: string;
-  price: number;
-  priceAfterDiscount: number | null;
-  imageUrl: string;
+  productId: number,
+  name?: string;
+  price?: number;
+  priceAfterDiscount?: number | null;
+  imageUrl?: string;
   quantity: number;
-  shipCost: number;
+  shipCost?: number;
 };

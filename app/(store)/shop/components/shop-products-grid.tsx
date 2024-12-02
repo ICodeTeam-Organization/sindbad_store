@@ -8,6 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 // import product from '../../../../public/images/product.svg';
 
 // const products = [
@@ -57,6 +58,9 @@ type ProductsResponsive = {
 
 const ShopProductsGrid = ({ allProducts }: any) => {
 
+  const params = useSearchParams()
+  const skw = params.get("skw");
+
   const { filters } = useShopFiltersStore();
   const [products, setProducts] = useState<Product[]>([]);
   const [firstRender, setfirstRender] = useState(true)
@@ -69,15 +73,17 @@ const ShopProductsGrid = ({ allProducts }: any) => {
           hasOffer: filters.hasOffer,   
           categoryId: filters.categoryId ,  
           storeId: filters.storeId + "",       
-          productName: filters.productName , 
+          productName: skw , 
         };
         // Remove fields that have invalid values (0 or empty string)
-        // const filteredBody = Object.fromEntries(
-        //   Object.entries(body).filter(([key, value]) => {
-        //     // Only keep the entries where value is not 0 or empty string
-        //     return value !== 0 && value !== "";
-        //   })
-        // );
+        const filteredBody = Object.fromEntries(
+          Object.entries(body).filter(([key, value]) => {
+            // Only keep the entries where value is not 0 or empty string
+            return value !== 0 && value !== "" && value;
+          })
+        );
+        console.log("body : ",filteredBody);
+        
         const response = await postApi(
           `Products/Store/GetStoreProductsWitheFilter`,
           {
@@ -99,7 +105,7 @@ const ShopProductsGrid = ({ allProducts }: any) => {
     useEffect(() => {
       if (firstRender) {setfirstRender(false);return;}
        mutation.mutate()
-    }, [filters])
+    }, [filters,skw])
     
 
   

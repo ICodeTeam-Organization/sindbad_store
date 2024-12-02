@@ -1,4 +1,3 @@
-import { CartItem } from "@/types/storeTypes";
 import { create } from "zustand";
 
 type FavoriteState = {
@@ -8,11 +7,6 @@ type FavoriteState = {
   setFavoriteProducts:(ids:number[])=>void,
   addproductToFavorite:(id:number)=>void,
   delProductToFavorite:(id:number)=>void,
-  
-//   addItem: (product: CartItem) => void;
-//   removeItem: (id: number) => void; // تغيير id إلى number
-//   increaseQuantity: (id: number) => void; // تغيير id إلى number
-//   decreaseQuantity: (id: number) => void; // تغيير id إلى number
 };
 
 export const useFavorite = create<FavoriteState>((set) => ({

@@ -30,6 +30,7 @@ import { BsCart } from "react-icons/bs";
 import { GoHeart } from "react-icons/go";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import DropdownMenu from "@/components/DropDownMenu";
+import { useSearchParams } from "next/navigation";
 
 const SearchComponent = ({
   searchKeyword = "",
@@ -37,6 +38,8 @@ const SearchComponent = ({
     searchKeyword = str;
   },
 }) => {
+  
+
   return (
     <div className="flex  px-1 h-[46px]  xl:w-full   border-[0px] rounded-[9px] shadow justify-between gap-x-1  bg-white w-full">
       <input
@@ -60,7 +63,10 @@ const SearchComponent = ({
 
 const StoreHeader = () => {
   // const [openNav, setopenNav] = useState<boolean>(false);
-  const [searchKeyword, setsearchKeyword] = useState("");
+  const params = useSearchParams()
+  const skw = params.get("skw");
+  
+  const [searchKeyword, setsearchKeyword] = useState(skw || "");
   const { data: session, status } = useSession();
   const isAuth = status === "authenticated";
 

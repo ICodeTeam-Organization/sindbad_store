@@ -6,6 +6,7 @@ import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
 import { Toaster as SonanerToaster } from "sonner";
+import GetCartItems from "./(home)/(getInitData)/GetCartItems";
 
 const Noto_Kufi = Noto_Kufi_Arabic({
   weight: ["400", "700"],
@@ -39,7 +40,10 @@ export default function RootLayout({
         <ProgressBarProvider>
           <NextAuthProvider>
             <main>
-              <ClientProviders>{children}</ClientProviders>
+              <ClientProviders>
+                <GetCartItems/>
+                {children}
+                </ClientProviders>
             </main>
             {/* <Subscribe /> */}
           </NextAuthProvider>

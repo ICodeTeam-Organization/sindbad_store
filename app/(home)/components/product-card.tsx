@@ -71,7 +71,7 @@ const ProductCard = ({
             </p>
           </div>
         </Link>
-        <AddToBasket id={id} />
+        <AddToBasket id={id} productInfo={{image, productName, price, oldPrice }} />
       </div>
     </div>
   );

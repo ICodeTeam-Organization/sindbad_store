@@ -83,8 +83,8 @@ body {
 }
 .oneLIineText {
   overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @layer base {
@@ -96,29 +96,29 @@ body {
   }
   .nav-menus {
     @apply flex flex-col gap-2 items-center mdHalf:justify-center mdHalf:p-2 text-base hover:bg-[#FF8F7E22] cursor-pointer transition;
-    
   }
 
   .nav-menus-label {
-    @apply flex w-full items-center  gap-x-2 mdHalf:p-0 p-2 justify-between px-6 text-xs
+    @apply flex w-full items-center  gap-x-2 mdHalf:p-0 p-2 justify-between px-6 text-xs;
   }
 }
 
-html,body {
+html,
+body {
   font-family: var(--font-noto) !important;
 }
- 
+
 .tajawal {
   font-family: var(--font-tajawal);
 }
 
-  /* Custom class to hide scrollbar */
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
+/* Custom class to hide scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
 }
 .hide-scrollbar {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 /* Customizing the scrollbar width */
@@ -149,4 +149,15 @@ html,body {
 /* Optional: Styling the scrollbar corners */
 ::-webkit-scrollbar-corner {
   background: #f4f4f4; /* Match the track background */
+}
+
+/* to remove arrows from input type number */
+.remove-arrow::-webkit-inner-spin-button,
+.remove-arrow::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.remove-arrow {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
