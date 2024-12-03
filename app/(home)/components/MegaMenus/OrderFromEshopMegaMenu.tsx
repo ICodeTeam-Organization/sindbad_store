@@ -1,6 +1,6 @@
 "use clinet";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import { getApi } from "@/lib/http";
+import { postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { MainCategory, Shop } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
@@ -9,33 +9,34 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { IoStorefrontOutline } from "react-icons/io5";
 import Spinner from "../Spinner";
 import Link from "next/link";
-import Image from "next/image";
 import SafeImage from "@/components/SafeImage";
 
-
-
 function OrderFromEshopMegaMenu() {
-
-
   const { categories } = useCategoriesDataStore((state) => state);
-  const allMainCat:MainCategory[] = categories?.filter((i) => i.categoryTypeNumber == 1) || [];
-
+  const allMainCat: MainCategory[] =
+    categories?.filter((i) => i.categoryTypeNumber == 1) || [];
 
   const [params, setParams] = useState({
     selectedCategory: allMainCat[0]?.id,
     pageNumber: 1,
-    limit: 50,
+    pageSize: 50,
   });
-
-  const { data, isLoading } = useQuery<{data:{items:Shop[]}}>({
-    queryKey: [params.selectedCategory, params.pageNumber],
-    queryFn:()=>getApi(`EcommercesStores/GetEcommercesByCategoryId /${params.selectedCategory}/50/${params.pageNumber}`),
+  const { data, isLoading } = useQuery<{ data: { items: Shop[] } }>({
+    queryKey: [params.selectedCategory, "FilterECommerceInMegaMenu"],
+    queryFn: () =>
+      postApi(`EcommercesStores/FilterECommerce`, {
+        body: {
+          parentsCategoriesIds: [params.selectedCategory],
+          pageSize: params.pageSize,
+          pageNumber: params.pageNumber,
+        },
+      }),
   });
-  useEffect(()=>{
+  useEffect(() => {
     if (allMainCat.length > 0) {
-        setParams(o=>({...o,selectedCategory:allMainCat[0]?.id}))
+      setParams((o) => ({ ...o, selectedCategory: allMainCat[0]?.id }));
     }
-  },[categories])
+  }, [categories]);
   return (
     //
     <div className="transition-all duration-200 right-0 opacity-0 invisible hidden  mdHalf:block  group-hover:block  translate-y-5  group-hover:-translate-y-0  w-full group-hover:opacity-100 group-hover:visible mdHalf:mt-1 -mt-2 rounded top-10 left-0   min-h-[400px] max-h-[540px] mdHalf:overflow-y-hidden overflow-y-scroll z-[99999]  bg-white  mdHalf:shadow-md mdHalf:border-y border-b  mdHalf:absolute   ">
@@ -47,17 +48,20 @@ function OrderFromEshopMegaMenu() {
               color="black"
               className="hidden mdHalf:flex"
             />
-            <h3 className="mdHalf:text-md text-xs font-bold text-black  " onClick={()=>{console.log(data?.data?.items);
-            }} >
+            <h3
+              className="mdHalf:text-md text-xs font-bold text-black  "
+              onClick={() => {
+                console.log(data?.data?.items);
+              }}
+            >
               {" "}
               إختر فئة{" "}
-             
             </h3>
           </div>
           <div className="mdHalf:grid lg:grid-cols-1 flex  mdHalf:place-content-start  mdHalf:overflow-y-scroll mdHalf:overflow-x-hidden overflow-x-scroll  gap-x-4  mdHalf:mb-5 mb-2  mdHalf:h-[80%]">
-            {allMainCat.map((i,x) => (
+            {allMainCat.map((i, x) => (
               <p
-                key={i.id+x}
+                key={i.id + x}
                 onClick={() => {
                   setParams((o) => ({ ...o, selectedCategory: i.id }));
                 }}
@@ -86,23 +90,33 @@ function OrderFromEshopMegaMenu() {
           </div>
           {isLoading ? (
             <div className=" flex items-center justify-center h-[70%]">
-              <Spinner/>
+              <Spinner />
             </div>
-          ) : data?.data?.items?.length != 0 ? (
-            <div className="mdHalf:grid  xl:grid-cols-5 2lg:grid-cols-4 mdHalf:grid-cols-3 grid-cols-1 place-content-start  gap-x-4   overflow-y-scrol overflow-x-hidden h-[75%] ">
-              {data?.data?.items?.map((i,x) => (
-                <Link href={"/special-order?sh=1&tab=3&category="+params.selectedCategory+"&link="+i.urlLinkOfStore} key={i.id + x} className=" text-[11px] my-[2px] h-fit overflow-hidden hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded lg:whitespace-nowrap">
-                  <div className="flex gap-3 items-center " >
-                    <div className="rounded-lg flex overflow-hidden w-12 border h-12 relative"  > 
+          ) : data?.data && data?.data?.items?.length != 0 ? (
+            <div className="grid grid-cols-1 mdHalf:grid-cols-3 2lg:grid-cols-4 xl:grid-cols-5 gap-x-4 place-content-start overflow-y-auto overflow-x-hidden h-[75%]">
+              {data?.data?.items?.map((i) => (
+                <Link
+                  href={
+                    "/special-order?sh=1&tab=3&category=" +
+                    params.selectedCategory +
+                    "&link=" +
+                    i.urlLinkOfStore
+                  }
+                  key={i.id}
+                  className="w-full text-[11px] my-[2px] h-fit hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded"
+                >
+                  <div className="flex gap-3 items-center">
+                    <div className="rounded-lg overflow-hidden w-12 h-12 border flex-shrink-0 relative">
                       <SafeImage
                         alt={i.name}
                         fill
-
-                        className="bg-gray-100 h-12 w-12"
+                        className="bg-gray-100"
                         src={"/images/alogo.png"}
-                       />
+                      />
                     </div>
-                    <p className="" > {i.name}   </p>
+                    <p className="line-clamp-1 flex-grow overflow-hidden text-ellipsis">
+                      {i.name}
+                    </p>
                   </div>
                 </Link>
               ))}
