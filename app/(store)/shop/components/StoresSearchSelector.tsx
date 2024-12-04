@@ -55,20 +55,22 @@ function StoresSearchSelector({
     enabled: params.storeName != "" || storeId != "",
   });
 
-  const [stores, setStores] = React.useState<Store[]>([]);
+  // const [stores, setStores] = React.useState<Store[]>([]);
 
-  React.useEffect(() => {
-    setStores(data?.data?.items || []);
-  }, [data]);
+  // this to set data
+  // React.useEffect(() => {
+  //   setStores(data?.data?.items || []);
+  // }, [data]);
 
+  // this to set the store Filter if send from url query
   React.useEffect(() => {
-    
     if (dataInitStore?.data) {
       setSelectedStore(dataInitStore?.data);
       setstoreId("")
     }
   }, [dataInitStore]);
 
+  // this to set storeId in state for trigged requist to get detail of store
   React.useEffect(() => {
     if ((params?.storeName == "" || !selectedStore?.id)) {
       setstoreId(filters.storeId)
@@ -103,8 +105,8 @@ function StoresSearchSelector({
           />
           <div className="max-h-[180px] overflow-auto">
             {!isLoading ? (
-              stores.length > 0 ? (
-                stores.map((store) => (
+             data?.data && data?.data?.items?.length > 0 ? (
+                data?.data?.items.map((store) => (
                   <div
                     key={store.id}
                     onClick={() => {
