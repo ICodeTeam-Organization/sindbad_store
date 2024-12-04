@@ -7,37 +7,39 @@ type PriceRange = {
 
 type ShopFiltersStore = {
   filters: {
-    price: PriceRange;
-    storeId: number;
+    price: [number, number];
+    storeId: string;
     categoryId: number;
     productName: string;
-    hasOffer: boolean;
-    pageNumber: number;
-    pageSize: number;
+    hasOffer: string;
+    newProduct: string;
+    pageNumber?: number;
+    pageSize?: number;
   };
-  setPriceRange: (range: PriceRange) => void;
-  setStoreId: (id: number) => void;
+  setPriceRange: (range: [number, number]) => void;
+  setStoreId: (id: string) => void;
   setCategoryId: (id: number) => void;
   setProductName: (name: string) => void;
-  setHasOffer: (hasOffer: boolean) => void;
+  setHasOffer: (hasOffer: string) => void;
+  setNewProduct: (newPro: string) => void;
   setPageNumber: (page: number) => void;
   setPageSize: (size: number) => void;
   resetFilters: () => void;
+  setFiltersFromObject: (newFilters: ShopFiltersStore['filters']) => void;
 };
 
 export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
   filters: {
-    price: {
-      from: 0,
-      to: 10000,
-    },
-    storeId: 0,
+    price: [0, 1000],
+    storeId: "",
     categoryId: 0,
     productName: "",
-    hasOffer: false,
+    hasOffer: "f",
+    newProduct: "f",
     pageNumber: 1,
     pageSize: 50,
   },
+
   setPriceRange: (range) =>
     set((state) => ({
       filters: {
@@ -73,6 +75,13 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         hasOffer,
       },
     })),
+  setNewProduct: (newPro) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        newProduct: newPro,
+      },
+    })),
   setPageNumber: (page) =>
     set((state) => ({
       filters: {
@@ -90,16 +99,23 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
   resetFilters: () =>
     set(() => ({
       filters: {
-        price: {
-          from: 0,
-          to: 10000,
-        },
-        storeId: 0,
+        price: [0, 10000],
+        storeId: "",
         categoryId: 0,
         productName: "",
-        hasOffer: false,
+        hasOffer: "f",
+        newProduct: "f",
         pageNumber: 1,
         pageSize: 50,
+      },
+    })),
+
+  // Function to set filters from an object
+  setFiltersFromObject: (newFilters) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        ...newFilters, // Merge new filters into the current state
       },
     })),
 }));

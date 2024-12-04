@@ -65,9 +65,9 @@ const AddToBasket = ({ id, productInfo }: Props) => {
         const newCart = {
           cartId: res?.id,
           productId: res?.productId,
-          // imageUrl:productInfo.image,
-          // price:productInfo.oldPrice,
-          // priceAfterDiscount:productInfo.price,
+          imageUrl:productInfo.image,
+          price:productInfo.oldPrice,
+          priceAfterDiscount:productInfo.price,
           quantity: res?.quantity,
         };
         setQuantity(1);

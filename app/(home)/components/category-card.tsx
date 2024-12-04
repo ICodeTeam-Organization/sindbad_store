@@ -10,8 +10,8 @@ type Props = {
 const CategoryCard = ({ name, imageUrl , id }: Props) => {
   return (
     <Link href={"/shop?cat="+id}>
-      <div className="text-center w-28 ">
-        <div className=" w-24 h-24 p-4  relative overflow-hidden bg-neutral-100 rounded-full border-2 group-hover:border-sky-500 border-transparent transition-[border,shadow]  flex justify-center items-center group-hover:cursor-pointer    group-hover:shadow-lg  ">
+      <div className="text-center w-28 flex flex-col items-center ">
+        <div className=" w-28 h-28 p-4  relative overflow-hidden bg-neutral-100 rounded-full border-2 group-hover:border-sky-500 border-transparent transition-[border,shadow]  flex justify-center items-center group-hover:cursor-pointer    group-hover:shadow-lg  ">
           <Image
             src={imageUrl}
             // layout="fill"
@@ -22,7 +22,7 @@ const CategoryCard = ({ name, imageUrl , id }: Props) => {
             alt="صورة الصنف"
           />
         </div>
-        <h2 className="  text-xs  mt-4 ">{name}</h2>
+        <h2 className="  text-xs  mt-4 text-center ">{name}</h2>
       </div>
     </Link>
   );

@@ -30,16 +30,18 @@ import { BsCart } from "react-icons/bs";
 import { GoHeart } from "react-icons/go";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import DropdownMenu from "@/components/DropDownMenu";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useShopFiltersStore } from "../stores/shopFiltersStore";
 
 const SearchComponent = ({
   searchKeyword = "",
   setsearchKeyword = (str: string) => {
     searchKeyword = str;
   },
+  isShopPage=false
 }) => {
   
-
+const {setProductName} = useShopFiltersStore()
   return (
     <div className="flex  px-1 h-[46px]  xl:w-full   border-[0px] rounded-[9px] shadow justify-between gap-x-1  bg-white w-full">
       <input
@@ -51,20 +53,32 @@ const SearchComponent = ({
           setsearchKeyword(e.target.value);
         }}
       />
-      <Link
+      {isShopPage 
+      ?<div
+      onClick={()=>{setProductName(searchKeyword)}}
+      className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
+    >
+      <BiSearch color="black " size={24} />
+    </div>
+      :<Link
         href={"/shop?skw=" + searchKeyword}
         className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
       >
         <BiSearch color="black " size={24} />
-      </Link>
+      </Link>}
     </div>
   );
 };
 
 const StoreHeader = () => {
+
+  const currentPage = usePathname();  
+  const pageName = currentPage.split('/').pop();  
+  let isShopPage = pageName?.startsWith("shop");
+
   // const [openNav, setopenNav] = useState<boolean>(false);
   const params = useSearchParams()
-  const skw = params.get("skw");
+  const skw = params.get("productName");
   
   const [searchKeyword, setsearchKeyword] = useState(skw || "");
   const { data: session, status } = useSession();
@@ -269,6 +283,7 @@ const StoreHeader = () => {
                   <SearchComponent
                     searchKeyword={searchKeyword}
                     setsearchKeyword={setsearchKeyword}
+                    isShopPage={isShopPage}
                   />
                 </div>
 

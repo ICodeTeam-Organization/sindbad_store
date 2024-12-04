@@ -7,28 +7,59 @@ import {
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-const ProductPage = async () => {
+import { postApi } from "@/lib/http";
+
+interface searchParamsType {
+  searchParams:{
+    skw?:string;//search keyword
+    cats?:string;
+    subCats?:string;
+    store?:string;
+    brands?:string;
+    tags?:string;
+    newProducts?:"t"|"f";
+    todayOffers?:"t"|"f";
+  }
+  
+}
+
+const ProductPage = async ({searchParams}:searchParamsType) => {
 
 
+  const {skw,brands,cats,newProducts,store,subCats,tags,todayOffers} = searchParams
+  
+  // const initData = await postApi(
+  //   `Products/Store/GetStoreProductsWitheFilter`,
+  //   {
+  //     body:{
+  //       "storeId": store || null,
+  //       // "productNumber": "string",
+  //       "productName": skw || "",
+  //       "productPrice": 0,
+  //       "productImageUrl": "string",
+  //       "productDescription": "string"
+  //     }
+  //   }
+  // )
 
  
   // const { isLoading, data } = useQuery<any>({
   //   queryKey: ["getproductsByfiltering"],
   //   queryFn: () =>
-  //     postApi(
-  //       `Products/Store/GetStoreProductsWitheFilter`,
-  //       {
-  //         body:{
-  //           "id": 0,
-  //           "storeId": "string",
-  //           "productNumber": "string",
-  //           "productName": "string",
-  //           "productPrice": 0,
-  //           "productImageUrl": "string",
-  //           "productDescription": "string"
-  //         }
-  //       }
-  //     ),
+      // postApi(
+      //   `Products/Store/GetStoreProductsWitheFilter`,
+      //   {
+      //     body:{
+      //       "id": 0,
+      //       "storeId": "string",
+      //       "productNumber": "string",
+      //       "productName": "string",
+      //       "productPrice": 0,
+      //       "productImageUrl": "string",
+      //       "productDescription": "string"
+      //     }
+      //   }
+      // ),
   // });
 
 

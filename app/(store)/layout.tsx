@@ -4,7 +4,7 @@ import StoreHeader from "./store-header";
 const StoreLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <StoreHeader />
+      {<StoreHeader />}
       <main>{children}</main>
       {/* <StoreFooter/> => => and this as well*/}
     </>

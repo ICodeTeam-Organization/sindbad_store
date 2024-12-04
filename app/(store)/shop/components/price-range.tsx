@@ -1,13 +1,12 @@
 "use client";
+import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useState } from "react";
 
-const PriceRange = ({onChangeRange}:{onChangeRange:(s:{ from: number; to: number })=>void}) => {
-  
-  const [priecRange, setPriecRange] = useState<{ from: number; to: number }>({
-    from: 0,
-    to: 10000,
-  });
+const PriceRange = ({onChangeRange}:{onChangeRange:(s:[number,number])=>void}) => {
+
+  const { filters ,setPriceRange } = useShopFiltersStore();
+  const [priecRange, setPriecRange] = useState<[number,number]>([...filters.price]);
 
   useEffect(() => {
     onChangeRange(priecRange)
@@ -24,20 +23,20 @@ const PriceRange = ({onChangeRange}:{onChangeRange:(s:{ from: number; to: number
         <Input
          placeholder="اقل سعر"
          type="number"
-         value={priecRange.from}
+         value={filters.price[0]}
          onChange={(e)=>{
-          if (+e.target.value > priecRange.to) return;
-          setPriecRange(p=>({...p,from:+e.target.value}))
+          if (+e.target.value > priecRange[1]) return;
+          setPriceRange([+e.target.value,filters.price[1]])
          }}
          className=" text-center  hover:outline-none min-h-[40px] border border-gray-300  rounded"
         />
         <Input
          placeholder="اعلى سعر"
          type="number"
-         value={priecRange.to}
+         value={filters.price[1]}
          onChange={(e)=>{
           // if (+e.target.value < priecRange.to) return;
-          setPriecRange(p=>({...p,to:+e.target.value}))
+          setPriecRange([filters.price[0],+e.target.value])
          }}
          className=" text-center hover:outline-none min-h-[40px] border border-gray-300  rounded"
         />

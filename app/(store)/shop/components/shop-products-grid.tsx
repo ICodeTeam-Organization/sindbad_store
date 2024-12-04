@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams,useRouter } from "next/navigation";
 // import product from '../../../../public/images/product.svg';
 
 // const products = [
@@ -59,9 +59,10 @@ type ProductsResponsive = {
 const ShopProductsGrid = ({ allProducts }: any) => {
 
   const params = useSearchParams()
+  const router = useRouter();
   const skw = params.get("skw");
 
-  const { filters } = useShopFiltersStore();
+  const { filters , resetFilters , setFiltersFromObject } = useShopFiltersStore();
   const [products, setProducts] = useState<Product[]>([]);
   const [firstRender, setfirstRender] = useState(true)
     const mutation = useMutation<ProductsResponsive>({
@@ -73,7 +74,7 @@ const ShopProductsGrid = ({ allProducts }: any) => {
           hasOffer: filters.hasOffer,   
           categoryId: filters.categoryId ,  
           storeId: filters.storeId + "",       
-          productName: skw , 
+          productName: filters.pageNumber , 
         };
         // Remove fields that have invalid values (0 or empty string)
         const filteredBody = Object.fromEntries(
@@ -100,12 +101,77 @@ const ShopProductsGrid = ({ allProducts }: any) => {
         console.error('Mutation failed h>', error);
       },
     });
-    
 
+    const initialFilters = {
+      price: [0, 10000],
+      storeId: "",
+      categoryId: 0,
+      productName: "",
+      hasOffer: "f",
+      newProduct: "f",
+    };
+    const updateQueryParams = () => {
+      const newParams = new URLSearchParams();
+      // Loop through the filters and check if they are different from initial values
+      Object.entries(filters).forEach(([key, value]) => {
+
+        // Skip page and pageSize
+        if (key === "pageNumber" || key === "pageSize") return;
+        // Check if the current value is different from the initial value
+        if (JSON.stringify(value) !== JSON.stringify(initialFilters[key as keyof typeof initialFilters])) {
+          // If value is an array, join it as a string (e.g., for price range)
+          if (Array.isArray(value)) {
+            newParams.set(key, value.join(","));
+          } else {
+            newParams.set(key, value.toString());
+          }
+        }
+      });
+  
+      // Update the URL with the new query parameters
+      router.replace(`?${newParams.toString()}`);
+    };
+    
+    // To set query search when change values
     useEffect(() => {
       if (firstRender) {setfirstRender(false);return;}
+       updateQueryParams()
        mutation.mutate()
-    }, [filters,skw])
+    }, [filters])
+
+    const initializeFiltersFromParams = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+  
+      const updatedFilters = { ...initialFilters } ;
+  
+      // Loop through the searchParams and update the filters state
+      for (const [key, value] of searchParams.entries()) {
+        if (key === "price") {
+          updatedFilters.price = value.split(',').map(Number); // Price is an array
+        } else {
+          updatedFilters[key] = value;
+        }
+      }
+  
+      // Set the updated filters state
+      console.log(updatedFilters,"dbhbhdbdh");
+      
+      setFiltersFromObject(updatedFilters)
+      // setFilters(updatedFilters);
+    };
+  
+    // Use effect to initialize the filters state on component mount
+    useEffect(() => {
+      if (!firstRender) {setfirstRender(false);return;}
+      initializeFiltersFromParams();
+    }, [params]);
+    
+    // To rest filter state when close page 
+    useEffect(() => {
+      return () => {
+        resetFilters()
+      }
+    }, [])
     
 
   

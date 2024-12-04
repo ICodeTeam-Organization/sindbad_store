@@ -19,7 +19,7 @@ function StoresMegaMenu() {
   const [params, setParams] = useState({
     selectedCategory: allMainCat[0]?.id,
     pageNumber: 1,
-    limit: 50,
+    pageSize: 50,
   });
 
   const { data, isLoading } = useQuery<{ data: { items: Store[] } }>({
@@ -31,8 +31,8 @@ function StoresMegaMenu() {
     queryFn: () =>
       postApi(`Stores/GetStoresWithFilter`, {
         body: {
-          parentsCategoriesIds: [32],
-          pageSize: 50,
+          parentsCategoriesIds: params.selectedCategory ? [ params.selectedCategory] : [],
+          pageSize: params.pageSize,
           pageNumber: params.pageNumber,
         },
       }),

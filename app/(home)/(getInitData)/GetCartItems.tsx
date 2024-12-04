@@ -40,14 +40,10 @@ export default function GetCartItems() {
       settrigged(true)
     }
     if (data) {
-      const cartItems = data?.data?.map(
-        (item: CartItem) => ({cartId:item.cartId,productId:item.productId,quantity:item.quantity})
-      );
-
-      console.log("cart items => ",cartItems);
-      
-     
-      setCartItems(cartItems);
+      // const cartItems = data?.data?.map(
+      //   (item: CartItem) => ({cartId:item.cartId,productId:item.productId,quantity:item.quantity})
+      // );
+      setCartItems(data.data);
     }
   }, [data,authData]);
 

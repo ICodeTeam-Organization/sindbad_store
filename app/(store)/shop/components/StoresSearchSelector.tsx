@@ -11,124 +11,18 @@ import { Input } from "@/components/ui/input";
 import { Store } from "@/types/storeTypes";
 import Spinner from "@/app/(home)/components/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import { getApi } from "@/lib/http";
+import { getApi, postApi } from "@/lib/http";
+import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 
-const stores1: Store[] = [
-  {
-    id: 1,
-    name: "Tech World",
-    websiteLink: "https://techworld.com",
-    description: "Your one-stop shop for all tech gadgets.",
-    mainImageUrl: "https://example.com/images/techworld-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/techworld1.jpg",
-      "https://example.com/images/techworld2.jpg",
-    ],
-  },
-  {
-    id: 2,
-    name: "Fashion Hub",
-    websiteLink: "https://fashionhub.com",
-    description: "Explore the latest trends in fashion.",
-    mainImageUrl: "https://example.com/images/fashionhub-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/fashionhub1.jpg",
-      "https://example.com/images/fashionhub2.jpg",
-    ],
-  },
-  {
-    id: 3,
-    name: "Gourmet Delights",
-    websiteLink: "https://gourmetdelights.com",
-    description: "Premium foods and beverages delivered to your door.",
-    mainImageUrl: "https://example.com/images/gourmet-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/gourmet1.jpg",
-      "https://example.com/images/gourmet2.jpg",
-    ],
-  },
-  {
-    id: 4,
-    name: "Home Comforts",
-    websiteLink: "https://homecomforts.com",
-    description: "Enhance your living spaces with our curated home products.",
-    mainImageUrl: "https://example.com/images/homecomforts-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/homecomforts1.jpg",
-      "https://example.com/images/homecomforts2.jpg",
-    ],
-  },
-  {
-    id: 5,
-    name: "Active Lifestyle",
-    websiteLink: "https://activelifestyle.com",
-    description: "Everything you need for sports and outdoor activities.",
-    mainImageUrl: "https://example.com/images/activelifestyle-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/activelifestyle1.jpg",
-      "https://example.com/images/activelifestyle2.jpg",
-    ],
-  },
-  {
-    id: 6,
-    name: "Gadget Galaxy",
-    websiteLink: "https://gadgetgalaxy.com",
-    description: "Innovative gadgets for everyday use.",
-    mainImageUrl: "https://example.com/images/gadgetgalaxy-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/gadgetgalaxy1.jpg",
-      "https://example.com/images/gadgetgalaxy2.jpg",
-    ],
-  },
-  {
-    id: 7,
-    name: "Book Haven",
-    websiteLink: "https://bookhaven.com",
-    description: "Dive into a world of literature and knowledge.",
-    mainImageUrl: "https://example.com/images/bookhaven-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/bookhaven1.jpg",
-      "https://example.com/images/bookhaven2.jpg",
-    ],
-  },
-  {
-    id: 8,
-    name: "Pet Palace",
-    websiteLink: "https://petpalace.com",
-    description: "Care, food, and accessories for your furry friends.",
-    mainImageUrl: "https://example.com/images/petpalace-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/petpalace1.jpg",
-      "https://example.com/images/petpalace2.jpg",
-    ],
-  },
-  {
-    id: 9,
-    name: "Wellness Works",
-    websiteLink: "https://wellnessworks.com",
-    description: "Discover products that promote health and well-being.",
-    mainImageUrl: "https://example.com/images/wellnessworks-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/wellnessworks1.jpg",
-      "https://example.com/images/wellnessworks2.jpg",
-    ],
-  },
-  {
-    id: 10,
-    name: "Artistic Vibes",
-    websiteLink: "https://artisticvibes.com",
-    description: "Inspiring art and creative tools for artists.",
-    mainImageUrl: "https://example.com/images/artisticvibes-main.jpg",
-    imagesUrl: [
-      "https://example.com/images/artisticvibes1.jpg",
-      "https://example.com/images/artisticvibes2.jpg",
-    ],
-  },
-];
-
-function StoresSearchSelector({onSelected}:{onSelected:(selectedStore:Store)=>void}) {
+function StoresSearchSelector({
+  onSelected,
+}: {
+  onSelected: (selectedStore: Store) => void;
+}) {
+  const { filters } = useShopFiltersStore();
   const [open, setOpen] = React.useState(false);
   const [selectedStore, setSelectedStore] = React.useState<Store>();
+  // const [isInitStore, setisInitStore] = React.useState(false)
 
   const [params, setParams] = React.useState({
     storeName: "",
@@ -136,23 +30,52 @@ function StoresSearchSelector({onSelected}:{onSelected:(selectedStore:Store)=>vo
     pageSize: 50,
   });
 
+  const [storeId, setstoreId] = React.useState("")
+  
+
+  const { isLoading: loadInitStore, data: dataInitStore } = useQuery<{
+    data: Store;
+  }>({
+    queryKey: ["getStoreFromInitDataFIltering", storeId],
+    queryFn: () => getApi(`Stores/GetStoreDetailsById/` + storeId),
+    enabled:storeId != "" && params.storeName == "" && !selectedStore?.id ,
+    retry:false
+  });
+
   const { isLoading, data } = useQuery<{ data: { items: Store[] } }>({
     queryKey: ["getStoresForSearchFilter", params.pageNumber, params.storeName],
     queryFn: () =>
-      getApi(
-        `Stores/GetStoresByFilter?Name=${params.storeName}&PageSize=${params.pageSize}&PageNumber=${params.pageNumber}`
-      ),
-    enabled: params.storeName != "",
+      postApi(`Stores/GetStoresWithFilter`, {
+        body: {
+          name: params.storeName,
+          pageSize: params.pageSize,
+          pageNumber: params.pageNumber,
+        },
+      }),
+    enabled: params.storeName != "" || storeId != "",
   });
 
   const [stores, setStores] = React.useState<Store[]>([]);
-  
+
   React.useEffect(() => {
-    setStores(data?.data?.items || [])
-  }, [data])
+    setStores(data?.data?.items || []);
+  }, [data]);
+
+  React.useEffect(() => {
+    
+    if (dataInitStore?.data) {
+      setSelectedStore(dataInitStore?.data);
+      setstoreId("")
+    }
+  }, [dataInitStore]);
+
+  React.useEffect(() => {
+    if ((params?.storeName == "" || !selectedStore?.id)) {
+      setstoreId(filters.storeId)
+    }
+    return;
+  }, [filters?.storeId])
   
-
-
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -164,9 +87,9 @@ function StoresSearchSelector({onSelected}:{onSelected:(selectedStore:Store)=>vo
           className="w-full justify-between"
         >
           {selectedStore
-            ? stores.find((store) => store.id === selectedStore.id)?.name
+            ? selectedStore.name
             : "المحلات"}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+         {loadInitStore ? <Spinner className="h-4 w-4" /> : <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0">
@@ -186,7 +109,7 @@ function StoresSearchSelector({onSelected}:{onSelected:(selectedStore:Store)=>vo
                     key={store.id}
                     onClick={() => {
                       setSelectedStore(store);
-                      onSelected(store)
+                      onSelected(store);
                       setOpen(false);
                     }}
                     className="p-2 cursor-pointer hover:bg-slate-50"

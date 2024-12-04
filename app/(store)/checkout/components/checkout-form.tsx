@@ -34,8 +34,10 @@ import {
 } from "@/components/ui/select";
 import InputField from "./input-field";
 import { Input } from "@/components/ui/input";
+import { useSession } from "next-auth/react";
 
 const CheckoutForm = () => {
+  
   const { data } = useQuery<any>({
     queryKey: ["banks"],
     queryFn: async () => await getApi("Cart/GetAllBanksForViewInCartPage"),
@@ -53,24 +55,36 @@ const CheckoutForm = () => {
     },
   });
 
+  const { data: authData } = useSession();
+  
   const { toast } = useToast();
   const router = useRouter();
   const { mutate, isPending } = useMutation({
     mutationKey: ["upload-bound"],
     mutationFn: (data: z.infer<typeof checkoutSchema>) =>
-      postApi("Orders/CompleteCustomerPurchase", {
-        body: {
-          bankId: 3, 
-          note: data.note,
-          amount: data.amount,
-          bondNumber: data.number,
-          bondDate: data.date,
-          bondImageUrl: data.image[0],
-          bondTyep: 1,
-          isUrgenOrder: true,
+    {
+      const bodyData = {
+        bankId: +data.bank, 
+        note: data.note,
+        amount: +data.amount,
+        bondNumber: +data.number,
+        bondDate: data.date,
+        bondImageFile: data.image,
+        bondTyep: 1,
+        isUrgentOrder: false,
+      };
+
+    
+      return postApi("Orders/CompleteCustomerPurchase", {
+        body: bodyData,
+        isPage: true,
+        headers: {
+          "Accept-Language": "ar",
+          "Content-type": "multipart/form-data",
+          Authorization: `Bearer ${authData?.user.data.token}`,
         },
-        isPage: false,
-      }),
+      })
+    },
     onError: (err) => {
       toast({
         variant: "destructive",
@@ -79,12 +93,12 @@ const CheckoutForm = () => {
       });
     },
     onSuccess: () => {
-      router.push("/checkout-success");
+      router.replace("/checkout-success");
     },
   });
 
-  function onSubmit(values: z.infer<typeof checkoutSchema>) {
-    console.log(values);
+ async function onSubmit(values: z.infer<typeof checkoutSchema>) {
+   values.image = await values.image[0].arrayBuffer()
     mutate(values);
   }
 
