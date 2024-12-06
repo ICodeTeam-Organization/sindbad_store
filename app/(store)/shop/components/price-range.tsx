@@ -1,20 +1,30 @@
 "use client";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 import { Input } from "@/components/ui/input";
+import { useDebounce } from "@/hooks/useDebounce";
 import React, { useEffect, useState } from "react";
 
 const PriceRange = ({onChangeRange}:{onChangeRange:(s:[number,number])=>void}) => {
 
   const { filters ,setPriceRange } = useShopFiltersStore();
-  const [priecRange, setPriecRange] = useState<[number,number]>([...filters.price]);
+  const [priecRange, setPriecRange] = useState<[number,number]>(filters.price);
 
+  const [isUpdated, setIsUpdated] = useState(false);
+  const rangeChamged = useDebounce(priecRange,1000);
   useEffect(() => {
-    onChangeRange(priecRange)
-  }, [priecRange])
+    if (rangeChamged && isUpdated) {
+      setIsUpdated(false);
+      onChangeRange(priecRange)
+    }
+  }, [rangeChamged])
+  
+  useEffect(() => {
+    setPriecRange(filters.price)
+  }, [filters.price])
   
 
   return (
-    <div className="mb-6">
+    <div className="my-6  ">
       <h3 className="mb-2">السعر</h3>
       {/* <div className="flex items-center mb-4 h-[2px] ">
         <input type="range" min="0" max="1000" className="w-full" />
@@ -23,20 +33,22 @@ const PriceRange = ({onChangeRange}:{onChangeRange:(s:[number,number])=>void}) =
         <Input
          placeholder="اقل سعر"
          type="number"
-         value={filters.price[0]}
+         value={priecRange[0]}
          onChange={(e)=>{
           if (+e.target.value > priecRange[1]) return;
-          setPriceRange([+e.target.value,filters.price[1]])
+          setIsUpdated(true)
+          setPriecRange(o=>([+e.target.value,o[1]]))
          }}
          className=" text-center  hover:outline-none min-h-[40px] border border-gray-300  rounded"
         />
         <Input
          placeholder="اعلى سعر"
          type="number"
-         value={filters.price[1]}
+         value={priecRange[1]}
          onChange={(e)=>{
+          setIsUpdated(true)
           // if (+e.target.value < priecRange.to) return;
-          setPriecRange([filters.price[0],+e.target.value])
+          setPriecRange(o=>([o[0],+e.target.value]))
          }}
          className=" text-center hover:outline-none min-h-[40px] border border-gray-300  rounded"
         />

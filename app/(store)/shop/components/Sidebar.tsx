@@ -1,105 +1,115 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React  from "react";
 
 import PriceRange from "./price-range";
 
 import PopularTags from "./popular-tags";
-import Categories from "./Categories";
 import Brands from "./Brands";
-import CategorySelector from "./CategorySelector";
 
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import CategoriesAndSubCheckBox from "./CategoriesAndSubCheckBox";
+import CategoriesAndSubCheckBox from "./CategoriesTreeCheckBox";
 import StoresSearchSelector from "./StoresSearchSelector";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
-
-
-interface searchParams {
-    skw?:string;//search keyword
-    cats?:string[];
-    subCats?:string[];
-    store?:string | "";
-    brands?:string[];
-    tags?:string[];
-    newProducts?:string;
-    todayOffers?:string;
-  }
-
-  
+import { MainCategory } from "@/types/storeTypes";
+import { Checkbox } from "@/components/ui/checkbox";
 
 
 const Sidebar = () => {
+  const { setPriceRange, setStoreId, setHasOffer, setNewProduct , filters } =
+    useShopFiltersStore();
+  const { categories } = useCategoriesDataStore();
 
-  const {
-    setPriceRange,
-    setStoreId,
-    filters,
-  } = useShopFiltersStore();
-
-  const brandList = ['Google', 'Apple', 'Samsung', 'Microsoft','HP', 'Dell', 'Xiaomi','Symphony','Panasonic','Sony','Intel','LG','One Plus'];
-  const tags = ['Graphics Cards', 'TV', 'iPhone', 'Game',  'Asus Laptops', 'SSD', 'Mackbook','Speakers','Smart TV','Power Bank','Samsung','Microsoft','Tablet'];
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  // to set init values if there in params
-  // const params: searchParams = {
-  //   skw: searchParams.get("skw") || "",
-  //   store: searchParams.get("store") || "",
-  //   newProducts: searchParams.get("newProducts") || "f",
-  //   todayOffers: searchParams.get("todayOffers") || "f",
-  //   cats: searchParams.get("cats")?.split(',') || [],
-  //   subCats: searchParams.get("subCats")?.split(',')  || [],
-  //   brands: searchParams.get("brands")?.split(',')  || [],
-  //   tags: searchParams.get("tags")?.split(',')  || [],
-  // };
-
-  // const updateQueryParams = (params: Record<string, string | number>) => {
-  
-  //   const newParams = new URLSearchParams(searchParams.toString());
-  
-  //   for (const [key, value] of Object.entries(params)) {
-  //     newParams.set(key, value.toString());
-  //   }
-  
-  //   const currentPath = window.location.pathname;
-  
-  //   const hasQueryParams = window.location.search.length > 0;
-  
-  //   const newUrl = `${currentPath}${hasQueryParams ? '&' : '?'}${newParams.toString()}`;
-  
-  //   router.push(newUrl);
-  // };
+  const brandList = [
+    "Google",
+    "Apple",
+    "Samsung",
+    "Microsoft",
+    "HP",
+    "Dell",
+    "Xiaomi",
+    "Symphony",
+    "Panasonic",
+    "Sony",
+    "Intel",
+    "LG",
+    "One Plus",
+  ];
+  const tags = [
+    "Graphics Cards",
+    "TV",
+    "iPhone",
+    "Game",
+    "Asus Laptops",
+    "SSD",
+    "Mackbook",
+    "Speakers",
+    "Smart TV",
+    "Power Bank",
+    "Samsung",
+    "Microsoft",
+    "Tablet",
+  ];
+ 
 
   return (
     <aside className=" h-full ">
-      <div className="mb-4" >
-         <StoresSearchSelector
-            onSelected={(store) => {
-              setStoreId(store.id+""); 
-            }}
+      <div className=" mb-3 flex-row flex items-center justify-start mt-10 mdHalf:mt-0 ">
+        <div className="flex items-center space-x-2  ">
+          <Checkbox
+            id="hasOffers"
+            checked={filters.hasOffer == "t"}
+            onCheckedChange={(checked) => setHasOffer(checked ? "t" : "f")}
           />
+          <label
+            htmlFor="hasOffers"
+            className="text-[13px] px-2 cursor-pointer font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            عروض اليوم
+          </label>
+        </div>
+
+        <div className="flex items-center space-x-2 ">
+          <Checkbox
+            id="newProducts"
+            checked={filters.newProduct == "t"}
+            onCheckedChange={(checked) => setNewProduct(checked ? "t" : "f")}
+          />
+          <label
+            htmlFor="newProducts"
+            className="text-[13px] px-2 cursor-pointer font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            وصل حديثاً
+          </label>
+        </div>
       </div>
-      {/* <Categories categories={categoryList} /> */}
-      {/* <div className="max-h-[50vh] overflow-auto " >
-      {categories.map((i)=>(
-        <CategoriesAndSubCheckBox 
-          key={i.id}  
-          data={i} 
-          parent  
-          onChecked={(ids)=>{
-              console.log(ids);
-          }} 
-          />
-      ))}
-      </div> */}
-      {/* <CategorySelector/> */}
-      <PriceRange 
-        onChangeRange={(range)=>{
+
+      {/* store Filter */}
+      <div className="">
+        <h3 className="mb-2 text-base mt-4">المحل</h3>
+        <StoresSearchSelector
+          onSelected={(store) => {
+            setStoreId(store.id + "");
+          }}
+        />
+      </div>
+
+      {/* price Filter */}
+      <PriceRange
+        onChangeRange={(range) => {
           setPriceRange(range);
         }}
-       />
+      />
+      {/* Categories Filter */}
+      <div className="border-b mb-4">
+        <h3 className="mb-2">الفئات</h3>
+        <div className="max-h-[50vh] overflow-auto ">
+          {categories.map((ele: MainCategory) => {
+            return <CategoriesAndSubCheckBox key={ele.id} data={ele} />;
+          })}
+        </div>
+      </div>
+
       <Brands brands={brandList} />
       <PopularTags tags={tags} />
     </aside>

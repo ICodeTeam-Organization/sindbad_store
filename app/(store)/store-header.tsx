@@ -4,23 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
-import {
-  BiCart,
-  BiHeadphone,
-  BiHeart,
-  BiLocationPlus,
-  BiMenu,
-  BiSearch,
-  BiSolidMessageRoundedError,
-  BiUser,
-} from "react-icons/bi";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { BiMenu, BiSearch } from "react-icons/bi";
+import DropDownMenuOrderFrom from "@/components/DropDownMenuOrderFrom";
 import { FaQuestionCircle } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { IoChevronDownOutline } from "react-icons/io5";
@@ -32,20 +17,22 @@ import { IoMdNotificationsOutline } from "react-icons/io";
 import DropdownMenu from "@/components/DropDownMenu";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useShopFiltersStore } from "../stores/shopFiltersStore";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { GrClose } from "react-icons/gr";
+import { useCartStore } from "../stores/cartStore";
 
 const SearchComponent = ({
   searchKeyword = "",
   setsearchKeyword = (str: string) => {
     searchKeyword = str;
   },
-  isShopPage=false
+  isShopPage = false,
 }) => {
-  
-const {setProductName} = useShopFiltersStore()
+  const { setProductName } = useShopFiltersStore();
   return (
     <div className="flex  px-1 h-[46px]  xl:w-full   border-[0px] rounded-[9px] shadow justify-between gap-x-1  bg-white w-full">
       <input
-        className="pr-2 w-full h-full text-sm mdHalf:text-md  outline-none rounded-full"
+        className="pr-2 w-full h-full   outline-none rounded-full text-[13px]"
         type="text"
         placeholder=" ابحث  عن منتج"
         value={searchKeyword}
@@ -53,36 +40,45 @@ const {setProductName} = useShopFiltersStore()
           setsearchKeyword(e.target.value);
         }}
       />
-      {isShopPage 
-      ?<div
-      onClick={()=>{setProductName(searchKeyword)}}
-      className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
-    >
-      <BiSearch color="black " size={24} />
-    </div>
-      :<Link
-        href={"/shop?skw=" + searchKeyword}
-        className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
-      >
-        <BiSearch color="black " size={24} />
-      </Link>}
+      {isShopPage ? (
+        <div
+          onClick={() => {
+            setProductName(searchKeyword);
+          }}
+          className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
+        >
+          <BiSearch color="black " size={24} />
+        </div>
+      ) : (
+        <Link
+          href={"/shop?skw=" + searchKeyword}
+          className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
+        >
+          <BiSearch color="black " size={24} />
+        </Link>
+      )}
     </div>
   );
 };
 
 const StoreHeader = () => {
 
-  const currentPage = usePathname();  
-  const pageName = currentPage.split('/').pop();  
+  // to check if the page is shop page make btn that click to search as div to handle click event if not shop page the btn become Link from next/Link
+  const currentPage = usePathname();
+  const pageName = currentPage.split("/").pop();
   let isShopPage = pageName?.startsWith("shop");
 
   // const [openNav, setopenNav] = useState<boolean>(false);
-  const params = useSearchParams()
+  const params = useSearchParams();
   const skw = params.get("productName");
-  
   const [searchKeyword, setsearchKeyword] = useState(skw || "");
+
   const { data: session, status } = useSession();
   const isAuth = status === "authenticated";
+
+  const [openMobileNav, setopenMobileNav] = useState(false);
+
+  const  {items:cartItems} = useCartStore()
 
   const questions = [
     {
@@ -168,44 +164,26 @@ const StoreHeader = () => {
     },
   ];
 
+ 
+
   const OrderFromAndHow = () => {
     return (
       <div className="flex mdHalf:flex-row flex-col-reverse xl:gap-6 gap-4 mdHalf:items-center  mdHalf:p-0">
         <div className="mdHalf:flex flex-row items-center mdHalf:justify-center mdHalf:p-0 px-6">
-          <p className=" mdHalf:text-sm text-[12px] mdHalf:m-0 mb-1">
-            {" "}
-            اطلب من{" "}
-          </p>
-          <div className="flex items-center justify-center gap-2 mdHalf:mr-1 mdHalf:px-1 mdHalf:pr-2  cursor-pointer rounded">
-            <Select dir="rtl">
-              <SelectTrigger className="bg-transparent mdHalf:px-3 outline-none selection:outline-none">
-                <SelectValue placeholder="اليمن" />
-              </SelectTrigger>
-              <SelectContent className="z-[99999999]">
-                <SelectItem value="place1">اليمن</SelectItem>
-                <SelectItem value="place2">السعودية</SelectItem>
-                <SelectItem value="place3">مصر</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <DropDownMenuOrderFrom />
         </div>
-
         <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
-
-        <div>
-          <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0 mt-2 mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] pt-3 ">
+        <div className="mdHalf:block hidden">
+          <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0  mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] py-3 ">
             <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
-              {/* <FaBoxes  className="me-1 text-[12px]" /> */}
-              <p className="mdHalf:text-sm text-[12px] mdHalf:m-0 "> طلباتي </p>
+              <p className="text-[13px] mdHalf:m-0 "> طلباتي </p>
             </div>
           </div>
         </div>
-
         <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
-
         <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0 mt-2 mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] pt-3 ">
           <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
-            <p className="mdHalf:text-sm text-[12px] mdHalf:m-0 "> كيف ؟ </p>
+            <p className="text-[13px] mdHalf:m-0 "> كيف ؟ </p>
             <IoChevronDownOutline className="group-hover:rotate-180 transition-transform text-[14px]" />
           </div>
 
@@ -222,16 +200,14 @@ const StoreHeader = () => {
               )}
             >
               {questions.map((item, index) =>
-                item.invisible ? (
-                  <></>
-                ) : (
+                 (
                   <React.Fragment key={index}>
                     <li
-                      className="cursor-pointer text-slate-800 flex w-full gap-x-2 text-sm items-center rounded-md p-2 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100 mr-4 "
+                      className="cursor-pointer text-slate-800 flex w-full gap-x-2 text-sm items-center rounded-md p-2 transition-all hover:bg-[#FF8F7E22]  mr-4 "
                       onClick={item.onclickFun}
                     >
                       {item.icon}
-                      <p className="text-slate-800 font-medium ml-2 whitespace-nowrap ">
+                      <p className="text-slate-800 font-medium ml-2 whitespace-nowrap text-[11px] ">
                         {item.title}
                       </p>
                     </li>
@@ -244,7 +220,6 @@ const StoreHeader = () => {
       </div>
     );
   };
-
   return (
     <header className="bg-white shadow  transition-all duration-300 sticky top-0 z-50">
       <div
@@ -255,14 +230,15 @@ const StoreHeader = () => {
         <div className="w-full h-full  flex flex-col  pb-3">
           <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
             {/* logo section*/}
-            <div className="p-2 px-0 pr-4  mx-0  flex  items-center z-10 ">
-              {/* <div
-              onClick={() => {
-                setopenNav((o) => !o);
-              }}
-            >
-              <BiMenu className="cursor-pointer" size={40} />
-            </div> */}
+            <div className="p-2 px-0 pr-4  mx-0  flex  items-center z-10  ">
+              <div
+                onClick={() => {
+                  setopenMobileNav((o) => !o);
+                }}
+                className="mdHalf:hidden block"
+              >
+                <BiMenu className="cursor-pointer" size={40} />
+              </div>
               <Link href="/" className="cursor-pointer">
                 <Image
                   className="block relative "
@@ -303,60 +279,59 @@ const StoreHeader = () => {
                         <GoHeart className="text-[#666666]  text-[20px] m-2 " />
                       </Link>
                       <Link
-                        href="/shopping-card"
-                        className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
-                      >
-                        <BsCart className="text-[#666666]  text-[20px] m-2 " />
-                      </Link>
+                    href="/shopping-card"
+                    className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
+                  > {cartItems.length > 0 && <div className="bg-red-600 text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute" >{cartItems.length}</div>}
+                    <BsCart className="text-[#666666]  text-[20px] m-2 " />
+                  </Link>
                     </>
                   )}
-                  <div className="cursor-pointer ">
+                  <div className="cursor-pointer hidden mdHalf:block ">
                     <PersonButton status={status} session={session} />
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div className="block md:hidden  mx-5 ">
+
+
+          {/* search for mobile */}
+          <div className="block md:hidden mx-5">
             <SearchComponent
               searchKeyword={searchKeyword}
               setsearchKeyword={setsearchKeyword}
             />
           </div>
+          {/* menu for mobile */}
+          <Sheet open={openMobileNav}>
+            <SheetContent
+              side="right"
+              className="[&>button]:hidden w-[80%] p-0 m-0"
+            >
+              <div className="mt-4">
+                {/* <Sidebar /> */}
+                <div className="m-6 cursor-pointer flex  items-center justify-between">
+                  <Image
+                    className="block relative "
+                    src={"/images/sedebadLogo.svg"}
+                    width={70}
+                    height={70}
+                    alt=""
+                  />
+                  <GrClose
+                    onClick={() => {
+                      setopenMobileNav((o) => !o);
+                    }}
+                  />
+                </div>
+                
+                <PersonButton status={status} session={session} />
+                <OrderFromAndHow />
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
-
-      {/* <div className="flex items-center justify-center gap-5 h-[90px] flex-wrap">
-        <Select dir="rtl">
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="اختر فئة" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">الكل</SelectItem>
-          </SelectContent>
-        </Select>
-        <Select dir="rtl">
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="المحلات" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="place1">محل1</SelectItem>
-            <SelectItem value="place2">محل3</SelectItem>
-            <SelectItem value="place3">محل2</SelectItem>
-          </SelectContent>
-        </Select>
-        <div className="flex items-center justify-center gap-5">
-          <Link href={"/OrderTrack"} className="flex gap-2 items-center">
-            متابعة طلب <BiLocationPlus size={20} />
-          </Link>
-          <Link href={"/SpecialOrder"} className="flex gap-2 items-center">
-            طلب خاص <BiHeadphone size={20} />
-          </Link>
-          <Link href={"#"} className="flex gap-2 items-center">
-            طرق الشراء <BiSolidMessageRoundedError size={20} />
-          </Link>
-        </div>
-      </div> */}
     </header>
   );
 };

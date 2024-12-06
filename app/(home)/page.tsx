@@ -13,8 +13,6 @@ import Feature from "./components/sections/Feature";
 import { getApi } from "@/lib/http";
 import AllEShops from "./components/sections/all-Eshops";
 import { MainCategory, Product, Store } from "@/types/storeTypes";
-import SetCategoriesInLocalStorage from "./(getInitData)/SetCategoriesInLocalStorage";
-import GetFavorite from "./(getInitData)/GetFavorite";
 export default async function Home() {
 
   const [
@@ -23,7 +21,6 @@ export default async function Home() {
     // Offersproducts,
     BeastSellerInWeek,
     RecentlyProducts,
-    AllCategoriesWithSub,
   ] = await Promise.all([
     getApi<{data:MainCategory[]}>(
       "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/50"
@@ -38,22 +35,13 @@ export default async function Home() {
     getApi<{data:Product[]}>(
       "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/10"
     ),
-    getApi<{data:{items:MainCategory[]}}>(
-      "Categories/GetAllMainCategoriesWithSubCategories/1/10000"
-    ),
-    
+   
   ]);
 
   
 
   return (
     <section className="w-full">
-
-      {/* components for init data */}
-      <GetFavorite  />
-      <SetCategoriesInLocalStorage AllCategoriesWihtSubcategories={AllCategoriesWithSub?.data?.items} />
-
-
       <Hero />
       <div className="w-full xl:container mx-auto ">
         <CategoriesSlider  />

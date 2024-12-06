@@ -17,16 +17,16 @@ function OrderFromEshopMegaMenu() {
     categories?.filter((i) => i.categoryTypeNumber == 1) || [];
 
   const [params, setParams] = useState({
-    selectedCategory: allMainCat[0]?.id,
+    selectedCategory: allMainCat[0]?.id || null,
     pageNumber: 1,
-    pageSize: 50,
+    pageSize: 60,
   });
   const { data, isLoading } = useQuery<{ data: { items: Shop[] } }>({
     queryKey: [params.selectedCategory, "FilterECommerceInMegaMenu"],
     queryFn: () =>
       postApi(`EcommercesStores/FilterECommerce`, {
         body: {
-          parentsCategoriesIds: [params.selectedCategory],
+          parentsCategoriesIds: params.selectedCategory ? [params.selectedCategory] : [],
           pageSize: params.pageSize,
           pageNumber: params.pageNumber,
         },
@@ -61,7 +61,7 @@ function OrderFromEshopMegaMenu() {
           <div className="mdHalf:grid lg:grid-cols-1 flex  mdHalf:place-content-start  mdHalf:overflow-y-scroll mdHalf:overflow-x-hidden overflow-x-scroll  gap-x-4  mdHalf:mb-5 mb-2  mdHalf:h-[80%]">
             {allMainCat.map((i, x) => (
               <p
-                key={i.id + x}
+                key={i.id}
                 onClick={() => {
                   setParams((o) => ({ ...o, selectedCategory: i.id }));
                 }}

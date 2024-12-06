@@ -17,9 +17,9 @@ function StoresMegaMenu() {
     categories?.filter((i) => i.categoryTypeNumber == 1) || [];
 
   const [params, setParams] = useState({
-    selectedCategory: allMainCat[0]?.id,
+    selectedCategory: allMainCat[0]?.id || null,
     pageNumber: 1,
-    pageSize: 50,
+    pageSize: 60,
   });
 
   const { data, isLoading } = useQuery<{ data: { items: Store[] } }>({

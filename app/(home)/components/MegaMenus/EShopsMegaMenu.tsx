@@ -1,6 +1,6 @@
 "use clinet";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import { getApi, postApi } from "@/lib/http";
+import {  postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { MainCategory, Shop } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
@@ -19,7 +19,7 @@ function EShopsMegaMenu() {
   const [params, setParams] = useState({
     selectedCategory: allMainCat[0]?.id,
     pageNumber: 1,
-    pageSize: 50,
+    pageSize: 60,
   });
 
   const { data, isLoading } = useQuery<{ data: { items: Shop[] } }>({
@@ -27,9 +27,9 @@ function EShopsMegaMenu() {
     queryFn: () =>
       postApi(`EcommercesStores/FilterECommerce`, {
         body: {
-          parentsCategoriesIds: [
+          parentsCategoriesIds: params.selectedCategory ? [
             params.selectedCategory
-          ],
+          ] : [],
           pageSize: params.pageSize,
           pageNumber: params.pageNumber,
         },

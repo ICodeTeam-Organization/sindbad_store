@@ -1,15 +1,22 @@
 import { create } from "zustand";
 
-type PriceRange = {
-  from: number;
-  to: number;
-};
-
 type ShopFiltersStore = {
   filters: {
     price: [number, number];
     storeId: string;
-    categoryId: number;
+    cats: string[]; 
+    subCats: string[]; 
+    productName: string;
+    hasOffer: string;
+    newProduct: string;
+    pageNumber: number;
+    pageSize: number;
+  };
+  initState: {
+    price: [number, number];
+    storeId: string;
+    cats: string[]; 
+    subCats: string[]; 
     productName: string;
     hasOffer: string;
     newProduct: string;
@@ -18,7 +25,8 @@ type ShopFiltersStore = {
   };
   setPriceRange: (range: [number, number]) => void;
   setStoreId: (id: string) => void;
-  setCategoryId: (id: number) => void;
+  setCats: (cats: string[]) => void;
+  setSubCats: (subCats: string[]) => void;
   setProductName: (name: string) => void;
   setHasOffer: (hasOffer: string) => void;
   setNewProduct: (newPro: string) => void;
@@ -26,19 +34,35 @@ type ShopFiltersStore = {
   setPageSize: (size: number) => void;
   resetFilters: () => void;
   setFiltersFromObject: (newFilters: ShopFiltersStore['filters']) => void;
+  toggleCat:(cat:string)=>void
+  toggleSubCat:(subCat:string)=>void
+};
+
+const initState = {
+  price: [0, 1000] as [number, number],
+  storeId: "",
+  cats: [] as string[],
+  subCats: [] as string[],
+  productName: "",
+  hasOffer: "f",
+  newProduct: "f",
+  pageNumber: 1,
+  pageSize: 30,
 };
 
 export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
   filters: {
     price: [0, 1000],
     storeId: "",
-    categoryId: 0,
+    cats: [], 
+    subCats: [], 
     productName: "",
     hasOffer: "f",
     newProduct: "f",
     pageNumber: 1,
-    pageSize: 50,
+    pageSize: 30,
   },
+  initState,
 
   setPriceRange: (range) =>
     set((state) => ({
@@ -47,6 +71,7 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         price: range,
       },
     })),
+
   setStoreId: (id) =>
     set((state) => ({
       filters: {
@@ -54,13 +79,23 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         storeId: id,
       },
     })),
-  setCategoryId: (id) =>
+
+  setCats: (cats) =>
     set((state) => ({
       filters: {
         ...state.filters,
-        categoryId: id,
+        cats,
       },
     })),
+
+  setSubCats: (subCats) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        subCats,
+      },
+    })),
+
   setProductName: (name) =>
     set((state) => ({
       filters: {
@@ -68,6 +103,7 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         productName: name,
       },
     })),
+
   setHasOffer: (hasOffer) =>
     set((state) => ({
       filters: {
@@ -75,6 +111,7 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         hasOffer,
       },
     })),
+
   setNewProduct: (newPro) =>
     set((state) => ({
       filters: {
@@ -82,6 +119,7 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         newProduct: newPro,
       },
     })),
+
   setPageNumber: (page) =>
     set((state) => ({
       filters: {
@@ -89,6 +127,7 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         pageNumber: page,
       },
     })),
+
   setPageSize: (size) =>
     set((state) => ({
       filters: {
@@ -96,26 +135,40 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         pageSize: size,
       },
     })),
+
   resetFilters: () =>
     set(() => ({
-      filters: {
-        price: [0, 10000],
-        storeId: "",
-        categoryId: 0,
-        productName: "",
-        hasOffer: "f",
-        newProduct: "f",
-        pageNumber: 1,
-        pageSize: 50,
-      },
+      filters: { ...initState },
     })),
 
-  // Function to set filters from an object
   setFiltersFromObject: (newFilters) =>
     set((state) => ({
       filters: {
         ...state.filters,
-        ...newFilters, // Merge new filters into the current state
+        ...newFilters,
+      },
+    })),
+
+  // Toggle a category in cats
+  toggleCat: (cat:string) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        cats: state.filters.cats.includes(cat)
+          ? state.filters.cats.filter((c) => c !== cat) // Remove if exists
+          : [...state.filters.cats, cat], // Add if not exists
+      },
+    })),
+
+  // Toggle a subcategory in subCats
+  toggleSubCat: (subCat:string) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        subCats: state.filters.subCats.includes(subCat)
+          ? state.filters.subCats.filter((s) => s !== subCat) // Remove if exists
+          : [...state.filters.subCats, subCat], // Add if not exists
       },
     })),
 }));
+

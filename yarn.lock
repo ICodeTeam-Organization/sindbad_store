@@ -3069,6 +3069,11 @@ react-icons@^5.3.0:
   resolved "https://registry.npmjs.org/react-icons/-/react-icons-5.3.0.tgz"
   integrity sha512-DnUk8aFbTyQPSkCfF8dbX6kQjXA9DktMeJqfjrg6cK9vwQVMxmcA3BfP4QoiztVmEHtwlTgLFsPuH2NskKT6eg==
 
+react-intersection-observer@^9.13.1:
+  version "9.13.1"
+  resolved "https://registry.yarnpkg.com/react-intersection-observer/-/react-intersection-observer-9.13.1.tgz#6c61a75801162491c6348bad09967f2caf445584"
+  integrity sha512-tSzDaTy0qwNPLJHg8XZhlyHTgGW6drFKTtvjdL+p6um12rcnp8Z5XstE+QNBJ7c64n5o0Lj4ilUleA41bmDoMw==
+
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -3334,7 +3339,7 @@ signal-exit@^4.0.1:
     react-hook-form "^7.53.0"
     react-icons "^5.3.0"
     react-to-print "^3.0.1"
-    sindbad_store "file:C:/Users/3liaa/AppData/Local/Yarn/Cache/v6/npm-sindbad-store-0.1.0-3b0b931d-502d-4446-871c-1964617c96c0-1732644938477/node_modules/sindbad_store"
+    sindbad_store "file:C:/Users/3liaa/AppData/Local/Yarn/Cache/v6/npm-sindbad-store-0.1.0-7b17779f-c986-4db9-9445-663dd7881054-1733500307667/node_modules/sindbad_store"
     sonner "^1.5.0"
     tailwind-merge "^2.5.2"
     tailwindcss-animate "^1.0.7"
@@ -3370,6 +3375,7 @@ streamsearch@^1.1.0:
   integrity sha512-Mcc5wHehp9aXz1ax6bZUyY5afg9u2rv5cqQI3mRrYkGC8rW2hM02jWuwjtL++LS5qinSyhj2QfLyNsuc+VsExg==
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==

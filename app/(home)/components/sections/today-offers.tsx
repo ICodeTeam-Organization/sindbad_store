@@ -25,7 +25,7 @@ const TodayOffers = ({Offersproducts={data:[]}}:{Offersproducts:{data:Product[]}
   return (
     <>
       <div className=" sm:px-4  ">
-        <SectionTitle title={"عروض اليوم"} href="/shop?todayoffers=true" />
+        <SectionTitle title={"عروض اليوم"} href="/shop?hasOffer=t" />
       </div>
      <div className="w-full" >
      <Carousel

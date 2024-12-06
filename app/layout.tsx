@@ -7,6 +7,12 @@ import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
 import { Toaster as SonanerToaster } from "sonner";
 import GetCartItems from "./(home)/(getInitData)/GetCartItems";
+import Footer from "@/components/Footer";
+import About from "@/components/About";
+import GetFavorite from "./(home)/(getInitData)/GetFavorite";
+import SetCategoriesInLocalStorage from "@/app/(home)/(getInitData)/SetCategoriesInLocalStorage";
+import { getApi } from "@/lib/http";
+import { MainCategory } from "@/types/storeTypes";
 
 const Noto_Kufi = Noto_Kufi_Arabic({
   weight: ["400", "700"],
@@ -26,11 +32,17 @@ export const metadata: Metadata = {
   description: "وصف لمتجر سندباد",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+ const AllCategoriesWithSub = await getApi<{data:{items:MainCategory[]}}>(
+    "Categories/GetAllMainCategoriesWithSubCategories/1/10000"
+  );
+  
+
   return (
     <html lang="en">
       <body
@@ -41,14 +53,16 @@ export default function RootLayout({
           <NextAuthProvider>
             <main>
               <ClientProviders>
+                <SetCategoriesInLocalStorage AllCategoriesWihtSubcategories={AllCategoriesWithSub?.data?.items} />
                 <GetCartItems/>
+                <GetFavorite/>
                 {children}
                 </ClientProviders>
             </main>
             {/* <Subscribe /> */}
           </NextAuthProvider>
-          {/* <About />
-          <Footer /> */}
+          <About />
+          <Footer />
           {/* to show toaster messages */}
           <Toaster />
           <SonanerToaster richColors />

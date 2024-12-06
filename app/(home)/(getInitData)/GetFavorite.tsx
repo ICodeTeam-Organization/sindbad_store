@@ -1,8 +1,5 @@
 "use client";
-
 import { useFavorite } from "@/app/stores/favoritesStore";
-import { getApi } from "@/lib/http";
-import { isClient } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -10,7 +7,6 @@ import { useEffect, useState } from "react";
 
 export default function GetFavorite() {
 
-  const isclient = isClient()
   const { pageNumber, pageSize, setFavoriteProducts } = useFavorite();
   const { status, data: authData } = useSession();
 

@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { Button } from "@/components/ui/button";
-import { Loader2 } from "lucide-react";
+import { Loader2, Minus, Plus } from "lucide-react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import AddToFavorite from "./add-to-favorite";
@@ -37,6 +37,11 @@ const AddToBasket = ({ id, productInfo }: Props) => {
   } = useCartStore();
   const inCart = cartItems.find((ele) => ele.productId == id);
   const [quantity, setQuantity] = useState<number>(inCart?.quantity || 0);
+
+  useEffect(() => {
+    setQuantity(inCart?.quantity||0)
+  }, [inCart])
+  
 
   const mutationAdd = useMutation({
     mutationFn: async () => {
@@ -194,20 +199,20 @@ const AddToBasket = ({ id, productInfo }: Props) => {
   return (
     <div className="cursor-pointer tajawal my-1 flex gap-x-2 px-2 mb-2   ">
       {inCart ? (
-        <div className=" w-full max-md:h-[30px]  h-[40px] rounded-[5px] border-[1px] flex justify-between items-center p-1 max-md:px-1">
+        <div className="w-full max-sm:h-[30px]  h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1">
           <div
-            className="text-[20px] bg-gray-200 px-2 h-full w-8 flex items-center justify-center rounded-sm"
+            className="text-[20px] bg-slate-100 px-2 h-[90%] aspect-square flex items-center justify-center rounded-full "
             onClick={() => {
               increamentQ();
             }}
           >
-            +
+            <Plus size={15} />
           </div>
           {mutationUpdateQ.isPending || deleteItemFromCart.isPending ? (
-            <>
+            <div className="w-full flex items-center justify-center">
               {" "}
-              <Spinner />{" "}
-            </>
+              <Spinner className="h-5 w-5"  />{" "}
+            </div>
           ) : (
             <input
               value={quantity}
@@ -216,18 +221,18 @@ const AddToBasket = ({ id, productInfo }: Props) => {
                 setQuantity(+e.target.value);
                 setIsUpdated(true)
               }}
-              className="w-20 text-center remove-arrow outline-none"
+              className=" w-full  text-center remove-arrow outline-none"
             />
           )}
           <div
-            className="text-[20px] bg-gray-200 px-2 h-full w-8 flex items-center justify-center rounded-sm "
+            className="text-[20px] bg-slate-100 px-2 h-[90%] aspect-square flex items-center justify-center rounded-full "
             onClick={() => {
               if (quantity > 0) {
                 decreamentQ();
               }
             }}
           >
-            -
+            <Minus size={15} />
           </div>
         </div>
       ) : (
@@ -235,14 +240,14 @@ const AddToBasket = ({ id, productInfo }: Props) => {
           disabled={mutationAdd.isPending}
           variant={"outline"}
           onClick={() => handleAddToCart()}
-          className="hover:bg-[#F55157] hover:text-white w-full max-md:h-[30px]  h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1"
+          className="hover:bg-[#F55157] hover:text-white w-full max-sm:h-[30px]  h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1"
         >
           {mutationAdd.isPending ? (
             <Loader2 className="animate-spin" />
           ) : (
             <div className="flex items-center justify-center gap-2">
               <MdOutlineLocalGroceryStore />
-              <p className="max-md:text-[10px] ">اضف للسلة</p>
+              <p className="max-sm:text-[10px] ">اضف للسلة</p>
             </div>
           )}
         </Button>
