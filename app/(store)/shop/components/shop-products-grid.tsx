@@ -46,7 +46,9 @@ const ShopProductsGrid = ({ allProducts }: any) => {
           storeId: filters.storeId || "",
           productName: filters.productName || "",
           isDeleted: false,
-          returnDtoName: 1,
+          // returnDtoName: 1,
+          minPrice:filters.price[0],
+          maxPrice:filters.price[1],
         };
         // Remove fields that have invalid values (0 or empty string)
         const filteredBody = Object.fromEntries(
@@ -57,7 +59,7 @@ const ShopProductsGrid = ({ allProducts }: any) => {
         );
 
         const response = await postApi(
-          `Products/GetProductsWitheFilter?returnDtoName=1`,
+          `Products/GetProductsWitheFilter?returnDtoName=2`,
           {
             body: filteredBody,
           }

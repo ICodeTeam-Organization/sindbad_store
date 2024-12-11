@@ -56,7 +56,12 @@ const RecentlyAdded =  ({RecentlyProducts={data:[]}}:{RecentlyProducts:{data:Pro
                 id={product.id}
                 image={product.mainImageUrl}
                 productName={product.name}
-                price={product.price}
+                price={
+                  product.priceAfterOffer
+                    ? product.priceAfterOffer
+                    : product.price
+                }
+                oldPrice={product.priceAfterOffer ? product.price : 0}
                 ProductDet={product.id}
               />
               </div>
