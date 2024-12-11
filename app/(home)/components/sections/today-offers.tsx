@@ -12,6 +12,7 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "../product-card";
 import Autoplay from "embla-carousel-autoplay";
 import { Product } from "@/types/storeTypes";
+import { FaClock } from 'react-icons/fa'
 
 const TodayOffers = ({ Offersproducts = { data: [] } }: { Offersproducts: { data: Product[] } }) => {
   const [IsHover, setIsHover] = useState(true);
@@ -21,25 +22,17 @@ const TodayOffers = ({ Offersproducts = { data: [] } }: { Offersproducts: { data
     const updateCountdown = () => {
       const now = new Date();
       const targetTime = new Date();
-
-      // تعيين الساعة المستهدفة إلى 6 صباحًا
       targetTime.setHours(6, 0, 0, 0);
-
-      // إذا كانت الساعة الحالية >= 6 صباحًا، نضيف يومًا
       if (now.getHours() >= 6) {
         targetTime.setDate(targetTime.getDate() + 1);
       }
-
       const timeLeft = targetTime - now;
-
-      // التأكد من أن الوقت المتبقي لا يصبح سالبًا
       setCountdown(Math.max(timeLeft, 0));
     };
 
-    updateCountdown(); // حساب الوقت المتبقي عند التحميل الأول
-    const interval = setInterval(updateCountdown, 1000); // تحديث كل ثانية
-
-    return () => clearInterval(interval); // تنظيف الinterval عند إلغاء التركيب
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   const formatTime = (milliseconds: number) => {
@@ -47,31 +40,61 @@ const TodayOffers = ({ Offersproducts = { data: [] } }: { Offersproducts: { data
     const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
-
     return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
   return (
-    <>    
-    <style jsx>{`
-      .countdown-timer p{
-color: rgb(206, 35, 52);
-    font-size: 18px;
-    font-weight: bold;
-    font-family: system-ui;
+    <>
+      <style jsx>{`
+        .countdown-timer {
+font-size: 20px;
+    color: #fff;
+    background-color: rgb(206 35 52 / 88%);
+    padding: 7px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
     text-align: center;
-      }
-    .countdown-timer span{
-    font-size:20px}
+    -webkit-box-shadow: 0 4px 15px rgba(0, 0, 0, .5);
+    -moz-box-shadow: 0 4px 15px rgba(0, 0, 0, .5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, .5);
+    margin: 0px 0;
+    /* opacity: 0.8; */
+    font-family: system-ui;
+    width: 90%;
+    margin: auto;
+        }
 
-    `}</style>
+    .countdown-timer span{
+        font-family: fantasy;
+    letter-spacing: 6px;
+}
+    .countdown-timer p{
+        display: flex
+;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;}
+        .carousel-container {
+          margin: auto;
+          width: 88%;
+        }
+        .carousel-item {
+          transition: transform 0.3s;
+        }
+        .carousel-item:hover {
+          transform: scale(1.05);
+          box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+      `}</style>
+
       <div className="sm:px-4">
         <SectionTitle title={"عروض اليوم"} href="/shop?hasOffer=t" />
         <div className="countdown-timer">
-          <p>سارع قبل نفاذ الوقت: <span>{formatTime(countdown)}</span></p>
+          <p>سارع قبل نفاذ الوقت <FaClock className="timer-icon" /> <span>{formatTime(countdown)}</span></p>
         </div>
       </div>
-      <div className="w-full">
+      <div className="carousel-container">
         <Carousel
           onMouseEnter={() => setIsHover(false)}
           onMouseLeave={() => setIsHover(true)}
@@ -82,13 +105,12 @@ color: rgb(206, 35, 52);
               active: IsHover,
             }),
           ]}
-          className="m-auto cursor-pointer md:w-[88%] sm:w-[85%] w-[100%]"
         >
           <CarouselContent dir="rtl" className="py-10">
             {Offersproducts?.data?.map((product: any) => (
               <CarouselItem
                 key={product.id}
-                className="pl-0 ml-4 xlHalf:basis-1/6 2lg:basis-[22%] mdHalf:basis-[25%] 2sm:basis-[35%] sm:basis-[42%] 2xs:basis-[34%] 1xs:basis-[45%] basis-1/2 rounded-t-[8px]"
+                className="carousel-item pl-0 ml-4 xlHalf:basis-1/6 2lg:basis-[22%] mdHalf:basis-[25%] 2sm:basis-[35%] sm:basis-[42%] 2xs:basis-[34%] 1xs:basis-[45%] basis-1/2 rounded-t-[8px]"
               >
                 <div className="sm:w-[220px] 1xs:w-[180px] w-full">
                   <ProductCard
