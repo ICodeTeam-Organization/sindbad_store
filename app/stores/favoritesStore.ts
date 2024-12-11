@@ -16,7 +16,7 @@ type FavoriteState = {
   delStoreToFavorite: (id: string) => void;
   setFavoriteEcommrces: (ecommrces: FavoriteEcommerces[]) => void;
   addEcommrceToFavorite: (ecommerce: FavoriteEcommerces) => void;
-  delEcommrceToFavorite: (id: number) => void;
+  delEcommrceFromFavorite: (id: number) => void;
 };
 
 export const useFavorite = create<FavoriteState>((set) => ({
@@ -56,7 +56,7 @@ export const useFavorite = create<FavoriteState>((set) => ({
   addEcommrceToFavorite: (ecommerce) =>
     set((state) => ({ ...state, favoriteEcommrces: [...state.favoriteEcommrces, ecommerce] })),
 
-  delEcommrceToFavorite: (id) =>
+  delEcommrceFromFavorite: (id) =>
     set((state) => ({
       ...state,
       favoriteEcommrces: state.favoriteEcommrces.filter((item) => item.ecommerceStoreId !== id),

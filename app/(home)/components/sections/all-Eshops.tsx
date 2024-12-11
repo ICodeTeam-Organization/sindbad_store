@@ -13,7 +13,7 @@ import Autoplay from "embla-carousel-autoplay"
 import Link from "next/link";
 import { useState } from "react";
 import EshopsCardCarsoul from "../EshopsCardCarsoul";
-import { Store } from "@/types/storeTypes";
+import { Shop, Store } from "@/types/storeTypes";
 
 const AllEShops =  ({AllEShops}:{AllEShops:any}) => {
  
@@ -54,7 +54,7 @@ const AllEShops =  ({AllEShops}:{AllEShops:any}) => {
         <CarouselNext className="  text-[#F58634]" />
         </div>
         <CarouselContent>
-          {AllEShops?.data?.map((shop: Store) => (
+          {AllEShops?.data.items?.map((shop: Shop) => (
             <CarouselItem
               key={shop.id}
               dir="rtl"
@@ -63,9 +63,10 @@ const AllEShops =  ({AllEShops}:{AllEShops:any}) => {
               <EshopsCardCarsoul 
                 name={shop.name} 
                 description={shop.description} 
-                mainImageUrl={shop.mainImageUrl}
-                websiteLink={shop.websiteLink}
-                ecommrcesId={shop.id}
+                urlLinkOfStore={shop.urlLinkOfStore}
+                logo={shop.logo}
+                id={shop.id}
+                ecommerceStoreImages={shop.ecommerceStoreImages}
                 key={shop.id}
                />
             </CarouselItem>

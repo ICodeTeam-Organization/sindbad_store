@@ -45,7 +45,7 @@ export default function GetFavorite() {
         ),
         axios.get(
           process.env.NEXT_PUBLIC_BASE_URL +
-            `/FavoriteShop/GetFavoriteStores`,
+            `FavoriteShop/GetFavoriteStores`,
           {
             headers: {
               Authorization: `Bearer ${authData?.user.data.token}`,
@@ -63,6 +63,8 @@ export default function GetFavorite() {
         ),
       ]);
   
+      console.log(storesResponse,"dsdkmskdmksmdksmd");
+      
       // if there any error or not found then will return empty array
       return {
         productsIds:productsResponse.status == "fulfilled" ? productsResponse.value.data?.data : [],
@@ -87,7 +89,7 @@ export default function GetFavorite() {
         (item: { productId: number }) => item.productId
       );
 
-      // console.log("favorite >>>>",data);
+      console.log("favorite >>>>",data);
       
       
       setFavoriteProducts(productIds);

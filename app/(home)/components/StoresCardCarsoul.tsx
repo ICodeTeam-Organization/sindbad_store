@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { AiFillHeart, AiFillStar, AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiFillStar } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -13,91 +13,101 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { Store } from "@/types/storeTypes";
 
-// Define the type for the props
-interface shop {
-  mainImageUrl: string | null;
-  name: string;
-  description: string | null;
-  websiteLink: string | null;
-  ecommrcesId: number;
-}
-
-const StoresCardCarsoul: React.FC<shop> = ({
+const StoresCardCarsoul: React.FC<Store> = ({
   description,
   name,
   mainImageUrl,
   websiteLink,
-  ecommrcesId,
+  id,
 }) => {
-
-
-  const { favoriteEcommrces , addEcommrceToFavorite } = useFavorite();
-  const isFavorite = favoriteEcommrces.find(
-    (ele) => ele.ecommerceStoreId == ecommrcesId
-  );
-  const { data:session , status } = useSession()
+  const { favoriteStores, addStoreToFavorite , delStoreToFavorite } = useFavorite();
+  const isFavorite = favoriteStores.find((ele) => ele.storeId == id);
+  const { data: session, status } = useSession();
+  const redirct = useRouter();
   const { toast } = useToast();
 
-  const {mutate:mutateAdd,isPending:isPendingAdd} = useMutation({
+  const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
-        const res = await axios.post(
-          process.env.NEXT_PUBLIC_BASE_URL +`FFavoriteShop/AddStore`,
-            {
-              "ecommerceStoreId": ecommrcesId
-            },
-            {
-                headers: {
-                    "Accept-Language": "ar",
-                    "Content-type": "multipart/form-data",
-                    Authorization: `Bearer ${session?.user.data.token}`,
-                },
-            }
-        );
-        return res.data;
+      const res = await axios.post(
+        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/AddStore`,
+        {
+          storeId: id,
+        },
+        {
+          headers: {
+            "Accept-Language": "ar",
+            "Content-type": "application/json",
+            Authorization: `Bearer ${session?.user.data.token}`,
+          },
+        }
+      );
+      return res.data;
     },
     onSuccess: (data) => {
-      console.log("ADD to Ecommrce",data);
-      
-         addEcommrceToFavorite({
-          description:description||"",
-          ecommerceStoreId:ecommrcesId,
-          imageUrl:mainImageUrl || "",
-          id:0,
-         })
+      addStoreToFavorite({
+        storeName: name,
+        storeId: id,
+        imageUrl: mainImageUrl || "",
+        description,
+      });
     },
     onError: (error: any) => {
-        const errorMessage =
-            error.response?.data?.message || 'حدث خطأ أثناء إضافة المتجر إلى المفضلة';
-        toast({
-            variant: 'destructive',
-            description: `خطأ: ${errorMessage}`,
-            action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-        });
+      const errorMessage =
+        error.response?.data?.message ||
+        "حدث خطأ أثناء إضافة المحل إلى المفضلة";
+      toast({
+        variant: "destructive",
+        description: `خطأ: ${errorMessage}`,
+        action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
+      });
     },
-});
-const redirct = useRouter();
+  });
 
+  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } = useMutation({
+    mutationFn: async () => {
+      const res = await axios.delete(
+        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/RemoveStore/`+id,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.data.token}`,
+          },
+        }
+      );
+      return res.data;
+    },
+    onSuccess: (data) => {
+      delStoreToFavorite(id)
+    },
+    onError: (error: any) => {
+      const errorMessage =
+        error.response?.data?.message ||
+        "حدث خطأ أثناء حذف المحل إلى المفضلة";
+      toast({
+        variant: "destructive",
+        description: `خطأ: ${errorMessage}`,
+        action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
+      });
+    },
+  });
 
-
-const handleAddToFav = () => {
-  if (status === "unauthenticated") redirct.push("/auth");
-  else if (status === "authenticated") {
-  if (isFavorite) {
-    
-  } else {
-    mutateAdd()
-  }
-}
-};
-
-
+  const handleAddToFav = () => {
+    if (status === "unauthenticated") redirct.push("/auth");
+    else if (status === "authenticated") {
+      if (isFavorite) {
+        mutateRemoveFromFav()
+      } else {
+        mutateAddToFav();
+      }
+    }
+  };
 
   return (
     <>
       <div className="flex justify-center items-center w-[35%] h-full relative me-3">
         {mainImageUrl === null ? (
-          <h1>لاتوجد صورة للمتجر</h1>
+          <h1>لاتوجد صورة للمحل</h1>
         ) : (
           <Image
             src={
@@ -105,7 +115,7 @@ const handleAddToFav = () => {
                 ? mainImageUrl
                 : "/" + mainImageUrl
             }
-            alt={"shop"}
+            alt={"store"}
             layout="fill"
           />
         )}
@@ -124,42 +134,30 @@ const handleAddToFav = () => {
           </div>
         </div>
         <div className="flex  w-full gap-x-2   ">
-          {websiteLink === null ? (
-            <div className="flex-1 p-2 cursor-pointer rounded-sm border-[1px] group-hover:bg-[#F58634] group-hover:border-[#F58634] group-hover:text-white transition-all duration-300 flex justify-center items-center border-gray-200">
-              <h1 className="text-base">لا يوجد رابط للمتجر</h1>
-              <IoIosArrowBack />
-            </div>
-          ) : (
-            <Link
-              href={websiteLink}
-              className="flex-1 p-2 cursor-pointer rounded-sm border-[1px] group-hover:bg-[#F58634] group-hover:border-[#F58634] group-hover:text-white transition-all duration-300 flex justify-center items-center border-gray-200"
-            >
-              <h1 className="text-base">زيارة المتجر</h1>
-              <IoIosArrowBack />
-            </Link>
-          )}
-
+          <Link
+            href={"/stores/storeDetails/" + id}
+            className="flex-1 p-2 cursor-pointer rounded-sm border-[1px] group-hover:bg-[#F58634] group-hover:border-[#F58634] group-hover:text-white transition-all duration-300 flex justify-center items-center border-gray-200"
+          >
+            <h1 className="text-base">زيارة المحل</h1>
+            <IoIosArrowBack />
+          </Link>
           <Button
             variant={"outline"}
             onClick={handleAddToFav}
             className={cn(
               "cursor-pointer group hover:bg-[#F55157] text-[#D5D5D5] hover:text-white transition-all duration-300  rounded-[5px]  border-[1px] flex justify-center items-center p-4 py-5 ml-2",
-              isFavorite && "bg-[#F55157]"
+              isFavorite && "bg-[#F55157] text-white"
             )}
           >
-            {
-              isPendingAdd  ? (
-                  <Loader2 className="animate-spin" />
-              ) :
+            {isPendingAddToFav || isPendingRemoveFromFav ? (
+              <Loader2 className="animate-spin" />
+            ) : (
               <>
                 <AiFillHeart
-                  className={cn(
-                    "w-[20px] h-[20px] ",
-                    isFavorite && "block"
-                  )}
+                  className={cn("w-[20px] h-[20px] ", isFavorite && "block")}
                 />
               </>
-            }
+            )}
           </Button>
         </div>
       </div>

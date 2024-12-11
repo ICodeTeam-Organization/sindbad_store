@@ -8,7 +8,6 @@ import { postApi } from "@/lib/http";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { useRouter } from "next/navigation";
 import { useInView } from "react-intersection-observer";
-import { Button } from "@/components/ui/button";
 
 type ProductsResponsive = {
   data: {
@@ -31,7 +30,6 @@ const ShopProductsGrid = ({ allProducts }: any) => {
     resetFilters,
     setFiltersFromObject,
     initState: initialFilters,
-    setPageNumber,
   } = useShopFiltersStore();
   const [firstRender, setfirstRender] = useState(true);
   const { isPending, data, fetchNextPage, isFetchingNextPage, hasNextPage } =
@@ -41,12 +39,11 @@ const ShopProductsGrid = ({ allProducts }: any) => {
         const body = {
           pageNumber: pageParam || 1,
           pageSize: filters.pageSize || 30,
-          hasOffer: filters.hasOffer == "t",
+          todayOffers: filters.hasOffer == "t",
           categoryId: null,
           storeId: filters.storeId || "",
           productName: filters.productName || "",
           isDeleted: false,
-          // returnDtoName: 1,
           minPrice:filters.price[0],
           maxPrice:filters.price[1],
         };
@@ -160,16 +157,24 @@ const ShopProductsGrid = ({ allProducts }: any) => {
         {!isPending ? (
           data?.pages && data?.pages?.length > 0 ? (
             data?.pages?.map((page) => {
-              return page.data.items.map((product) => (
+              return page.data.items.map((product:any) => (
                 <div key={product.id} className="sm:w-[220px]  w-[180px] ">
                   <ProductCard
                     id={product.id + ""}
                     ProductDet={+product.id}
                     image={product.mainImageUrl}
-                    price={product.price}
+                    price={product.priceAfterDiscount?product.priceAfterDiscount:product.priceBeforeDiscount}
+                    oldPrice={product.priceBeforeDiscount}
                     productName={product.name}
-                    // oldPrice={product.}
                   />
+                  {/* 
+                  "id": 0,
+        "name": "string",
+        "mainImageUrl": "string",
+        "priceBeforeDiscount": 0,
+        "priceAfterDiscount": 0,
+        "buyAndGet": "string",
+        "rate": 0 */}
                 </div>
               ));
             })

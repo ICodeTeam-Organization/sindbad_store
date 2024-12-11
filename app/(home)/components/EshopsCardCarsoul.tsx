@@ -13,43 +13,37 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { Shop } from "@/types/storeTypes";
 
-// Define the type for the props
-interface shop {
-  mainImageUrl: string | null;
-  name: string;
-  description: string | null;
-  websiteLink: string | null;
-  ecommrcesId: number;
-}
 
-const EshopsCardCarsoul: React.FC<shop> = ({
+const EshopsCardCarsoul: React.FC<Shop> = ({
   description,
   name,
-  mainImageUrl,
-  websiteLink,
-  ecommrcesId,
+  ecommerceStoreImages,
+  id:ecommrcesId,
+  logo,
+  urlLinkOfStore
 }) => {
 
 
-  const { favoriteEcommrces , addEcommrceToFavorite } = useFavorite();
+  const { favoriteEcommrces , addEcommrceToFavorite ,delEcommrceFromFavorite} = useFavorite();
   const isFavorite = favoriteEcommrces.find(
     (ele) => ele.ecommerceStoreId == ecommrcesId
   );
   const { data:session , status } = useSession()
   const { toast } = useToast();
 
-  const {mutate:mutateAdd,isPending:isPendingAdd} = useMutation({
+  const {mutate:mutateAddToFav,isPending:isPendingAddToFav} = useMutation({
     mutationFn: async () => {
         const res = await axios.post(
-          process.env.NEXT_PUBLIC_BASE_URL +`FFavoriteShop/AddStore`,
+          process.env.NEXT_PUBLIC_BASE_URL +`FavoriteShop/AddEcommerceStore`,
             {
               "ecommerceStoreId": ecommrcesId
             },
             {
                 headers: {
                     "Accept-Language": "ar",
-                    "Content-type": "multipart/form-data",
+                    "Content-type": "application/json",
                     Authorization: `Bearer ${session?.user.data.token}`,
                 },
             }
@@ -57,12 +51,11 @@ const EshopsCardCarsoul: React.FC<shop> = ({
         return res.data;
     },
     onSuccess: (data) => {
-      console.log("ADD to Ecommrce",data);
-      
          addEcommrceToFavorite({
           description:description||"",
           ecommerceStoreId:ecommrcesId,
-          imageUrl:mainImageUrl || "",
+          imageUrl:logo || "",
+          ecommerceName:"",
           id:0,
          })
     },
@@ -76,15 +69,41 @@ const EshopsCardCarsoul: React.FC<shop> = ({
         });
     },
 });
+
+const {mutate:mutateRemoveFromFav,isPending:isPendingRemoveFromFav} = useMutation({
+  mutationFn: async () => {
+      const res = await axios.delete(
+        process.env.NEXT_PUBLIC_BASE_URL +`FavoriteShop/RemoveEcommerceStore/`+ecommrcesId,
+          {
+              headers: {
+                  Authorization: `Bearer ${session?.user.data.token}`,
+              },
+          }
+      );
+      return res.data;
+  },
+  onSuccess: (data) => {
+    delEcommrceFromFavorite(ecommrcesId)
+  },
+  onError: (error: any) => {
+      const errorMessage =
+          error.response?.data?.message || 'حدث خطأ أثناء حذف المتجر إلى المفضلة';
+      toast({
+          variant: 'destructive',
+          description: `خطأ: ${errorMessage}`,
+          action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
+      });
+  },
+});
 const redirct = useRouter();
 
 const handleAddToFav = () => {
   if (status === "unauthenticated") redirct.push("/auth");
   else if (status === "authenticated") {
   if (isFavorite) {
-    
+    mutateRemoveFromFav()
   } else {
-    mutateAdd()
+    mutateAddToFav()
   }
 }
 };
@@ -94,17 +113,18 @@ const handleAddToFav = () => {
   return (
     <>
       <div className="flex justify-center items-center w-[35%] h-full relative me-3">
-        {mainImageUrl === null ? (
+        {logo === null ? (
           <h1>لاتوجد صورة للمتجر</h1>
         ) : (
           <Image
             src={
-              mainImageUrl?.startsWith("http")
-                ? mainImageUrl
-                : "/" + mainImageUrl
+              logo?.startsWith("http")
+                ? logo
+                : "/" + logo
             }
             alt={"shop"}
             layout="fill"
+            className="object-contain"
           />
         )}
       </div>
@@ -122,14 +142,14 @@ const handleAddToFav = () => {
           </div>
         </div>
         <div className="flex  w-full gap-x-2   ">
-          {websiteLink === null ? (
+          {urlLinkOfStore === null ? (
             <div className="flex-1 p-2 cursor-pointer rounded-sm border-[1px] group-hover:bg-[#F58634] group-hover:border-[#F58634] group-hover:text-white transition-all duration-300 flex justify-center items-center border-gray-200">
               <h1 className="text-base">لا يوجد رابط للمتجر</h1>
               <IoIosArrowBack />
             </div>
           ) : (
             <Link
-              href={websiteLink}
+              href={urlLinkOfStore}
               className="flex-1 p-2 cursor-pointer rounded-sm border-[1px] group-hover:bg-[#F58634] group-hover:border-[#F58634] group-hover:text-white transition-all duration-300 flex justify-center items-center border-gray-200"
             >
               <h1 className="text-base">زيارة المتجر</h1>
@@ -142,11 +162,11 @@ const handleAddToFav = () => {
             onClick={handleAddToFav}
             className={cn(
               "cursor-pointer group hover:bg-[#F55157] text-[#D5D5D5] hover:text-white transition-all duration-300  rounded-[5px]  border-[1px] flex justify-center items-center p-4 py-5 ml-2",
-              isFavorite && "bg-[#F55157]"
+              isFavorite && "bg-[#F55157] text-white"
             )}
           >
             {
-              isPendingAdd  ? (
+              isPendingAddToFav  || isPendingRemoveFromFav ? (
                   <Loader2 className="animate-spin" />
               ) :
               <>
