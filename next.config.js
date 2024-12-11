@@ -21,6 +21,12 @@ module.exports = {
       },
       {
         protocol: "https",
+        hostname: "logo.clearbit.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
         hostname: "img-cdn.pixlr.com",
         port: "",
         pathname: "/image-generator/history/**",

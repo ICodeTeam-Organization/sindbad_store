@@ -29,7 +29,7 @@ interface EcommerceStoreImage {
 
 
 export interface Store {
-  id: number;
+  id: string;
   name: string;
   websiteLink: string;
   description: string;
@@ -45,6 +45,23 @@ export interface Shop {
   logo: string;
   ecommerceStoreImages: EcommerceStoreImage[];
 }
+
+
+export type FavoriteStores = {
+  id?: number;
+  storeId: string;
+  storeName: string;
+  description: string;
+  imageUrl: string;
+};
+
+export type FavoriteEcommerces = {
+  id: number;
+  ecommerceStoreId: number;
+  description: string;
+  imageUrl: string;
+  ecommerceName?:string
+};
 
 
 //this Product type just for testing

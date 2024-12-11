@@ -3,17 +3,11 @@ import ProductCard from "../product-card";
 import { getApi } from "@/lib/http";
 import React from "react";
 const ShoppingNow = async () => {
+  
   const products = await getApi<any>(
-    // change the url later
     "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/18"
   );
-  // if (!products) return notFound();
-//   const productList = Array.from({ length: 30 }, (v, i) => ({
-//     id: i + 1,
-//     mainImageUrl: `https://img.freepik.com/free-photo/flat-lay-natural-self-care-products-composition_23-2148990019.jpg`,
-//     name: `ابريق شاي زجاجي مع امكانية التفاف النص في اسم الصنف ${i + 1}`,
-//     price: (i + 1) * 10 
-// }));
+  
   return (
     <>
       <div className="pt-10 mx-auto sm:px-4 ">
@@ -30,8 +24,13 @@ const ShoppingNow = async () => {
                   id={product.id}
                   image={product.mainImageUrl}
                   productName={product.name}
-                  price={product.price}
                   ProductDet={product.id}
+                  price={
+                    product.priceAfterOffer
+                      ? product.priceAfterOffer
+                      : product.price
+                  }
+                  oldPrice={product.priceAfterOffer ? product.price : 0}
                 />
               </div>
             ))}

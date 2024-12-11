@@ -10,30 +10,34 @@ import BeastSeller from "./components/sections/beast-seller";
 import Ads from "./components/sections/Ads";
 import RecentlyAdded from "./components/sections/recently-added";
 import Feature from "./components/sections/Feature";
-import { getApi } from "@/lib/http";
+import { getApi, postApi } from "@/lib/http";
 import AllEShops from "./components/sections/all-Eshops";
-import { MainCategory, Product, Store } from "@/types/storeTypes";
+import { MainCategory, Product, Shop, Store } from "@/types/storeTypes";
 export default async function Home() {
 
   const [
     categories,
     Allstores,
+    AllEcommrce,
     Offersproducts,
     BeastSellerInWeek,
     RecentlyProducts,
   ] = await Promise.all([
     getApi<{data:MainCategory[]}>(
-      "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/50"
+      "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/100000"
     ),
     getApi<{data:Store[]}>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
     getApi<{data:Product[]}>(
       "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/10"
     ),
     getApi<{data:Product[]}>(
-      "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/10"
+      "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/30"
     ),
     getApi<{data:Product[]}>(
-      "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/10"
+      "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/30"
+    ),
+    getApi<{data:Product[]}>(
+      "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/30"
     ),
    
   ]);
@@ -67,7 +71,7 @@ export default async function Home() {
         <ShoppingNow />
       </div>
       <div className="my-10">
-        <AllEShops AllEShops={Allstores} />
+        <AllEShops AllEShops={AllEcommrce} />
       </div>
       <Feature />
     </section>

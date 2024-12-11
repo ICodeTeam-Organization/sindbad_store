@@ -6,7 +6,7 @@ import { AiFillStar } from "react-icons/ai";
 
 function calculateDiscountPercentage(oldPrice: number, newPrice: number): number {
   const discount = ((oldPrice - newPrice) / oldPrice) * 100;
-  return discount > 0 ? discount : 0;
+  return discount ;
 }
 
 type props = {
@@ -55,12 +55,12 @@ const ProductCard = ({
             <p className="max-md:pr-3 pr-5 max-md:text-xs text-xl text-[#F55157]">
               <strong>{price}</strong>
             </p>
-            {oldPrice && <>
+            { (!!oldPrice) && <>
               <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px] line-through text-[#9C9C9C]">
               {oldPrice} 
             </p>
             <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px]  text-[#9C9C9C]">
-               خصم {calculateDiscountPercentage(100,50)}
+               خصم {calculateDiscountPercentage(oldPrice,price).toFixed(2)}%
             </p>
             </>}
           </div>
