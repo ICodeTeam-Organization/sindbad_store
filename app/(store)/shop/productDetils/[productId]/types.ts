@@ -21,6 +21,7 @@ export interface ProductDetailsProps {
   size: string;
   memory: string;
   storage: string;
+  name:string;
 }
 
 export interface ImageGalleryProps {

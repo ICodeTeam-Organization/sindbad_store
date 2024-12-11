@@ -61,7 +61,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
         />
       </div>
       <div className="lg:w-1/2">
-        <ProductTitle description={product.description} rating={5} />
+        <ProductTitle name={product.name} description={product.description} rating={5} />
         <ProductInfoRow
           label1="التوفر"
           value1="In Stock"
@@ -77,11 +77,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
         <PriceSection
           discountedPrice={`${product.priceAfterOffer} ر.س`}
           originalPrice={`${product.priceBeforOffer} ر.س`}
-          discount={Math.round(
-            ((product.priceBeforOffer - product.priceAfterOffer) /
-              product.priceBeforOffer) *
-              100
-          )}
+          discount={product.percentageOfDiscount}
         />
         <hr className="my-4 border-gray-300" />
         <ProductInfoRow
