@@ -18,25 +18,31 @@ const TodayOffers = ({ Offersproducts = { data: [] } }: { Offersproducts: { data
   const [countdown, setCountdown] = useState(0);
 
   useEffect(() => {
-    const calculateTimeLeft = () => {
+    const updateCountdown = () => {
       const now = new Date();
-      console.log("now" + now)
       const targetTime = new Date();
-      console.log("targetTime: " + targetTime)
-      targetTime.setHours(20, 0, 0, 999); // نهاية اليوم
+
+      // تعيين الساعة المستهدفة إلى 6 صباحًا
+      targetTime.setHours(6, 0, 0, 0);
+
+      // إذا كانت الساعة الحالية >= 6 صباحًا، نضيف يومًا
+      if (now.getHours() >= 6) {
+        targetTime.setDate(targetTime.getDate() + 1);
+      }
+
       const timeLeft = targetTime - now;
-      setCountdown(timeLeft > 0 ? timeLeft : 0);
+
+      // التأكد من أن الوقت المتبقي لا يصبح سالبًا
+      setCountdown(Math.max(timeLeft, 0));
     };
 
-    calculateTimeLeft(); // حساب الوقت المتبقي عند التحميل الأول
-    const interval = setInterval(() => {
-      calculateTimeLeft();
-    }, 1000);
+    updateCountdown(); // حساب الوقت المتبقي عند التحميل الأول
+    const interval = setInterval(updateCountdown, 1000); // تحديث كل ثانية
 
     return () => clearInterval(interval); // تنظيف الinterval عند إلغاء التركيب
   }, []);
 
-  const formatTime = (milliseconds) => {
+  const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);
     const hours = Math.floor((totalSeconds % 86400) / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -46,24 +52,30 @@ const TodayOffers = ({ Offersproducts = { data: [] } }: { Offersproducts: { data
   };
 
   return (
-    <>
+    <>    
+    <style jsx>{`
+      .countdown-timer p{
+color: rgb(206, 35, 52);
+    font-size: 18px;
+    font-weight: bold;
+    font-family: system-ui;
+    text-align: center;
+      }
+    .countdown-timer span{
+    font-size:20px}
+
+    `}</style>
       <div className="sm:px-4">
         <SectionTitle title={"عروض اليوم"} href="/shop?hasOffer=t" />
         <div className="countdown-timer">
-          <p>الوقت المتبقي: {formatTime(countdown)}</p>
+          <p>سارع قبل نفاذ الوقت: <span>{formatTime(countdown)}</span></p>
         </div>
       </div>
       <div className="w-full">
         <Carousel
-          onMouseEnter={() => {
-            setIsHover(false);
-          }}
-          onMouseLeave={() => {
-            setIsHover(true);
-          }}
-          opts={{
-            direction: "rtl",
-          }}
+          onMouseEnter={() => setIsHover(false)}
+          onMouseLeave={() => setIsHover(true)}
+          opts={{ direction: "rtl" }}
           plugins={[
             Autoplay({
               delay: 1500,
