@@ -18,7 +18,7 @@ export default async function Home() {
   const [
     categories,
     Allstores,
-    // Offersproducts,
+    Offersproducts,
     BeastSellerInWeek,
     RecentlyProducts,
   ] = await Promise.all([
@@ -26,9 +26,9 @@ export default async function Home() {
       "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/50"
     ),
     getApi<{data:Store[]}>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
-    // getApi<{data:Product[]}>(
-    //   "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/10"
-    // ),
+    getApi<{data:Product[]}>(
+      "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/10"
+    ),
     getApi<{data:Product[]}>(
       "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/10"
     ),
@@ -49,7 +49,7 @@ export default async function Home() {
         <CardsInfo />
         <Categories categories={categories?.data} />
         <div className="mb-10" />
-        {/* <TodayOffers Offersproducts={Offersproducts} /> */}
+        <TodayOffers Offersproducts={Offersproducts} />
         <ShoppingNow />
       </div>
       <div className="my-10">
