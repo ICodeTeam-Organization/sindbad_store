@@ -1,5 +1,4 @@
 "use client";
-
 import SectionTitle from "../section-title";
 import {
   Carousel,
@@ -107,19 +106,24 @@ font-size: 20px;
           ]}
         >
           <CarouselContent dir="rtl" className="py-10">
-            {Offersproducts?.data?.map((product: any) => (
+            {Offersproducts?.data?.map((product: Product) => (
               <CarouselItem
                 key={product.id}
                 className="carousel-item pl-0 ml-4 xlHalf:basis-1/6 2lg:basis-[22%] mdHalf:basis-[25%] 2sm:basis-[35%] sm:basis-[42%] 2xs:basis-[34%] 1xs:basis-[45%] basis-1/2 rounded-t-[8px]"
               >
                 <div className="sm:w-[220px] 1xs:w-[180px] w-full">
-                  <ProductCard
+                <ProductCard
                     key={product.id}
-                    id={product.id}
+                    id={"" + product.id}
                     image={product.mainImageUrl}
                     productName={product.name}
-                    price={product.price}
+                    price={
+                      product.priceAfterOffer
+                        ? product.priceAfterOffer
+                        : product.price
+                    }
                     ProductDet={product.id}
+                    oldPrice={product.priceAfterOffer ? product.price : 0}
                   />
                 </div>
               </CarouselItem>

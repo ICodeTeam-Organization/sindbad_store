@@ -21,7 +21,7 @@ function OrderFromEshopMegaMenu() {
     pageNumber: 1,
     pageSize: 60,
   });
-  const { data, isLoading } = useQuery<{ data: { items: Shop[] } }>({
+  const { data, isLoading,error } = useQuery<{ data: { items: Shop[] } }>({
     queryKey: [params.selectedCategory, "FilterECommerceInMegaMenu"],
     queryFn: () =>
       postApi(`EcommercesStores/FilterECommerce`, {
@@ -31,6 +31,7 @@ function OrderFromEshopMegaMenu() {
           pageNumber: params.pageNumber,
         },
       }),
+      
   });
   useEffect(() => {
     if (allMainCat.length > 0) {

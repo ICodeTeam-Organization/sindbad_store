@@ -21,7 +21,7 @@ const AddToFavorite = ({ id }: Props) => {
     const redirct = useRouter();
     const { data: session, status } = useSession();
     const { toast } = useToast();
-    const {productsIds,addproductToFavorite,delProductToFavorite} = useFavorite()
+    const {productsIds,addProductToFavorite,delProductFromFavorite} = useFavorite()
 
     // add to favorite
     const mutationFav = useMutation({
@@ -40,7 +40,7 @@ const AddToFavorite = ({ id }: Props) => {
             return res.data;
         },
         onSuccess: (data) => {
-            addproductToFavorite(+id)
+            addProductToFavorite(+id)
         },
         onError: (error: any) => {
             const errorMessage =
@@ -68,7 +68,7 @@ const AddToFavorite = ({ id }: Props) => {
             return res.data;
         },
         onSuccess: (data) => {
-            delProductToFavorite(+id)
+            delProductFromFavorite(+id)
         },
         onError: (error: any) => {
             const errorMessage =
