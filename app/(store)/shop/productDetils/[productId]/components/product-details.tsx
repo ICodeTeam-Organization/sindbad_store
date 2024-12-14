@@ -5,6 +5,12 @@ import ProductInfoRow from "./product-info-row";
 import PriceSection from "./price-section";
 import ImageGallery from "./image-gallery";
 import AddToBasket from "./add-to-basket";
+
+
+type ProductDetailsProps = {
+  product: Product; // تغيير هنا
+};
+
 interface ProductImage {
   imageUrl: string;
 }
@@ -36,10 +42,6 @@ interface Product {
   productImages: ProductImage[];
   attributesWithValues: AttributeWithValues[];
 }
-
-type ProductDetailsProps = {
-  product: Product; // تغيير هنا
-};
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
 
