@@ -1,4 +1,8 @@
-import React from "react";
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { getApi } from "@/lib/http";
+import { notFound } from "next/navigation";
 import ProductDetails from "./components/product-details";
 import TabsComponent from "./components/taps";
 import DetailsTap from "./components/details-tap";
@@ -11,8 +15,65 @@ type ProductPageProps = {
   };
 };
 
+interface ProductImage {
+  imageUrl: string;
+}
+interface AttributeWithValues {
+  attributeName: string;
+  values: string[];
+}
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  priceBeforOffer: number;
+  priceAfterOffer: number;
+  percentageOfDiscount: number;
+  amountYouShouldToBuyForGetOffer: number;
+  amountYouWillGetFromOffer: number;
+  offerSentence: string;
+  offerStartDate: string; 
+  offerEndDate: string; 
+  mainImageUrl: string;
+  number: string;
+  brandName: string;
+  categoryName: string;
+  oneStarCount: number;
+  twoStarCount: number;
+  threeStarCount: number;
+  fourStarCount: number;
+  fiveStarCount: number;
+  productImages: ProductImage[];
+  attributesWithValues: AttributeWithValues[];
+}
 const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
   const { productId } = params;
+
+  const [product, setProduct] = useState<Product | null>(null);
+
+  useEffect(() => {
+    if (productId) {
+      fetchProductDetails(productId);
+    }
+  }, [productId]);
+
+  const fetchProductDetails = async (id: string) => {
+    try {
+      const response = await getApi<any>(
+        `ProductsProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`
+      );
+      // console.log("Fetched Response:", response);
+      if (response?.success && response?.data) {
+        // console.log("Product Data:", response.data);
+        setProduct(response.data);
+      } else {
+        notFound();
+      }
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+      notFound();
+    }
+  };
 
   const productFeatures = [
     { label: "Material", value: "High Quality Leather" },
@@ -20,21 +81,15 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
     { label: "Environmentally Friendly", value: "Yes" },
   ];
 
+  if (!product) {
+    return <div>Loading...</div>; // يمكنك إضافة شاشة تحميل أو رسالة
+  }
   return (
     <>
-      <ProductDetails params={params} />
+      <ProductDetails product={product} />
       <TabsComponent
-        tabLabels={{
-          details: "تفاصيل المنتج",
-          features: "مميزات المنتج",
-          reviews: "تقييمات المنتج",
-        }}
-        tabContent={{
-          tap1: <DetailsTap />,
-          tap2: <ProductFeaturesTap features={productFeatures} />,
-          tap3: <ProductReviewsTap productId={productId}/>,
-        }}
-        productId={productId}
+       product={product}
+       productId={productId}
       />
     </>
   );
