@@ -1,47 +1,16 @@
 
 import React, { useState, useEffect } from "react";
 import ProductTitle from "./product-title";
-import ProductInfoRow from "./product-info-row";
 import PriceSection from "./price-section";
 import ImageGallery from "./image-gallery";
 import AddToBasket from "./add-to-basket";
-
+import {Product} from "./../types"
+import {AttributeWithValues} from "./../types"
 
 type ProductDetailsProps = {
-  product: Product; // تغيير هنا
+  product: Product;
 };
 
-interface ProductImage {
-  imageUrl: string;
-}
-interface AttributeWithValues {
-  attributeName: string;
-  values: string[];
-}
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  priceBeforOffer: number;
-  priceAfterOffer: number;
-  percentageOfDiscount: number;
-  amountYouShouldToBuyForGetOffer: number;
-  amountYouWillGetFromOffer: number;
-  offerSentence: string;
-  offerStartDate: string; 
-  offerEndDate: string; 
-  mainImageUrl: string;
-  number: string;
-  brandName: string;
-  categoryName: string;
-  oneStarCount: number;
-  twoStarCount: number;
-  threeStarCount: number;
-  fourStarCount: number;
-  fiveStarCount: number;
-  productImages: ProductImage[];
-  attributesWithValues: AttributeWithValues[];
-}
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
 

@@ -1,6 +1,7 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import SafeImage from "@/components/SafeImage";
 import ProductReviewsTap from "./reviews-tap";
+import {Product} from "./../types"
 
 type TabsComponentProps = {
   product: Product;
@@ -16,38 +17,6 @@ type TabsComponentProps = {
   //   tap3: React.ReactNode;
   // };
 };
-
-interface ProductImage {
-  imageUrl: string;
-}
-interface AttributeWithValues {
-  attributeName: string;
-  values: string[];
-}
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  priceBeforOffer: number;
-  priceAfterOffer: number;
-  percentageOfDiscount: number;
-  amountYouShouldToBuyForGetOffer: number;
-  amountYouWillGetFromOffer: number;
-  offerSentence: string;
-  offerStartDate: string;
-  offerEndDate: string;
-  mainImageUrl: string;
-  number: string;
-  brandName: string;
-  categoryName: string;
-  oneStarCount: number;
-  twoStarCount: number;
-  threeStarCount: number;
-  fourStarCount: number;
-  fiveStarCount: number;
-  productImages: ProductImage[];
-  attributesWithValues: AttributeWithValues[];
-}
 
 const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
   <Tabs.Root defaultValue="details" className="w-full px-12 mt-5">
@@ -82,8 +51,8 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
         className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
       >
         {<section className="bg-white">
-          <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-            <div className="lg:col-span-7 text-right">
+          <div className="grid max-w-screen-xl px-4 py-8 mx-auto md:gap-5 xl:gap-0 md:py-16 md:grid-cols-12">
+            <div className="md:col-span-7 text-right">
               <h3 className="max-w-2xl mb-4 text-2xl font-extrabold tracking-tight leading-none">
                 {product.name}
               </h3>
@@ -103,7 +72,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
                 }
               </p>
             </div>
-            <div className="hidden lg:mt-0 lg:col-span-5 lg:flex  items-start">
+            <div className="hidden lg:mt-0 md:col-span-5 md:flex  items-start">
               <SafeImage
                 src={product.mainImageUrl}
                 alt="صور للمنتج"
@@ -114,7 +83,8 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
               />
             </div>
           </div>
-        </section>}
+        </section>
+        }
       </Tabs.Content>
 
       <Tabs.Content
@@ -137,7 +107,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
         value="reviews"
         className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
       >
-        <ProductReviewsTap productId={productId}/>
+        <ProductReviewsTap productId={productId} product={product}/>
       </Tabs.Content>
     </div>
   </Tabs.Root>

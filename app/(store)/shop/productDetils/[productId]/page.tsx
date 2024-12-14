@@ -5,9 +5,7 @@ import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import ProductDetails from "./components/product-details";
 import TabsComponent from "./components/taps";
-import DetailsTap from "./components/details-tap";
-import ProductFeaturesTap from "./components/features-table";
-import ProductReviewsTap from "./components/reviews-tap";
+import { Product } from "./types";
 
 type ProductPageProps = {
   params: {
@@ -15,41 +13,11 @@ type ProductPageProps = {
   };
 };
 
-interface ProductImage {
-  imageUrl: string;
-}
-interface AttributeWithValues {
-  attributeName: string;
-  values: string[];
-}
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  priceBeforOffer: number;
-  priceAfterOffer: number;
-  percentageOfDiscount: number;
-  amountYouShouldToBuyForGetOffer: number;
-  amountYouWillGetFromOffer: number;
-  offerSentence: string;
-  offerStartDate: string; 
-  offerEndDate: string; 
-  mainImageUrl: string;
-  number: string;
-  brandName: string;
-  categoryName: string;
-  oneStarCount: number;
-  twoStarCount: number;
-  threeStarCount: number;
-  fourStarCount: number;
-  fiveStarCount: number;
-  productImages: ProductImage[];
-  attributesWithValues: AttributeWithValues[];
-}
 const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
   const { productId } = params;
 
   const [product, setProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState<boolean>(true); 
 
   useEffect(() => {
     if (productId) {
@@ -58,39 +26,37 @@ const ProductPage: React.FC<ProductPageProps> = ({ params }) => {
   }, [productId]);
 
   const fetchProductDetails = async (id: string) => {
+    setLoading(true); 
     try {
       const response = await getApi<any>(
         `ProductsProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`
       );
-      // console.log("Fetched Response:", response);
       if (response?.success && response?.data) {
-        // console.log("Product Data:", response.data);
         setProduct(response.data);
+        setLoading(false); 
       } else {
         notFound();
       }
     } catch (error) {
       console.error("Error fetching product details:", error);
       notFound();
+    } finally {
+      setLoading(false); 
     }
   };
 
-  const productFeatures = [
-    { label: "Material", value: "High Quality Leather" },
-    { label: "Warranty", value: "1-Year" },
-    { label: "Environmentally Friendly", value: "Yes" },
-  ];
-
-  if (!product) {
-    return <div>Loading...</div>; // يمكنك إضافة شاشة تحميل أو رسالة
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-[400px]">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-orange-500"></div>
+      </div>
+    );
   }
+
   return (
     <>
       <ProductDetails product={product} />
-      <TabsComponent
-       product={product}
-       productId={productId}
-      />
+      <TabsComponent product={product} productId={productId} />
     </>
   );
 };

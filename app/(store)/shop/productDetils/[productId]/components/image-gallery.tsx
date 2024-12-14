@@ -1,8 +1,6 @@
 "use client";
 
-import Image from "next/image";
 import SafeImage from "@/components/SafeImage";
-import { useState } from "react";
 import {
   Carousel,
   CarouselContent,

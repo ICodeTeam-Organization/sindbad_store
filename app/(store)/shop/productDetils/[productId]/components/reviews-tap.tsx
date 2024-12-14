@@ -5,12 +5,14 @@ import ReviewForm from "./review-form";
 import ReviewComment from "./review-comment";
 import { ReviewProps } from "../types";
 import { getApi } from "@/lib/http";
+import {Product} from "./../types"
 
 type ProductReviewsTapProps = {
   productId: string | number;
+    product: Product;
 };
 
-const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
+const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId, product }) => {
   const [reviews, setReviews] = useState<ReviewProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -30,13 +32,13 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
           setError("Failed to fetch reviews");
         }
       } catch (err) {
-        console.error("Error fetching reviews:", err);
         setError("An error occurred while fetching reviews.");
       } finally {
         setLoading(false);
       }
     };
 
+    
     // تم حذف الدالة من قبل الباك اند
     // const fetchTotalRating = async () => {
     //   try {
@@ -61,21 +63,29 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
     }
   }, [productId]);
 
+  useEffect(() => {
+    const calculatedTotalRating = reviews.reduce((acc, review) => acc + review.numOfRate, 0);
+    setTotalRating(calculatedTotalRating); // تحديث totalRating
+  }, [reviews]);
+
   const handleShowMore = () => {
     setVisibleReviewsCount((prevCount) => prevCount + 3);
   };
 
-  if (loading) return <div>Loading reviews...</div>;
+  if (loading) return       <div className="flex items-center justify-center">
+  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-orange-500"></div>
+</div>;
   if (error) return <div>{error}</div>;
 
   const shouldShowMoreButton = visibleReviewsCount < reviews.length;
 
   return (
-    <div className="grid grid-cols-3 gap-6" dir="rtl">
-      <div className="bg-gray-50 border border-gray-300 rounded-md p-4">
+    <div className="md:grid grid-cols-3 gap-6" dir="rtl">
+      <div className="bg-gray-50 border border-gray-300 rounded-md p-4 mb-4">
         <div className="text-center mb-4">
           <div className="text-3xl font-bold">{totalRating} من 5</div>
-          <p className="text-gray-500">{reviews.length} تقييم على المنتج</p>
+          <p className="text-gray-500 text-sm">عدد النجوم </p>
+          <p className="text-gray-500 text-sm"> عدد المراجعين {reviews.length}</p>
         </div>
         <ReviewForm productId={Number(productId)} />
       </div>
