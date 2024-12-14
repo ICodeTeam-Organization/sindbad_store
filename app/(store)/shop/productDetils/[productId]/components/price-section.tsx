@@ -7,9 +7,9 @@ const PriceSection = ({ discountedPrice, originalPrice, discount } : PriceSectio
         <span className="text-3xl font-bold text-blue-500">{discountedPrice}</span>
         <span className="text-xl line-through text-gray-500">{originalPrice}</span>
         </div>
-        <div className="px-3 py-2 bg-yellow-500 text-black font-medium ">
-          {discount}% خصم
-        </div>
+        <div className="px-3 py-2 bg-yellow-500 text-black font-medium">
+  {discount !== null ? discount : 0} % خصم
+</div>
       </div>
     );
   };
