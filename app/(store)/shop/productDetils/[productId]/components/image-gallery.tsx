@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import SafeImage from "@/components/SafeImage";
 import { useState } from "react";
 import {
   Carousel,
@@ -8,33 +9,35 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
-
+} from "@/components/ui/carousel";
 
 const ImageGallery = ({ images }: { images: string[] }) => {
-  const [activeImage, setActiveImage] = useState(images[0]);
-
   return (
-    <div className="flex flex-col mx-5">
-<Carousel>
-  <CarouselContent>
-    {images?.map((img, index) => (
-      <CarouselItem key={index} style={{ height: "400px" }}>
-        <Image
-          src={img}
-          width={400}
-          height={400}
-          alt="Thumbnail"
-          className={`w-full h-full rounded cursor-pointer ${activeImage === img ? 'border-1 border-orange-500' : ''}`}
-          style={{ height: "400px", objectFit: "cover" }} // Ensure the image covers the full height
-          onClick={() => setActiveImage(img)}
-        />
-      </CarouselItem>
-    ))}
-  </CarouselContent>
-  <CarouselPrevious />
-  <CarouselNext />
-</Carousel>
+    <div className="flex flex-col mx-5" style={{ direction: "ltr" }}>
+      {images.length > 0 ? (
+        <Carousel>
+          <CarouselContent>
+            {images.map((img, index) => (
+              <CarouselItem key={index} style={{ height: "400px" }}>
+                <SafeImage
+                  src={img}
+                  alt="صور للمنتج"
+                  width={400}
+                  height={400}
+                  className={`w-full h-full rounded cursor-pointer`}
+                  style={{ objectFit: "fill" }}
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
+      ) : (
+        <div className="text-center text-gray-500">
+          لا توجد صور متوفرة
+        </div>
+      )}
     </div>
   );
 };
