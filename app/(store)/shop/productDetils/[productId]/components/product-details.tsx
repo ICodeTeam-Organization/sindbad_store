@@ -1,28 +1,17 @@
-"use client";
 
 import React, { useState, useEffect } from "react";
-import { getApi } from "@/lib/http";
-import { notFound } from "next/navigation";
 import ProductTitle from "./product-title";
 import ProductInfoRow from "./product-info-row";
 import PriceSection from "./price-section";
 import ImageGallery from "./image-gallery";
 import AddToBasket from "./add-to-basket";
-
-type ProductDetailsProps = {
-  params: {
-    productId: string;
-  };
-};
 interface ProductImage {
   imageUrl: string;
 }
-
 interface AttributeWithValues {
   attributeName: string;
   values: string[];
 }
-
 interface Product {
   id: number;
   name: string;
@@ -48,43 +37,19 @@ interface Product {
   attributesWithValues: AttributeWithValues[];
 }
 
-const ProductDetails = ({ params }: ProductDetailsProps) => {
-  const { productId } = params;
-  const [product, setProduct] = useState<Product | null>(null);
+type ProductDetailsProps = {
+  product: Product; // تغيير هنا
+};
+
+const ProductDetails = ({ product }: ProductDetailsProps) => {
+
   const [quantity, setQuantity] = useState(1);
-
-  useEffect(() => {
-    if (productId) {
-      fetchProductDetails(productId);
-    }
-  }, [productId]);
-
-  const fetchProductDetails = async (id: string) => {
-    try {
-      const response = await getApi<any>(
-        `ProductsProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`
-      );
-      // console.log("Fetched Response:", response);
-      if (response?.success && response?.data) {
-        // console.log("Product Data:", response.data);
-        setProduct(response.data);
-      } else {
-        notFound();
-      }
-    } catch (error) {
-      console.error("Error fetching product details:", error);
-      notFound();
-    }
-  };
 
   const handleIncrement = () => setQuantity(quantity + 1);
   const handleDecrement = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
 
-  if (!product) {
-    return <div>Product not found</div>;
-  }
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-12 px-12">
@@ -193,7 +158,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
               +
             </button>
           </div>
-          <AddToBasket productId={productId} quantity={quantity} />
+          <AddToBasket productId={product.id} quantity={quantity} />
         </div>
       </div>
     </div>
