@@ -27,8 +27,8 @@ export default async function Home() {
       "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/100000"
     ),
     getApi<{data:Store[]}>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
-    getApi<{data:Product[]}>(
-      "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/10"
+    getApi<{data:Shop[]}>(
+      "EcommercesStores/GetEcommerceStores"
     ),
     getApi<{data:Product[]}>(
       "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/30"
@@ -42,6 +42,9 @@ export default async function Home() {
    
   ]);
 
+
+  console.log(AllEcommrce);
+  
   
 
   return (

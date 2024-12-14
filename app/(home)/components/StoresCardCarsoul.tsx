@@ -22,8 +22,8 @@ const StoresCardCarsoul: React.FC<Store> = ({
   websiteLink,
   id,
 }) => {
-  const { favoriteStores, addStoreToFavorite , delStoreToFavorite } = useFavorite();
-  const isFavorite = favoriteStores.find((ele) => ele.storeId == id);
+  const { favoriteStoreIds, addStoreToFavorite , delStoreToFavorite } = useFavorite();
+  const isFavorite = favoriteStoreIds.find((ele) => ele == id);
   const { data: session, status } = useSession();
   const redirct = useRouter();
   const { toast } = useToast();
@@ -46,12 +46,7 @@ const StoresCardCarsoul: React.FC<Store> = ({
       return res.data;
     },
     onSuccess: (data) => {
-      addStoreToFavorite({
-        storeName: name,
-        storeId: id,
-        imageUrl: mainImageUrl || "",
-        description,
-      });
+      addStoreToFavorite(id);
     },
     onError: (error: any) => {
       const errorMessage =

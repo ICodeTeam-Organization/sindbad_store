@@ -15,7 +15,7 @@ import { useState } from "react";
 import EshopsCardCarsoul from "../EshopsCardCarsoul";
 import { Shop, Store } from "@/types/storeTypes";
 
-const AllEShops =  ({AllEShops}:{AllEShops:any}) => {
+const AllEShops =  ({AllEShops}:{AllEShops:{data:Shop[]}}) => {
  
   
   const [IsHover, setIsHover] = useState(true)
@@ -54,7 +54,7 @@ const AllEShops =  ({AllEShops}:{AllEShops:any}) => {
         <CarouselNext className="  text-[#F58634]" />
         </div>
         <CarouselContent>
-          {AllEShops?.data.items?.map((shop: Shop) => (
+          {AllEShops?.data?.map((shop: Shop) => (
             <CarouselItem
               key={shop.id}
               dir="rtl"

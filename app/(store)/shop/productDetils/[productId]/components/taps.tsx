@@ -45,10 +45,10 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
     </Tabs.List>
 
     {/* Dynamic Tab Content */}
-    <div className="pt-4 w-full">
+    <div className="pt-4 w-full" dir="rtl" >
       <Tabs.Content
         value="details"
-        className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
+        className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
       >
         {<section className="bg-white">
           <div className="grid max-w-screen-xl px-4 py-8 mx-auto md:gap-5 xl:gap-0 md:py-16 md:grid-cols-12">
@@ -89,7 +89,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
 
       <Tabs.Content
         value="features"
-        className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
+        className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
       >
         {
           product.attributesWithValues && product.attributesWithValues.length > 0  ? (        product.attributesWithValues?.map((attribute, index) => (
@@ -105,7 +105,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
 
       <Tabs.Content
         value="reviews"
-        className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
+        className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
       >
         <ProductReviewsTap productId={productId} product={product}/>
       </Tabs.Content>

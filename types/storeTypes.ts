@@ -46,9 +46,19 @@ export interface Shop {
   ecommerceStoreImages: EcommerceStoreImage[];
 }
 
+export type FavoriteProduct = {
+  favoriteId: number;
+  productId: number;
+  customerId: string;
+  productName: string;
+  productDescription: string;
+  price: number;
+  mainImageUrl: string;
+};
+
 
 export type FavoriteStores = {
-  id?: number;
+  id?: string;
   storeId: string;
   storeName: string;
   description: string;
