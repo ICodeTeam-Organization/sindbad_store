@@ -1,9 +1,9 @@
 import React from "react";
-import TabsComponent from "../shop/productDetils/[productId]/components/taps";
 import FavoriteProducts from "./favoriteSection/FavoriteProducts";
 import FavoriteStores from "./favoriteSection/FavoriteStores";
 import FavoriteEcommrces from "./favoriteSection/FavoriteEcommrces";
 import { FcLike } from "react-icons/fc";
+import FavoriteTabs from "./FavoriteTabs";
 const Favorites = () => {
   return (
     <div  className="xl:container mx-auto">
@@ -13,7 +13,7 @@ const Favorites = () => {
           منتجات ومحلات و متاجر أعجبتك
         </h2>
       </div>
-      <TabsComponent
+      <FavoriteTabs
         tabLabels={{
           details: "المنتجات",
           features: "المتاجر",
