@@ -13,7 +13,7 @@ interface SafeImageProps extends Omit<ImageProps, 'src' | 'width' | 'height'> {
 
 const SafeImage: React.FC<SafeImageProps> = ({
   src,
-  fallbackSrc = '/images/default-image.png', // القيمة الافتراضية
+  fallbackSrc = '/images/sedebadLogo.svg', // القيمة الافتراضية
   alt = 'صورة', 
   width,
   height,
