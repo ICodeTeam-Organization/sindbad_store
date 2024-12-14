@@ -8,8 +8,6 @@ import ProgressBarProvider from "@/components/progress-bar-providers";
 import { Toaster as SonanerToaster } from "sonner";
 import Footer from "@/components/Footer";
 import About from "@/components/About";
-import { getApi } from "@/lib/http";
-import { MainCategory } from "@/types/storeTypes";
 import GetInitialData from "./GetInitialData";
 
 const Noto_Kufi = Noto_Kufi_Arabic({
