@@ -31,9 +31,9 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
       const response = await getApi<any>(
         `ProductsProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`
       );
-      console.log("Fetched Response:", response);
+      // console.log("Fetched Response:", response);
       if (response?.success && response?.data) {
-        console.log("Product Data:", response.data);
+        // console.log("Product Data:", response.data);
         setProduct(response.data);
       } else {
         notFound();
@@ -57,7 +57,10 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
     <div className="flex flex-col lg:flex-row gap-4 mt-12 px-12">
       <div className="lg:w-1/3 ml-8">
         <ImageGallery
-          images={product.productImages.map((img: any) => img.imageUrl)}
+                  images={[
+                    product.mainImageUrl,
+                    ...product.productImages.map((img: any) => img.imageUrl),
+                  ]}
         />
       </div>
       <div className="lg:w-1/2">
