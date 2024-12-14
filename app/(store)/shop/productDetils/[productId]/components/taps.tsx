@@ -1,21 +1,56 @@
 import * as Tabs from "@radix-ui/react-tabs";
+import SafeImage from "@/components/SafeImage";
+import ProductReviewsTap from "./reviews-tap";
 
 type TabsComponentProps = {
-  tabLabels: {
-    details: string;
-    features: string;
-    reviews: string;
-  };
-  tabContent: {
-    tap1: React.ReactNode;
-    tap2: React.ReactNode;
-    tap3: React.ReactNode;
-  };
-  productId?: string;
+  product: Product;
+  productId: string | number;
+  // tabLabels: {
+  //   details: string;
+  //   features: string;
+  //   reviews: string;
+  // };
+  // tabContent: {
+  //   tap1: React.ReactNode;
+  //   tap2: React.ReactNode;
+  //   tap3: React.ReactNode;
+  // };
 };
 
-const TabsComponent: React.FC<TabsComponentProps> = ({ tabLabels, tabContent }) => (
-  <Tabs.Root defaultValue="details" className="w-full px-12">
+interface ProductImage {
+  imageUrl: string;
+}
+interface AttributeWithValues {
+  attributeName: string;
+  values: string[];
+}
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  priceBeforOffer: number;
+  priceAfterOffer: number;
+  percentageOfDiscount: number;
+  amountYouShouldToBuyForGetOffer: number;
+  amountYouWillGetFromOffer: number;
+  offerSentence: string;
+  offerStartDate: string;
+  offerEndDate: string;
+  mainImageUrl: string;
+  number: string;
+  brandName: string;
+  categoryName: string;
+  oneStarCount: number;
+  twoStarCount: number;
+  threeStarCount: number;
+  fourStarCount: number;
+  fiveStarCount: number;
+  productImages: ProductImage[];
+  attributesWithValues: AttributeWithValues[];
+}
+
+const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
+  <Tabs.Root defaultValue="details" className="w-full px-12 mt-5">
     <Tabs.List
       className="flex items-start space-x-reverse space-x-4 border-b-2 border-orange-500 pb-2 w-full justify-start"
       dir="rtl"
@@ -24,19 +59,19 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ tabLabels, tabContent }) 
         value="details"
         className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
       >
-        {tabLabels.details}
+        لمحة
       </Tabs.Trigger>
       <Tabs.Trigger
         value="features"
         className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
       >
-        {tabLabels.features}
+        التفاصيل
       </Tabs.Trigger>
       <Tabs.Trigger
         value="reviews"
         className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
       >
-        {tabLabels.reviews}
+        التقييمات
       </Tabs.Trigger>
     </Tabs.List>
 
@@ -46,21 +81,63 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ tabLabels, tabContent }) 
         value="details"
         className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
       >
-        {tabContent.tap1}
+        {<section className="bg-white">
+          <div className="grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+            <div className="lg:col-span-7 text-right">
+              <h3 className="max-w-2xl mb-4 text-2xl font-extrabold tracking-tight leading-none">
+                {product.name}
+              </h3>
+              <p className="max-w-2xl mb-4 font-light text-gray-500 lg:mb-8">
+                {
+                  product.description
+                }
+              </p>
+              <p className="max-w-2xl mb-6 font-light text-gray-500 lg:mb-8">
+                {
+                  product.attributesWithValues?.map((attribute, index) => (
+                    <div key={index} className="flex items-center mb-2">
+                      <span className="font-medium ml-1">{attribute.attributeName}: </span>
+                      <span>{attribute.values.join(", ")}</span>
+                    </div>
+                  ))
+                }
+              </p>
+            </div>
+            <div className="hidden lg:mt-0 lg:col-span-5 lg:flex  items-start">
+              <SafeImage
+                src={product.mainImageUrl}
+                alt="صور للمنتج"
+                width={400}
+                height={400}
+                className={`w-full h-full rounded cursor-pointer`}
+                style={{ objectFit: "fill" }}
+              />
+            </div>
+          </div>
+        </section>}
       </Tabs.Content>
 
       <Tabs.Content
         value="features"
         className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
       >
-        {tabContent.tap2}
+        {
+          product.attributesWithValues && product.attributesWithValues.length > 0  ? (        product.attributesWithValues?.map((attribute, index) => (
+            <div key={index} className="flex items-center mb-2">
+              <span className="font-medium ml-1">{attribute.attributeName}: </span>
+              <span>{attribute.values.join(", ")}</span>
+            </div>
+          ))) : (
+            <p className="text-center">لا يوجد معلومات اضافية</p>
+          )
+}
       </Tabs.Content>
 
       <Tabs.Content
         value="reviews"
         className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
       >
-        {tabContent.tap3}
+        <ProductReviewsTap productId={productId}/>
       </Tabs.Content>
     </div>
   </Tabs.Root>
