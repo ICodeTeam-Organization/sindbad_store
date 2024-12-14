@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 
 type AddToBasketProps = {
-  productId: string;
+  productId: string | number;
   quantity: number;
 };
 
