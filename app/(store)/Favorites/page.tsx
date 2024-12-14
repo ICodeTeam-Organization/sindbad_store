@@ -1,22 +1,32 @@
-import React from 'react'
-import TabsComponent from '../shop/productDetils/[productId]/components/taps';
+import React from "react";
+import TabsComponent from "../shop/productDetils/[productId]/components/taps";
+import FavoriteProducts from "./favoriteSection/FavoriteProducts";
+import FavoriteStores from "./favoriteSection/FavoriteStores";
+import FavoriteEcommrces from "./favoriteSection/FavoriteEcommrces";
+import { FcLike } from "react-icons/fc";
 const Favorites = () => {
-  return <>
-  <div className='px-12 py-4'>
-        <h2 className='h2 text-2xl font-bold'>المفضلات</h2>
-  </div>
-  <TabsComponent 
-          tabLabels={{
-            details: "المنتجات",
-            features: "المتاجر",
-            reviews: "الأسواق",
-          }}
-          tabContent={{
-            tap1: <h1>المنتجات</h1>,
-            tap2: <h1>المتاجر</h1>,
-            tap3: <h1>اللأسواق</h1>,
-        }}/>
-  </>
-}
+  return (
+    <div  className="xl:container mx-auto">
+      <div className=" mt-10 mb-6 flex gap-x-3 items-center mdHalf:mx-auto mx-4">
+        <FcLike size={30} />
+        <h2 className="h2 mdHalf:text-lg text-base tajawal   font-bold">
+          منتجات ومحلات و متاجر أعجبتك
+        </h2>
+      </div>
+      <TabsComponent
+        tabLabels={{
+          details: "المنتجات",
+          features: "المتاجر",
+          reviews: "المحلات",
+        }}
+        tabContent={{
+          tap1: <FavoriteProducts />,
+          tap2: <FavoriteEcommrces />,
+          tap3: <FavoriteStores />,
+        }}
+      />
+    </div>
+  );
+};
 
-export default Favorites
+export default Favorites;

@@ -1,28 +1,26 @@
-import { FavoriteEcommerces, FavoriteStores } from "@/types/storeTypes";
 import { create } from "zustand";
-
 
 type FavoriteState = {
   productsIds: number[];
-  favoriteStores: FavoriteStores[];
-  favoriteEcommrces: FavoriteEcommerces[];
+  favoriteStoreIds: string[];
+  favoriteEcommerceIds: number[];
   pageNumber: number;
   pageSize: number;
   setFavoriteProducts: (ids: number[]) => void;
   addProductToFavorite: (id: number) => void;
   delProductFromFavorite: (id: number) => void;
-  setFavoriteStores: (stores: FavoriteStores[]) => void;
-  addStoreToFavorite: (store: FavoriteStores) => void;
+  setFavoriteStoreIds: (ids: string[]) => void;
+  addStoreToFavorite: (id: string) => void;
   delStoreToFavorite: (id: string) => void;
-  setFavoriteEcommrces: (ecommrces: FavoriteEcommerces[]) => void;
-  addEcommrceToFavorite: (ecommerce: FavoriteEcommerces) => void;
-  delEcommrceFromFavorite: (id: number) => void;
+  setFavoriteEcommerceIds: (ids: number[]) => void;
+  addEcommerceToFavorite: (id: number) => void;
+  delEcommerceFromFavorite: (id: number) => void;
 };
 
 export const useFavorite = create<FavoriteState>((set) => ({
   productsIds: [],
-  favoriteStores: [],
-  favoriteEcommrces: [],
+  favoriteStoreIds: [],
+  favoriteEcommerceIds: [],
   pageNumber: 1,
   pageSize: 50,
 
@@ -38,27 +36,27 @@ export const useFavorite = create<FavoriteState>((set) => ({
       productsIds: state.productsIds.filter((item) => item !== id),
     })),
 
-  setFavoriteStores: (stores) =>
-    set((state) => ({ ...state, favoriteStores: [...stores] })),
+  setFavoriteStoreIds: (ids) =>
+    set((state) => ({ ...state, favoriteStoreIds: [...ids] })),
 
-  addStoreToFavorite: (store) =>
-    set((state) => ({ ...state, favoriteStores: [...state.favoriteStores, store] })),
+  addStoreToFavorite: (id) =>
+    set((state) => ({ ...state, favoriteStoreIds: [...state.favoriteStoreIds, id] })),
 
   delStoreToFavorite: (id) =>
     set((state) => ({
       ...state,
-      favoriteStores: state.favoriteStores.filter((item) => item.storeId !== id),
+      favoriteStoreIds: state.favoriteStoreIds.filter((item) => item !== id),
     })),
 
-  setFavoriteEcommrces: (ecommrces) =>
-    set((state) => ({ ...state, favoriteEcommrces: [...ecommrces] })),
+  setFavoriteEcommerceIds: (ids) =>
+    set((state) => ({ ...state, favoriteEcommerceIds: [...ids] })),
 
-  addEcommrceToFavorite: (ecommerce) =>
-    set((state) => ({ ...state, favoriteEcommrces: [...state.favoriteEcommrces, ecommerce] })),
+  addEcommerceToFavorite: (id) =>
+    set((state) => ({ ...state, favoriteEcommerceIds: [...state.favoriteEcommerceIds, id] })),
 
-  delEcommrceFromFavorite: (id) =>
+  delEcommerceFromFavorite: (id) =>
     set((state) => ({
       ...state,
-      favoriteEcommrces: state.favoriteEcommrces.filter((item) => item.ecommerceStoreId !== id),
+      favoriteEcommerceIds: state.favoriteEcommerceIds.filter((item) => item !== id),
     })),
 }));

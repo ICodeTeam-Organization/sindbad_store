@@ -8,27 +8,10 @@ import { useEffect, useState } from "react";
 
 export default function GetFavorite() {
 
-  const { pageNumber, pageSize, setFavoriteProducts,setFavoriteEcommrces,setFavoriteStores } = useFavorite();
+  const { pageNumber, pageSize, setFavoriteProducts,setFavoriteEcommerceIds,setFavoriteStoreIds } = useFavorite();
   const { status, data: authData } = useSession();
 
   const [trigged, settrigged] = useState<boolean>(false);
-
-  // const { data } = useQuery({
-  //   queryKey: ["favorites", pageNumber, pageSize],
-  //   queryFn: async () => {
-  //     const response = await axios.get(
-  //       process.env.NEXT_PUBLIC_BASE_URL +
-  //         `Favorites/GetFavoriteProductIds?pageNumber=${pageNumber}&PageSize=${pageSize}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${authData?.user.data.token}`,
-  //         },
-  //       }
-  //     );
-  //     return response.data; // Ensure the response is correctly unwrapped
-  //   },
-  //   enabled:trigged, 
-  // });
 
   const { data } = useQuery({
     queryKey: ["favorites", pageNumber, pageSize],
@@ -85,16 +68,14 @@ export default function GetFavorite() {
       settrigged(true)
     }
     if (data) {
+      
       const productIds = data?.productsIds?.map(
         (item: { productId: number }) => item.productId
       );
-
-      console.log("favorite >>>>",data);
-      
       
       setFavoriteProducts(productIds);
-      setFavoriteEcommrces(data.ecommrces);
-      setFavoriteStores(data.stores)
+      setFavoriteEcommerceIds(data.ecommrces.map((e)=>e.ecommerceStoreId));
+      setFavoriteStoreIds(data.stores.map((e)=>e.storeId))
     }
   }, [data,authData]);
 

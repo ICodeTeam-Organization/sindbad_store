@@ -26,9 +26,9 @@ const EshopsCardCarsoul: React.FC<Shop> = ({
 }) => {
 
 
-  const { favoriteEcommrces , addEcommrceToFavorite ,delEcommrceFromFavorite} = useFavorite();
-  const isFavorite = favoriteEcommrces.find(
-    (ele) => ele.ecommerceStoreId == ecommrcesId
+  const { favoriteEcommerceIds , addEcommerceToFavorite ,delEcommerceFromFavorite} = useFavorite();
+  const isFavorite = favoriteEcommerceIds.find(
+    (ele) => ele == ecommrcesId
   );
   const { data:session , status } = useSession()
   const { toast } = useToast();
@@ -51,13 +51,7 @@ const EshopsCardCarsoul: React.FC<Shop> = ({
         return res.data;
     },
     onSuccess: (data) => {
-         addEcommrceToFavorite({
-          description:description||"",
-          ecommerceStoreId:ecommrcesId,
-          imageUrl:logo || "",
-          ecommerceName:"",
-          id:0,
-         })
+         addEcommerceToFavorite(ecommrcesId)
     },
     onError: (error: any) => {
         const errorMessage =
@@ -83,7 +77,7 @@ const {mutate:mutateRemoveFromFav,isPending:isPendingRemoveFromFav} = useMutatio
       return res.data;
   },
   onSuccess: (data) => {
-    delEcommrceFromFavorite(ecommrcesId)
+    delEcommerceFromFavorite(ecommrcesId)
   },
   onError: (error: any) => {
       const errorMessage =

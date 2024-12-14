@@ -15,7 +15,7 @@ type TabsComponentProps = {
 };
 
 const TabsComponent: React.FC<TabsComponentProps> = ({ tabLabels, tabContent }) => (
-  <Tabs.Root defaultValue="details" className="w-full px-12">
+  <Tabs.Root  defaultValue="details" className="w-full">
     <Tabs.List
       className="flex items-start space-x-reverse space-x-4 border-b-2 border-orange-500 pb-2 w-full justify-start"
       dir="rtl"
@@ -41,24 +41,24 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ tabLabels, tabContent }) 
     </Tabs.List>
 
     {/* Dynamic Tab Content */}
-    <div className="pt-4 w-full">
+    <div className="pt-4 w-full" dir="rtl" >
       <Tabs.Content
         value="details"
-        className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
+        className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
       >
         {tabContent.tap1}
       </Tabs.Content>
 
       <Tabs.Content
         value="features"
-        className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
+        className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
       >
         {tabContent.tap2}
       </Tabs.Content>
 
       <Tabs.Content
         value="reviews"
-        className="text-gray-700 border-l border-r border-b border-gray-300 p-4 mb-4"
+        className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
       >
         {tabContent.tap3}
       </Tabs.Content>
