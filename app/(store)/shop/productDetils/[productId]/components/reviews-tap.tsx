@@ -7,7 +7,7 @@ import { ReviewProps } from "../types";
 import { getApi } from "@/lib/http";
 
 type ProductReviewsTapProps = {
-  productId: string;
+  productId: string | number;
 };
 
 const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
@@ -21,7 +21,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
     const fetchReviews = async () => {
       try {
         const response = await getApi<any>(
-          `CommentsAndRates/GetReviewsOfProductForViewInProductDetailsPage/${productId}/3`
+          `CommentsAndRates/GetReviewsOfProduct?productId=${productId}&sort=1&pageNumber=1&pageSize=20`
         );
 
         if (response?.success) {
@@ -37,26 +37,27 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
       }
     };
 
-    const fetchTotalRating = async () => {
-      try {
-        const response = await getApi<any>(
-          `CommentsAndRates/GetTotalRateOfProduct/productId?productId=${productId}`
-        );
+    // تم حذف الدالة من قبل الباك اند
+    // const fetchTotalRating = async () => {
+    //   try {
+    //     const response = await getApi<any>(
+    //       `CommentsAndRates/GetTotalRateOfProduct/productId?productId=${productId}`
+    //     );
 
-        if (response?.success) {
-          setTotalRating(response.data);
-        } else {
-          setError("Failed to fetch total rating");
-        }
-      } catch (err) {
-        console.error("Error fetching total rating:", err);
-        setError("An error occurred while fetching total rating.");
-      }
-    };
+    //     if (response?.success) {
+    //       setTotalRating(response.data);
+    //     } else {
+    //       setError("Failed to fetch total rating");
+    //     }
+    //   } catch (err) {
+    //     console.error("Error fetching total rating:", err);
+    //     setError("An error occurred while fetching total rating.");
+    //   }
+    // };
 
     if (productId) {
       fetchReviews();
-      fetchTotalRating();
+      // fetchTotalRating();
     }
   }, [productId]);
 
@@ -97,7 +98,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
           </div>
         ) : (
           <>
-            {reviews.slice(0, visibleReviewsCount).map((review, index) => (
+            {reviews.map((review, index) => (
               <ReviewComment
                 key={index}
                 reviewer={review.customerName}
