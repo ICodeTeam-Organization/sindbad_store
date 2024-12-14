@@ -41,7 +41,7 @@ const ReviewComment = ({
           <div>
             <h4 className="font-semibold">{reviewer}</h4>
             <div className="flex items-center">
-              {renderStars()}
+              {/* {renderStars()} */}
               <span className="ml-1 text-sm text-yellow-500">{rating}</span>
             </div>
           </div>
