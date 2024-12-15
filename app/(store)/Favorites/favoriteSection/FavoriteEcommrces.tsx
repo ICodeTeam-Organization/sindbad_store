@@ -9,7 +9,7 @@ import E_commerceCard from "../../e-commerce/components/e-comm-card";
 function FavoriteEcommrces() {
   const { data: authData } = useSession();
   const { data, isLoading } = useQuery<{
-    data: { data: FavoriteEcommerces[] };
+    data: { data: {items:FavoriteEcommerces[]} };
   }>({
     queryKey: ["GetFavoriteEcommerceStores"],
     queryFn: async () =>
@@ -35,21 +35,19 @@ function FavoriteEcommrces() {
     );
   }
 
-  console.log(data?.data.data);
-  
 
-  if (data?.data && data?.data.data.length > 0) {
+  if (data?.data && data?.data.data.items.length > 0) {
     return (
       <>
         <div className="px-10 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
-          {data?.data.data.map((ecommrce) => (
+          {data?.data.data.items.map((ecommrce) => (
             <E_commerceCard
               key={ecommrce.ecommerceStoreId}
-              name={ecommrce?.ecommerceName+""}
-              mainImageUrl={ecommrce?.imageUrl}
+              name={ecommrce?.ecommerceStoreName+""}
+              mainImageUrl={ecommrce?.logo}
               storeCategories={[]}
               imagesUrl={[]}
-              LinkOFStore={ecommrce.id+""}
+              LinkOFStore={ecommrce?.urlLinkOfStore}
               id={ecommrce.ecommerceStoreId+""}
             />
           ))}

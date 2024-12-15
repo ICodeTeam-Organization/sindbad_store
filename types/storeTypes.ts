@@ -69,8 +69,9 @@ export type FavoriteEcommerces = {
   id: number;
   ecommerceStoreId: number;
   description: string;
-  imageUrl: string;
-  ecommerceName?:string
+  logo: string;
+  ecommerceStoreName?:string
+  urlLinkOfStore:string
 };
 
 

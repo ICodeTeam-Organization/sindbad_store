@@ -46,7 +46,6 @@ export default function GetFavorite() {
         ),
       ]);
   
-      console.log(storesResponse,"dsdkmskdmksmdksmd");
       
       // if there any error or not found then will return empty array
       return {
@@ -55,8 +54,8 @@ export default function GetFavorite() {
         ecommrces: ecommrcesResponse.status == "fulfilled" ? ecommrcesResponse.value.data?.data : [],
       } as {
         productsIds:{productId:number}[],
-        stores:FavoriteStores[]
-        ecommrces:FavoriteEcommerces[]
+        stores:{items:FavoriteStores[]}
+        ecommrces:{items:FavoriteEcommerces[]}
       } ;
     },
     enabled: trigged,
@@ -74,8 +73,8 @@ export default function GetFavorite() {
       );
       
       setFavoriteProducts(productIds);
-      setFavoriteEcommerceIds(data.ecommrces.map((e)=>e.ecommerceStoreId));
-      setFavoriteStoreIds(data.stores.map((e)=>e.storeId))
+      setFavoriteEcommerceIds(data.ecommrces?.items?.map((e)=>e.ecommerceStoreId));
+      setFavoriteStoreIds(data.stores?.items.map((e)=>e.storeId))
     }
   }, [data,authData]);
 
