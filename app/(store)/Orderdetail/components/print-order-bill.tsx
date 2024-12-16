@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef } from "react";
-import ReactToPrint, { useReactToPrint } from "react-to-print";
+import { useReactToPrint } from "react-to-print";
 
 const PrintOrderBill = ({ Bill }: any) => {
   const contentRef = useRef<HTMLDivElement>(null);

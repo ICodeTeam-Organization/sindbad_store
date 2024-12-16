@@ -19,11 +19,17 @@ async function http<T>(
   params?: Record<string, unknown>, // --------- change any to unkonwn to avoid an error
   config?: Config
 ) {
-  const endpoint = process.env.NEXT_PUBLIC_BASE_URL + url;
+  let endpoint = process.env.NEXT_PUBLIC_BASE_URL + url;
 
   // if (params) {
   //   endpoint += ?${decodeURIComponent(stringifyParams(params))};
   // }
+
+    // استخدم params لبناء query string
+    if (params) {
+      const queryString = new URLSearchParams(params as Record<string, string>).toString();
+      endpoint += `?${decodeURIComponent(queryString)}`;
+    }
 
   // const locale = cookies.get("NEXT_LOCALE") || "ar";
   let session;
@@ -87,7 +93,7 @@ export function putApi<T>(
   return http<T>(url, undefined, { ...config, method: method });
 }
 
-export function postApi<T>(url: string, config?: Config, p0?: {}) {
+export function postApi<T>(url: string, config?: Config) {
   return http<T>(url, undefined, { ...config, method: "POST" });
 }
 

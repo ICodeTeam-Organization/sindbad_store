@@ -1,90 +1,93 @@
-"use client";
 
 import React, { useState, useEffect } from "react";
-import { getApi } from "@/lib/http";
-import { notFound } from "next/navigation";
 import ProductTitle from "./product-title";
-import ProductInfoRow from "./product-info-row";
 import PriceSection from "./price-section";
 import ImageGallery from "./image-gallery";
 import AddToBasket from "./add-to-basket";
+import {Product} from "./../types"
+import {AttributeWithValues} from "./../types"
 
 type ProductDetailsProps = {
-  params: {
-    productId: string;
-  };
+  product: Product;
 };
 
-const ProductDetails = ({ params }: ProductDetailsProps) => {
-  const { productId } = params;
-  const [product, setProduct] = useState<any>(null);
+
+const ProductDetails = ({ product }: ProductDetailsProps) => {
+
   const [quantity, setQuantity] = useState(1);
-
-  useEffect(() => {
-    if (productId) {
-      fetchProductDetails(productId);
-    }
-  }, [productId]);
-
-  const fetchProductDetails = async (id: string) => {
-    try {
-      const response = await getApi<any>(
-        `ProductsProductDetailsPage/GetProductDetailsForViewInProductDetailsPage/${id}`
-      );
-      console.log("Fetched Response:", response);
-      if (response?.success && response?.data) {
-        console.log("Product Data:", response.data);
-        setProduct(response.data);
-      } else {
-        notFound();
-      }
-    } catch (error) {
-      console.error("Error fetching product details:", error);
-      notFound();
-    }
-  };
 
   const handleIncrement = () => setQuantity(quantity + 1);
   const handleDecrement = () => {
     if (quantity > 1) setQuantity(quantity - 1);
   };
 
-  if (!product) {
-    return <div>Product not found</div>;
-  }
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-12 px-12">
       <div className="lg:w-1/3 ml-8">
         <ImageGallery
-          images={product.productImages.map((img: any) => img.imageUrl)}
+          images={[
+            product.mainImageUrl,
+            ...product.productImages.map((img: any) => img.imageUrl),
+          ]}
         />
       </div>
       <div className="lg:w-1/2">
-        <ProductTitle description={product.description} rating={5} />
-        <ProductInfoRow
-          label1="التوفر"
-          value1="In Stock"
-          label2="رقم المنتج"
-          value2={product.number}
-        />
-        <ProductInfoRow
-          label1="الفئة"
-          value1={product.categoryName}
-          label2="الماركة"
-          value2={product.brandName || "N/A"}
-        />
+        <ProductTitle name={product.name} description={product.description} rating={5} />
+
+        <div className="grid grid-cols-2 text-sm text-gray-700">
+          <div className="flex items-center col-span-2 mb-2">
+            <span className="font-medium ml-1 ">رقم المنتج:</span>
+            <span>{product.number}</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span className="font-medium ml-1">{product.brandName !== null ? "الماركة: " : ""}</span>
+            <span>{product.brandName !== null ? product.brandName : ""}</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span className="font-medium ml-1">{product.categoryName !== null ? "الفئة: " : ""}</span>
+            <span>{product.categoryName !== null ? product.categoryName : ""}</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span className="font-medium ml-1">{product.offerStartDate !== null ? "بداية العرض: " : ""}</span>
+            <span>{product.offerStartDate !== null ? product.offerStartDate : ""}</span>
+          </div>
+          <div className="flex items-center mb-2">
+            <span className="font-medium ml-1">{product.offerEndDate !== null ? "نهاية العرض: " : ""}</span>
+            <span>{product.offerEndDate !== null ? product.offerEndDate : ""}</span>
+          </div>
+          {
+            product.attributesWithValues?.length > 3 ? (
+              product.attributesWithValues?.slice(0,3).map((attribute:AttributeWithValues , index) =>(
+                <div key={index} className="flex items-center mb-2">
+                  <span className="font-medium ml-1">{attribute.attributeName}: </span>
+                  <span>{attribute.values.join(", ")}</span>
+                </div>
+              ))
+            ):(
+              product.attributesWithValues?.map((attribute, index) =>(
+                <div key={index} className="flex items-center mb-2">
+                  <span className="font-medium ml-1">{attribute.attributeName}: </span>
+                  <span>{attribute.values.join(", ")}</span>
+                </div>
+              ))
+            )
+          }
+        </div>
+
         <PriceSection
           discountedPrice={`${product.priceAfterOffer} ر.س`}
           originalPrice={`${product.priceBeforOffer} ر.س`}
-          discount={Math.round(
-            ((product.priceBeforOffer - product.priceAfterOffer) /
-              product.priceBeforOffer) *
-              100
-          )}
+          discount={product.percentageOfDiscount}
         />
         <hr className="my-4 border-gray-300" />
-        <ProductInfoRow
+
+        <div className="flex items-center col-span-2 mb-2">
+            <span className="font-medium ml-1">{product.offerSentence !== null ? "جملة العرض: " : ""}</span>
+            <span>{product.offerSentence !== null ? product.offerSentence : ""}</span>
+          </div>
+
+        {/* <ProductInfoRow
           label1="الألوان"
           value1={
             <select className="border border-gray-300 rounded-md p-2">
@@ -109,7 +112,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
                 )) || <option>N/A</option>}
             </select>
           }
-        />
+        /> */}
         <div className="flex items-center gap-4 mt-8">
           <div className="flex items-center gap-4">
             <button
@@ -126,7 +129,7 @@ const ProductDetails = ({ params }: ProductDetailsProps) => {
               +
             </button>
           </div>
-          <AddToBasket productId={productId} quantity={quantity} />
+          <AddToBasket productId={product.id} quantity={quantity} />
         </div>
       </div>
     </div>

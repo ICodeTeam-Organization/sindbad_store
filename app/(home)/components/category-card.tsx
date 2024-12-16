@@ -7,20 +7,22 @@ type Props = {
   imageUrl: string;
 };
 
-const CategoryCard = ({ name, imageUrl }: Props) => {
+const CategoryCard = ({ name, imageUrl , id }: Props) => {
   return (
-    <Link href={"/shop/"}>
-      <div className="text-center w-28">
-        <div className="p-8 w-full h-full bg-neutral-100 rounded-full flex justify-center items-center hover:cursor-pointer hover:scale-105  transition-transform duration-300 hover:shadow-lg hover:outline hover:outline-2 hover:outline-sky-500 ">
+    <Link href={"/shop?cat="+id}>
+      <div className="text-center w-28 flex flex-col items-center ">
+        <div className=" w-28 h-28 p-4  relative overflow-hidden bg-neutral-100 rounded-full border-2 group-hover:border-sky-500 border-transparent transition-[border,shadow]  flex justify-center items-center group-hover:cursor-pointer    group-hover:shadow-lg  ">
           <Image
             src={imageUrl}
-            height={100}
-            width={100}
-            className="w-10 h-10 md:w-12 md:h-12"
+            // layout="fill"
+            width={120}
+            height={120}
+            objectFit="cover"
+            // className="w-10 h-10 md:w-12 md:h-12"
             alt="صورة الصنف"
           />
         </div>
-        <h2 className="  text-xs md:text-sm  mt-4 ">{name}</h2>
+        <h2 className="  text-xs  mt-4 text-center ">{name}</h2>
       </div>
     </Link>
   );

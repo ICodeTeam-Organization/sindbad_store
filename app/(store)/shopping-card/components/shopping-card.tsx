@@ -1,18 +1,19 @@
-import CartTable from "./cart-table";
-import InvoiceDetails from "./invoice-details";
+import { getApi } from "@/lib/http";
+import CartBody from "./cart-body";
 
-const ShoppingCart = () => {
+import { CartItem } from "@/types/storeTypes";
+
+const ShoppingCart = async () => {
+
+
+  const initCartProducts = await getApi<{data:CartItem[]}>("Cart/GetAllCustomerProductsInCartForViewInCartPage");
+
   return (
     <div className="py-8">
-      <div className="container mx-auto px-4">
+      <div className="mdHalf:container mx-auto px-4">
         <h1 className="text-2xl font-semibold mb-4">سلة المشتريات</h1>
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="md:w-3/4">
-            <CartTable />
-          </div>
-          <div className="md:w-1/4">
-            <InvoiceDetails />
-          </div>
+        <div className="flex flex-col mdHalf:flex-row gap-4 ">
+            <CartBody initCartProducts={initCartProducts} />
         </div>
       </div>
     </div>

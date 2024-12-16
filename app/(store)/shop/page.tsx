@@ -1,32 +1,64 @@
 import React from "react";
-import Sidebar from "./components/sidebar";
-import SearchResultsHeader from "./components/search-results-header";
 import ShopProductsGrid from "./components/shop-products-grid";
-import Pagination from "../../../components/Pagination";
-import { getApi } from "@/lib/http";
-import { console } from "inspector";
+import Sidebar from "./components/Sidebar";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { FilterIcon } from "lucide-react";
 
-const ProductPage = async () => {
-  const products = await getApi<any>(
-    `products/HomePage/GetProductsOfOurStore/${20}/1`
-  );
+interface searchParamsType {
+  searchParams:{
+    skw?:string;//search keyword
+    cats?:string;
+    subCats?:string;
+    storeId?:string;
+    brands?:string;
+    tags?:string;
+    newProducts?:"t"|"f";
+    todayOffers?:"t"|"f";
+  }
+  
+}
 
-  // console.log(products);
+const ProductPage = async ({searchParams}:searchParamsType) => {
+
+
+  // const {skw,brands,cats,newProducts,store,subCats,tags,todayOffers} = searchParams
+  
 
   return (
-    <div className="container mx-auto py-6 px-4">
+    <div className="xl:container mx-auto mdHalf:py-6 mdHalf:px-4">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Sidebar */}
-        <Sidebar />
+        <div className=" lg:w-[25%] mdHalf:w-[30%] mdHalf:block hidden mt-10 ms-7   " >
+         <Sidebar/>
+        </div>
+        <div className="mdHalf:hidden" >
+          <Sheet>
+            <SheetTrigger asChild className="bg-[#F8F4E5] cursor-pointer shadow-md  rounded-full p-2 px-6 fixed left-[50%] bottom-10 -translate-x-[50%] z-10 ">
+              <div className="flex items-center justify-between gap-x-2" >
+              <FilterIcon size={16} />
+              <p className="text-[#333] text-sm" >فلاتر البحث</p>
+              </div>
+            </SheetTrigger>
+            <SheetContent className="w-full " >
+                <div className="mt-4" >
+                   <Sidebar />
+                </div>
+            </SheetContent>
+          </Sheet>
+        </div>
         {/* Main content */}
-        <main className="w-full md:w-3/4">
+        <main className="w-full lg:w-[75%] mdHalf:w-[70%] md:my-10 mb-16  ">
           {/* Tags and Results */}
-          <SearchResultsHeader products={products} />
+          {/* <SearchResultsHeader products={[]} /> */}
 
           {/* Products Section */}
           <section>
-            <ShopProductsGrid allProducts={products} />
-            <Pagination />
+            <ShopProductsGrid  />
+            
           </section>
         </main>
       </div>

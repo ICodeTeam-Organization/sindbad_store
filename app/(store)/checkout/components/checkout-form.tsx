@@ -9,7 +9,7 @@ import {
 
 import { checkoutSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { Bank, CheckoutType } from "@/types/checkout";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, postApi } from "@/lib/http";
@@ -34,9 +34,10 @@ import {
 } from "@/components/ui/select";
 import InputField from "./input-field";
 import { Input } from "@/components/ui/input";
-//import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const CheckoutForm = () => {
+  
   const { data } = useQuery<any>({
     queryKey: ["banks"],
     queryFn: async () => await getApi("Cart/GetAllBanksForViewInCartPage"),
@@ -54,24 +55,36 @@ const CheckoutForm = () => {
     },
   });
 
+  const { data: authData } = useSession();
+  
   const { toast } = useToast();
   const router = useRouter();
   const { mutate, isPending } = useMutation({
     mutationKey: ["upload-bound"],
     mutationFn: (data: z.infer<typeof checkoutSchema>) =>
-      postApi("Orders/CompleteCustomerPurchase", {
-        body: {
-          bankId: 3,
-          note: data.note,
-          amount: data.amount,
-          bondNumber: data.number,
-          bondDate: data.date,
-          bondImageUrl: data.image[0],
-          bondTyep: 1,
-          isUrgenOrder: true,
+    {
+      const bodyData = {
+        bankId: +data.bank, 
+        note: data.note,
+        amount: +data.amount,
+        bondNumber: +data.number,
+        bondDate: data.date,
+        bondImageFile: data.image,
+        bondTyep: 1,
+        isUrgentOrder: false,
+      };
+
+    
+      return postApi("Orders/CompleteCustomerPurchase", {
+        body: bodyData,
+        isPage: true,
+        headers: {
+          "Accept-Language": "ar",
+          "Content-type": "multipart/form-data",
+          Authorization: `Bearer ${authData?.user.data.token}`,
         },
-        isPage: false,
-      }),
+      })
+    },
     onError: (err) => {
       toast({
         variant: "destructive",
@@ -80,12 +93,12 @@ const CheckoutForm = () => {
       });
     },
     onSuccess: () => {
-      router.push("/checkout-success");
+      router.replace("/checkout-success");
     },
   });
 
-  function onSubmit(values: z.infer<typeof checkoutSchema>) {
-    console.log(values);
+ async function onSubmit(values: z.infer<typeof checkoutSchema>) {
+   values.image = await values.image[0].arrayBuffer()
     mutate(values);
   }
 
@@ -95,21 +108,21 @@ const CheckoutForm = () => {
         <h1 className="font-bold text-xl text-center">أجراءات الدفع</h1>
       </CardHeader>
       <FormProvider {...form}>
-        <Form encType="multipart/form-data">
+        <form encType="multipart/form-data" onSubmit={form.handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
             <FormField
               control={form.control}
               name="bank"
-              render={({ field }) => (
+              render={({ field }: { field: any }) => ( // تحديد نوع field هنا
                 <FormItem className="w-full">
-                  <Select dir="rtl" onValueChange={field.onChange}>
+                  <Select dir="rtl" onValueChange={field.onChange} value={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="حدد الصراف/البنك" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectGroup {...field}>
+                      <SelectGroup>
                         {data?.data?.map((bank: Bank) => (
                           <SelectItem key={bank.id} value={bank.id.toString()}>
                             {bank.bankName}
@@ -123,55 +136,41 @@ const CheckoutForm = () => {
               )}
             />
             <InputField
-              name={"amount"}
+              name="amount"
               label="المبلغ المدفوع"
               control={form.control}
               type="number"
             />
             <InputField
-              name={"number"}
+              name="number"
               label="رقم السند"
               control={form.control}
               type="number"
             />
             <InputField
-              name={"date"}
-              label=" تاريخ الدفع"
+              name="date"
+              label="تاريخ الدفع"
               control={form.control}
               type="date"
             />
-
             <InputField
-              name={"note"}
-              label="ملاحضة"
+              name="note"
+              label="ملاحظة"
               control={form.control}
               type="text"
             />
-
-            <Input type="file" {...form.register("image")} name="image" />
-            {/* <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormControl>
-                    <Input {...field} type="file" value={field.value} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
+            <Input type="file" {...form.register("image")} />
           </CardContent>
           <CardFooter>
             <Button
-              onClick={form.handleSubmit(onSubmit)}
+              type="submit"
               disabled={isPending}
               className="w-full hover:bg-orange-600 bg-primary-background transition-colors"
             >
               {isPending ? <Loader2 className="animate-spin" /> : "رفع السند"}
             </Button>
           </CardFooter>
-        </Form>
+        </form>
       </FormProvider>
     </Card>
   );

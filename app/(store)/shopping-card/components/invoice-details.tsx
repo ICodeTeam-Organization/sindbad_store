@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,27 +10,73 @@ import { ArrowLeft } from "lucide-react";
 import React from "react";
 import PriceLabel from "./price-label";
 import Link from "next/link";
+import { useCartStore } from "@/app/stores/cartStore";
+import { CartItem } from "@/types/storeTypes";
 
-const Summary = () => {
+// Function to calculate the total price
+const calculateTotalPrice = (cartItems: CartItem[]): number => {
+  return cartItems?.reduce((total, item) => {
+    const price = item.price || 0;
+    return total + price * item.quantity;
+  }, 0);
+};
+
+// Function to calculate the total shipping cost
+const calculateTotalShippingCost = (cartItems: CartItem[]): number => {
+  return cartItems?.reduce((total, item) => {
+    const shipCost = item.shipCost || 0;
+    return total + shipCost * item.quantity;
+  }, 0);
+};
+
+// Function to calculate the total discount
+const calculateTotalDiscount = (cartItems: CartItem[]): number => {
+  const totalOldPrice = cartItems?.reduce((total, item) => {
+    const oldPrice = (item.priceAfterDiscount !== null ? item.priceAfterDiscount : item.price) || 0;
+    return total + oldPrice * item.quantity;
+  }, 0);
+
+  const totalNewPrice = calculateTotalPrice(cartItems);
+
+  return totalOldPrice - totalNewPrice;
+};
+
+const calculateFinalTotal = (cartItems: CartItem[]): number => {
+  const totalPrice = calculateTotalPrice(cartItems);
+
+  const totalShippingCost = calculateTotalShippingCost(cartItems);
+
+  const totalDiscount = calculateTotalDiscount(cartItems);
+
+  const finalTotal = totalPrice + totalShippingCost - totalDiscount;
+
+  return finalTotal;
+};
+
+
+
+const Summary = ({cartItems}:{cartItems:CartItem[]}) => {
+
+ 
   return (
-    <Card>
+    <Card className="mdHalf:sticky mdHalf:top-[100px] mdHalf:z-10 " >
       <CardHeader>
         <h2 className="text-lg text-center font-bold mb-4">
           تفاصيل قيمة الطلب
         </h2>
       </CardHeader>
       <CardContent>
-        <PriceLabel title="الأجمالي" price={235} />
-        <PriceLabel title="الشحن" price={235} />
-        <PriceLabel title="الخصم" price={235} />
+        <PriceLabel title="الأجمالي" price={calculateTotalPrice(cartItems) || 0} />
+        <PriceLabel title="الشحن" price={calculateTotalShippingCost(cartItems)|| 0} />
+        <PriceLabel title="الخصم" price={calculateTotalDiscount(cartItems)|| 0} />
         <hr className="my-2" />
         <div className="flex justify-between mb-2">
           <span className="font-semibold">الأجمالي</span>
-          <span className="font-semibold">{2504} رس</span>
+          <span className="font-semibold">{calculateFinalTotal(cartItems) || 0} رس</span>
         </div>
       </CardContent>
       <CardFooter>
-        <Link href={"/checkout"}>
+        <Link href={"/checkout"}  className=" w-full" >
           <Button className="bg-primary-background hover:bg-orange-600 text-white text-lg  w-full">
             ادخال سند السداد
             <ArrowLeft className="mr-3 " />

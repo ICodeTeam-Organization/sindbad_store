@@ -1,0 +1,20 @@
+
+
+.card:hover .overlay {
+  transform: scale(10) translateZ(0);
+}
+
+.circle:after {
+  content: "";
+
+}
+
+
+
+
+
+
+
+
+
+

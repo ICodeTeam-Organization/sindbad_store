@@ -25,7 +25,7 @@ const CategoriesDialog = () => {
     queryKey: ["branch-category"],
     queryFn: () =>
       getApi(
-        "Market/categories/GetAllMainCategoriesWithSubCategoriesForViewInSpecialProductsPage/1/1"
+        "Market/categories/GetMainCategoriesWithSubCategories/1/1"
       ),
   });
 
@@ -40,7 +40,7 @@ const CategoriesDialog = () => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant={"ghost"} className="flex items-center text-sm ml-3 ">
+        <Button variant={"ghost"} className="flex items-center text-sm  ">
           <IoIosArrowForward className="text-sky-700" />
           <h3 className="mr-2">عرض الكل</h3>
         </Button>

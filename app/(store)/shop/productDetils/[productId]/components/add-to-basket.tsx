@@ -9,11 +9,11 @@ import { useRouter } from "next/navigation";
 
 
 type AddToBasketProps = {
-  productId: string;
+  productId: string | number;
   quantity: number;
 };
 
-const AddToBasket = ({ productId, quantity }: AddToBasketProps) => {
+const AddToBasket = ({ productId }: AddToBasketProps) => {
   const { toast } = useToast();
   const { data: session, status } = useSession();
   const redirct = useRouter();
@@ -34,7 +34,7 @@ const AddToBasket = ({ productId, quantity }: AddToBasketProps) => {
           },
         }
       );
-      // return res;
+      return res;
     },
     onSuccess: () => {
       toast({

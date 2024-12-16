@@ -4,26 +4,33 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { ReviewFormProps } from "../types";
+import { useSession } from "next-auth/react";
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const [reviewText, setReviewText] = useState("");
   const [rate, setRate] = useState(3);
   const [validationError, setValidationError] = useState<string | null>(null);
   const { toast } = useToast();
+  const { data: session, status } = useSession();
 
   const mutation = useMutation({
     mutationFn: async () => {
+      if (!session) {
+        throw new Error("لا يوجد جلسة نشطة");
+      }
       const res = await axios.post(
         "https://icode-sendbad-store.runasp.net/api/CommentsAndRates/AddReviewToProduct",
         {
-          productId: productId,
-          rate: rate,
-          reviewText: reviewText,
+          productId,
+          rate,
+          reviewText,
+          reviewImageUrl: "string", // يمكن تغيير هذا لاحقًا ليكون حقلًا اختياريًا
         },
         {
           headers: {
             "Accept-Language": "ar",
             "Content-Type": "application/json",
+            Authorization: `Bearer ${session.user.data.token}`,
           },
         }
       );
@@ -43,7 +50,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       });
     },
     onError: (error: any) => {
-      const errorMessage = error?.response?.data?.message ? "حدث خطأ أثناء إضافة تعليقك." : "";
+      const errorMessage = error?.response?.data?.message || "حدث خطأ أثناء إضافة تعليقك.";
       
       toast({
         variant: "destructive",
@@ -53,7 +60,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
     },
   });
 
-  const { isLoading } = mutation;
+  const { isPending } = mutation;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -67,6 +74,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       setValidationError("يرجى اختيار تقييم بين 1 و 5.");
       return;
     }
+
     setValidationError(null);
     mutation.mutate();
   };
@@ -103,9 +111,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       <button
         className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600"
         type="submit"
-        disabled={isLoading}
+        disabled={isPending}
       >
-        {isLoading ? "جارٍ نشر تعليقك..." : "نشر تعليقك"}
+        {isPending ? "جارٍ نشر تعليقك..." : "نشر تعليقك"}
       </button>
     </form>
   );

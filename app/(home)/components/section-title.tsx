@@ -4,18 +4,19 @@ import { IoIosArrowForward } from "react-icons/io";
 
 type Props = {
   title: string;
+  href:string
 };
 
-const SectionTitle = ({ title }: Props) => {
+const SectionTitle = ({ title,href="/shop" }: Props) => {
   return (
     <div className="py-5 w-full">
       <div className="flex justify-between items-center ">
         <div>
-          <h3 className={styles.title + "  text-2xl font-normal relative pr-3"}>
+          <h3 className={styles.title + "  lg:text-2xl text-lg font-normal relative pr-3"}>
             {title} :
           </h3>
         </div>
-        <Link href={"/shop"}>
+        <Link href={href}>
         <button className="btn flex items-center text-sm ml-3 ">
           <IoIosArrowForward className="text-sky-700" />
           <h3 className="mr-2">عرض الكل</h3>

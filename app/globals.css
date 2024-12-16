@@ -83,8 +83,8 @@ body {
 }
 .oneLIineText {
   overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 @layer base {
@@ -94,4 +94,70 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  .nav-menus {
+    @apply flex flex-col gap-2 items-center mdHalf:justify-center mdHalf:p-2 text-base hover:bg-[#FF8F7E22] cursor-pointer transition;
+  }
+
+  .nav-menus-label {
+    @apply flex w-full items-center  gap-x-2 mdHalf:p-0 p-2 justify-between px-6 text-xs;
+  }
+}
+
+html,
+body {
+  font-family: var(--font-noto) !important;
+}
+
+.tajawal {
+  font-family: var(--font-tajawal);
+}
+
+/* Custom class to hide scrollbar */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Customizing the scrollbar width */
+::-webkit-scrollbar {
+  width: 9px; /* For vertical scrollbars */
+  height: 9px; /* For horizontal scrollbars */
+}
+
+/* Styling the scrollbar track */
+::-webkit-scrollbar-track {
+  background: #f4f4f4; /* Light grey background for the track */
+  border-radius: 10px; /* Rounded corners for the track */
+  border: 1px solid #dcdcdc; /* Optional border for the track */
+}
+
+/* Styling the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background: #888; /* Darker grey for the thumb */
+  border-radius: 10px; /* Rounded corners for the thumb */
+  border: 2px solid #f4f4f4; /* Matches the track background */
+}
+
+/* Change scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker grey when hovered */
+}
+
+/* Optional: Styling the scrollbar corners */
+::-webkit-scrollbar-corner {
+  background: #f4f4f4; /* Match the track background */
+}
+
+/* to remove arrows from input type number */
+.remove-arrow::-webkit-inner-spin-button,
+.remove-arrow::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.remove-arrow {
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
