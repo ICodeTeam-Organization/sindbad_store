@@ -22,12 +22,6 @@ export interface MainCategory {
 }
 
 // for e shops
-interface EcommerceStoreImage {
-  id: number;
-  imageUrl: string;
-}
-
-
 export interface Store {
   id: string;
   name: string;
@@ -37,12 +31,18 @@ export interface Store {
   imagesUrl:string[];
 }
 
+export interface EcommerceStoreImage {
+  id: number;
+  imageUrl: string;
+}
+
 export interface Shop {
   id: number;
   name: string;
   urlLinkOfStore: string;
   description: string;
   logo: string;
+  categories: string[];
   ecommerceStoreImages: EcommerceStoreImage[];
 }
 

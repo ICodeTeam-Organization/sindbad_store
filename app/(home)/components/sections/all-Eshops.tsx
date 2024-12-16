@@ -15,10 +15,13 @@ import { useState } from "react";
 import EshopsCardCarsoul from "../EshopsCardCarsoul";
 import { Shop, Store } from "@/types/storeTypes";
 
-const AllEShops =  ({AllEShops}:{AllEShops:{data:Shop[]}}) => {
+const AllEShops =  ({AllEShops}:{AllEShops:{data:{items: Shop[]} }}) => {
  
   
   const [IsHover, setIsHover] = useState(true)
+
+  console.log("AllEShops: ")
+  console.log(AllEShops)
 
   return (
     <div className="bg-[#F8F8F8] w-full">
@@ -54,7 +57,7 @@ const AllEShops =  ({AllEShops}:{AllEShops:{data:Shop[]}}) => {
         <CarouselNext className="  text-[#F58634]" />
         </div>
         <CarouselContent>
-          {AllEShops?.data?.map((shop: Shop) => (
+          {AllEShops?.data?.items?.map((shop: Shop) => (
             <CarouselItem
               key={shop.id}
               dir="rtl"

@@ -28,7 +28,7 @@ export default async function Home() {
     ),
     getApi<{data:Store[]}>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
     getApi<{data:Shop[]}>(
-      "EcommercesStores/GetEcommerceStores"
+      "EcommercesStores/GetEcommerceStores?pageNumber=1&pageSize=20"
     ),
     getApi<{data:Product[]}>(
       "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/30"
