@@ -7,7 +7,7 @@ const E_commercePage=()=> {
   return (
     <div className='mt-12'>
       <E_commerceGrid/>
-      <Pagination />
+      {/* <Pagination /> */}
     </div>
   );
 }
