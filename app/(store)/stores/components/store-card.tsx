@@ -14,8 +14,9 @@ import { ToastAction } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import { DivideCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
+import SafeImage from "@/components/SafeImage";
 
-const StoreCard = ({ id, name, imagesUrl, description }: StoreCardProps) => {
+const StoreCard = ({ id, name, websiteLink , imagesUrl }: StoreCardProps) => {
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
@@ -103,13 +104,13 @@ const StoreCard = ({ id, name, imagesUrl, description }: StoreCardProps) => {
       className="border rounded-lg shadow-sm overflow-hidden relative w-full max-w-[380px] mx-auto "
     >
       <Link href={linkToStore} >
-        <Image
-          src={imagesUrl}
+      <SafeImage
+          src={imagesUrl[0]}
           alt={name}
           className="w-full h-[220px] object-cover "
           width={380}
           height={250}
-        />
+      />
       </Link>
       
       <div className="p-4">
