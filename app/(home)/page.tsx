@@ -9,17 +9,12 @@ import AllStores from "./components/sections/all-stores";
 import BeastSeller from "./components/sections/beast-seller";
 import Ads from "./components/sections/Ads";
 import RecentlyAdded from "./components/sections/recently-added";
-<<<<<<< Updated upstream
-import ShoppingNow from "./components/sections/shopping-now";
-import TodayOffers from "./components/sections/today-offers";
-=======
 import Feature from "./components/sections/Feature";
-import { getApi, postApi } from "@/lib/http";
+import { getApi } from "@/lib/http";
 import AllEShops from "./components/sections/all-Eshops";
 import { MainCategory, Product, Shop, Store } from "@/types/storeTypes";
 
 export default async function Home() {
-
   const [
     categories,
     Allstores,
@@ -52,26 +47,12 @@ export default async function Home() {
       items: AllEcommrce.data
     }
   };
->>>>>>> Stashed changes
 
-export default function Home() {
   return (
     <section className="w-full">
       <Hero />
-<<<<<<< Updated upstream
-      <Cards />
-      <Categories />
-      <TodayOffers />
-      <ShoppingNow />
-      <AllStores />
-      <BeastSeller />
-      <Ads />
-      <RecentlyAdded />
-      <ShoppingNow />
-      <AllStores />
-=======
       <div className="w-full xl:container mx-auto ">
-        <CategoriesSlider  />
+        <CategoriesSlider />
         <ServiceCard />
         <CardsInfo />
         <Categories categories={categories?.data} />
@@ -94,9 +75,8 @@ export default function Home() {
         <ShoppingNow />
       </div>
       <div className="my-10">
-        <AllEShops AllEShops={transformedAllEcommrce}/>
+        <AllEShops AllEShops={transformedAllEcommrce} />
       </div>
->>>>>>> Stashed changes
       <Feature />
     </section>
   );
