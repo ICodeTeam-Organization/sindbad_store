@@ -15,11 +15,13 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 
 const E_commerceCard = ({
-  mainImageUrl,
-  name,
-  storeCategories,
-  LinkOFStore,
-  id,
+    id,
+    name,
+    LinkOFStore,
+    description,
+    logo,
+    categories,
+    ecommerceStoreImages,
 }: E_commerceCardProps) => {
   const {
     favoriteEcommerceIds,
@@ -110,7 +112,7 @@ const E_commerceCard = ({
       className="border tajawal rounded-lg shadow-sm relative w-full max-w-[380px] mx-auto text-center"
     >
       <SafeImage
-        src={mainImageUrl}
+        src={logo}
         alt={name}
         className="w-full h-[250px] object-scale-down"
         width={500}
@@ -118,6 +120,7 @@ const E_commerceCard = ({
       />
       <div className="m-4">
         <h2 className="font-bold mt-2 text-center">{name}</h2>
+        <p className="text-[#666] text-sm">{description}</p>
 
         <div className="flex flex-wrap   w-full  gap-x-1 mt-6 ] ">
           <Link

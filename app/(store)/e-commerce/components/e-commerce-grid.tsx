@@ -1,30 +1,38 @@
 import React from "react";
 import E_commerceCard from "./e-comm-card";
 import { Shop } from "@/types/storeTypes";
+import { getApi, postApi } from '@/lib/http';
 
-// const e_commers = [
-//     {
-//       image: alibaba,
-//       title: "علي بابا",
-//       description: "اواني منزلية - اكسسوارات - اواني منزلية - اكسسوارات - اواني منزلية - اكسسوارات - اواني منزلية - اكسسوارات - اواني منزلية - اكسسوارات ",
-//     }
-//   ];
+const E_commerceGrid = async () => {
 
-const E_commerceGrid = ({ allEcommerces }: any) => {
+  const Ecommerces = await postApi<any>(
+    'EcommercesStores/FilterECommerce',
+    { 
+      body:
+        {
+          "pageSize": 50,
+          "pageNumber": 1,
+        }
+      
+    }
+  )
+  console.log(Ecommerces?.data?.items)
   return (
     <div className="px-10 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {allEcommerces?.length > 0 ? (
-        allEcommerces.map((e_comm: Shop, index: number) => {
+      {Ecommerces?.data?.items.length > 0 ? (
+        Ecommerces?.data?.items.map((e_comm: Shop, index: number) => {
           return (
             <E_commerceCard
               key={index}
-              id={e_comm.id + ""}
-              imagesUrl={[]}
-              mainImageUrl={e_comm.logo}
+              id={e_comm.id}
               name={e_comm.name}
-              storeCategories={[]}
               LinkOFStore={e_comm.urlLinkOfStore}
+              description={e_comm.description}
+              logo={e_comm.logo}
+              categories={e_comm.categories}
+              ecommerceStoreImages={e_comm.ecommerceStoreImages}
             />
+
           );
         })
       ) : (
