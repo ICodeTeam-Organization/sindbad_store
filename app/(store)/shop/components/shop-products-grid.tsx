@@ -22,7 +22,7 @@ const ShopProductsGrid = ({ allProducts }: any) => {
 
   const { ref: footerRef, inView } = useInView({
     threshold: 0.5,
-    rootMargin:"100px"
+    rootMargin: "100px",
   });
 
   const {
@@ -31,7 +31,9 @@ const ShopProductsGrid = ({ allProducts }: any) => {
     setFiltersFromObject,
     initState: initialFilters,
   } = useShopFiltersStore();
+  
   const [firstRender, setfirstRender] = useState(true);
+
   const { isPending, data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useInfiniteQuery<ProductsResponsive>({
       queryKey: ["GetProductsWitheFilter", filters],
@@ -44,8 +46,8 @@ const ShopProductsGrid = ({ allProducts }: any) => {
           storeId: filters.storeId || "",
           productName: filters.productName || "",
           isDeleted: false,
-          minPrice:filters.price[0],
-          maxPrice:filters.price[1],
+          minPrice: filters.price[0],
+          maxPrice: filters.price[1],
         };
         // Remove fields that have invalid values (0 or empty string)
         const filteredBody = Object.fromEntries(
@@ -81,7 +83,8 @@ const ShopProductsGrid = ({ allProducts }: any) => {
       // Check if the current value is different from the initial value
       if (
         JSON.stringify(value) !==
-        JSON.stringify(initialFilters[key as keyof typeof initialFilters])
+          JSON.stringify(initialFilters[key as keyof typeof initialFilters]) &&
+        value
       ) {
         // If value is an array, join it as a string (e.g., for price range)
         if (Array.isArray(value)) {
@@ -157,13 +160,17 @@ const ShopProductsGrid = ({ allProducts }: any) => {
         {!isPending ? (
           data?.pages && data?.pages?.length > 0 ? (
             data?.pages?.map((page) => {
-              return page.data.items.map((product:any) => (
+              return page.data.items.map((product: any) => (
                 <div key={product.id} className="sm:w-[220px]  w-[180px] ">
                   <ProductCard
                     id={product.id + ""}
                     ProductDet={+product.id}
                     image={product.mainImageUrl}
-                    price={product.priceAfterDiscount?product.priceAfterDiscount:product.priceBeforeDiscount}
+                    price={
+                      product.priceAfterDiscount
+                        ? product.priceAfterDiscount
+                        : product.priceBeforeDiscount
+                    }
                     oldPrice={product.priceBeforeDiscount}
                     productName={product.name}
                   />
@@ -193,21 +200,15 @@ const ShopProductsGrid = ({ allProducts }: any) => {
           ))
         )}
 
-      {isFetchingNextPage && (
+        {isFetchingNextPage &&
           [...Array(6)].map((_, x) => (
             <div key={x.toString()} className="sm:w-[220px]  w-[180px] ">
               <ProductCardSkeleton />
             </div>
-          ))
-      )}
-
+          ))}
       </div>
 
-      
-      <div
-        ref={footerRef}
-        style={{ height: "50px"}}
-      />
+      <div ref={footerRef} style={{ height: "50px" }} />
     </>
   );
 };

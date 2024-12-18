@@ -4,24 +4,26 @@ type ShopFiltersStore = {
   filters: {
     price: [number, number];
     storeId: string;
-    cats: string[]; 
-    subCats: string[]; 
+    cats: string[];
+    subCats: string[];
     productName: string;
     hasOffer: string;
     newProduct: string;
     pageNumber: number;
     pageSize: number;
+    brandId: number | null;
   };
   initState: {
     price: [number, number];
     storeId: string;
-    cats: string[]; 
-    subCats: string[]; 
+    cats: string[];
+    subCats: string[];
     productName: string;
     hasOffer: string;
     newProduct: string;
     pageNumber?: number;
     pageSize?: number;
+    brandId: number | null;
   };
   setPriceRange: (range: [number, number]) => void;
   setStoreId: (id: string) => void;
@@ -32,10 +34,11 @@ type ShopFiltersStore = {
   setNewProduct: (newPro: string) => void;
   setPageNumber: (page: number) => void;
   setPageSize: (size: number) => void;
+  setBrandId: (id: number | null) => void;
   resetFilters: () => void;
-  setFiltersFromObject: (newFilters: ShopFiltersStore['filters']) => void;
-  toggleCat:(cat:string)=>void
-  toggleSubCat:(subCat:string)=>void
+  setFiltersFromObject: (newFilters: ShopFiltersStore["filters"]) => void;
+  toggleCat: (cat: string) => void;
+  toggleSubCat: (subCat: string) => void;
 };
 
 const initState = {
@@ -48,19 +51,12 @@ const initState = {
   newProduct: "f",
   pageNumber: 1,
   pageSize: 30,
+  brandId: null,
 };
 
 export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
   filters: {
-    price: [0, 1000],
-    storeId: "",
-    cats: [], 
-    subCats: [], 
-    productName: "",
-    hasOffer: "f",
-    newProduct: "f",
-    pageNumber: 1,
-    pageSize: 30,
+    ...initState,
   },
   initState,
 
@@ -136,6 +132,14 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       },
     })),
 
+  setBrandId: (id) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        brandId: id,
+      },
+    })),
+
   resetFilters: () =>
     set(() => ({
       filters: { ...initState },
@@ -149,8 +153,7 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       },
     })),
 
-  // Toggle a category in cats
-  toggleCat: (cat:string) =>
+  toggleCat: (cat: string) =>
     set((state) => ({
       filters: {
         ...state.filters,
@@ -160,8 +163,7 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       },
     })),
 
-  // Toggle a subcategory in subCats
-  toggleSubCat: (subCat:string) =>
+  toggleSubCat: (subCat: string) =>
     set((state) => ({
       filters: {
         ...state.filters,
@@ -171,4 +173,3 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       },
     })),
 }));
-

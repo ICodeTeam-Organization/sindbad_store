@@ -71,6 +71,7 @@ const AllEShops =  ({AllEShops}:{AllEShops:{data:{items: Shop[]} }}) => {
                 id={shop.id}
                 ecommerceStoreImages={shop.ecommerceStoreImages}
                 key={shop.id}
+                categories={shop.categories}
                />
             </CarouselItem>
           ))}
