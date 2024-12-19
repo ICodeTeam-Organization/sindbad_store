@@ -64,6 +64,12 @@ const RecentlyAdded =  ({RecentlyProducts={data:[]}}:{RecentlyProducts:{data:Pro
                 oldPrice={product.priceAfterOffer ? product.price : 0}
                 ProductDet={product.id}
                 offerSentence={product.offerSentence}
+                offerSentence={product.offerSentence}
+                oneStarCount = {product.oneStarCount}
+                twoStarCount = {product.twoStarCount}
+                threeStarCount = {product.threeStarCount}
+                fourStarCount = {product.fourStarCount}
+                fiveStarCount = {product.fiveStarCount}
               />
               </div>
               {/* <Link href={`/shop/productDetils/${product.id}`}>

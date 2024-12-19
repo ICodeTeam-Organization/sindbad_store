@@ -18,6 +18,11 @@ type props = {
   oldPrice?: number;
   ProductDet: number;
   offerSentence?: string;
+  oneStarCount?: number;
+  twoStarCount?: number;
+  threeStarCount?: number;
+  fourStarCount?: number;
+  fiveStarCount?: number;
 };
 const ProductCard = ({
   cn,
@@ -28,7 +33,22 @@ const ProductCard = ({
   oldPrice,
   ProductDet,
   offerSentence,
+  oneStarCount = 0,
+  twoStarCount = 0,
+  threeStarCount = 0,
+  fourStarCount = 0,
+  fiveStarCount = 0,
 }: props) => {
+        // حساب إجمالي التقييمات
+        const totalRatings = oneStarCount + twoStarCount + threeStarCount + fourStarCount + fiveStarCount;
+  
+        // حساب التقييم المتوسط
+        const weightedStars = totalRatings > 0
+        ? (oneStarCount * 1 + twoStarCount * 2 + threeStarCount * 3 + fourStarCount * 4 + fiveStarCount * 5) / totalRatings : 0;
+        
+        // تحديد عدد النجوم المملوءة والفارغة
+        const filledStars = Math.round(weightedStars);
+        const emptyStars = 5 - filledStars;
   return (
     <div
       className={
@@ -69,13 +89,14 @@ const ProductCard = ({
             </>}
           </div>
           <div className="flex items-center mx-3 mt-1 ">
-              <AiFillStar className="text-[#FFC62A] text-[10px]" />
-              <AiFillStar className="text-[#FFC62A] text-[10px]" />
-              <AiFillStar className="text-[#FFC62A] text-[10px]" />
-              <AiFillStar className="text-[#FFC62A] text-[10px]" />
-              <AiFillStar className="text-[#D6D6D6] text-[10px]" />
+          {[...Array(filledStars)].map((_, index) => (
+          <AiFillStar key={index} className="text-[#FFC62A] text-[10px]" />
+        ))}
+        {[...Array(emptyStars)].map((_, index) => (
+          <AiFillStar key={index} className="text-[#D6D6D6] text-[10px]" />
+        ))}
               <p className="text-[#A5A5A5] text-[9px] mr-3">
-                (4.5)
+                ({weightedStars.toFixed(1)})
               </p>
             </div>
         </Link>

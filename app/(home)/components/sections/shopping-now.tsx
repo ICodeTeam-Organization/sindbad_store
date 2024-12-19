@@ -32,6 +32,12 @@ const ShoppingNow = async () => {
                   }
                   oldPrice={product.priceAfterOffer ? product.price : 0}
                   offerSentence={product.offerSentence}
+                  offerSentence={product.offerSentence}
+                  oneStarCount = {product.oneStarCount}
+                  twoStarCount = {product.twoStarCount}
+                  threeStarCount = {product.threeStarCount}
+                  fourStarCount = {product.fourStarCount}
+                  fiveStarCount = {product.fiveStarCount}
                 />
               </div>
             ))}
