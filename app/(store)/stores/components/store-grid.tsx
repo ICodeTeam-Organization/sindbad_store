@@ -10,7 +10,7 @@ const StoreGrid = async () => {
   );
 
   const stores = storesResponse.data; 
-
+  
   if (stores.length > 0) {
     return (
       <>

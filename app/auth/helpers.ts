@@ -19,12 +19,12 @@ export async function loginUser({ phone, password }: loginFormField) {
 export async function registerUser(formData: registerFormField) {
   try {
     const res = await axios.post(
-      (process.env.NEXT_PUBLIC_BASE_URL as string) + "Auth/RegisterUserAsync",
+      (process.env.NEXT_PUBLIC_BASE_URL as string) + "Auth/RegisterUserAsync?roleName=Customer",
       {
         name: formData.name,
         phoneNumber: formData.phone,
         email: formData.email,
-        roleName: "Customer",
+        // roleName: "Customer",
         password: formData.password,
         confirmPassword: formData.confirmPassword,
       }

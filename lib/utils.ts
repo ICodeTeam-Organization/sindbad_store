@@ -4,6 +4,7 @@ import { twMerge } from "tailwind-merge";
 import { authOption } from "./authOption";
 import { getSession } from "next-auth/react";
 
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -23,3 +24,6 @@ export async function isLogged(): Promise<boolean> {
 
   return session !== null;
 }
+
+
+

@@ -60,12 +60,12 @@ const Categories = ({categories}:categoriesPropsInterface) => {
               key={category.id}
               className="basis-1/10 group"
             >
-               <CategoryCard
-                key={category.id}
-                id={category.id}
-                name={category.name}
-                imageUrl="/images/shoppingStore.svg"
-              />
+                <CategoryCard
+                    key={category.id}
+                    id={category.id}
+                    name={category.name}
+                    imageUrl={category.imageUrl || ""}
+                />
             </CarouselItem>
           ))}
         </CarouselContent>

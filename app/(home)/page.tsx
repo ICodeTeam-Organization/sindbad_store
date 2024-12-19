@@ -12,47 +12,51 @@ import RecentlyAdded from "./components/sections/recently-added";
 import Feature from "./components/sections/Feature";
 import { getApi } from "@/lib/http";
 import AllEShops from "./components/sections/all-Eshops";
-import { MainCategory, Product, Store } from "@/types/storeTypes";
-import SetCategoriesInLocalStorage from "./components/SetCategoriesInLocalStorage";
+import { MainCategory, Product, Shop, Store } from "@/types/storeTypes";
 
-export default async function Home2() {
+export default async function Home() {
   const [
     categories,
     Allstores,
+    AllEcommrce,
     Offersproducts,
     BeastSellerInWeek,
     RecentlyProducts,
-    AllCategoriesWithSub,
   ] = await Promise.all([
     getApi<{data:MainCategory[]}>(
-      "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/50"
+      "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/100000"
     ),
     getApi<{data:Store[]}>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
-    getApi<{data:Product[]}>(
-      "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/10"
+    getApi<{data:Shop[]}>(
+      "EcommercesStores/GetEcommerceStores?pageNumber=1&pageSize=20"
     ),
     getApi<{data:Product[]}>(
-      "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/10"
+      "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/30"
     ),
     getApi<{data:Product[]}>(
-      "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/10"
+      "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/30"
     ),
-    getApi<{data:{items:MainCategory[]}}>(
-      "Categories/GetAllMainCategoriesWithSubCategories/1/10000"
+    getApi<{data:Product[]}>(
+      "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/30"
     ),
   ]);
 
+  // تحويل البيانات لتتطابق مع التركيبة المتوقعة
+  const transformedAllEcommrce = {
+    data: {
+      items: AllEcommrce.data
+    }
+  };
+
   return (
-    <section className="w-full     ">
-
-      <SetCategoriesInLocalStorage AllCategoriesWihtSubcategories={AllCategoriesWithSub?.data?.items} />
-
+    <section className="w-full">
       <Hero />
       <div className="w-full xl:container mx-auto ">
-        <CategoriesSlider categories={categories.data} />
+        <CategoriesSlider />
         <ServiceCard />
         <CardsInfo />
         <Categories categories={categories?.data} />
+        <div className="mb-10" />
         <TodayOffers Offersproducts={Offersproducts} />
         <ShoppingNow />
       </div>
@@ -71,7 +75,7 @@ export default async function Home2() {
         <ShoppingNow />
       </div>
       <div className="my-10">
-        <AllEShops AllEShops={Allstores} />
+        <AllEShops AllEShops={transformedAllEcommrce} />
       </div>
       <Feature />
     </section>

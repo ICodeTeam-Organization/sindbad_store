@@ -6,6 +6,9 @@ import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
 import { Toaster as SonanerToaster } from "sonner";
+import Footer from "@/components/Footer";
+import About from "@/components/About";
+import GetInitialData from "./GetInitialData";
 
 const Noto_Kufi = Noto_Kufi_Arabic({
   weight: ["400", "700"],
@@ -25,11 +28,12 @@ export const metadata: Metadata = {
   description: "وصف لمتجر سندباد",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
   return (
     <html lang="en">
       <body
@@ -39,12 +43,16 @@ export default function RootLayout({
         <ProgressBarProvider>
           <NextAuthProvider>
             <main>
-              <ClientProviders>{children}</ClientProviders>
+              <ClientProviders>
+                {/* this to get init data like categories , favorites */}
+                <GetInitialData/>
+                {children}
+                </ClientProviders>
             </main>
             {/* <Subscribe /> */}
           </NextAuthProvider>
-          {/* <About />
-          <Footer /> */}
+          <About />
+          <Footer />
           {/* to show toaster messages */}
           <Toaster />
           <SonanerToaster richColors />

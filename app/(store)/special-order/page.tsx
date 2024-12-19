@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import AddSpecialOrder from "./components/add-special-order";
 import { Card, CardHeader } from "@/components/ui/card";
 import TabButton from "./components/tab-button";
@@ -7,8 +7,16 @@ import MyNewOrders from "./components/my-new-orders";
 import OrdersWaitingForAcceptPrice from "./components/orders-waiting-for-accept-price";
 import PreviousOrder from "./components/previous-order";
 import BreadCrumb from "@/components/BreadCrumb";
+import { useSearchParams } from "next/navigation";
 
 const SpecialOrderPage = () => {
+  const searchParams = useSearchParams();
+
+  const tab = searchParams.get("tab");
+  const category = searchParams.get("category");
+  const show = searchParams.get("sh");
+  const [showDialog, setshowDialog] = useState<boolean>(show=="1");
+
   const [MyNewOrder, setMyNewOrder] = React.useState<boolean>(true);
   const [OrdersWaitingForAccept, setOrdersWaitingForAccept] =
     React.useState<boolean>(false);
@@ -36,7 +44,13 @@ const SpecialOrderPage = () => {
         ThirdName="طلب خاص"
         ThirdDir=""
       />
-      <AddSpecialOrder />
+      <AddSpecialOrder
+        // This show dirct when the user select category from home
+        show={showDialog}
+        setShow={setshowDialog}
+        tab={tab ? Number.parseInt(tab) : 1}
+        category={category ? category : ""}
+      />
       <Card className="m-auto w-11/12 pt-0 border-0">
         <CardHeader className="pt-0 px-0 m-auto ">
           <TabButton

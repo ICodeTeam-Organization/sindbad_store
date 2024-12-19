@@ -22,19 +22,18 @@ export interface MainCategory {
 }
 
 // for e shops
-interface EcommerceStoreImage {
-  id: number;
-  imageUrl: string;
-}
-
-
 export interface Store {
-  id: number;
+  id: string;
   name: string;
   websiteLink: string;
   description: string;
   mainImageUrl: string;
-  imagesUrl:[string];
+  imagesUrl:string[];
+}
+
+export interface EcommerceStoreImage {
+  id: number;
+  imageUrl: string;
 }
 
 export interface Shop {
@@ -43,25 +42,68 @@ export interface Shop {
   urlLinkOfStore: string;
   description: string;
   logo: string;
+  categories: string[];
   ecommerceStoreImages: EcommerceStoreImage[];
 }
+
+export type FavoriteProduct = {
+  favoriteId: number;
+  productId: number;
+  customerId: string;
+  productName: string;
+  productDescription: string;
+  price: number;
+  mainImageUrl: string;
+};
+
+
+export type FavoriteStores = {
+  id?: string;
+  storeId: string;
+  storeName: string;
+  description: string;
+  imageUrl: string;
+};
+
+export type FavoriteEcommerces = {
+  id: number;
+  ecommerceStoreId: number;
+  description: string;
+  logo: string;
+  ecommerceStoreName?:string
+  urlLinkOfStore:string
+};
 
 
 //this Product type just for testing
 export type Product = {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-};
+    id: number;
+    name: string;
+    price: number;
+    priceAfterOffer: number;
+    amountYouShouldToBuyForGetOffer: number;
+    amountYouWillGetFromOffer: number;
+    offerSentence: string;
+    percentageOfDiscount: number;
+    offerStartDate: string; // Use `Date` if you want a Date object instead of ISO string
+    offerEndDate: string;   // Use `Date` if you want a Date object instead of ISO string
+    mainImageUrl: string;
+    oneStarCount: number;
+    twoStarCount: number;
+    threeStarCount: number;
+    fourStarCount: number;
+    fiveStarCount: number;
+  }
+  
 //////////////////////
 
 export type CartItem = {
   cartId: number;
-  name: string;
-  price: number;
-  priceAfterDiscount: number | null;
-  imageUrl: string;
+  productId: number,
+  name?: string;
+  price?: number;
+  priceAfterDiscount?: number | null;
+  imageUrl?: string;
   quantity: number;
-  shipCost: number;
+  shipCost?: number;
 };

@@ -8,14 +8,6 @@ import PersonButton from "./person-button";
 import { useSession } from "next-auth/react";
 import { ArrowRight } from "lucide-react";
 import React from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-// import useSignOut from "@/hooks/useSignOut";
 import DropdownMenu from "@/components/DropDownMenu";
 import { IoChevronDownOutline, IoMenu } from "react-icons/io5";
 import { GoHeart } from "react-icons/go";
@@ -27,6 +19,14 @@ import AllCategoriesMegaMenu from "./MegaMenus/AllCategoriesMegaMenu";
 import SpecialOrderMegaMenu from "./MegaMenus/SpecialOrderMegaMenu";
 import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import { useCartStore } from "@/app/stores/cartStore";
+import DropDownMenuOrderFrom from "@/components/DropDownMenuOrderFrom";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 // import {useRouter} from "next/navigation";
 
 const SearchComponent = ({
@@ -35,8 +35,6 @@ const SearchComponent = ({
     searchKeyword = str;
   },
 }) => {
-
-
   return (
     <div className="flex  px-1 h-[46px]  xl:w-full   border-[0px] rounded-[9px] shadow justify-between gap-x-1  bg-white w-full">
       <input
@@ -47,10 +45,9 @@ const SearchComponent = ({
         onChange={(e) => {
           setsearchKeyword(e.target.value);
         }}
-        
       />
       <Link
-        href={"/shop?skw="+searchKeyword}
+        href={"/shop?skw=" + searchKeyword}
         className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
       >
         <BiSearch color="black " size={24} />
@@ -65,6 +62,7 @@ const Header = () => {
   const [openNav, setopenNav] = useState<boolean>(false);
   const [searchKeyword, setsearchKeyword] = useState("");
   const { data: session, status } = useSession();
+  const {items:cartItems} = useCartStore()
   const isAuth = status === "authenticated";
   // const router = useRouter()
 
@@ -168,31 +166,26 @@ const Header = () => {
   const OrderFromAndHow = () => {
     return (
       <div className="flex mdHalf:flex-row flex-col-reverse xl:gap-6 gap-4 mdHalf:items-center  mdHalf:p-0">
-        <div className="mdHalf:flex flex-row items-center mdHalf:justify-center mdHalf:p-0 px-6">
-          <p className=" mdHalf:text-sm text-base mdHalf:m-0 mb-1"> اطلب من </p>
-          <div className="flex items-center justify-center gap-2 mdHalf:mr-1 mdHalf:px-1 mdHalf:pr-2  cursor-pointer rounded">
-            <Select dir="rtl">
-              <SelectTrigger className="bg-transparent mdHalf:px-3 outline-none selection:outline-none">
-                <SelectValue placeholder="اليمن" />
-              </SelectTrigger>
-              <SelectContent className="z-[99999999]">
-                <SelectItem value="place1">اليمن</SelectItem>
-                <SelectItem value="place2">السعودية</SelectItem>
-                <SelectItem value="place3">مصر</SelectItem>
-              </SelectContent>
-            </Select>
+        <div className="mdHalf:flex flex-row items-center mdHalf:justify-center mdHalf:p-0 px-6 z-[9999999]">
+          <DropDownMenuOrderFrom />
+        </div>
+        <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
+        <div className="mdHalf:block hidden">
+          <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0  mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] py-3 ">
+            <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
+              <p className="text-[13px] mdHalf:m-0 "> طلباتي </p>
+            </div>
           </div>
         </div>
         <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
-
         <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0 mt-2 mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] pt-3 ">
           <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
-            <p className="mdHalf:text-sm text-base mdHalf:m-0 "> كيف ؟ </p>
-            <IoChevronDownOutline className="group-hover:rotate-180 transition-transform text-base" />
+            <p className="text-[13px] mdHalf:m-0 "> كيف ؟ </p>
+            <IoChevronDownOutline className="group-hover:rotate-180 transition-transform text-[14px]" />
           </div>
 
           {/* web */}
-          <div className="hidden mdHalf:block">
+          <div className="hidden mdHalf:block ">
             <DropdownMenu menu={questions} dir="right" />
           </div>
           {/* mobile */}
@@ -204,16 +197,14 @@ const Header = () => {
               )}
             >
               {questions.map((item, index) =>
-                item.invisible ? (
-                  <></>
-                ) : (
+                (
                   <React.Fragment key={index}>
                     <li
-                      className="cursor-pointer text-slate-800 flex w-full gap-x-2 text-sm items-center rounded-md p-2 transition-all hover:bg-slate-100 focus:bg-slate-100 active:bg-slate-100 mr-4 "
+                      className="cursor-pointer text-slate-800 flex w-full gap-x-2 text-sm items-center rounded-md p-2 transition-all hover:bg-[#FF8F7E22]  mr-4 "
                       onClick={item.onclickFun}
                     >
                       {item.icon}
-                      <p className="text-slate-800 font-medium ml-2 whitespace-nowrap ">
+                      <p className="text-slate-800 font-medium ml-2 whitespace-nowrap text-[11px] ">
                         {item.title}
                       </p>
                     </li>
@@ -227,19 +218,128 @@ const Header = () => {
     );
   };
 
+  const NavMenu = ()=>(
+    <div
+    onClick={(event) => {
+      event.stopPropagation();
+    }}
+    className={cn(
+      "flex flex-col mdHalf:flex-row mdHalf:relative z-0 bg-white mdHalf:shadow-md  xl:text-sm text-xs  xl:px-4  mdHalf:justify-between justify-start  mdHalf:h-auto mdHalf:w-auto h-full w-full transition-all duration-300 xl:pr-[170px]  mdHalf:pr-[170px] ",
+    )}
+  >
+    {/* this just show in mobile */}
+    <div className="p-4 flex justify-between items-center w-full mdHalf:hidden">
+      <Image
+        className="block relative"
+        src={"/images/sedebadLogo.svg"}
+        width={80}
+        height={80}
+        alt=""
+      />
+      <div
+        className="bg-white border p-2 rounded-full relative  cursor-pointer "
+        onClick={() => {
+          setopenNav(false);
+        }}
+      >
+        <ArrowRight size={30} />
+      </div>
+    </div>
+
+    <div className=" flex flex-col mdHalf:flex-row lg:justify-end mdHalf:justify-between xl:gap-x-4   ">
+      <div className="nav-menus group">
+        <div className="nav-menus-label">
+          <IoMenu size={22} className="hidden lg:block" />
+          <p className="">كل الفئات</p>
+        </div>
+
+        <AllCategoriesMegaMenu />
+      </div>
+
+      <div className="nav-menus group">
+        <div className="nav-menus-label">
+          <p> طلب خاص </p>
+          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+        </div>
+        <SpecialOrderMegaMenu />
+      </div>
+
+      <div className="nav-menus group ">
+        <div className="nav-menus-label">
+          <p> طلب من متجر إلكتروني </p>
+          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+        </div>
+        <OrderFromEshopMegaMenu />
+      </div>
+
+      <div className="nav-menus group">
+        <div className="nav-menus-label">
+          <p> المحلات </p>
+          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+        </div>
+        <StoresMegaMenu />
+      </div>
+
+      <div className="nav-menus group">
+        <div className="nav-menus-label">
+          <p> المتاجر الإلكترونية</p>
+          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+        </div>
+        <EShopsMegaMenu />
+      </div>
+
+      <div className="nav-menus group">
+        <div className="nav-menus-label">
+          <p> طلب جملة </p>
+          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+        </div>
+        <WholesalerOrderCategoriesMegaMenu />
+      </div>
+    </div>
+
+    <div className=" flex flex-col mdHalf:flex-row justify-end lg:gap-x-5 lg:ml-5">
+      <div className="nav-menus ">
+        <Link
+          href={"/shop?hasOffer=t"}
+          className="nav-menus-label"
+        >
+          <p> عروض اليوم </p>
+        </Link>
+      </div>
+
+      <div className="nav-menus">
+        <Link
+          href={"/shop?newProducts=true"}
+          className="nav-menus-label"
+        >
+          <p> وصل حديث</p>
+        </Link>
+      </div>
+    </div>
+    {/* profile info in mobile show in nav menu */}
+    <div className="mdHalf:hidden block " >
+      <PersonButton status={status} session={session} />
+    </div>
+    <div className="mdHalf:hidden mb-10 block  relative">
+      <OrderFromAndHow />
+    </div>
+  </div>
+  )
+
   return (
     <div className="  bg-header-gradient  ">
       <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
         {/* logo section*/}
         <div>
-          <div className="p-2 px-0  lg:m-4 mdHalf:my-4 mdHalf:mx-1  hidden mdHalf:block absolute z-[999999] ">
+          <div className="p-2 px-0  cursor-pointer lg:m-4 mdHalf:my-4 mdHalf:mx-1  hidden mdHalf:block absolute z-[999999] ">
+            <Link href="/" >
             <Image
               className="block relative "
               src={"/images/sedebadLogo.svg"}
               width={130}
               height={100}
               alt=""
-            />
+            /></Link>
           </div>
 
           {/* this for mobile */}
@@ -253,19 +353,21 @@ const Header = () => {
             >
               <BiMenu className="cursor-pointer" size={40} />
             </div>
+            <Link href="/">
             <Image
-              className="block relative "
+              className="block relative cursor-pointer"
               src={"/images/sedebadLogo.svg"}
               width={80}
               height={80}
               alt=""
             />
+            </Link>
           </div>
         </div>
         {/* header => top,down */}
         <div className="flex flex-col md:w-full   ">
           {/* top section */}
-          <div className="flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center mx-5 mdHalf:mr-[170px]  ">
+          <div className="flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center ms-5 mdHalf:mr-[170px]  ">
             <div className="hidden mdHalf:block">
               <OrderFromAndHow />
             </div>
@@ -274,28 +376,33 @@ const Header = () => {
               <SearchComponent
                 searchKeyword={searchKeyword}
                 setsearchKeyword={setsearchKeyword}
-                
               />
             </div>
 
-            <div className="flex flex-row items-center xl:gap-6 md:gap-2 gap-3">
+            <div className="flex flex-row items-center  md:gap-2 gap-6">
               {isAuth && (
                 <>
                   <Link
                     href="/Favorites"
-                    className="cursor-pointer bg-[#66666611] md:bg-transparent md:p-0 p-2 rounded-full"
+                    className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500  hover:bg-[#66666611]  rounded-full"
                   >
-                    <GoHeart className="text-[#666666] mdHalf:text-[22px] text-sm " />
+                    <IoMdNotificationsOutline className="text-[#666666]  text-[20px] m-2 " />
+                  </Link>
+                  <Link
+                    href="/Favorites"
+                    className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
+                  >
+                    <GoHeart className="text-[#666666]  text-[20px] m-2 " />
                   </Link>
                   <Link
                     href="/shopping-card"
-                    className="cursor-pointer bg-[#66666611] md:bg-transparent md:p-0 p-2 rounded-full"
-                  >
-                    <BsCart className="text-[#666666] mdHalf:text-[22px] text-sm " />
+                    className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
+                  > {cartItems.length > 0 && <div className="bg-red-600 text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute" >{cartItems.length}</div>}
+                    <BsCart className="text-[#666666]  text-[20px] m-2 " />
                   </Link>
                 </>
               )}
-              <div className="cursor-pointer ">
+              <div className="cursor-pointer hidden mdHalf:block">
                 <PersonButton status={status} session={session} />
               </div>
             </div>
@@ -303,118 +410,20 @@ const Header = () => {
 
           {/* down section this section in mobile become the navbarMenu */}
           <div
-            // this container of down section of header to bgc black , this show in mobile for navmenu
-            className={cn(
-              "mdHalf:w-auto mdHalf:h-auto mdHalf:static tajawal font-bold bg-[#0000] mdHalf:visible invisible z-[99999] transition-all  w-screen h-screen fixed  ",
-              openNav && " bg-[#0006] fixed top-0 left-0 visible"
-            )}
-            onClick={() => {
-              setopenNav((o) => !o);
-            }}
+            className="tajawal z-[99999]  mdHalf:block hidden "
           >
             {/* content of navmenu */}
-            <div
-              onClick={(event) => {
-                event.stopPropagation();
-              }}
-              className={cn(
-                "flex flex-col mdHalf:flex-row mdHalf:relative fixed mdHalf:over mdHalf:translate-x-0 translate-x-[200%] right-0 top-0 bg-white shadow-md  xl:text-sm text-xs   xl:px-4  mdHalf:justify-between justify-start  mdHalf:h-auto mdHalf:w-auto h-full  w-[80%] transition-all duration-300 xl:pr-[170px]  mdHalf:pr-[170px] mdHalf:overflow-visible overflow-y-scroll overflow-x-hidden  ",
-                openNav && "translate-x-[0] z-[999999] pb-4  "
-              )}
-            >
-              {/* this just show in mobile */}
-              <div className="p-4 flex justify-between items-center w-full mdHalf:hidden">
-                <Image
-                  className="block relative"
-                  src={"/images/sedebadLogo.svg"}
-                  width={80}
-                  height={80}
-                  alt=""
-                />
-                <div
-                  className="bg-white border p-2 rounded-full relative  cursor-pointer "
-                  onClick={() => {
-                    setopenNav(false);
-                  }}
-                >
-                  <ArrowRight size={30} />
-                </div>
-              </div>
-
-              <div className=" flex flex-col mdHalf:flex-row lg:justify-end mdHalf:justify-between xl:gap-x-4   ">
-                <div className="nav-menus group">
-                  <div className="nav-menus-label">
-                    <IoMenu size={22} className="hidden lg:block" />
-                    <p className="">كل الفئات</p>
-                  </div>
-
-                  <AllCategoriesMegaMenu />
-                </div>
-
-                <div className="nav-menus group">
-                  <div className="nav-menus-label">
-                    <p> طلب خاص </p>
-                    <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-                  </div>
-                  {/* <CategoriesMegaMenu
-                    categories={categories}
-                    linkAll="/"
-                    title="فئات الطلب الخاص"
-                  /> */}
-                  <SpecialOrderMegaMenu />
-                </div>
-
-                <div className="nav-menus group ">
-                  <div className="nav-menus-label">
-                    <p> طلب من متجر إلكتروني </p>
-                    <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-                  </div>
-                  <OrderFromEshopMegaMenu />
-                </div>
-
-                <div className="nav-menus group">
-                  <div className="nav-menus-label">
-                    <p> المحلات </p>
-                    <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-                  </div>
-                  <StoresMegaMenu />
-                </div>
-
-                <div className="nav-menus group">
-                  <div className="nav-menus-label">
-                    <p> المتاجر الإلكترونية</p>
-                    <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-                  </div>
-                  <EShopsMegaMenu />
-                </div>
-
-                <div className="nav-menus group">
-                  <div className="nav-menus-label">
-                    <p> طلب جملة </p>
-                    <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-                  </div>
-                  <WholesalerOrderCategoriesMegaMenu />
-                </div>
-              </div>
-
-              <div className=" flex flex-col mdHalf:flex-row justify-end lg:gap-x-5 lg:ml-5">
-                <div className="nav-menus ">
-                  <div className="nav-menus-label">
-                    <p> عرض اليوم </p>
-                  </div>
-                </div>
-
-                <div className="nav-menus">
-                  <div className="nav-menus-label">
-                    <p> وصل حديث</p>
-                  </div>
-                </div>
-              </div>
-              <div className="mdHalf:hidden block z-[9999999] relative">
-                <OrderFromAndHow />
-              </div>
-            </div>
+             <NavMenu/>
           </div>
+
+         <div className="mdHalf:hidden" >
+         <Sheet open={openNav} >
+            <SheetContent side="right" className="w-[90%] [&>button]:hidden overflow-y-auto p-0 m-0  " >
+                 <NavMenu/>
+            </SheetContent>
+          </Sheet>
+         </div>
+          
         </div>
       </div>
       {/* serach component for mobiles */}

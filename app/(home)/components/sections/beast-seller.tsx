@@ -20,8 +20,8 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
 
 
   return (
-    <div className="container pt-10 mx-autocontainer mx-auto ">
-      <SectionTitle title={"الاكثر مبيعا في اسبوع"} />
+    <div className=" mx-auto ">
+      <SectionTitle title={"الاكثر مبيعا في اسبوع"} href="/shop?bestseller=true" />
       <div className="w-full" >
      <Carousel
      
@@ -42,11 +42,11 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
       }),
     ]}
       className="m-auto cursor-pointer md:w-[88%] sm:w-[85%] w-[100%]">
-        <CarouselContent dir="rtl">
+        <CarouselContent dir="rtl" className="py-10" >
           {BeastSellerInWeek?.data?.map((product: any) => (
             <CarouselItem
               key={product.id}
-              className="pl-0 ml-4 xlHalf:basis-1/6 2lg:basis-[22%] mdHalf:basis-[25%] 2sm:basis-[35%] sm:basis-[42%] 2xs:basis-[34%] 1xs:basis-[45%] basis-1/2 rounded-t-[8px]"
+              className="pl-0 ml-4 xlHalf:basis-1/6 2lg:basis-[22%] mdHalf:basis-[25%] 2sm:basis-[35%] sm:basis-[42%] 2xs:basis-[34%] 1xs:basis-[45%] basis-1/2 rounded-t-[8px] "
             >
               <div className="sm:w-[220px]  1xs:w-[180px] w-full" >
               <ProductCard
@@ -54,8 +54,20 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
                 id={product.id}
                 image={product.mainImageUrl}
                 productName={product.name}
-                price={product.price}
+                price={
+                  product.priceAfterOffer
+                    ? product.priceAfterOffer
+                    : product.price
+                }
+                oldPrice={product.priceAfterOffer ? product.price : 0}
                 ProductDet={product.id}
+                offerSentence={product.offerSentence}
+                offerSentence={product.offerSentence}
+                oneStarCount = {product.oneStarCount}
+                twoStarCount = {product.twoStarCount}
+                threeStarCount = {product.threeStarCount}
+                fourStarCount = {product.fourStarCount}
+                fiveStarCount = {product.fiveStarCount}
               />
               </div>
               {/* <Link href={`/shop/productDetils/${product.id}`}>

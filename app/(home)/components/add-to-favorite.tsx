@@ -1,5 +1,5 @@
 "use client";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import axios from "axios";
 import React from "react";
+import { useFavorite } from "@/app/stores/favoritesStore";
+import { cn } from "@/lib/utils";
 
 type Props = {
     id: string | number;
@@ -19,6 +21,7 @@ const AddToFavorite = ({ id }: Props) => {
     const redirct = useRouter();
     const { data: session, status } = useSession();
     const { toast } = useToast();
+    const {productsIds,addProductToFavorite,delProductFromFavorite} = useFavorite()
 
     // add to favorite
     const mutationFav = useMutation({
@@ -36,14 +39,8 @@ const AddToFavorite = ({ id }: Props) => {
             );
             return res.data;
         },
-        onSuccess: () => {
-            toast({
-                variant: 'default',
-                description: 'تم إضافة المنتج إلى المفضلة بنجاح',
-                style: {
-                    backgroundColor: 'green',
-                },
-            });
+        onSuccess: (data) => {
+            addProductToFavorite(+id)
         },
         onError: (error: any) => {
             const errorMessage =
@@ -56,13 +53,44 @@ const AddToFavorite = ({ id }: Props) => {
             });
         },
     });
+    const mutationFavDel = useMutation({
+        mutationFn: async () => {
+            const res = await axios.delete(
+                `https://icode-sendbad-store.runasp.net/api/Favorites/DeleteFavorite?productId=${id}`,
+                {
+                    headers: {
+                        "Accept-Language": "ar",
+                        "Content-type": "multipart/form-data",
+                        Authorization: `Bearer ${session?.user.data.token}`,
+                    },
+                }
+            );
+            return res.data;
+        },
+        onSuccess: (data) => {
+            delProductFromFavorite(+id)
+        },
+        onError: (error: any) => {
+            const errorMessage =
+                error.response?.data?.message || 'حدث خطأ أثناء حذف المنتج إلى المفضلة';
+
+            toast({
+                variant: 'destructive',
+                description: `خطأ: ${errorMessage}`,
+                action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
+            });
+        },
+    });
+
 
     const handleAddToFav = () => {
-        console.log(`${id} hi`)
-        
         if (status === "unauthenticated") redirct.push("/auth");
         else if (status === "authenticated") {
-            mutationFav.mutate();
+            if (productsIds.includes(+id)) {
+                mutationFavDel.mutate()
+            } else {
+                mutationFav.mutate();
+            }
         }
     };
 
@@ -71,14 +99,15 @@ const AddToFavorite = ({ id }: Props) => {
             disabled={mutationFav.isPending}
             variant={"outline"}
             onClick={() => handleAddToFav()}
-            className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1"
+            className={cn("cursor-pointer group hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-sm:w-[30px] max-sm:h-[30px] w-[50px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1",productsIds.includes(+id)&&"bg-[#F55157]")}
         >
             {
-                mutationFav.isPending ? (
+                mutationFav.isPending || mutationFavDel.isPending  ? (
                     <Loader2 className="animate-spin" />
-                ) : (
-                    <AiOutlineHeart className="w-[20px] h-[20px]" color="#D5D5D5" />
-                )
+                ) : (<>
+                    <AiOutlineHeart className={cn("w-[20px] h-[20px]  group-hover:hidden",productsIds.includes(+id)&&"hidden")} color="#D5D5D5" />
+                    <AiFillHeart className={cn("w-[20px] h-[20px] hidden group-hover:block",productsIds.includes(+id)&&"block")} color="#fff" />
+                    </> )
             }
         </Button>
     )

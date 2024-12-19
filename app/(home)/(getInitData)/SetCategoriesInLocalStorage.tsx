@@ -18,7 +18,7 @@ const setCategories = useCategoriesDataStore((state) => state.setCategories);
     }else{
         setCategories(AllCategoriesWihtSubcategories || [])
     }
-  }, [AllCategoriesWihtSubcategories]);
+  }, []);
 
   return null; // No UI needed
 }

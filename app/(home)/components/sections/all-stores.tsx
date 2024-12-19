@@ -12,6 +12,8 @@ import {
 import Autoplay from "embla-carousel-autoplay"
 import Link from "next/link";
 import { useState } from "react";
+import { Store } from "@/types/storeTypes";
+import StoresCardCarsoul from "../StoresCardCarsoul";
 
 const AllStores =  ({Allstores}:{Allstores:any}) => {
  
@@ -53,60 +55,20 @@ const AllStores =  ({Allstores}:{Allstores:any}) => {
         <CarouselNext className="  text-[#F58634]" />
         </div>
         <CarouselContent>
-          {Allstores?.data?.map((store: any) => (
+          {Allstores?.data?.map((store: Store) => (
             <CarouselItem
               key={store.id}
               dir="rtl"
-              className="group hover:cursor-pointer flex items-center pl-0  ml-4 xl:basis-1/3 mdHalf:basis-1/2 basis-1/1 border-[1px] border-gray-300 rounded-sm bg-white sm:w-[520px] w-[90vw]   hover:border-[#F58634] transition-all duration-700"
+              className="group overflow-hidden hover:cursor-pointer flex items-center pl-0  ml-4 xl:basis-1/3 mdHalf:basis-1/2 basis-1/1 border-[1px] border-gray-300 rounded-sm bg-white sm:w-[520px] w-[90vw]   hover:border-[#F58634] transition-all duration-700"
             >
-              <div className=" flex justify-center items-center mdHalf:w-[196px] mdHalf:h-[140px] w-[156px] h-[100px] relative">
-                {store.mainImageUrl === null ? (
-                  <h1>لاتوجد صورة للمتجر</h1>
-                ) : (
-                  <Image
-                    src={store?.mainImageUrl?.startsWith("http")?store.mainImageUrl:"/"+store.mainImageUrl}
-                    alt={"store"}
-                    layout="fill"
-                  />
-                )}
-              </div>
-              <div className="flex-1 flex flex-col justify-between h-full py-2">
-                <div>
-                    <h1 className="mdHalf:text-md text-sm font-bold text-right line-clamp-1 mt-1">
-                      {store.name} 
-                    </h1>
-                    <p className="mdHalf:text-sm text-[11px]  line-clamp-1 text-[#666666]">
-                      {store.description ? store.description : " ."}
-                    </p>
-                    <div className="flex items-center  max-sm:w-20 mb-1">
-                      <AiFillStar className="text-[#FFC62A] text-xs" />
-                      <AiFillStar className="text-[#FFC62A] text-xs" />
-                      <AiFillStar className="text-[#FFC62A] text-xs" />
-                      <AiFillStar className="text-[#FFC62A] text-xs" />
-                      <AiFillStar className="text-[#D6D6D6] text-xs" />
-                      <p className="text-[#A5A5A5] text-[12px] mr-3">
-                        (4.5)
-                      </p>
-                    </div>
-                </div>
-                {store.websiteLink === null ? (
-                 <div className=" w-[96%] p-2  cursor-pointer   rounded-sm border-[1px] group-hover:border-0 group-hover:bg-[#F58634] group-hover:text-white group-hover:border-transparent transition-all duration-300 flex justify-center items-center border-black">
-                 <h1 className="text-base">
-                   لا يوجد رابط للمتجر
-                 </h1>
-                 <IoIosArrowBack />
-               </div>
-                ) : (
-                  <Link href={store.websiteLink}>
-                    <div className=" w-[96%] p-2 cursor-pointer  rounded-sm border-[1px] group-hover:border-0 group-hover:bg-[#F58634] group-hover:text-white group-hover:border-transparent transition-all duration-300 flex justify-center items-center border-black">
-                      <h1 className="text-base">
-                        زيارة المتجر
-                      </h1>
-                      <IoIosArrowBack />
-                    </div>
-                  </Link>
-                )}
-              </div>
+              <StoresCardCarsoul
+               description={store?.description}
+               id={store?.id}
+               mainImageUrl={store?.mainImageUrl}
+               name={store?.name}
+               websiteLink={store?.websiteLink}
+               imagesUrl={store?.imagesUrl}
+              />
             </CarouselItem>
           ))}
         </CarouselContent>

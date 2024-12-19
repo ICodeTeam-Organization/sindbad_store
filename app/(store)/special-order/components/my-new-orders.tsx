@@ -41,7 +41,9 @@ const fetchProducts = async (pageNumber: number, pageSize: number) => {
   const response = await getApi<ApiResponse>(
     `SpecialProducts/GetAllSpecialProductsForViewInSpecialProductsPageByFilter?searchKeyWord=0&PageSize=${pageSize}&PageNumber=${pageNumber}`
   );
-  return response;
+  console.log("response")
+  console.log(response)
+  return response.data;
 };
 
 const MyNewOrder = () => {
@@ -57,7 +59,12 @@ const MyNewOrder = () => {
     // refetch,
   } = useQuery({
     queryKey: ["newSpecialOrder", pageNumber, pageSize],
-    queryFn: () => fetchProducts(pageNumber, pageSize),
+    queryFn: () => {
+      console.log("newOrders")
+      console.log(newOrders)
+      fetchProducts(pageNumber, pageSize)
+      console.log(newOrders)
+    },
     // enabled: false, // عدم تفعيل الاستعلام تلقائيًا
   });
 

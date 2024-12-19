@@ -23,7 +23,7 @@ function ServiceCard() {
     {
       name: "طلب من متجر إلكتروني",
       image: onlineStores,
-      href: "/e-commerce/",
+      href: "/special-order?sh=1&tab=3",
       color: "#F57C00",
       transpColor: "#F57C0050",
       desc: " كل المتاجر الإلكترونية وضعناها بين يديك بأسعار منافسة ..",
@@ -31,7 +31,7 @@ function ServiceCard() {
     {
       name: "العروض",
       image: discounts,
-      href: "/shop",
+      href: "/shop?newProducts=true",
       color: "#CE2334",
       transpColor: "#CE233450",
 
