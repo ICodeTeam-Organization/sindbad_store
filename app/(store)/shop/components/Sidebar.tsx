@@ -1,6 +1,6 @@
 "use client";
 
-import React  from "react";
+import React from "react";
 
 import PriceRange from "./price-range";
 
@@ -14,10 +14,15 @@ import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 import { MainCategory } from "@/types/storeTypes";
 import { Checkbox } from "@/components/ui/checkbox";
 
-
 const Sidebar = () => {
-  const { setPriceRange, setStoreId, setHasOffer, setNewProduct , filters } =
-    useShopFiltersStore();
+  const {
+    setPriceRange,
+    setStoreId,
+    setHasOffer,
+    setNewProduct,
+    filters,
+    setBrandId,
+  } = useShopFiltersStore();
   const { categories } = useCategoriesDataStore();
 
   const brandList = [
@@ -50,7 +55,6 @@ const Sidebar = () => {
     "Microsoft",
     "Tablet",
   ];
- 
 
   return (
     <aside className=" h-full ">
@@ -110,8 +114,17 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <Brands brands={brandList} />
-      <PopularTags tags={tags} />
+      <Brands
+        brand={filters.brandId || 0}
+        onSelectBrand={(id) => {
+          if (id == filters.brandId) {
+            setBrandId(0)
+          } else {
+            setBrandId(id);
+          }
+        }}
+      />
+      {/* <PopularTags tags={tags} /> */}
     </aside>
   );
 };

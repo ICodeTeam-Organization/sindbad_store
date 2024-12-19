@@ -8,6 +8,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { PanelLeft } from "lucide-react";
 import { useState } from "react";
@@ -16,6 +17,14 @@ import { FaCaretDown } from "react-icons/fa";
 import { FcDown, FcLeft } from "react-icons/fc";
 import { GrDown } from "react-icons/gr";
 import { RiArrowLeftLine } from "react-icons/ri";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const orderFrom = [
   {
@@ -51,13 +60,23 @@ const orderFrom = [
 ];
 
 export default function DropDownMenuOrderFrom() {
+  const { toast } = useToast();
+
+  const [showAlert, setShowAlert] = useState(false)
+
   const [selectedCountry, setselectedCountry] = useState({
     name: "السعودية",
     key: "SA",
   });
 
   const onSelect = (item: { name: string; key: string }) => {
-    setselectedCountry(item)
+    if (item.key != selectedCountry.key) {
+      toast({
+        variant: "destructive",
+        description: `سيتم إضافة هذي المناطق قريبا`,
+      });
+    }
+    // setselectedCountry(item)
   };
 
   return (
@@ -74,7 +93,7 @@ export default function DropDownMenuOrderFrom() {
           <DropdownMenuGroup>
             {orderFrom.map((ele) =>
               ele.sub ? (
-                <DropdownMenuSub key={ele.name} >
+                <DropdownMenuSub key={ele.name}>
                   <DropdownMenuSubTrigger
                     onClick={() => onSelect({ name: ele.name, key: ele.key })}
                     className={cn(
@@ -107,7 +126,7 @@ export default function DropDownMenuOrderFrom() {
                 <DropdownMenuItem
                   key={ele.name}
                   className={cn(
-                    'cursor-pointer',
+                    "cursor-pointer",
                     selectedCountry.key == ele.key && "bg-slate-100"
                   )}
                   onClick={() => onSelect({ name: ele.name, key: ele.key })}
