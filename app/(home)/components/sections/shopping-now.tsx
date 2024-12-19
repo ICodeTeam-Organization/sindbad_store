@@ -31,6 +31,7 @@ const ShoppingNow = async () => {
                       : product.price
                   }
                   oldPrice={product.priceAfterOffer ? product.price : 0}
+                  offerSentence={product.offerSentence}
                 />
               </div>
             ))}

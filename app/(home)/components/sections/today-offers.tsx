@@ -124,6 +124,7 @@ font-size: 20px;
                     }
                     ProductDet={product.id}
                     oldPrice={product.priceAfterOffer ? product.price : 0}
+                    offerSentence={product.offerSentence}
                   />
                 </div>
               </CarouselItem>

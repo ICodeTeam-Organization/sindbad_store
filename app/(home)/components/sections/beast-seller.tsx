@@ -61,6 +61,7 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
                 }
                 oldPrice={product.priceAfterOffer ? product.price : 0}
                 ProductDet={product.id}
+                offerSentence={product.offerSentence}
               />
               </div>
               {/* <Link href={`/shop/productDetils/${product.id}`}>

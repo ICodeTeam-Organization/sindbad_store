@@ -17,6 +17,7 @@ type props = {
   price: number;
   oldPrice?: number;
   ProductDet: number;
+  offerSentence?: string;
 };
 const ProductCard = ({
   cn,
@@ -26,6 +27,7 @@ const ProductCard = ({
   price,
   oldPrice,
   ProductDet,
+  offerSentence,
 }: props) => {
   return (
     <div
@@ -36,6 +38,8 @@ const ProductCard = ({
     >
       <Link href={`/shop/productDetils/${ProductDet}`} className="" >
         <div className="w-full h-[180px] overflow-hidden relative  " >
+          {offerSentence ? <span className="OfferSentence ">{offerSentence}</span>: null}
+          
         <SafeImage
             src={image} // رابط الصورة
             alt="صورة منتج"
