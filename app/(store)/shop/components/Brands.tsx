@@ -11,6 +11,7 @@ interface BrandsProps {
 }
 
 const Brands: React.FC<BrandsProps> = ({ brand, onSelectBrand }) => {
+  
   const { data, isLoading } = useQuery<{
     data: { id: number; name: string }[];
   }>({

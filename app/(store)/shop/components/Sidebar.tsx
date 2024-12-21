@@ -13,6 +13,8 @@ import StoresSearchSelector from "./StoresSearchSelector";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 import { MainCategory } from "@/types/storeTypes";
 import { Checkbox } from "@/components/ui/checkbox";
+import { BiReset } from "react-icons/bi";
+import { GrPowerReset } from "react-icons/gr";
 
 const Sidebar = () => {
   const {
@@ -22,6 +24,7 @@ const Sidebar = () => {
     setNewProduct,
     filters,
     setBrandId,
+    resetFilters
   } = useShopFiltersStore();
   const { categories } = useCategoriesDataStore();
 
@@ -57,9 +60,17 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className=" h-full ">
+    <aside className=" h-full  tajawal">
+
+        <div className="mb-8 flex gap-x-2 items-center cursor-pointer" onClick={resetFilters}  >
+            <GrPowerReset size={18}  />
+            <p className="text-sm" > إعادة ضبط الفلاتر </p> 
+         </div>
+
+         {/* today offers and new products filter */}
       <div className=" mb-3 flex-row flex items-center justify-start mt-10 mdHalf:mt-0 ">
-        <div className="flex items-center space-x-2  ">
+       
+         <div className="flex items-center space-x-2  ">
           <Checkbox
             id="hasOffers"
             checked={filters.hasOffer == "t"}
@@ -71,7 +82,7 @@ const Sidebar = () => {
           >
             عروض اليوم
           </label>
-        </div>
+         </div>
 
         <div className="flex items-center space-x-2 ">
           <Checkbox

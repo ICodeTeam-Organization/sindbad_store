@@ -3,5 +3,6 @@ export interface StoreCardProps {
   name: string;
   websiteLink: string;
   imagesUrl: string[];
+  mainImageUrl: string;
   storeCategories?: string[];
 }

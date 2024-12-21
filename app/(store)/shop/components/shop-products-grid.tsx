@@ -54,6 +54,7 @@ const ShopProductsGrid = ({ allProducts }: any) => {
         maxPrice: filters.price[1],
         mainCategories: [...filters.cats.map((id) => +id)],
         subCategories: [...filters.subCats.map((id) => +id)],
+        brandId:filters.brandId || 0
       };
       // Remove fields that have invalid values (0 or empty string)
       const filteredBody = Object.fromEntries(
@@ -185,11 +186,11 @@ const ShopProductsGrid = ({ allProducts }: any) => {
                     ProductDet={+product.id}
                     image={product.mainImageUrl}
                     price={
-                      product.priceAfterDiscount
+                      !!(product.priceAfterDiscount)
                         ? product.priceAfterDiscount
                         : product.priceBeforeDiscount
                     }
-                    oldPrice={product.priceBeforeDiscount}
+                    oldPrice={product.priceAfterDiscount? product.priceBeforeDiscount : null}
                     productName={product.name}
                   />
                 </div>

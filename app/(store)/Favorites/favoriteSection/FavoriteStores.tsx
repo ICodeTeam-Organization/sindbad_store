@@ -45,8 +45,10 @@ function FavoriteStores() {
               key={store.storeId}
               id={store.storeId}
               name={store.storeName}
-              imagesUrl={store.imageUrl}
-              description={store.description}
+              imagesUrl={[]}
+              storeCategories={[]}
+              mainImageUrl={store.imageUrl}
+              websiteLink=""
             />
           ))}
         </div>

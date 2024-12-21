@@ -76,12 +76,12 @@ const ProductCard = ({
             <strong>{productName}</strong>
           </p>
           <div className="text-right flex justify-start items-center ">
-            <p className="max-md:pr-3 pr-5 max-md:text-xs text-xl text-[#F55157]">
-              <strong>{price}</strong>
+            <p className="max-md:pr-3 pr-5 max-md:text-xs text-[16px] text-[#F55157]">
+              <strong>{price}</strong> <span className="text-[13px]" >رس</span>
             </p>
             { (!!oldPrice) && <>
               <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px] line-through text-[#9C9C9C]">
-              {oldPrice} 
+              {oldPrice}رس 
             </p>
             <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px]  text-[#9C9C9C]">
                خصم {calculateDiscountPercentage(oldPrice,price).toFixed(2)}%

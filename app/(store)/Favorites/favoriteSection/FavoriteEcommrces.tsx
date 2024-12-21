@@ -47,11 +47,11 @@ function FavoriteEcommrces() {
             <E_commerceCard
               key={ecommrce.ecommerceStoreId}
               name={ecommrce?.ecommerceStoreName+""}
-              mainImageUrl={ecommrce?.logo}
-              storeCategories={[]}
-              imagesUrl={[]}
+              logo={ecommrce?.logo}
               LinkOFStore={ecommrce?.urlLinkOfStore}
-              id={ecommrce.ecommerceStoreId+""}
+              id={ecommrce.ecommerceStoreId}
+              categories={[]}
+              ecommerceStoreImages={[]}
             />
           ))}
         </div>

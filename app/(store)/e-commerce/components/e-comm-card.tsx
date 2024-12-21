@@ -20,6 +20,8 @@ const E_commerceCard = ({
     LinkOFStore,
     description,
     logo,
+    categories,
+    ecommerceStoreImages,
 }: E_commerceCardProps) => {
   const {
     favoriteEcommerceIds,

@@ -12,6 +12,7 @@ type ShopFiltersStore = {
     pageNumber: number;
     pageSize: number;
     brandId: number | null;
+    tagId: number | null; // Added tagId
   };
   initState: {
     price: [number, number];
@@ -24,6 +25,7 @@ type ShopFiltersStore = {
     pageNumber?: number;
     pageSize?: number;
     brandId: number | null;
+    tagId: number | null; // Added tagId
   };
   setPriceRange: (range: [number, number]) => void;
   setStoreId: (id: string) => void;
@@ -35,6 +37,7 @@ type ShopFiltersStore = {
   setPageNumber: (page: number) => void;
   setPageSize: (size: number) => void;
   setBrandId: (id: number | null) => void;
+  setTagId: (id: number | null) => void; // Added setTagId
   resetFilters: () => void;
   setFiltersFromObject: (newFilters: ShopFiltersStore["filters"]) => void;
   toggleCat: (cat: string) => void;
@@ -52,6 +55,7 @@ const initState = {
   pageNumber: 1,
   pageSize: 40,
   brandId: null,
+  tagId: null, // Added tagId to initState
 };
 
 export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
@@ -137,6 +141,14 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       filters: {
         ...state.filters,
         brandId: id,
+      },
+    })),
+
+  setTagId: (id) => // Added setTagId method
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        tagId: id,
       },
     })),
 

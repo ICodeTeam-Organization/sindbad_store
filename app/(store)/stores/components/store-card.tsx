@@ -14,7 +14,7 @@ import Link from "next/link";
 import { deleteApi, postApi } from "@/lib/http";
 import SafeImage from "@/components/SafeImage";
 
-const StoreCard = ({ id, name , imagesUrl }: StoreCardProps) => {
+const StoreCard = ({ id, name , mainImageUrl }: StoreCardProps) => {
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
@@ -102,7 +102,7 @@ const StoreCard = ({ id, name , imagesUrl }: StoreCardProps) => {
     >
       <Link href={linkToStore} >
       <SafeImage
-          src={imagesUrl[0]}
+          src={mainImageUrl}
           alt={name}
           className="w-full h-[220px] object-cover "
           width={380}
@@ -115,9 +115,9 @@ const StoreCard = ({ id, name , imagesUrl }: StoreCardProps) => {
          <h2 className="font-bold  mb-4">{name}</h2>
       </Link>
         <div className="flex flex-wrap   w-full  gap-x-1 ">
-          <button className="flex-1 min-w-[70px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
+          <Link href={"/shop?storeId="+id} className="flex-1 min-w-[70px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
             عرض المنتجات
-          </button>
+          </Link>
           <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
             متجر المحل
           </button>
