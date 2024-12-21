@@ -5,23 +5,28 @@ import { useSession } from "next-auth/react";
 import { FavoriteEcommerces } from "@/types/storeTypes";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import E_commerceCard from "../../e-commerce/components/e-comm-card";
+import { getApi } from "@/lib/http";
 
 function FavoriteEcommrces() {
-  const { data: authData } = useSession();
+  const { data: authData , status } = useSession();
   const { data, isLoading } = useQuery<{
     data: { data: {items:FavoriteEcommerces[]} };
   }>({
     queryKey: ["GetFavoriteEcommerceStores"],
     queryFn: async () =>
-      await axios.get(
-        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/GetFavoriteEcommerceStores`,
+      await getApi(
+        `FavoriteShop/GetFavoriteEcommerceStores`,
         {
           headers: {
             Authorization: `Bearer ${authData?.user.data.token}`,
           },
         }
       ),
+      enabled:status == "authenticated",
   });
+
+
+  
 
   if (isLoading) {
     return (
@@ -36,7 +41,7 @@ function FavoriteEcommrces() {
   }
 
 
-  if (data?.data && data?.data.data.items.length > 0) {
+  if (data?.data?.data && data?.data.data.items.length > 0) {
     return (
       <>
         <div className="px-10 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
@@ -56,9 +61,11 @@ function FavoriteEcommrces() {
     );
   } else {
     return (
-      <p className="text-center text-2xl font-bold py-12">
-        لايتوفر أي متجر في الوقت الحالي
-      </p>
+      <div className="h-[65vh] flex items-center justify-center">
+        <p className="text-center text-lg tajawal font-bold py-12">
+          لا توجد متاجر في المفضلة
+        </p>
+      </div>
     );
   }
 }

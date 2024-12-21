@@ -7,10 +7,11 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import axios from "axios";
 import React from "react";
 import { useFavorite } from "@/app/stores/favoritesStore";
 import { cn } from "@/lib/utils";
+import { deleteApi, postApi } from "@/lib/http";
+import { FavoriteProduct } from "@/types/storeTypes";
 
 type Props = {
     id: string | number;
@@ -26,9 +27,8 @@ const AddToFavorite = ({ id }: Props) => {
     // add to favorite
     const mutationFav = useMutation({
         mutationFn: async () => {
-            const res = await axios.post(
-                `https://icode-sendbad-store.runasp.net/api/Favorites/AddProductToFavorite/${id}`,
-                {},
+            const res = await postApi<{data:FavoriteProduct}>(
+                `Favorites/AddProductToFavorite/${id}`,
                 {
                     headers: {
                         "Accept-Language": "ar",
@@ -55,8 +55,8 @@ const AddToFavorite = ({ id }: Props) => {
     });
     const mutationFavDel = useMutation({
         mutationFn: async () => {
-            const res = await axios.delete(
-                `https://icode-sendbad-store.runasp.net/api/Favorites/DeleteFavorite?productId=${id}`,
+            return await deleteApi<{data:string}>(
+                `Favorites/DeleteFavorite?productId=${id}`,
                 {
                     headers: {
                         "Accept-Language": "ar",
@@ -65,9 +65,8 @@ const AddToFavorite = ({ id }: Props) => {
                     },
                 }
             );
-            return res.data;
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             delProductFromFavorite(+id)
         },
         onError: (error: any) => {

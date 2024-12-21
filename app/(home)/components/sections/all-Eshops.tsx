@@ -20,9 +20,6 @@ const AllEShops =  ({AllEShops}:{AllEShops:{data:{items: Shop[]} }}) => {
   
   const [IsHover, setIsHover] = useState(true)
 
-  console.log("AllEShops: ")
-  console.log(AllEShops)
-
   return (
     <div className="bg-[#F8F8F8] w-full">
      <div className="xl:container mx-auto relative" >

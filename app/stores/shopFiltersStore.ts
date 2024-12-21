@@ -50,7 +50,7 @@ const initState = {
   hasOffer: "f",
   newProduct: "f",
   pageNumber: 1,
-  pageSize: 30,
+  pageSize: 40,
   brandId: null,
 };
 

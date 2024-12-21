@@ -47,7 +47,7 @@ const SearchComponent = ({
         }}
       />
       <Link
-        href={"/shop?skw=" + searchKeyword}
+        href={"/shop?productName=" + searchKeyword}
         className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
       >
         <BiSearch color="black " size={24} />

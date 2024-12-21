@@ -14,6 +14,7 @@ import { ToastAction } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
 import { DivideCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { deleteApi, postApi } from "@/lib/http";
 
 const StoreCard = ({ id, name, imagesUrl, description }: StoreCardProps) => {
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
@@ -27,22 +28,22 @@ const StoreCard = ({ id, name, imagesUrl, description }: StoreCardProps) => {
 
   const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/AddStore`,
-        {
-          storeId: id,
-        },
+      return await postApi(
+        `FavoriteShop/AddStore`,
+        
         {
           headers: {
             "Accept-Language": "ar",
             "Content-type": "application/json",
             Authorization: `Bearer ${session?.user.data.token}`,
           },
+          body:{
+            storeId: id,
+          },
         }
       );
-      return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       addStoreToFavorite(id + "");
     },
     onError: (error: any) => {
@@ -60,17 +61,16 @@ const StoreCard = ({ id, name, imagesUrl, description }: StoreCardProps) => {
   const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
-        const res = await axios.delete(
-          process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/RemoveStore/` + id,
+        return await deleteApi(
+          `FavoriteShop/RemoveStore/` + id,
           {
             headers: {
               Authorization: `Bearer ${session?.user.data.token}`,
             },
           }
         );
-        return res.data;
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         delStoreToFavorite(id + "");
       },
       onError: (error: any) => {
