@@ -1,11 +1,11 @@
 import React from "react";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { Loader2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { postApi } from "@/lib/http";
 
 
 type AddToBasketProps = {
@@ -21,20 +21,20 @@ const AddToBasket = ({ productId }: AddToBasketProps) => {
 
   const mutation = useMutation({
     mutationFn: async () => {
-      const res = await axios.post(
-        `https://icode-sendbad-store.runasp.net/api/Cart/AddProductToCart?productId=${productId}`,
-        {
-          quantity: 1,
-        },
+      return await postApi(
+        `Cart/AddProductToCart?productId=${productId}`,
         {
           headers: {
             "Accept-Language": "ar",
             "Content-type": "multipart/form-data",
             Authorization: `Bearer ${session?.user.data.token}`,
           },
+          body:{
+            quantity: 1,
+          },
         }
       );
-      return res;
+    
     },
     onSuccess: () => {
       toast({

@@ -31,48 +31,56 @@ const ShopProductsGrid = ({ allProducts }: any) => {
     setFiltersFromObject,
     initState: initialFilters,
   } = useShopFiltersStore();
-  
+
   const [firstRender, setfirstRender] = useState(true);
 
-  const { isPending, data, fetchNextPage, isFetchingNextPage, hasNextPage } =
-    useInfiniteQuery<ProductsResponsive>({
-      queryKey: ["GetProductsWitheFilter", filters],
-      queryFn: async ({ pageParam }) => {
-        const body = {
-          pageNumber: pageParam || 1,
-          pageSize: filters.pageSize || 30,
-          todayOffers: filters.hasOffer == "t",
-          categoryId: null,
-          storeId: filters.storeId || "",
-          productName: filters.productName || "",
-          isDeleted: false,
-          minPrice: filters.price[0],
-          maxPrice: filters.price[1],
-        };
-        // Remove fields that have invalid values (0 or empty string)
-        const filteredBody = Object.fromEntries(
-          Object.entries(body).filter(([key, value]) => {
-            // Only keep the entries where value is not 0 or empty string
-            return value !== 0 && value !== "" && value;
-          })
-        );
+  const {
+    isPending,
+    data,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    isFetched,
+  } = useInfiniteQuery<ProductsResponsive>({
+    queryKey: ["GetProductsWitheFilter", filters],
+    queryFn: async ({ pageParam }) => {
+      const body = {
+        pageNumber: pageParam || 1,
+        pageSize: filters.pageSize,
+        todayOffers: filters.hasOffer == "t",
+        storeId: filters.storeId || "",
+        productName: filters.productName || "",
+        minPrice: filters.price[0],
+        maxPrice: filters.price[1],
+        mainCategories: [...filters.cats.map((id) => +id)],
+        subCategories: [...filters.subCats.map((id) => +id)],
+      };
+      // Remove fields that have invalid values (0 or empty string)
+      const filteredBody = Object.fromEntries(
+        Object.entries(body).filter(([key, value]) => {
+          // Only keep the entries where value is not 0 or empty string
+          return value !== 0 && value !== "" && value;
+        })
+      );
 
-        const response = await postApi(
-          `Products/GetProductsWitheFilter?returnDtoName=2`,
-          {
-            body: filteredBody,
-          }
-        );
-        return response as ProductsResponsive;
-      },
-      getNextPageParam: (lastPage) => {
-        if (lastPage?.data.currentPage < lastPage?.data.totalPages) {
-          return lastPage?.data.currentPage + 1;
+      console.log("filteredBody of filters shop", filteredBody);
+
+      const response = await postApi(
+        `Products/GetProductsWitheFilter?returnDtoName=2`,
+        {
+          body: filteredBody,
         }
-        return undefined;
-      },
-      initialPageParam: 1,
-    });
+      );
+      return response as ProductsResponsive;
+    },
+    getNextPageParam: (lastPage) => {
+      if (lastPage?.data.currentPage < lastPage?.data.totalPages) {
+        return lastPage?.data.currentPage + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
+  });
 
   const updateQueryParams = () => {
     const newParams = new URLSearchParams();
@@ -160,6 +168,16 @@ const ShopProductsGrid = ({ allProducts }: any) => {
         {!isPending ? (
           data?.pages && data?.pages?.length > 0 ? (
             data?.pages?.map((page) => {
+              if (page?.data?.items?.length == 0 && isFetched) {
+                return (
+                  <div className="h-[65vh] flex items-center justify-center">
+                    <p className="text-center text-lg tajawal font-bold py-12">
+                      لايتوفر أي منتج في الوقت الحالي
+                    </p>
+                  </div>
+                );
+              }
+
               return page.data.items.map((product: any) => (
                 <div key={product.id} className="sm:w-[220px]  w-[180px] ">
                   <ProductCard
@@ -174,14 +192,6 @@ const ShopProductsGrid = ({ allProducts }: any) => {
                     oldPrice={product.priceBeforeDiscount}
                     productName={product.name}
                   />
-                  {/* 
-                  "id": 0,
-        "name": "string",
-        "mainImageUrl": "string",
-        "priceBeforeDiscount": 0,
-        "priceAfterDiscount": 0,
-        "buyAndGet": "string",
-        "rate": 0 */}
                 </div>
               ));
             })

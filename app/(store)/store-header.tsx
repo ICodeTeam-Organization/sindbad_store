@@ -51,7 +51,7 @@ const SearchComponent = ({
         </div>
       ) : (
         <Link
-          href={"/shop?skw=" + searchKeyword}
+          href={"/shop?productName=" + searchKeyword}
           className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
         >
           <BiSearch color="black " size={24} />
@@ -70,8 +70,8 @@ const StoreHeader = () => {
 
   // const [openNav, setopenNav] = useState<boolean>(false);
   const params = useSearchParams();
-  const skw = params.get("productName");
-  const [searchKeyword, setsearchKeyword] = useState(skw || "");
+  const productName = params.get("productName");
+  const [searchKeyword, setsearchKeyword] = useState(productName || "");
 
   const { data: session, status } = useSession();
   const isAuth = status === "authenticated";

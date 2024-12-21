@@ -10,7 +10,7 @@ import { FilterIcon } from "lucide-react";
 
 interface searchParamsType {
   searchParams:{
-    skw?:string;//search keyword
+    productName?:string;//search keyword
     cats?:string;
     subCats?:string;
     storeId?:string;
@@ -25,7 +25,7 @@ interface searchParamsType {
 const ProductPage = async ({searchParams}:searchParamsType) => {
 
 
-  // const {skw,brands,cats,newProducts,store,subCats,tags,todayOffers} = searchParams
+  // const {productName,brands,cats,newProducts,store,subCats,tags,todayOffers} = searchParams
   
 
   return (

@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useFavorite } from "@/app/stores/favoritesStore";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { Store } from "@/types/storeTypes";
+import { deleteApi, postApi } from "@/lib/http";
 
 const StoresCardCarsoul: React.FC<Store> = ({
   description,
@@ -22,7 +22,8 @@ const StoresCardCarsoul: React.FC<Store> = ({
   websiteLink,
   id,
 }) => {
-  const { favoriteStoreIds, addStoreToFavorite , delStoreToFavorite } = useFavorite();
+  const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
+    useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
   const { data: session, status } = useSession();
   const redirct = useRouter();
@@ -30,12 +31,12 @@ const StoresCardCarsoul: React.FC<Store> = ({
 
   const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/AddStore`,
+      return await postApi(
+        `FavoriteShop/AddStore`,
         {
-          storeId: id,
-        },
-        {
+          body: {
+            storeId: id,
+          },
           headers: {
             "Accept-Language": "ar",
             "Content-type": "application/json",
@@ -43,9 +44,8 @@ const StoresCardCarsoul: React.FC<Store> = ({
           },
         }
       );
-      return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       addStoreToFavorite(id);
     },
     onError: (error: any) => {
@@ -60,38 +60,38 @@ const StoresCardCarsoul: React.FC<Store> = ({
     },
   });
 
-  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } = useMutation({
-    mutationFn: async () => {
-      const res = await axios.delete(
-        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/RemoveStore/`+id,
-        {
-          headers: {
-            Authorization: `Bearer ${session?.user.data.token}`,
-          },
-        }
-      );
-      return res.data;
-    },
-    onSuccess: (data) => {
-      delStoreToFavorite(id)
-    },
-    onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message ||
-        "حدث خطأ أثناء حذف المحل إلى المفضلة";
-      toast({
-        variant: "destructive",
-        description: `خطأ: ${errorMessage}`,
-        action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-      });
-    },
-  });
+  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
+    useMutation({
+      mutationFn: async () => {
+        return await deleteApi(
+          `FavoriteShop/RemoveStore/` + id,
+          {
+            headers: {
+              Authorization: `Bearer ${session?.user.data.token}`,
+            },
+          }
+        );
+      },
+      onSuccess: () => {
+        delStoreToFavorite(id);
+      },
+      onError: (error: any) => {
+        const errorMessage =
+          error.response?.data?.message ||
+          "حدث خطأ أثناء حذف المحل إلى المفضلة";
+        toast({
+          variant: "destructive",
+          description: `خطأ: ${errorMessage}`,
+          action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
+        });
+      },
+    });
 
   const handleAddToFav = () => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
       if (isFavorite) {
-        mutateRemoveFromFav()
+        mutateRemoveFromFav();
       } else {
         mutateAddToFav();
       }

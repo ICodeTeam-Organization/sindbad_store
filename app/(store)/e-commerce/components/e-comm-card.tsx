@@ -8,11 +8,11 @@ import { useFavorite } from "@/app/stores/favoritesStore";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { deleteApi, postApi } from "@/lib/http";
 
 const E_commerceCard = ({
     id,
@@ -20,8 +20,6 @@ const E_commerceCard = ({
     LinkOFStore,
     description,
     logo,
-    categories,
-    ecommerceStoreImages,
 }: E_commerceCardProps) => {
   const {
     favoriteEcommerceIds,
@@ -34,20 +32,20 @@ const E_commerceCard = ({
 
   const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/AddEcommerceStore`,
-        {
-          ecommerceStoreId: id,
-        },
+      return postApi(
+        `FavoriteShop/AddEcommerceStore`,
+        
         {
           headers: {
             "Accept-Language": "ar",
             "Content-type": "application/json",
             Authorization: `Bearer ${session?.user.data.token}`,
           },
+          body:{
+            ecommerceStoreId: id,
+          },
         }
       );
-      return res.data;
     },
     onSuccess: (data) => {
       addEcommerceToFavorite(+id);
@@ -67,8 +65,7 @@ const E_commerceCard = ({
   const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
-        const res = await axios.delete(
-          process.env.NEXT_PUBLIC_BASE_URL +
+        return await deleteApi(
             `FavoriteShop/RemoveEcommerceStore/` +
             id,
           {
@@ -77,7 +74,6 @@ const E_commerceCard = ({
             },
           }
         );
-        return res.data;
       },
       onSuccess: (data) => {
         delEcommerceFromFavorite(+id);

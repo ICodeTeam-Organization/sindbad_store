@@ -1,22 +1,20 @@
 "use client";
-
 import React from "react";
-import Image from "next/image";
 import { StoreCardProps } from "../typest";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
 import { useFavorite } from "@/app/stores/favoritesStore";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
-import { DivideCircle, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { deleteApi, postApi } from "@/lib/http";
 import SafeImage from "@/components/SafeImage";
 
-const StoreCard = ({ id, name, websiteLink , imagesUrl }: StoreCardProps) => {
+const StoreCard = ({ id, name , imagesUrl }: StoreCardProps) => {
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
@@ -28,22 +26,22 @@ const StoreCard = ({ id, name, websiteLink , imagesUrl }: StoreCardProps) => {
 
   const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/AddStore`,
-        {
-          storeId: id,
-        },
+      return await postApi(
+        `FavoriteShop/AddStore`,
+        
         {
           headers: {
             "Accept-Language": "ar",
             "Content-type": "application/json",
             Authorization: `Bearer ${session?.user.data.token}`,
           },
+          body:{
+            storeId: id,
+          },
         }
       );
-      return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       addStoreToFavorite(id + "");
     },
     onError: (error: any) => {
@@ -61,17 +59,16 @@ const StoreCard = ({ id, name, websiteLink , imagesUrl }: StoreCardProps) => {
   const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
-        const res = await axios.delete(
-          process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/RemoveStore/` + id,
+        return await deleteApi(
+          `FavoriteShop/RemoveStore/` + id,
           {
             headers: {
               Authorization: `Bearer ${session?.user.data.token}`,
             },
           }
         );
-        return res.data;
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         delStoreToFavorite(id + "");
       },
       onError: (error: any) => {
