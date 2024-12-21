@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { ReviewFormProps } from "../types";
 import { useSession } from "next-auth/react";
+import { postApi } from "@/lib/http";
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const [reviewText, setReviewText] = useState("");
@@ -18,19 +18,20 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       if (!session) {
         throw new Error("لا يوجد جلسة نشطة");
       }
-      const res = await axios.post(
-        "https://icode-sendbad-store.runasp.net/api/CommentsAndRates/AddReviewToProduct",
-        {
-          productId,
-          rate,
-          reviewText,
-          reviewImageUrl: "string", // يمكن تغيير هذا لاحقًا ليكون حقلًا اختياريًا
-        },
+      const res = await postApi(
+        "CommentsAndRates/AddReviewToProduct",
+       
         {
           headers: {
             "Accept-Language": "ar",
             "Content-Type": "application/json",
             Authorization: `Bearer ${session.user.data.token}`,
+          },
+          body:{
+            productId,
+            rate,
+            reviewText,
+            reviewImageUrl: "string", // يمكن تغيير هذا لاحقًا ليكون حقلًا اختياريًا
           },
         }
       );

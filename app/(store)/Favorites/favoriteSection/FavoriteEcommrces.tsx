@@ -9,9 +9,7 @@ import { getApi } from "@/lib/http";
 
 function FavoriteEcommrces() {
   const { data: authData , status } = useSession();
-  const { data, isLoading } = useQuery<{
-    data: { data: {items:FavoriteEcommerces[]} };
-  }>({
+  const { data, isLoading } = useQuery< { data: {items:FavoriteEcommerces[]} }>({
     queryKey: ["GetFavoriteEcommerceStores"],
     queryFn: async () =>
       await getApi(
@@ -41,11 +39,11 @@ function FavoriteEcommrces() {
   }
 
 
-  if (data?.data?.data && data?.data.data.items.length > 0) {
+  if (data?.data && data?.data.items.length > 0) {
     return (
       <>
         <div className="px-10 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
-          {data?.data.data.items.map((ecommrce) => (
+          {data?.data.items.map((ecommrce) => (
             <E_commerceCard
               key={ecommrce.ecommerceStoreId}
               name={ecommrce?.ecommerceStoreName+""}

@@ -8,10 +8,10 @@ import { getApi } from "@/lib/http";
 
 function FavoriteStores() {
   const { data: authData, status } = useSession();
-  const { data, isLoading } = useQuery<{
-    data: { data: {items:FavoriteStoresType[]} };
-  }>({
-    queryKey: ["favorites"],
+  const { data, isLoading } = useQuery<
+   { data: {items:FavoriteStoresType[]} }
+  >({
+    queryKey: ["favorites-stores"],
     queryFn: async () =>
       await getApi(
         `FavoriteShop/GetFavoriteStores`,
@@ -36,11 +36,11 @@ function FavoriteStores() {
     );
   }
 
-  if (data?.data?.data && data?.data.data.items.length > 0) {
+  if (data?.data && data?.data.items.length > 0) {
     return (
       <>
         <div className="px-10 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center">
-          {data?.data.data.items.map((store) => (
+          {data?.data.items.map((store) => (
             <StoreCard
               key={store.storeId}
               id={store.storeId}

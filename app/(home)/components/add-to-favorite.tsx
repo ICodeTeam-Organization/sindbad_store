@@ -23,6 +23,7 @@ const AddToFavorite = ({ id }: Props) => {
     const { data: session, status } = useSession();
     const { toast } = useToast();
     const {productsIds,addProductToFavorite,delProductFromFavorite} = useFavorite()
+    const isInFavorite = productsIds.includes(+id);
 
     // add to favorite
     const mutationFav = useMutation({
@@ -85,7 +86,7 @@ const AddToFavorite = ({ id }: Props) => {
     const handleAddToFav = () => {
         if (status === "unauthenticated") redirct.push("/auth");
         else if (status === "authenticated") {
-            if (productsIds.includes(+id)) {
+            if (isInFavorite) {
                 mutationFavDel.mutate()
             } else {
                 mutationFav.mutate();
@@ -98,14 +99,14 @@ const AddToFavorite = ({ id }: Props) => {
             disabled={mutationFav.isPending}
             variant={"outline"}
             onClick={() => handleAddToFav()}
-            className={cn("cursor-pointer group hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-sm:w-[30px] max-sm:h-[30px] w-[50px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1",productsIds.includes(+id)&&"bg-[#F55157]")}
+            className={cn("cursor-pointer group hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-sm:w-[30px] max-sm:h-[30px] w-[50px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1",isInFavorite&&"bg-[#F55157]")}
         >
             {
                 mutationFav.isPending || mutationFavDel.isPending  ? (
                     <Loader2 className="animate-spin" />
                 ) : (<>
-                    <AiOutlineHeart className={cn("w-[20px] h-[20px]  group-hover:hidden",productsIds.includes(+id)&&"hidden")} color="#D5D5D5" />
-                    <AiFillHeart className={cn("w-[20px] h-[20px] hidden group-hover:block",productsIds.includes(+id)&&"block")} color="#fff" />
+                    <AiOutlineHeart className={cn("w-[20px] h-[20px]  group-hover:hidden",isInFavorite&&"hidden")} color="#D5D5D5" />
+                    <AiFillHeart className={cn("w-[20px] h-[20px] hidden group-hover:block",isInFavorite&&"block")} color="#fff" />
                     </> )
             }
         </Button>

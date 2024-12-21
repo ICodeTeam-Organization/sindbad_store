@@ -34,7 +34,10 @@ const AddToBasket = ({ id, productInfo }: Props) => {
     updateQuantity,
     removeItem,
   } = useCartStore();
+
   const inCart = cartItems.find((ele) => ele.productId == id);
+  
+  
   const [quantity, setQuantity] = useState<number>(inCart?.quantity || 0);
 
   useEffect(() => {

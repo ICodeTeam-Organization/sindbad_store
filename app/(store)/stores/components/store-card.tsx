@@ -7,12 +7,11 @@ import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
 import { useFavorite } from "@/app/stores/favoritesStore";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
-import { DivideCircle, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { deleteApi, postApi } from "@/lib/http";
 

@@ -8,7 +8,6 @@ import { useFavorite } from "@/app/stores/favoritesStore";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";

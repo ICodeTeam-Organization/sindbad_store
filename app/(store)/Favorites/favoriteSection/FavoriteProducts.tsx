@@ -4,14 +4,13 @@ import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { getApi } from "@/lib/http";
 import { FavoriteProduct } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useSession } from "next-auth/react";
-import React, { useEffect } from "react";
+import React from "react";
 
 function FavoriteProducts() {
   const { data: session, status } = useSession();
 
-  const { data, isLoading } = useQuery<{ data: { data: FavoriteProduct[] } }>({
+  const { data, isLoading } = useQuery<{ data: FavoriteProduct[] }>({
     queryKey: ["get-favorite-products-all"],
     queryFn: () =>
       getApi(
@@ -29,6 +28,8 @@ function FavoriteProducts() {
     enabled: status == "authenticated",
   });
 
+  
+
   return (
     <div
       dir="rtl"
@@ -40,8 +41,8 @@ function FavoriteProducts() {
             <ProductCardSkeleton />
           </div>
         ))
-      ) : data?.data.data && data?.data.data.length > 0 ? (
-        data.data.data.map((product: FavoriteProduct) => (
+      ) : data?.data&& data?.data.length > 0 ? (
+        data.data.map((product: FavoriteProduct) => (
           <div key={product.productId} className="sm:w-[220px]  w-[180px] ">
             <ProductCard
               id={product.productId + ""}
