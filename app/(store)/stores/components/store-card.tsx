@@ -14,7 +14,7 @@ import Link from "next/link";
 import { deleteApi, postApi } from "@/lib/http";
 import SafeImage from "@/components/SafeImage";
 
-const StoreCard = ({ id, name , mainImageUrl }: StoreCardProps) => {
+const StoreCard = ({ id, name , websiteLink, imagesUrl, mainImageUrl, storeCategories }: StoreCardProps) => {
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
@@ -118,9 +118,15 @@ const StoreCard = ({ id, name , mainImageUrl }: StoreCardProps) => {
           <Link href={"/shop?storeId="+id} className="flex-1 min-w-[70px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
             عرض المنتجات
           </Link>
-          <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
+          {
+            websiteLink != null?           <Link href={websiteLink} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
             متجر المحل
-          </button>
+          </Link> :
+                    <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
+                    لايوجد رابط
+                  </button>
+          }
+
           <button
             onClick={(e)=>{
               e.stopPropagation()

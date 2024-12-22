@@ -136,6 +136,7 @@ const EshopsCardCarsoul: React.FC<Shop> = ({
           ) : (
             <Link
               href={urlLinkOfStore}
+              target="_blank"
               className="flex-1 p-2 cursor-pointer rounded-sm border-[1px] group-hover:bg-[#F58634] group-hover:border-[#F58634] group-hover:text-white transition-all duration-300 flex justify-center items-center border-gray-200"
             >
               <h1 className="text-base">زيارة المتجر</h1>

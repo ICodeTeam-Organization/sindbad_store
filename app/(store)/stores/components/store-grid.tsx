@@ -16,7 +16,7 @@ const StoreGrid = async () => {
       <>
         <div className="px-10 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center">
           {stores.map((store: StoreCardProps) => (
-            <StoreCard key={store.id} id={store.id} name={store.name} imagesUrl={store.imagesUrl} />
+            <StoreCard key={store.id} id={store.id} name={store.name} websiteLink={store.websiteLink} imagesUrl={store.imagesUrl} storeCategories={store.storeCategories} />
           ))}
         </div>
         <Pagination />

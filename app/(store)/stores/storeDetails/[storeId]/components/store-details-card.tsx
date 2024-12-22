@@ -1,15 +1,26 @@
 import React from "react";
 import Image from "next/image";
-import { StoreCardProps } from "../../../typest";
+import { StoreData } from "../../../typest";
 import { IoMdHeartEmpty } from "react-icons/io";
+import SafeImage from "@/components/SafeImage";
 
-const StoreDetailsCard = ({ imagesUrl, name, description }: StoreCardProps) => {
+const StoreDetailsCard = ({id,
+  name ,
+  description,
+  imageUrl,
+  websiteUrl,
+  storeCategoriesIds,
+  images,
+  createdAt,
+  updatedAt }: StoreData) => {
   return (
     <div className="border px-12 py-6 rounded-lg shadow-sm relative w-full  m-auto text-center">
-      <Image
-        src={imagesUrl}
-        alt={name}
-        className="w-full h-[400px] object-cover rounded-lg"
+            <SafeImage
+          src={imageUrl}
+          alt={name}
+          className="w-full h-[400px] object-cover rounded-lg"
+          width={380}
+          height={250}
       />
       <div className="m-4">
         <h2 className="font-bold mt-2 text-center">{name}</h2>
