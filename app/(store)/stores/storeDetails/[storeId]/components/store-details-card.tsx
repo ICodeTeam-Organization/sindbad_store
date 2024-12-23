@@ -3,7 +3,6 @@ import Image from "next/image";
 import { StoreData } from "../../../typest";
 import { IoMdHeartEmpty } from "react-icons/io";
 import SafeImage from "@/components/SafeImage";
-// import { Link } from "lucide-react";
 import Link from "next/link";
 import {
   Carousel,
@@ -11,49 +10,40 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/carousel";
 
-const StoreDetailsCard = ({id,
-  name ,
+
+const StoreDetailsCard = ({
+  id,
+  name,
   description,
   imageUrl,
   websiteUrl,
   storeCategoriesIds,
   images,
-  createdAt,
-  updatedAt }: StoreData) => {
+}: StoreData) => {
   return (
-    <div className="border px-12 py-6 rounded-lg shadow-sm relative w-full  m-auto text-center">
-            <SafeImage
-          src={imageUrl}
-          alt={name}
-          className="w-full h-[400px] object-cover rounded-lg border shadow-md"
-          width={380}
-          height={250}
-      />
-      <div className="m-4">
-        <h2 className="font-bold mt-2 text-center">{name}</h2>
-        <p className="text-gray-extr-light mt-2">{description}</p>
-        {storeCategoriesIds? (
-        <p className="text-gray-extr-light mt-2">{
-          storeCategoriesIds?.map((category) => (
-            <span key={category.id} className="border-2 border-gray-300 px-2 py-1 text-sm rounded-md">
-              {category.categoryName}
-            </span>
-        ))}</p>
-        ): null
-      }
-
-      {
-        images? (
-          <Carousel>
+    <div className="rounded-lg shadow-lg p-6 w-full  mx-auto container mt-5">
+      <div className="flex flex-col lg:flex-row gap-6">
+        {/* Image Section */}
+        <div className="lg:w-1/2 w-full">
+          <SafeImage
+            src={imageUrl}
+            alt={name}
+            className="w-full h-[350px] object-cover rounded-lg border shadow-sm"
+            width={400}
+            height={350}
+          />
+          {images && images.length > 0 && (
+            <div className="px-12">
+                        <Carousel className="mt-4">
             <CarouselContent>
               {images.map((image) => (
-                <CarouselItem key={image.id} className="sm:basis-1/2 lg:basis-1/3">
+                <CarouselItem key={image.id} className="sm:basis-1/2 md:basis-1/3">
                   <SafeImage
                     src={image.imageUrl}
                     alt={name}
-                    className="w-full h-[400px] object-cover rounded-lg border shadow-md"
+                    className="object-cover rounded-lg border shadow-sm"
                     width={380}
                     height={250}
                   />
@@ -63,25 +53,53 @@ const StoreDetailsCard = ({id,
             <CarouselPrevious />
             <CarouselNext />
           </Carousel>
-        ) : null
-      }
+            </div>
+        )}
+        </div>
 
-        <div className="flex flex-wrap justify-evenly items-center w-full mt-6 px-4">
-          <Link href={"/shop?storeId="+id} className="flex-1 min-w-[70px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-            منتجات المتجر
+        {/* Details Section */}
+        <div className="lg:w-1/2 w-full text-gray-800 mt-10">
+          <h2 className="text-2xl font-bold mb-4">{name}</h2>
+          <p className="text-gray-600 mb-4 text-sm">{description}</p>
+
+          {storeCategoriesIds && storeCategoriesIds.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {storeCategoriesIds.map((category) => (
+                <span
+                  key={category.id}
+                  className=" text-gray-800 text-sm px-3 py-1 rounded-md"
+                >
+                  {category.categoryName}
+                </span>
+              ))}
+            </div>
+          )}
+
+          <div className="flex items-center justify-between mt-6">
+            <span className="font-bold text-yellow-500">50 <span className="font-normal text-sm">مشتري</span></span>
+            <div className="flex items-center gap-4">
+
+              <Link
+                href={websiteUrl || "#"}
+                target={websiteUrl ? "_blank" : ""}
+                className={` px-2 py-2 rounded-lg text-sm text-white ${
+                  websiteUrl ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"
+                }`}
+              >
+                {websiteUrl ? "موقع المتجر" : " لايوجد رابط"}
+              </Link>
+              <button className="bg-red-500 text-white rounded-full p-3 hover:bg-red-600">
+                <IoMdHeartEmpty className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          <Link
+            href={"/shop?storeId=" + id}
+            className="mt-6 inline-block w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg"
+          >
+            عرض المنجات
           </Link>
-          {
-            websiteUrl != null?
-          <Link href={websiteUrl} target="_blank" className="flex-1 min-w-[70px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-            متجر المحل
-          </Link> :
-            <button className="flex-1 min-w-[70px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-            لايوجد رابط
-          </button>
-          }
-          <button className="flex-1 min-w-[40px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-            <IoMdHeartEmpty className="w-4 h-4 " />
-          </button>
         </div>
       </div>
     </div>
