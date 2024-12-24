@@ -20,55 +20,75 @@ import { useShopFiltersStore } from "../stores/shopFiltersStore";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { GrClose } from "react-icons/gr";
 import { useCartStore } from "../stores/cartStore";
+import useStoreQuerySearch from "./stores/hooks/useStoreQuerySearch";
+import useEcommerceQuerySearch from "./e-commerce/hooks/useEcommerceQuerySearch";
 
 const SearchComponent = ({
   searchKeyword = "",
   setsearchKeyword = (str: string) => {
     searchKeyword = str;
   },
-  isShopPage = false,
 }) => {
+  const currentPage = usePathname();
+  const pageName = currentPage.split("/").pop();
+
+  // to check if the page is shop page make btn that click to search as div to handle click event
+  // if not shop page the btn become Link from next/Link
+  // if store page search about stores
+  // if ecommrce page search about ecommerce
+  const isShopPage = pageName?.startsWith("shop");
+  const isEcommrcePage = pageName?.startsWith("e-commerce");
+  const isStorePage = pageName?.startsWith("stores");
+
   const { setProductName } = useShopFiltersStore();
+  const { setStoreName } = useStoreQuerySearch();
+  const { setEcommerceName } = useEcommerceQuerySearch();
+
   return (
     <div className="flex  px-1 h-[46px]  xl:w-full   border-[0px] rounded-[9px] shadow justify-between gap-x-1  bg-white w-full">
       <input
         className="pr-2 w-full h-full   outline-none rounded-full text-[13px]"
         type="text"
-        placeholder=" ابحث  عن منتج"
+        placeholder={
+          isStorePage
+            ? " ابحث  عن محل"
+            : isEcommrcePage
+            ? " ابحث  عن متجر"
+            : " ابحث  عن منتج"
+        }
         value={searchKeyword}
         onChange={(e) => {
           setsearchKeyword(e.target.value);
         }}
       />
-      {isShopPage ? (
-        <div
-          onClick={() => {
-            setProductName(searchKeyword);
-          }}
-          className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
-        >
-          <BiSearch color="black " size={24} />
-        </div>
-      ) : (
+      {!isShopPage && !isEcommrcePage && !isStorePage ? (
         <Link
           href={"/shop?productName=" + searchKeyword}
           className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
         >
           <BiSearch color="black " size={24} />
         </Link>
+      ) : (
+        <div
+          onClick={() => {
+            if (isEcommrcePage) {
+              setEcommerceName(searchKeyword);
+            } else if (isStorePage) {
+              setStoreName(searchKeyword);
+            } else  {
+              setProductName(searchKeyword)
+            }
+          }}
+          className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
+        >
+          <BiSearch color="black " size={24} />
+        </div>
       )}
     </div>
   );
 };
 
 const StoreHeader = () => {
-
-  // to check if the page is shop page make btn that click to search as div to handle click event if not shop page the btn become Link from next/Link
-  const currentPage = usePathname();
-  const pageName = currentPage.split("/").pop();
-  let isShopPage = pageName?.startsWith("shop");
-
-  // const [openNav, setopenNav] = useState<boolean>(false);
   const params = useSearchParams();
   const productName = params.get("productName");
   const [searchKeyword, setsearchKeyword] = useState(productName || "");
@@ -78,7 +98,7 @@ const StoreHeader = () => {
 
   const [openMobileNav, setopenMobileNav] = useState(false);
 
-  const  {items:cartItems} = useCartStore()
+  const { items: cartItems } = useCartStore();
 
   const questions = [
     {
@@ -164,8 +184,6 @@ const StoreHeader = () => {
     },
   ];
 
- 
-
   const OrderFromAndHow = () => {
     return (
       <div className="flex mdHalf:flex-row flex-col-reverse xl:gap-6 gap-4 mdHalf:items-center  mdHalf:p-0">
@@ -199,21 +217,19 @@ const StoreHeader = () => {
                 " mt-2 opacity-0 invisible  group-hover:visible group-hover:opacity-100 hidden group-hover:block transition-all top-12 z-[999999] min-w-[180px] overflow-y-scroll overflow-x-hidden  bg-white focus:outline-none h-[200px] border-b"
               )}
             >
-              {questions.map((item, index) =>
-                 (
-                  <React.Fragment key={index}>
-                    <li
-                      className="cursor-pointer text-slate-800 flex w-full gap-x-2 text-sm items-center rounded-md p-2 transition-all hover:bg-[#FF8F7E22]  mr-4 "
-                      onClick={item.onclickFun}
-                    >
-                      {item.icon}
-                      <p className="text-slate-800 font-medium ml-2 whitespace-nowrap text-[11px] ">
-                        {item.title}
-                      </p>
-                    </li>
-                  </React.Fragment>
-                )
-              )}
+              {questions.map((item, index) => (
+                <React.Fragment key={index}>
+                  <li
+                    className="cursor-pointer text-slate-800 flex w-full gap-x-2 text-sm items-center rounded-md p-2 transition-all hover:bg-[#FF8F7E22]  mr-4 "
+                    onClick={item.onclickFun}
+                  >
+                    {item.icon}
+                    <p className="text-slate-800 font-medium ml-2 whitespace-nowrap text-[11px] ">
+                      {item.title}
+                    </p>
+                  </li>
+                </React.Fragment>
+              ))}
             </ul>
           </div>
         </div>
@@ -259,7 +275,6 @@ const StoreHeader = () => {
                   <SearchComponent
                     searchKeyword={searchKeyword}
                     setsearchKeyword={setsearchKeyword}
-                    isShopPage={isShopPage}
                   />
                 </div>
 
@@ -279,11 +294,17 @@ const StoreHeader = () => {
                         <GoHeart className="text-[#666666]  text-[20px] m-2 " />
                       </Link>
                       <Link
-                    href="/shopping-card"
-                    className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
-                  > {cartItems.length > 0 && <div className="bg-red-600 text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute" >{cartItems.length}</div>}
-                    <BsCart className="text-[#666666]  text-[20px] m-2 " />
-                  </Link>
+                        href="/shopping-card"
+                        className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
+                      >
+                        {" "}
+                        {cartItems.length > 0 && (
+                          <div className="bg-red-600 text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute">
+                            {cartItems.length}
+                          </div>
+                        )}
+                        <BsCart className="text-[#666666]  text-[20px] m-2 " />
+                      </Link>
                     </>
                   )}
                   <div className="cursor-pointer hidden mdHalf:block ">
@@ -293,7 +314,6 @@ const StoreHeader = () => {
               </div>
             </div>
           </div>
-
 
           {/* search for mobile */}
           <div className="block md:hidden mx-5">
@@ -324,7 +344,7 @@ const StoreHeader = () => {
                     }}
                   />
                 </div>
-                
+
                 <PersonButton status={status} session={session} />
                 <OrderFromAndHow />
               </div>

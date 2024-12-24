@@ -22,7 +22,7 @@ interface ParentChildCheckboxProps {
   data: MainCategory; // Represents the parent and its children
 }
 
-const CategoriesAndSubCheckBox: React.FC<ParentChildCheckboxProps> = ({ data }) => {
+const CategoriesShopFilter: React.FC<ParentChildCheckboxProps> = ({ data }) => {
 
   const {toggleCat,toggleSubCat,filters,setSubCats} = useShopFiltersStore();
 
@@ -150,4 +150,4 @@ const CategoriesAndSubCheckBox: React.FC<ParentChildCheckboxProps> = ({ data }) 
   );
 };
 
-export default CategoriesAndSubCheckBox;
+export default CategoriesShopFilter;

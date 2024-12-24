@@ -2,13 +2,13 @@
 import React from "react";
 import { IoIosClose } from "react-icons/io";
 
-const SreachResultsHeader = ({ storeName="",catName="",totalResults=0 }) => {
+const SreachEcommercesResultsHeader = ({ ecommerceName="",catName="",totalResults=0 }) => {
   return (
     <section className="flex items-center justify-between w-full mb-6 bg-gray-100 p-4  rounded-lg text-[13px]">
-      {/* {storeName != "" &&<div >
+      {ecommerceName != "" &&<div >
          <span className="flex items-center">
-          <span> اسم المنتج :  </span>
-          {storeName}
+          <span> اسم المتجر :  </span>
+          {ecommerceName}
         </span>
       </div>}
       {catName != "" && <div >
@@ -16,18 +16,18 @@ const SreachResultsHeader = ({ storeName="",catName="",totalResults=0 }) => {
           <span> الفئة :  </span>
           {catName}
         </span>
-      </div>} */}
+      </div>}
 
-      {/* {(catName == "" && storeName == "") && <div >
+      {(catName == "" && ecommerceName == "") && <div >
          <span className="flex items-center">
-          <span> جميع المحلات </span>
+          <span> جميع المتاجر </span>
         </span>
-      </div>} */}
+      </div>}
       <div>
-        <p  >نتائج البحث: {totalResults} منتج</p>
+        <p  >نتائج البحث: {totalResults} متجر</p>
       </div>
     </section>
   );
 };
 
-export default SreachResultsHeader;
+export default SreachEcommercesResultsHeader;

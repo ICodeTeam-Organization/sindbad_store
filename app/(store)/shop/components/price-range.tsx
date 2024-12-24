@@ -29,7 +29,7 @@ const PriceRange = ({onChangeRange}:{onChangeRange:(s:[number,number])=>void}) =
       {/* <div className="flex items-center mb-4 h-[2px] ">
         <input type="range" min="0" max="1000" className="w-full" />
       </div> */}
-      <div className="flex  gap-4">
+      <div className="flex  gap-4 items-center">
         <Input
          placeholder="اقل سعر"
          type="number"
@@ -41,6 +41,7 @@ const PriceRange = ({onChangeRange}:{onChangeRange:(s:[number,number])=>void}) =
          }}
          className=" text-center  hover:outline-none min-h-[40px] border border-gray-300  rounded"
         />
+        <span > الى </span>
         <Input
          placeholder="اعلى سعر"
          type="number"
