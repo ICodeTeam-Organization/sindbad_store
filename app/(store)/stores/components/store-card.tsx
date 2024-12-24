@@ -14,7 +14,8 @@ import Link from "next/link";
 import { deleteApi, postApi } from "@/lib/http";
 import SafeImage from "@/components/SafeImage";
 
-const StoreCard = ({ id, name , websiteLink, imagesUrl, mainImageUrl, storeCategories }: StoreCardProps) => {
+const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCardProps) => {
+  
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
@@ -84,14 +85,15 @@ const StoreCard = ({ id, name , websiteLink, imagesUrl, mainImageUrl, storeCateg
     });
 
   const handleFav = () => {
-    if (status === "unauthenticated") redirct.push("/auth");
-    else if (status === "authenticated") {
-      if (isFavorite) {
-        mutateRemoveFromFav();
-      } else {
-        mutateAddToFav();
-      }
-    }
+    
+    // if (status === "unauthenticated") redirct.push("/auth");
+    // else if (status === "authenticated") {
+    //   if (isFavorite) {
+    //     mutateRemoveFromFav();
+    //   } else {
+    //     mutateAddToFav();
+    //   }
+    // }
   };
 
 
@@ -102,7 +104,7 @@ const StoreCard = ({ id, name , websiteLink, imagesUrl, mainImageUrl, storeCateg
     >
       <Link href={linkToStore} >
       <SafeImage
-          src={mainImageUrl}
+          src={mainImageUrl || imagesUrl[0]}
           alt={name}
           className="w-full h-[220px] object-cover "
           width={380}
@@ -112,17 +114,17 @@ const StoreCard = ({ id, name , websiteLink, imagesUrl, mainImageUrl, storeCateg
       
       <div className="p-4">
       <Link href={`/stores/storeDetails/${id}`} >
-         <h2 className="font-bold  mb-4">{name}</h2>
+         <h2 className="font-bold text-[13px] mb-4">{name}</h2>
       </Link>
         <div className="flex flex-wrap   w-full  gap-x-1 ">
-          <Link href={"/shop?storeId="+id} className="flex-1 min-w-[70px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
+          <Link href={"/shop?storeId="+id} className="flex-1 min-w-[70px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
             عرض المنتجات
           </Link>
           {
-            websiteLink != null?           <Link href={websiteLink} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
+            websiteLink != null?           <Link href={websiteLink} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
             متجر المحل
           </Link> :
-                    <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
+                    <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
                     لايوجد رابط
                   </button>
           }

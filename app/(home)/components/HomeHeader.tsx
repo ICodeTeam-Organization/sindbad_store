@@ -56,7 +56,7 @@ const SearchComponent = ({
   );
 };
 
-const Header = () => {
+const HomeHeader = () => {
   // const [scrolled, setScrolled] = useState(false);
 
   const [openNav, setopenNav] = useState<boolean>(false);
@@ -437,4 +437,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default HomeHeader;

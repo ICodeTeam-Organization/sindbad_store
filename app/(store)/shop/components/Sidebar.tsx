@@ -8,12 +8,11 @@ import PopularTags from "./popular-tags";
 import Brands from "./Brands";
 
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import CategoriesAndSubCheckBox from "./CategoriesTreeCheckBox";
+import CategoriesShopFilter from "./CategoriesShopFilter";
 import StoresSearchSelector from "./StoresSearchSelector";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 import { MainCategory } from "@/types/storeTypes";
 import { Checkbox } from "@/components/ui/checkbox";
-import { BiReset } from "react-icons/bi";
 import { GrPowerReset } from "react-icons/gr";
 
 const Sidebar = () => {
@@ -24,40 +23,12 @@ const Sidebar = () => {
     setNewProduct,
     filters,
     setBrandId,
-    resetFilters
+    resetFilters,
+    setTagId
   } = useShopFiltersStore();
   const { categories } = useCategoriesDataStore();
 
-  const brandList = [
-    "Google",
-    "Apple",
-    "Samsung",
-    "Microsoft",
-    "HP",
-    "Dell",
-    "Xiaomi",
-    "Symphony",
-    "Panasonic",
-    "Sony",
-    "Intel",
-    "LG",
-    "One Plus",
-  ];
-  const tags = [
-    "Graphics Cards",
-    "TV",
-    "iPhone",
-    "Game",
-    "Asus Laptops",
-    "SSD",
-    "Mackbook",
-    "Speakers",
-    "Smart TV",
-    "Power Bank",
-    "Samsung",
-    "Microsoft",
-    "Tablet",
-  ];
+
 
   return (
     <aside className=" h-full  tajawal">
@@ -120,7 +91,11 @@ const Sidebar = () => {
         <h3 className="mb-2">الفئات</h3>
         <div className="max-h-[50vh] overflow-auto ">
           {categories.map((ele: MainCategory) => {
-            return <CategoriesAndSubCheckBox key={ele.id} data={ele} />;
+            return <CategoriesShopFilter 
+            key={ele.id} 
+            data={ele}
+            
+            />;
           })}
         </div>
       </div>
@@ -135,7 +110,7 @@ const Sidebar = () => {
           }
         }}
       />
-      {/* <PopularTags tags={tags} /> */}
+      <PopularTags onSelectTag={setTagId} />
     </aside>
   );
 };

@@ -1,15 +1,18 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import E_commerceCard from "./e-comm-card";
-import { Shop } from "@/types/storeTypes";
-import { getApi } from '@/lib/http';
-import LoadMoreButton from "@/components/LoadMoreButton";
-import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
 
-interface ApiResponse {
-  success: boolean;
-  message: string;
+
+"use client";
+import React from "react";
+import E_commerceCard from "./e-comm-card";
+import { postApi } from "@/lib/http";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import ProductCardSkeleton from "@/components/ProductCardSkeleton";
+import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+import { Button } from "@/components/ui/button";
+import useEcommerceQuerySearch from "../hooks/useEcommerceQuerySearch";
+import SreachEcommercesResultsHeader from "./search-ecommrce-results-header";
+import { Shop } from "@/types/storeTypes";
+
+interface EcommercesResponsive {
   data: {
     items: Shop[];
     totalCount: number;
@@ -19,96 +22,105 @@ interface ApiResponse {
   };
 }
 
-const fetchEcommerces = async (pageNumber: number, pageSize: number) => {
-  console.log("fetchEcommerces");
-
-  const response = await getApi<ApiResponse>(
-    `EcommercesStores/GetEcommerceStores?pageNumber=${pageNumber}&pageSize=${pageSize}`
-  );
-
-  console.log("response", response);
-  return response;
-};
-
 const E_commerceGrid = () => {
-  const [allEcommerces, setAllEcommerces] = useState<Shop[]>([]);
-  const pageSize = 2;
-  const [pageNumber, setPageNumber] = useState(1);
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [hiddenLoadingMore, setHiddenLoadingMore] = useState(true);
 
-  const { data: Ecommerces, isLoading, refetch } = useQuery({
-    queryKey: ["E_commerceGrid", pageNumber, pageSize],
-    queryFn: () => fetchEcommerces(pageNumber, pageSize),
-    keepPreviousData: true,
-  });
+  const { categoryId, ecommerceName } = useEcommerceQuerySearch();
 
-  useEffect(() => {
-    console.log("useEffect - Ecommerces changed");
+  const { categories } = useCategoriesDataStore();
 
-    if (Ecommerces && Ecommerces.success) {
-      console.log("Ecommerces data", Ecommerces.data.items);
-      setAllEcommerces((prevEcommerces) => [...prevEcommerces, ...Ecommerces.data.items]);
-      if (Ecommerces.data.currentPage === Ecommerces.data.totalPages) {
-        setHiddenLoadingMore(true);
-      } else {
-        setHiddenLoadingMore(false);
-      }
-      setIsLoadingMore(false);
-    }
-  }, [Ecommerces]);
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage, isFetched } =
+    useInfiniteQuery<EcommercesResponsive>({
+      queryKey: ["GetEcommerces-Filter", categoryId,ecommerceName],
+      queryFn: async ({ pageParam = 1 }) => {
+        const body = {
+          name:ecommerceName,
+          parentsCategoriesIds: categoryId ? [categoryId] : null,
+          pageSize: 10,
+          pageNumber: pageParam,
+        };
+        const response = await postApi(`EcommercesStores/FilterECommerce`, { body });
+        return response as EcommercesResponsive;
+      },
+      retry:false,
+      getNextPageParam: (lastPage) => {
+        if (lastPage?.data?.currentPage < lastPage?.data?.totalPages) {
+          return lastPage?.data?.currentPage + 1;
+        }
+        return undefined;
+      },
+      initialPageParam: 1,
+    });
 
-  useEffect(() => {
-    console.log("useEffect - pageNumber changed", pageNumber);
-    refetch();
-  }, []);
+  const ecommerces = data?.pages?.flatMap((page) => page.data.items) || [];
+  const totalCount = data?.pages[0]?.data?.totalCount || 0;
 
-  console.log("allEcommerces", allEcommerces);
-  console.log("Ecommerces", Ecommerces);
+  if (!isFetched) {
+    return (
+      <div
+        dir="rtl"
+        className="px-10 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-center"
+      >
+        {[...Array(18)].map((_, x) => (
+          <div key={x.toString()} className=" ">
+            <ProductCardSkeleton />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
-  const loadMore = () => {
-    console.log("loadMore");
-    setIsLoadingMore(true);
-    const nextPage = pageNumber + 1;
-    setPageNumber(nextPage);
-  };
+  if (ecommerces.length === 0) {
+    return (
+      <div className="h-[65vh] flex items-center justify-center">
+      <p className="text-center text-lg tajawal font-bold py-12">
+        لايتوفر أي متاجر في الوقت الحالي
+      </p>
+    </div>
+    );
+  }
 
   return (
-    <div className="px-10 mb-12">
-      
-        {isLoading && !isLoadingMore ? (
-                <div className="flex items-center justify-center w h-[400px] w-full">
-                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-orange-500"></div>
-              </div>
-        ) : allEcommerces.length > 0 ? (
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {
-          allEcommerces.map((e_comm: Shop, index: number) => (
+    <>
+      <div className="flex items-center justify-center px-5">
+        <SreachEcommercesResultsHeader
+          ecommerceName={ecommerceName}
+          totalResults={totalCount}
+          catName={categories.find((ele) => ele.id == categoryId)?.name || ""}
+        />
+      </div>
+      <div className="px-5 mb-12 grid xl:grid-cols-3 sm:grid-cols-2   gap-5 justify-center items-center">
+        {ecommerces.map((ecommerce) => (
+          <E_commerceCard
+            key={ecommerce.id}
+            id={ecommerce.id}
+            name={ecommerce.name}
+            LinkOFStore={ecommerce.urlLinkOfStore}
+            description={ecommerce.description}
+            logo={ecommerce.logo}
+            categories={ecommerce.categories}
+            ecommerceStoreImages={ecommerce.ecommerceStoreImages}
+          />
+        ))}
 
-            <E_commerceCard
-              key={index}
-              id={e_comm.id}
-              name={e_comm.name}
-              LinkOFStore={e_comm.urlLinkOfStore}
-              description={e_comm.description}
-              logo={e_comm.logo}
-              categories={e_comm.categories}
-              ecommerceStoreImages={e_comm.ecommerceStoreImages}
-            />
-          ))
-              }
-</div>
-        ) : (
-          <p className="text-center text-xl font-bold py-12">
-            لايتوفر أي أسواق في الوقت الحالي
-          </p>
-        )}
-      
-      {!hiddenLoadingMore && (
-        <LoadMoreButton onClick={loadMore} isLoading={isLoadingMore} />
+        {isFetchingNextPage &&
+          [...Array(10)].map((_, x) => (
+            <div key={x.toString()} className=" ">
+              <ProductCardSkeleton />
+            </div>
+          ))}
+      </div>
+      {hasNextPage && !isFetchingNextPage && (
+        <div className="flex justify-center">
+          <Button
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+            className="px-6 py-2 bg-[#0f172a] pt-3 tajawal text-white rounded  disabled:opacity-50"
+          >
+            {"تحميل المزيد"}
+          </Button>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

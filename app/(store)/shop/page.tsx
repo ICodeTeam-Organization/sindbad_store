@@ -32,7 +32,7 @@ const ProductPage = async ({searchParams}:searchParamsType) => {
     <div className="xl:container mx-auto mdHalf:py-6 mdHalf:px-4">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Sidebar */}
-        <div className=" lg:w-[20%] mdHalf:w-[30%] mdHalf:block hidden mt-10 ms-7   " >
+        <div className=" lg:w-[20%] mdHalf:w-[30%] mdHalf:block hidden mt-10 ms-7 border-l pl-2  " >
          <Sidebar/>
         </div>
         <div className="mdHalf:hidden" >
@@ -52,13 +52,9 @@ const ProductPage = async ({searchParams}:searchParamsType) => {
         </div>
         {/* Main content */}
         <main className="w-full lg:w-[80%] mdHalf:w-[70%] md:my-10 mb-16  ">
-          {/* Tags and Results */}
-          {/* <SearchResultsHeader products={[]} /> */}
-
           {/* Products Section */}
           <section>
             <ShopProductsGrid  />
-            
           </section>
         </main>
       </div>
