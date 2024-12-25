@@ -8,12 +8,14 @@ import { postApi } from "@/lib/http";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { useRouter } from "next/navigation";
 import { useInView } from "react-intersection-observer";
+import SearchResultsHeader from "./search-results-header";
 
 type ProductsResponsive = {
   data: {
     items: Product[];
     currentPage: number;
     totalPages: number;
+    totalCount:number
   };
 };
 
@@ -82,6 +84,7 @@ const ShopProductsGrid = ({ allProducts }: any) => {
     },
     initialPageParam: 1,
   });
+  const totalCount = data?.pages[0]?.data?.totalCount
 
   const updateQueryParams = () => {
     const newParams = new URLSearchParams();
@@ -107,6 +110,7 @@ const ShopProductsGrid = ({ allProducts }: any) => {
     // Update the URL with the new query parameters
     router.replace(`?${newParams.toString()}`);
   };
+
 
   // to set filters from query params in state
   const initializeFiltersFromParams = () => {
@@ -166,6 +170,9 @@ const ShopProductsGrid = ({ allProducts }: any) => {
  
   return (
     <>
+      {!isPending&&<div>
+        <SearchResultsHeader totalResults={totalCount} />
+      </div>}
       <div className="mb-12 flex flex-wrap  justify-center mdHalf:gap-6  gap-3">
         {!isPending ? (
           data?.pages && data?.pages?.length > 0 ? (

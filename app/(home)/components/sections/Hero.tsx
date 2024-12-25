@@ -1,13 +1,13 @@
 import React from "react";
 
 import Image from "next/image";
-import Header from "../Header";
+import HomeHeader from "../HomeHeader";
 
 const Hero = () => {
   return (
     <div className="relative" >
       <div className="relative overflow-visible">
-        <Header />
+        <HomeHeader />
       </div>
 
       <div className="xl:container mx-auto" >
