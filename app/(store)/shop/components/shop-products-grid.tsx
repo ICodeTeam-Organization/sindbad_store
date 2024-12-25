@@ -167,6 +167,7 @@ const ShopProductsGrid = ({ allProducts }: any) => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+ 
   return (
     <>
       {!isPending&&<div>
@@ -199,7 +200,10 @@ const ShopProductsGrid = ({ allProducts }: any) => {
                     }
                     oldPrice={product.priceAfterDiscount? product.priceBeforeDiscount : null}
                     productName={product.name}
+                    offerSentence={product.buyAndGet}
+                    rate={product.rate}
                   />
+                  { console.log("0product.rate == " + product.rate)}
                 </div>
               ));
             })
