@@ -31,13 +31,13 @@ export default async function Home() {
       "EcommercesStores/GetEcommerceStores?pageNumber=1&pageSize=20"
     ),
     getApi<{data:Product[]}>(
-      "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/30"
+      "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/20"
     ),
     getApi<{data:Product[]}>(
-      "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/30"
+      "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/20"
     ),
     getApi<{data:Product[]}>(
-      "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/30"
+      "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/20"
     ),
   ]);
 
@@ -75,7 +75,7 @@ export default async function Home() {
         <ShoppingNow />
       </div>
       <div className="my-10">
-        <AllEShops AllEShops={transformedAllEcommrce} />
+        <AllEShops AllEShops={transformedAllEcommrce}  />
       </div>
       <Feature />
     </section>

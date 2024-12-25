@@ -25,6 +25,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import HowDialog from "./HowDialog";
 
 const orderFrom = [
   {
@@ -78,6 +79,8 @@ export default function DropDownMenuOrderFrom() {
     }
     // setselectedCountry(item)
   };
+
+  const [showHowDialog, setshowHowDialog] = useState<number|null>(null);
 
   return (
     <div className="flex items-center gap-x-2 w-full">
@@ -138,6 +141,7 @@ export default function DropDownMenuOrderFrom() {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
+      <HowDialog open={showHowDialog != null} onOpenChange={(e)=>{setshowHowDialog(null)}} />
     </div>
   );
 }
