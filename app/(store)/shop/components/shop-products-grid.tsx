@@ -163,6 +163,7 @@ const ShopProductsGrid = ({ allProducts }: any) => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+ 
   return (
     <>
       <div className="mb-12 flex flex-wrap  justify-center mdHalf:gap-6  gap-3">
@@ -192,7 +193,10 @@ const ShopProductsGrid = ({ allProducts }: any) => {
                     }
                     oldPrice={product.priceAfterDiscount? product.priceBeforeDiscount : null}
                     productName={product.name}
+                    offerSentence={product.buyAndGet}
+                    rate={product.rate}
                   />
+                  { console.log("0product.rate == " + product.rate)}
                 </div>
               ));
             })
