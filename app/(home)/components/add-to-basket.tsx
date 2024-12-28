@@ -1,6 +1,6 @@
 "use client";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";

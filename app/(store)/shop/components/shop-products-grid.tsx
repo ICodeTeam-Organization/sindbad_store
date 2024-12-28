@@ -203,7 +203,6 @@ const ShopProductsGrid = ({ allProducts }: any) => {
                     offerSentence={product.buyAndGet}
                     rate={product.rate}
                   />
-                  { console.log("0product.rate == " + product.rate)}
                 </div>
               ));
             })

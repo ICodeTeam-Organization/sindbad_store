@@ -75,14 +75,14 @@ const Summary = ({cartItems}:{cartItems:CartItem[]}) => {
           <span className="font-semibold">{calculateFinalTotal(cartItems) || 0} رس</span>
         </div>
       </CardContent>
-      <CardFooter>
+      {cartItems.length > 0 && <CardFooter>
         <Link href={"/checkout"}  className=" w-full" >
           <Button className="bg-primary-background hover:bg-orange-600 text-white text-lg  w-full">
             ادخال سند السداد
             <ArrowLeft className="mr-3 " />
           </Button>
         </Link>
-      </CardFooter>
+      </CardFooter>}
     </Card>
   );
 };

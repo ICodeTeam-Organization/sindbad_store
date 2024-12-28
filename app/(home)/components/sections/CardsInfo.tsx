@@ -35,7 +35,7 @@ function CardsInfo() {
   return (
     <div className="xlHalf:mt-40 mdHalf:mt-20 mt-10 p-4  flex items-center justify-center xl:gap-16 lg:gap-8 mdHalf:gap-5 gap-4 xl:mx-12 lg:mx-4 mdHalf:mx-4 lg:flex-nowrap flex-wrap " >
     {cards.map((item)=>(
-      <Link href={item.href} style={{backgroundColor:item.bgc}} className="bg-white p-5 flex justify-between h-[160px] w-[400px] rounded " >
+      <Link href={item.href} style={{backgroundColor:item.bgc}} className="bg-white p-5 flex justify-between h-[160px] w-[400px] rounded-[10px] " >
          <div className="w-[60%] h-full flex-col flex justify-between" >
            <h1 className="font-bold mb-4 " > {item.title} </h1>
            <h3 className="text-[13px]" >{item.desc}</h3>

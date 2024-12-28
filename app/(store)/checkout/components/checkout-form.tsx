@@ -16,7 +16,8 @@ import { getApi, postApi } from "@/lib/http";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import * as z from "zod";
 import {
   FormControl,
@@ -35,6 +36,7 @@ import {
 import InputField from "./input-field";
 import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
+import { useCartStore } from "@/app/stores/cartStore";
 
 const CheckoutForm = () => {
   
@@ -56,49 +58,49 @@ const CheckoutForm = () => {
   });
 
   const { data: authData } = useSession();
+  const {setCartItems} = useCartStore()
   
   const { toast } = useToast();
   const router = useRouter();
   const { mutate, isPending } = useMutation({
     mutationKey: ["upload-bound"],
-    mutationFn: (data: z.infer<typeof checkoutSchema>) =>
-    {
-      const bodyData = {
-        bankId: +data.bank, 
-        note: data.note,
-        amount: +data.amount,
-        bondNumber: +data.number,
-        bondDate: data.date,
-        bondImageFile: data.image,
-        bondTyep: 1,
-        isUrgentOrder: false,
-      };
-
-    
+    mutationFn: async (data: z.infer<typeof checkoutSchema>) => {
+      const formData = new FormData();
+      formData.append("BankId", String(+data.bank));
+      formData.append("Note", data.note || ""); 
+      formData.append("Amount", String(+data.amount)); 
+      formData.append("BondNumber", String(+data.number)); 
+      formData.append("BondDate", data.date || ""); 
+      formData.append("BondImageFile", data.image[0]); 
+      formData.append("BondTyep", "1"); 
+      formData.append("IsUrgentOrder", "false"); 
+  
       return postApi("Orders/CompleteCustomerPurchase", {
-        body: bodyData,
+        body: formData, 
         isPage: true,
         headers: {
           "Accept-Language": "ar",
-          "Content-type": "multipart/form-data",
-          Authorization: `Bearer ${authData?.user.data.token}`,
+          Authorization: `Bearer ${authData?.user.data.token}`, // Token from authData
+          // Content-Type header is NOT required; `fetch` automatically sets it for FormData
         },
-      })
+      });
     },
     onError: (err) => {
       toast({
         variant: "destructive",
-        description: err.message,
+        description: err.message || "حدث خطأ أثناء معالجة الطلب",
         action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
       });
     },
     onSuccess: () => {
+      setCartItems([]);
       router.replace("/checkout-success");
     },
   });
+  
 
  async function onSubmit(values: z.infer<typeof checkoutSchema>) {
-   values.image = await values.image[0].arrayBuffer()
+  
     mutate(values);
   }
 

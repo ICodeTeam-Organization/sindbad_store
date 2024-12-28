@@ -68,7 +68,7 @@ function AllCategoriesMegaMenu() {
                 {i.name}{" "}
               </Link>
               <p
-              //  href={`/shop?cat=${i.id}`}
+              //  href={`/shop?cats=${i.id}`}
                 onMouseEnter={() => {
                   setselectedCategory(i.id);
                   handleSubCategory(i.id);
