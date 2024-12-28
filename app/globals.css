@@ -95,7 +95,7 @@ body {
     @apply bg-background text-foreground;
   }
   .nav-menus {
-    @apply flex flex-col gap-2 items-center mdHalf:justify-center mdHalf:p-2 text-base hover:bg-[#FF8F7E22] cursor-pointer transition;
+    @apply flex flex-col gap-2 items-center mdHalf:justify-center mdHalf:p-2 text-base hover:bg-[#FF8F7E22] cursor-pointer transition ;
   }
 
   .nav-menus-label {

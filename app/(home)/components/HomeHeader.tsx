@@ -8,20 +8,17 @@ import PersonButton from "./person-button";
 import { useSession } from "next-auth/react";
 import { ArrowRight } from "lucide-react";
 import React from "react";
-import DropdownMenu from "@/components/DropDownMenu";
 import { IoChevronDownOutline, IoMenu } from "react-icons/io5";
 import { GoHeart } from "react-icons/go";
 import { BsCart } from "react-icons/bs";
 import StoresMegaMenu from "./MegaMenus/StoresMegaMenu";
 import EShopsMegaMenu from "./MegaMenus/EShopsMegaMenu";
-import { FaQuestionCircle } from "react-icons/fa";
 import AllCategoriesMegaMenu from "./MegaMenus/AllCategoriesMegaMenu";
 import SpecialOrderMegaMenu from "./MegaMenus/SpecialOrderMegaMenu";
 import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useCartStore } from "@/app/stores/cartStore";
-import DropDownMenuOrderFrom from "@/components/DropDownMenuOrderFrom";
 import {
   Sheet,
   SheetContent,
@@ -66,7 +63,6 @@ const HomeHeader = () => {
   const isAuth = status === "authenticated";
   // const router = useRouter()
 
-
   // const mutation = useSignOut();
 
  
@@ -89,7 +85,7 @@ const HomeHeader = () => {
       event.stopPropagation();
     }}
     className={cn(
-      "flex flex-col mdHalf:flex-row mdHalf:relative z-0 bg-white mdHalf:shadow-md  xl:text-sm text-xs  xl:px-4  mdHalf:justify-between justify-start  mdHalf:h-auto mdHalf:w-auto h-full w-full transition-all duration-300 xl:pr-[170px]  mdHalf:pr-[170px] ",
+      "flex flex-col mdHalf:flex-row mdHalf:relative hover:z-[9999999] bg-white mdHalf:shadow-md  xl:text-sm text-xs  xl:px-4  mdHalf:justify-between justify-start  mdHalf:h-auto mdHalf:w-auto h-full w-full transition-all duration-300 xl:pr-[170px]  mdHalf:pr-[170px] ",
     )}
   >
     {/* this just show in mobile */}
@@ -196,7 +192,7 @@ const HomeHeader = () => {
       <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
         {/* logo section*/}
         <div>
-          <div className="p-2 px-0  cursor-pointer lg:m-4 mdHalf:my-4 mdHalf:mx-1  hidden mdHalf:block absolute z-[999999] ">
+          <div className="p-2 px-0  cursor-pointer lg:m-4 mdHalf:my-4 mdHalf:mx-1  hidden mdHalf:block absolute z-[99999999] ">
             <Link href="/" >
             <Image
               className="block relative "
@@ -275,7 +271,7 @@ const HomeHeader = () => {
 
           {/* down section this section in mobile become the navbarMenu */}
           <div
-            className="tajawal z-[99999]  mdHalf:block hidden "
+            className="tajawal   mdHalf:block hidden "
           >
             {/* content of navmenu */}
              <NavMenu/>

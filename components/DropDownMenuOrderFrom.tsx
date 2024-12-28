@@ -10,22 +10,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { PanelLeft } from "lucide-react";
 import { useState } from "react";
-import { BiDockLeft, BiDownArrow, BiLeftArrow } from "react-icons/bi";
-import { FaCaretDown } from "react-icons/fa";
-import { FcDown, FcLeft } from "react-icons/fc";
+
 import { GrDown } from "react-icons/gr";
 import { RiArrowLeftLine } from "react-icons/ri";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import HowDialog from "./HowDialog";
+
 
 const orderFrom = [
   {
@@ -63,7 +52,6 @@ const orderFrom = [
 export default function DropDownMenuOrderFrom() {
   const { toast } = useToast();
 
-  const [showAlert, setShowAlert] = useState(false)
 
   const [selectedCountry, setselectedCountry] = useState({
     name: "السعودية",
@@ -80,7 +68,7 @@ export default function DropDownMenuOrderFrom() {
     // setselectedCountry(item)
   };
 
-  const [showHowDialog, setshowHowDialog] = useState<number|null>(null);
+  
 
   return (
     <div className="flex items-center gap-x-2 w-full">
@@ -141,7 +129,7 @@ export default function DropDownMenuOrderFrom() {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      <HowDialog open={showHowDialog != null} onOpenChange={(e)=>{setshowHowDialog(null)}} />
+      
     </div>
   );
 }
