@@ -12,7 +12,7 @@ type ProductReviewsTapProps = {
     product: Product;
 };
 
-const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId, product }) => {
+const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
   const [reviews, setReviews] = useState<ReviewProps[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);

@@ -10,7 +10,6 @@ import { ArrowLeft } from "lucide-react";
 import React from "react";
 import PriceLabel from "./price-label";
 import Link from "next/link";
-import { useCartStore } from "@/app/stores/cartStore";
 import { CartItem } from "@/types/storeTypes";
 
 // Function to calculate the total price

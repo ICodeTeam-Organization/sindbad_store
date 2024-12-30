@@ -1,4 +1,3 @@
-import Image from "next/image";
 import AddToBasket from "./add-to-basket";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
@@ -41,6 +40,7 @@ const ProductCard = ({
   fiveStarCount = 0,
   rate = 0,
 }: props) => {
+
         // حساب إجمالي التقييمات
         const totalRatings = oneStarCount + twoStarCount + threeStarCount + fourStarCount + fiveStarCount;
   
@@ -56,12 +56,12 @@ const ProductCard = ({
     <div
       className={
         cn +
-        `m-auto rounded-t-[8px] border hover:border-purple-600 hover:border  transition-all hover:-translate-y-1 hover:shadow  `
+        `m-auto rounded-t-[8px] overflow-hidden border hover:border-purple-600 hover:border  transition-all hover:-translate-y-1 hover:shadow  `
       }
     >
       <Link href={`/shop/productDetils/${ProductDet}`} className="" >
         <div className="w-full h-[180px] overflow-hidden relative  " >
-          {offerSentence ? <span className="OfferSentence ">{offerSentence}</span>: null}
+          {offerSentence ? <span className="OfferSentence px-4 py-[2px] ">{offerSentence}</span>: null}
           
         <SafeImage
             src={image} // رابط الصورة

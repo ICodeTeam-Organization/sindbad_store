@@ -25,7 +25,7 @@ export default function SpecialOrderMegaMenu() {
          { categories.filter((i)=>i.categoryTypeNumber==2).length != 0 
          ? <div className='grid gap-x-4  mb-5 ' >
               {
-                categories.filter((i)=>i.categoryTypeNumber==2)?.map((i,x)=>(
+                categories.filter((i)=>i.categoryTypeNumber==2)?.map((i)=>(
                     <Link key={i.id} href={"/special-order?sh=1&tab=1&category="+i.id}  className='text-[11px] me-2 font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </Link>
                 ))
               }
@@ -45,7 +45,7 @@ export default function SpecialOrderMegaMenu() {
          { categories.filter((i)=>i.categoryTypeNumber==3).length != 0 
          ? <div className='grid  gap-x-4  mb-5 ' >
               {
-                  categories.filter((i)=>i.categoryTypeNumber==3)?.map((i,x)=>(
+                  categories.filter((i)=>i.categoryTypeNumber==3)?.map((i)=>(
                       <Link key={i.id} href={"/special-order?sh=1&tab=2&category="+i.id}  className='text-[11px] me-2 font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black ' > {i.name} </Link>
                   ))
               }

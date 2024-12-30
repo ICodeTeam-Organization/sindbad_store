@@ -1,8 +1,11 @@
 "use client";
 import React from "react";
-import { IoIosClose } from "react-icons/io";
 
-const SreachResultsHeader = ({ storeName="",catName="",totalResults=0 }) => {
+const SreachResultsHeader = ({
+  // storeName = "",
+  // catName = "",
+  totalResults = 0,
+}) => {
   return (
     <section className="flex items-center justify-between w-full mb-6 bg-gray-100 p-4  rounded-lg text-[13px]">
       {/* {storeName != "" &&<div >
@@ -24,7 +27,7 @@ const SreachResultsHeader = ({ storeName="",catName="",totalResults=0 }) => {
         </span>
       </div>} */}
       <div>
-        <p  >نتائج البحث: {totalResults} منتج</p>
+        <p>نتائج البحث: {totalResults} منتج</p>
       </div>
     </section>
   );

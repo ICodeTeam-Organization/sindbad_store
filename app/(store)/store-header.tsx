@@ -3,18 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-
 import { BiMenu, BiSearch } from "react-icons/bi";
-import DropDownMenuOrderFrom from "@/components/DropDownMenuOrderFrom";
-import { FaQuestionCircle } from "react-icons/fa";
 import { useSession } from "next-auth/react";
-import { IoChevronDownOutline } from "react-icons/io5";
-import { cn } from "@/lib/utils";
 import PersonButton from "../(home)/components/person-button";
 import { BsCart } from "react-icons/bs";
 import { GoHeart } from "react-icons/go";
 import { IoMdNotificationsOutline } from "react-icons/io";
-import DropdownMenu from "@/components/DropDownMenu";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useShopFiltersStore } from "../stores/shopFiltersStore";
 import { Sheet, SheetContent } from "@/components/ui/sheet";

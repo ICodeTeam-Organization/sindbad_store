@@ -47,7 +47,7 @@ export const useCartStore = create<CartState>((set) => ({
   //     ),
   //   })),
     setCartItems: (cartItems) =>
-      set((state) => {
+      set(() => {
         return {items:cartItems}
       }),
 }));

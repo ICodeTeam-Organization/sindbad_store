@@ -16,13 +16,13 @@ const MainCategoriesFilter: React.FC<ParentChildCheckboxProps> = ({ data , check
      {
       data.map((ele)=>{
         return (
-          <div className="mb-1">
+          <div className="mb-1" key={ele.id} >
             <div className="flex items-center space-x-3">
               
                <Checkbox
                 id={ele.id+""}
                 checked={checkedId == ele.id}
-                onCheckedChange={(e)=>{
+                onCheckedChange={()=>{
                   onCheckedChange(ele.id)
                 }}
                />

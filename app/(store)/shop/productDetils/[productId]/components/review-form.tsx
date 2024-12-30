@@ -11,7 +11,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const [rate, setRate] = useState(3);
   const [validationError, setValidationError] = useState<string | null>(null);
   const { toast } = useToast();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   const mutation = useMutation({
     mutationFn: async () => {

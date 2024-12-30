@@ -1,16 +1,20 @@
 "use client";
 import { BiPlusCircle } from "react-icons/bi";
-import { Dialog, DialogContent, DialogTrigger , DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger  } from "@/components/ui/dialog";
 // import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import SpecialOrderForm from "./special-order-form";
-import { number } from "zod";
 
 const AddSpecialOrder = ({
   show = false,
-  setShow = (s:boolean) => {},
+  setShow ,
   tab = 1,
   category = "",
+}:{
+  show:boolean,
+  setShow:(s:boolean) => void
+  tab:number,
+  category:string
 }) => {
   return (
     <Dialog open={show}  >

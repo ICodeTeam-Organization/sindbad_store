@@ -19,7 +19,7 @@ const StoresCardCarsoul: React.FC<Store> = ({
   description,
   name,
   mainImageUrl,
-  websiteLink,
+  // websiteLink,
   id,
 }) => {
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =

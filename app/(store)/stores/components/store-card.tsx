@@ -5,7 +5,6 @@ import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
 import { useFavorite } from "@/app/stores/favoritesStore";
-import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
 import { cn } from "@/lib/utils";
@@ -19,13 +18,14 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
-  const { data: session, status } = useSession();
-  const redirct = useRouter();
+  const { data: session } = useSession();
   const { toast } = useToast();
 
   const linkToStore = `/stores/storeDetails/${id}`;
 
-  const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
+  const { 
+    // mutate: mutateAddToFav,
+     isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
       return await postApi(
         `FavoriteShop/AddStore`,
@@ -57,7 +57,9 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
     },
   });
 
-  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
+  const { 
+    // mutate: mutateRemoveFromFav,
+     isPending: isPendingRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
         return await deleteApi(

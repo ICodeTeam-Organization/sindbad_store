@@ -17,6 +17,7 @@ const Hero = () => {
             width={2000}
             height={200}
             alt="hero-image"
+            priority
             className="object-contain"
           />
         </div>

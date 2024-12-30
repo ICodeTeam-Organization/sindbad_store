@@ -1,7 +1,4 @@
 "use client"
-import { IoIosArrowBack } from "react-icons/io";
-import { AiFillStar } from "react-icons/ai";
-import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -10,7 +7,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay"
-import Link from "next/link";
 import { useState } from "react";
 import { Store } from "@/types/storeTypes";
 import StoresCardCarsoul from "../StoresCardCarsoul";

@@ -1,9 +1,8 @@
 import { Card } from "@/components/ui/card";
 import { BsCheck2Circle } from "react-icons/bs";
-import { IoBagCheckOutline } from "react-icons/io5";
 
 const page = ({}) => {
-  const code: number = 564846874;
+  // const code: number = 564846874;
   const requestNumber: number = 565456;
   return (
     <div className="my-10 text-center" >

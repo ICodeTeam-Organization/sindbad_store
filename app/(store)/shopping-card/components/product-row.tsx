@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { BiTrash } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import { HiMinusSm } from "react-icons/hi";

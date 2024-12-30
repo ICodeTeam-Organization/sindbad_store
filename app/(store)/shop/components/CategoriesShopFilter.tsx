@@ -3,20 +3,20 @@ import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MainCategory } from "@/types/storeTypes";
 import { Dot } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MdOutlineChevronLeft } from "react-icons/md";
 
-interface SubCategory {
-  id: number; // Unique ID for the subcategory
-  name: string; // Name of the subcategory
-  checked: boolean; // Whether the subcategory is checked
-}
+// interface SubCategory {
+//   id: number; // Unique ID for the subcategory
+//   name: string; // Name of the subcategory
+//   checked: boolean; // Whether the subcategory is checked
+// }
 
-interface ParentCategory {
-  id: number; // Unique ID for the parent category
-  name: string; // Name of the parent category
-  subCategories: SubCategory[]; // Array of subcategories
-}
+// interface ParentCategory {
+//   id: number; // Unique ID for the parent category
+//   name: string; // Name of the parent category
+//   subCategories: SubCategory[]; // Array of subcategories
+// }
 
 interface ParentChildCheckboxProps {
   data: MainCategory; // Represents the parent and its children
@@ -110,7 +110,7 @@ const CategoriesShopFilter: React.FC<ParentChildCheckboxProps> = ({ data }) => {
                     <Checkbox
                       id={data.id+""}
                       checked={filters.subCats.includes(i.id+"")}
-                      onCheckedChange={(e)=>{
+                      onCheckedChange={()=>{
                         toggleSubCat(i.id+"")
                         const isAllChecked = data?.subCategories?.every((ele)=>{
                            return [...filters.subCats,i.id+""].includes(ele.id+"")

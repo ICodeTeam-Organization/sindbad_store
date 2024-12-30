@@ -1,4 +1,3 @@
-import DropdownMenu from "@/components/DropDownMenu";
 import DropDownMenuOrderFrom from "@/components/DropDownMenuOrderFrom";
 import HowDialog from "@/components/HowDialog";
 import { getApi } from "@/lib/http";
@@ -127,11 +126,8 @@ function OrderFromAndHow() {
     data: { items: { id: number; question: string }[] };
   }>({
     queryKey: ["how-FAQs"],
-    queryFn: () => getApi("FAQs/QuestionsWithIds?pageNumber=1&pageSize=10"),
+    queryFn: () => getApi("FAQs/GetFAQ_QuestionsWithIds/1/10/1"),
   });
-
-  console.log(questions,"dddddddddddd");
-  
 
   return (
     <>
@@ -166,7 +162,7 @@ function OrderFromAndHow() {
               {isFetching ? (
                 <Loader />
               ) : (
-                questions?.data?.items?.map((item, index) => (
+                questions?.data?.items?.map((item) => (
                   <React.Fragment key={item.id}>
                     <li
                       role="menuitem"
@@ -194,7 +190,7 @@ function OrderFromAndHow() {
               {isFetching ? (
                 <Loader />
               ) : (
-                questions?.data?.items?.map((item, index) => (
+                questions?.data?.items?.map((item) => (
                   <React.Fragment key={item.id}>
                     <li
                       className="cursor-pointer text-slate-800 flex w-full gap-x-2 text-sm items-center rounded-md p-2 transition-all hover:bg-[#FF8F7E22]  mr-4 "
@@ -215,7 +211,7 @@ function OrderFromAndHow() {
       <HowDialog
         open={showHowDialog}
         id={showHowDialog || 0}
-        onOpenChange={(e) => {
+        onOpenChange={() => {
           setshowHowDialog(null);
         }}
       />

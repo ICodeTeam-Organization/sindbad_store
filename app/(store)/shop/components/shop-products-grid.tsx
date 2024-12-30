@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "@/app/(home)/components/product-card";
 import { Product } from "@/types/storeTypes";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { useRouter } from "next/navigation";
@@ -19,7 +19,7 @@ type ProductsResponsive = {
   };
 };
 
-const ShopProductsGrid = ({ allProducts }: any) => {
+const ShopProductsGrid = () => {
   const router = useRouter();
 
   const { ref: footerRef, inView } = useInView({
@@ -60,13 +60,12 @@ const ShopProductsGrid = ({ allProducts }: any) => {
       };
       // Remove fields that have invalid values (0 or empty string)
       const filteredBody = Object.fromEntries(
-        Object.entries(body).filter(([key, value]) => {
+        Object.entries(body).filter(([, value]) => {
           // Only keep the entries where value is not 0 or empty string
           return value !== 0 && value !== "" && value;
         })
       );
 
-      console.log("filteredBody of filters shop", filteredBody);
 
       const response = await postApi(
         `Products/GetProductsWitheFilter?returnDtoName=2`,
@@ -176,10 +175,10 @@ const ShopProductsGrid = ({ allProducts }: any) => {
       <div className="mb-12 flex flex-wrap  justify-center mdHalf:gap-6  gap-3">
         {!isPending ? (
           data?.pages && data?.pages?.length > 0 ? (
-            data?.pages?.map((page) => {
+            data?.pages?.map((page,x) => {
               if (page?.data?.items?.length == 0 && isFetched) {
                 return (
-                  <div className="h-[65vh] flex items-center justify-center">
+                  <div key={x} className="h-[65vh] flex items-center justify-center">
                     <p className="text-center text-lg tajawal font-bold py-12">
                       لايتوفر أي منتج في الوقت الحالي
                     </p>

@@ -1,5 +1,5 @@
-
-import React, { useState, useEffect } from "react";
+"use client"
+import React, { useState } from "react";
 import ProductTitle from "./product-title";
 import PriceSection from "./price-section";
 import ImageGallery from "./image-gallery";

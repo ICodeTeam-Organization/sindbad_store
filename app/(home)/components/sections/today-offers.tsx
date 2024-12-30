@@ -17,22 +17,43 @@ const TodayOffers = ({ Offersproducts = { data: [] } }: { Offersproducts: { data
   const [IsHover, setIsHover] = useState(true);
   const [countdown, setCountdown] = useState(0);
 
+  // useEffect(() => {
+  //   const updateCountdown = () => {
+  //     const now = new Date();
+  //     const targetTime = new Date();
+  //     targetTime.setHours(6, 0, 0, 0);
+  //     if (now.getHours() >= 6) {
+  //       targetTime.setDate(targetTime.getDate() + 1);
+  //     }
+  //     const timeLeft = targetTime - now;
+  //     setCountdown(Math.max(timeLeft, 0));
+  //   };
+
+  //   updateCountdown();
+  //   const interval = setInterval(updateCountdown, 1000);
+  //   return () => clearInterval(interval);
+  // }, []);
+
   useEffect(() => {
     const updateCountdown = () => {
       const now = new Date();
       const targetTime = new Date();
       targetTime.setHours(6, 0, 0, 0);
+  
       if (now.getHours() >= 6) {
         targetTime.setDate(targetTime.getDate() + 1);
       }
-      const timeLeft = targetTime - now;
+  
+      const timeLeft = targetTime.getTime() - now.getTime();
       setCountdown(Math.max(timeLeft, 0));
     };
-
+  
     updateCountdown();
     const interval = setInterval(updateCountdown, 1000);
-    return () => clearInterval(interval);
+  
+    return () => clearInterval(interval); // تنظيف المؤقت عند إلغاء التفعيل
   }, []);
+  
 
   const formatTime = (milliseconds: number) => {
     const totalSeconds = Math.floor(milliseconds / 1000);

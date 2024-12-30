@@ -1,7 +1,4 @@
-"use client"
-import { IoIosArrowBack } from "react-icons/io";
-import { AiFillStar } from "react-icons/ai";
-import Image from "next/image";
+"use client";
 import {
   Carousel,
   CarouselContent,
@@ -10,12 +7,15 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import Link from "next/link";
 import { useState } from "react";
 import EshopsCardCarsoul from "../EshopsCardCarsoul";
-import { Shop, Store } from "@/types/storeTypes";
+import { Shop } from "@/types/storeTypes";
 
-const AllEShops = ({ AllEShops }: { AllEShops: { data: { items: { items: Shop[] } } } }) => {
+const AllEShops = ({
+  AllEShops,
+}: {
+  AllEShops: { data: { items: Shop[] } };
+}) => {
   const [IsHover, setIsHover] = useState(true);
 
   return (
@@ -52,7 +52,7 @@ const AllEShops = ({ AllEShops }: { AllEShops: { data: { items: { items: Shop[] 
               <CarouselNext className=" text-[#F58634]" />
             </div>
             <CarouselContent>
-              {AllEShops?.data?.items?.items?.map((shop: Shop) => (
+              {AllEShops?.data?.items?.map((shop: Shop) => (
                 <CarouselItem
                   key={shop.id}
                   dir="rtl"

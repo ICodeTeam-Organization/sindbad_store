@@ -4,7 +4,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Carousel,
@@ -13,7 +12,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/http";
 
@@ -71,7 +69,7 @@ function HowDialog({
                   </div>
                   <CarouselContent dir="rtl">
                     {question?.data?.imagesUrls.map((item, index) => (
-                      <CarouselItem className="w-full">
+                      <CarouselItem className="w-full" key={index}>
                         <div>
                           <div className="">
                             <h1 className="text-lg text-primary-background bg-zinc-100 w-10 h-10 flex items-center justify-center  rounded-full ">

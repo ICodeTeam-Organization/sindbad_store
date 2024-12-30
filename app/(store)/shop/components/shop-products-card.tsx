@@ -39,7 +39,14 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
           )}
         </div>
 
-        <AddToBasket id={product.id} />
+        <AddToBasket id={product.id} productInfo={
+          {
+            image: product.image,
+            productName: product.name,
+            price: product.price,
+            oldPrice:  product.oldPrice
+        }
+        } />
 
       </div>
     </div>

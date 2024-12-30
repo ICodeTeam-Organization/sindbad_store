@@ -1,5 +1,4 @@
 "use client";
-import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { FavoriteEcommerces } from "@/types/storeTypes";

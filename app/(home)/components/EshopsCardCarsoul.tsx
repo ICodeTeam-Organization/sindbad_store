@@ -18,7 +18,7 @@ import { deleteApi, postApi } from "@/lib/http";
 const EshopsCardCarsoul: React.FC<Shop> = ({
   description,
   name,
-  ecommerceStoreImages,
+  // ecommerceStoreImages,
   id: ecommrcesId,
   logo,
   urlLinkOfStore,

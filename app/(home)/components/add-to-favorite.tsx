@@ -40,7 +40,7 @@ const AddToFavorite = ({ id }: Props) => {
             );
             return res.data;
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             addProductToFavorite(+id)
         },
         onError: (error: any) => {

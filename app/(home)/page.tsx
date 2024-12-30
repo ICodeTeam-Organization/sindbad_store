@@ -27,7 +27,7 @@ export default async function Home() {
       "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/100000"
     ),
     getApi<{data:Store[]}>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
-    getApi<{data:Shop[]}>(
+    getApi<{data:{items:Shop[]}}>(
       "EcommercesStores/GetEcommerceStores?pageNumber=1&pageSize=20"
     ),
     getApi<{data:Product[]}>(
@@ -40,13 +40,6 @@ export default async function Home() {
       "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/20"
     ),
   ]);
-
-  // تحويل البيانات لتتطابق مع التركيبة المتوقعة
-  const transformedAllEcommrce = {
-    data: {
-      items: AllEcommrce.data
-    }
-  };
 
   return (
     <section className="w-full">
@@ -75,7 +68,7 @@ export default async function Home() {
         <ShoppingNow />
       </div>
       <div className="my-10">
-        <AllEShops AllEShops={transformedAllEcommrce}  />
+        <AllEShops AllEShops={AllEcommrce}  />
       </div>
       <Feature />
     </section>

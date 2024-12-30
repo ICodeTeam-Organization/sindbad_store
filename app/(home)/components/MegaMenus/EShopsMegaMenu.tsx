@@ -59,7 +59,7 @@ function EShopsMegaMenu() {
             </h3>
           </div>
           <div className="mdHalf:grid lg:grid-cols-1 flex  mdHalf:place-content-start  mdHalf:overflow-y-scroll mdHalf:overflow-x-hidden overflow-x-scroll  gap-x-4  mdHalf:mb-5 mb-2  mdHalf:h-[80%]">
-            {allMainCat.map((i, x) => (
+            {allMainCat.map((i) => (
               <p
                 key={i.id}
                 onClick={() => {

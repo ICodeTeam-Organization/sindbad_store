@@ -50,7 +50,7 @@ function AllCategoriesMegaMenu() {
             </h3>
           </div>
           <div dir="ltr" className="mdHalf:grid grid-cols-1 flex direction-  mdHalf:place-content-start  mdHalf:overflow-y-scroll mdHalf:overflow-x-hidden overflow-x-scroll   gap-x-4  mdHalf:mb-5 mb-2  mdHalf:h-[75%]">
-            {allMainCat?.map((i: MainCategory,ix:number) => (
+            {allMainCat?.map((i: MainCategory,) => (
               <div key={i.id} >
               <Link
                
@@ -99,7 +99,7 @@ function AllCategoriesMegaMenu() {
           </div>
           {subCategories.length != 0 ? (
             <div className="mdHalf:grid  grid-cols-1 place-content-start  gap-x-4   overflow-y-scrol overflow-x-hidden h-[75%]">
-              {subCategories?.map((i: MainCategory,x) => (
+              {subCategories?.map((i: MainCategory) => (
                 <div key={i.id} >
                   <Link  href={`/shop?subCats=${i.id}`} className=" block text-[11px] my-[2px] h-fit hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded lg:whitespace-nowrap">
                   {" "}

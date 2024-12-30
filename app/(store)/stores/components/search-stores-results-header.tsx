@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { IoIosClose } from "react-icons/io";
 
 const SreachStoresResultsHeader = ({ storeName="",catName="",totalResults=0 }) => {
   return (

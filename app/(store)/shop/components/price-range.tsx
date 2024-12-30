@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 
 const PriceRange = ({onChangeRange}:{onChangeRange:(s:[number,number])=>void}) => {
 
-  const { filters ,setPriceRange } = useShopFiltersStore();
+  const { filters } = useShopFiltersStore();
   const [priecRange, setPriecRange] = useState<[number,number]>(filters.price);
 
   const [isUpdated, setIsUpdated] = useState(false);

@@ -16,7 +16,7 @@ export default function GetFavorite() {
 
   const [trigged, settrigged] = useState<boolean>(false);
 
-  const { data, error, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["favorites"],
     queryFn: async () => {
       

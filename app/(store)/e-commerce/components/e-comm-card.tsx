@@ -20,8 +20,8 @@ const E_commerceCard = ({
     LinkOFStore,
     description,
     logo,
-    categories,
-    ecommerceStoreImages,
+    // categories,
+    // ecommerceStoreImages,
 }: E_commerceCardProps) => {
   const {
     favoriteEcommerceIds,
@@ -49,7 +49,7 @@ const E_commerceCard = ({
         }
       );
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       addEcommerceToFavorite(+id);
     },
     onError: (error: any) => {
@@ -77,7 +77,7 @@ const E_commerceCard = ({
           }
         );
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         delEcommerceFromFavorite(+id);
       },
       onError: (error: any) => {

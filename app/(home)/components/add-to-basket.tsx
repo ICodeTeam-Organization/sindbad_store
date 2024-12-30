@@ -10,7 +10,7 @@ import { Loader2, Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import AddToFavorite from "./add-to-favorite";
 import { useCartStore } from "@/app/stores/cartStore";
-import { deleteApi, getApi, postApi, putApi } from "@/lib/http";
+import { deleteApi, postApi, putApi } from "@/lib/http";
 import Spinner from "./Spinner";
 import { useDebounce } from "@/hooks/useDebounce";
 

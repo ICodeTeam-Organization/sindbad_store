@@ -44,7 +44,7 @@ const Categories = ({categories}:categoriesPropsInterface) => {
         setIsHover(true)
       }}
       opts={{
-        direction:"rtl"
+        direction:"rtl",
       }}
        plugins={[
         Autoplay({
@@ -71,6 +71,7 @@ const Categories = ({categories}:categoriesPropsInterface) => {
         </CarouselContent>
         <div  className="hidden md:block" >
         <CarouselPrevious 
+        
          />
         <CarouselNext 
          />
