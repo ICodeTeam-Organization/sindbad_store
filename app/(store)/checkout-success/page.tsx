@@ -1,9 +1,9 @@
 import { Card } from "@/components/ui/card";
 import { BsCheck2Circle } from "react-icons/bs";
 
-const page = ({}) => {
+const page = ({searchParams}:{searchParams:{code:string}}) => {
   // const code: number = 564846874;
-  const requestNumber: number = 565456;
+  const requestNumber: string =  searchParams.code;
   return (
     <div className="my-10 text-center" >
       <Card className="container mx-auto mb-40 shadow-none py-20  border-none  px-1 h-fit w-fit ">

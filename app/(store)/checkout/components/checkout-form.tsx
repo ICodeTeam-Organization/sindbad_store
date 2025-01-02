@@ -38,6 +38,12 @@ import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
 import { useCartStore } from "@/app/stores/cartStore";
 
+function extractNumbers(str:string) {
+  // Use regex to match all numbers in the string
+  const numbers = str.match(/\d+/g);
+  return numbers ? numbers.map(Number) : []; // Convert to numbers and return
+}
+
 const CheckoutForm = () => {
   
   const { data } = useQuery<any>({
@@ -92,9 +98,11 @@ const CheckoutForm = () => {
         action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
       });
     },
-    onSuccess: () => {
+    onSuccess: (data:any) => {
+      
+      const code = extractNumbers(data?.data as string)[0]
       setCartItems([]);
-      router.replace("/checkout-success");
+      router.replace("/checkout-success?code="+code);
     },
   });
   
