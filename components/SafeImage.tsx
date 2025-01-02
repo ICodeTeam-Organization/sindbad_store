@@ -20,28 +20,43 @@ const SafeImage: React.FC<SafeImageProps> = ({
   ...rest // أخذ باقي الخصائص مثل className، priority وغيرها
 }) => {
   const [validSrc, setValidSrc] = useState<string>(fallbackSrc);
+ 
+  // useEffect(() => {
+  //   const validateImage = async () => {
+  //     try {
+  //       const response = await fetch(src);
+  //       if (response.ok) {
+  //         setValidSrc(src); // تعيين الصورة الأصلية إذا كانت صالحة
+  //       } else {
+  //         setValidSrc(fallbackSrc); // تعيين الصورة الافتراضية إذا فشل التحقق
+  //       }
+  //     } catch {
+  //       setValidSrc(fallbackSrc); // تعيين الصورة الافتراضية عند حدوث خطأ
+  //     }
+  //   };
+
+  //   validateImage();
+  // }, [src, fallbackSrc]);
 
   useEffect(() => {
-    const validateImage = async () => {
-      try {
-        const response = await fetch(src);
-        if (response.ok) {
-          setValidSrc(src); // تعيين الصورة الأصلية إذا كانت صالحة
-        } else {
-          setValidSrc(fallbackSrc); // تعيين الصورة الافتراضية إذا فشل التحقق
-        }
-      } catch {
-        setValidSrc(fallbackSrc); // تعيين الصورة الافتراضية عند حدوث خطأ
-      }
-    };
+    checkImage(src)
+  }, [src])
+  
 
-    validateImage();
-  }, [src, fallbackSrc]);
+  const checkImage = (src:string) => { 
+    if (!src.startsWith("https") || !src.startsWith("http")) {
+      setValidSrc(src.startsWith("/") ? src : "/" + src)
+      return;
+    }
+     setValidSrc(src);
+   }
 
   return (
     <Image
       src={validSrc}
+      loader={()=>validSrc}
       alt={alt}
+      onError={()=>setValidSrc(fallbackSrc)}
       width={width} // سيتم تمريرها فقط إذا كانت موجودة
       height={height} // سيتم تمريرها فقط إذا كانت موجودة
       {...rest} // تمرير باقي الخصائص هنا

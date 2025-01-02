@@ -5,7 +5,7 @@ module.exports = {
         protocol: "https",
         hostname: "example.com",
         port: "",
-        pathname: "/images/**",
+        pathname: "/**",
       },
       {
         protocol: "https",

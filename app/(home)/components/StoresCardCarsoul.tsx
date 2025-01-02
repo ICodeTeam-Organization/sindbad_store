@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { Store } from "@/types/storeTypes";
 import { deleteApi, postApi } from "@/lib/http";
+import SafeImage from "@/components/SafeImage";
 
 const StoresCardCarsoul: React.FC<Store> = ({
   description,
@@ -104,7 +105,7 @@ const StoresCardCarsoul: React.FC<Store> = ({
         {mainImageUrl === null ? (
           <h1>لاتوجد صورة للمحل</h1>
         ) : (
-          <Image
+          <SafeImage
             src={
               mainImageUrl?.startsWith("http")
                 ? mainImageUrl
