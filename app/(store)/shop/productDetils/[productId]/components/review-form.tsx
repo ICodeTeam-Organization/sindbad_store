@@ -51,13 +51,18 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       });
     },
     onError: (error: any) => {
-      const errorMessage = error?.response?.data?.message || "حدث خطأ أثناء إضافة تعليقك.";
+      const errorMessage = error?.message || "حدث خطأ أثناء إضافة تعليقك.";
       
       toast({
         variant: "destructive",
         description: errorMessage,
-        action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+        // action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
       });
+
+      console.log(JSON.stringify(error));
+      console.log(error);
+      console.log(error?.message);
+
     },
   });
 

@@ -9,7 +9,7 @@ import { Toaster as SonanerToaster } from "sonner";
 import Footer from "@/components/Footer";
 import About from "@/components/About";
 import GetInitialData from "./GetInitialData";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { NuqsAdapter } from "nuqs/adapters/next/app"; 
 
 const Noto_Kufi = Noto_Kufi_Arabic({
   weight: ["400", "700"],
@@ -44,13 +44,17 @@ export default async function RootLayout({
               <ClientProviders>
                 {/* this to get init data like categories , favorites */}
                 <GetInitialData />
-                <NuqsAdapter>{children}</NuqsAdapter>
+
+                <NuqsAdapter>
+                  {children}
+                  <About />
+                  <Footer />
+                </NuqsAdapter>
               </ClientProviders>
             </main>
             {/* <Subscribe /> */}
           </NextAuthProvider>
-          <About />
-          <Footer />
+
           {/* to show toaster messages */}
           <Toaster />
           <SonanerToaster richColors />

@@ -76,8 +76,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         </div>
 
         <PriceSection
-          discountedPrice={`${product.priceAfterOffer} ر.س`}
-          originalPrice={`${product.priceBeforOffer} ر.س`}
+          discountedPrice={product.priceAfterOffer}
+          originalPrice={product.priceBeforOffer}
           discount={product.percentageOfDiscount}
         />
         <hr className="my-4 border-gray-300" />

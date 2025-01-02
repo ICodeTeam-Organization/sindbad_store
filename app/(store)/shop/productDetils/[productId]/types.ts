@@ -34,8 +34,8 @@ export interface QuantitySelectorProps {
 }
 
 export interface PriceSectionProps {
-  discountedPrice: string;
-  originalPrice: string;
+  discountedPrice: number;
+  originalPrice: number;
   discount: number;
 }
 

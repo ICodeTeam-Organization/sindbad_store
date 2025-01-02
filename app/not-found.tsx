@@ -3,10 +3,13 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineHome } from "react-icons/md";
+import StoreHeader from "./(store)/store-header";
 
 const NotFoundPage = () => {
   return (
-    <div className=" mb-10 text-center flex flex-col items-center justify-center mx-2 md:mx-0">
+    <div>
+        <StoreHeader  />
+    <div className=" mb-20 text-center flex flex-col items-center justify-center mx-2 md:mx-0">
       <Image src="/images/opps.svg" alt="" width={350} height={350} />
       <h1 className="font-bold text-1xl mb-1 mt-2">404, هذا الرابط غير صحيح</h1>
       <p className="text-xm text-gray-400">
@@ -24,6 +27,7 @@ const NotFoundPage = () => {
         </Link>
         <BackButton />
       </div>
+    </div>
     </div>
   );
 };
