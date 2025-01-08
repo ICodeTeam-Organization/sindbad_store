@@ -12,19 +12,20 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { deleteApi, postApi } from "@/lib/http";
 import SafeImage from "@/components/SafeImage";
-
+import { useRouter } from "next/navigation";
 const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCardProps) => {
   
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { toast } = useToast();
-
+  const router = useRouter();
   const linkToStore = `/stores/storeDetails/${id}`;
 
   const { 
-    // mutate: mutateAddToFav,
+    mutate: mutateAddToFav,
      isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
       return await postApi(
@@ -58,7 +59,7 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
   });
 
   const { 
-    // mutate: mutateRemoveFromFav,
+    mutate: mutateRemoveFromFav,
      isPending: isPendingRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
@@ -87,15 +88,21 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
     });
 
   const handleFav = () => {
+    console.log("handle")
     
-    // if (status === "unauthenticated") redirct.push("/auth");
-    // else if (status === "authenticated") {
-    //   if (isFavorite) {
-    //     mutateRemoveFromFav();
-    //   } else {
-    //     mutateAddToFav();
-    //   }
-    // }
+    if (status === "unauthenticated") router.push("/auth");
+    else if (status === "authenticated") {
+      console.log("authenticated")
+      if (isFavorite) {
+        mutateRemoveFromFav();
+      } else {
+        mutateAddToFav();
+      }
+    }
+    else{
+      console.log("ff")
+
+    }
   };
 
 
