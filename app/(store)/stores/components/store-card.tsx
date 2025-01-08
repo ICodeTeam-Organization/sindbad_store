@@ -87,21 +87,14 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
       },
     });
 
-  const handleFav = () => {
-    console.log("handle")
-    
+  const handleFav = () => {    
     if (status === "unauthenticated") router.push("/auth");
     else if (status === "authenticated") {
-      console.log("authenticated")
       if (isFavorite) {
         mutateRemoveFromFav();
       } else {
         mutateAddToFav();
       }
-    }
-    else{
-      console.log("ff")
-
     }
   };
 
