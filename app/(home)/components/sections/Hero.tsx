@@ -10,8 +10,8 @@ const Hero = () => {
         <HomeHeader />
       </div>
 
-      <div className="xl:container mx-auto" >
-        <div className="absolute top-0 -z-50 xl:container mx-auto">
+      <div className="xl:container mx-auto"  style={{paddingTop: "116px"}} >
+        <div className="absolute top-0 -z-50 xl:container mx-auto" style={{paddingTop: "116px"}}>
           <Image
             src={"/images/sndbadBG.svg"}
             width={2000}
