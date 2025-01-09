@@ -167,7 +167,7 @@ const StoreDetailsCard = ({
                   websiteUrl ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"
                 }`}
               >
-                {websiteUrl ? "موقع المتجر" : " لايوجد رابط"}
+                {websiteUrl ? "الموقع الإلكتروني" : " لايوجد رابط"}
               </Link>
               <button
                 onClick={(e) => {
