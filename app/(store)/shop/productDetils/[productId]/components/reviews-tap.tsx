@@ -82,11 +82,36 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
   return (
     <div className="md:grid grid-cols-3 gap-6" dir="rtl">
       <div className="bg-gray-50 border border-gray-300 rounded-md p-4 mb-4">
-        <div className="text-center mb-4">
-          <div className="text-3xl font-bold">{totalRating} من 5</div>
-          <p className="text-gray-500 text-sm">عدد النجوم </p>
-          <p className="text-gray-500 text-sm"> عدد المراجعين {reviews.length}</p>
+       
+      <div className="bg-white border border-gray-300 rounded-md p-4 mb-4 shadow-md">
+  <h3 className="text-center text-lg font-semibold mb-2">التقييم والمراجعات</h3>
+  <div className="flex justify-between items-center mb-2">
+    <span className="text-xl font-bold">{totalRating.toFixed(1)} من 5</span>
+    <span className="text-gray-500 text-sm">عدد المراجعين: {reviews.length}</span>
+  </div>
+
+  {/* شريط التقييم */}
+  <div className="flex flex-col">
+    {[5, 4, 3, 2, 1].map((rating) => {
+      const count = reviews.filter(review => review.numOfRate === rating).length;
+      const percentage = (count / reviews.length) * 100;
+
+      return (
+        <div key={rating} className="flex items-center mb-1">
+          <span className="w-6 text-center">{rating}</span>
+          <div className="relative w-full h-2 bg-gray-200 rounded-full">
+            <div
+              className="absolute h-2 bg-black"
+              style={{ width: `${percentage}%` }}
+            ></div>
+          </div>
+          <span className="ml-2 text-yellow-500">{'⭐'.repeat(rating)}</span>
         </div>
+      );
+    })}
+  </div>
+</div>
+        
         <ReviewForm productId={Number(productId)} />
       </div>
 
