@@ -6,7 +6,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-
 import { checkoutSchema } from "../schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
@@ -16,7 +15,6 @@ import { getApi, postApi } from "@/lib/http";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
-// import { useRouter } from "next/navigation";
 import { useRouter } from "next-nprogress-bar";
 import * as z from "zod";
 import {
@@ -37,15 +35,15 @@ import InputField from "./input-field";
 import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
 import { useCartStore } from "@/app/stores/cartStore";
+import SuccessDialog from "./SuccessModal"; // تأكد من تعديل المسار حسب هيكلية مشروعك
+import { useState } from "react";
 
-function extractNumbers(str:string) {
-  // Use regex to match all numbers in the string
+function extractNumbers(str: string) {
   const numbers = str.match(/\d+/g);
-  return numbers ? numbers.map(Number) : []; // Convert to numbers and return
+  return numbers ? numbers.map(Number) : [];
 }
 
 const CheckoutForm = () => {
-  
   const { data } = useQuery<any>({
     queryKey: ["banks"],
     queryFn: async () => await getApi("Cart/GetAllBanksForViewInCartPage"),
@@ -64,30 +62,32 @@ const CheckoutForm = () => {
   });
 
   const { data: authData } = useSession();
-  const {setCartItems} = useCartStore()
-  
+  const { setCartItems } = useCartStore();
   const { toast } = useToast();
   const router = useRouter();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [requestNumber, setRequestNumber] = useState("");
+
   const { mutate, isPending } = useMutation({
     mutationKey: ["upload-bound"],
     mutationFn: async (data: z.infer<typeof checkoutSchema>) => {
       const formData = new FormData();
       formData.append("BankId", String(+data.bank));
-      formData.append("Note", data.note || ""); 
-      formData.append("Amount", String(+data.amount)); 
-      formData.append("BondNumber", String(+data.number)); 
-      formData.append("BondDate", data.date || ""); 
-      formData.append("BondImageFile", data.image[0]); 
-      formData.append("BondTyep", "1"); 
-      formData.append("IsUrgentOrder", "false"); 
-  
+      formData.append("Note", data.note || "");
+      formData.append("Amount", String(+data.amount));
+      formData.append("BondNumber", String(+data.number));
+      formData.append("BondDate", data.date || "");
+      formData.append("BondImageFile", data.image[0]);
+      formData.append("BondTyep", "1");
+      formData.append("IsUrgentOrder", "false");
+
       return postApi("Orders/CompleteCustomerPurchase", {
-        body: formData, 
+        body: formData,
         isPage: true,
         headers: {
           "Accept-Language": "ar",
-          Authorization: `Bearer ${authData?.user.data.token}`, // Token from authData
-          // Content-Type header is NOT required; `fetch` automatically sets it for FormData
+          Authorization: `Bearer ${authData?.user.data.token}`,
         },
       });
     },
@@ -98,91 +98,96 @@ const CheckoutForm = () => {
         action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
       });
     },
-    onSuccess: (data:any) => {
-      
-      const code = extractNumbers(data?.data as string)[0]
+    onSuccess: (data: any) => {
+      const code = extractNumbers(data?.data as string)[0];
       setCartItems([]);
-      router.replace("/checkout-success?code="+code);
+      setRequestNumber(code.toString());
+      setIsDialogOpen(true);
     },
   });
-  
 
- async function onSubmit(values: z.infer<typeof checkoutSchema>) {
-  
+  async function onSubmit(values: z.infer<typeof checkoutSchema>) {
     mutate(values);
   }
 
   return (
-    <Card className="w-96">
-      <CardHeader>
-        <h1 className="font-bold text-xl text-center">أجراءات الدفع</h1>
-      </CardHeader>
-      <FormProvider {...form}>
-        <form encType="multipart/form-data" onSubmit={form.handleSubmit(onSubmit)}>
-          <CardContent className="space-y-4">
-            <FormField
-              control={form.control}
-              name="bank"
-              render={({ field }: { field: any }) => ( // تحديد نوع field هنا
-                <FormItem className="w-full">
-                  <Select dir="rtl" onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="حدد الصراف/البنك" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectGroup>
-                        {data?.data?.map((bank: Bank) => (
-                          <SelectItem key={bank.id} value={bank.id.toString()}>
-                            {bank.bankName}
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <InputField
-              name="amount"
-              label="المبلغ المدفوع"
-              control={form.control}
-              type="number"
-            />
-            <InputField
-              name="number"
-              label="رقم السند"
-              control={form.control}
-              type="number"
-            />
-            <InputField
-              name="date"
-              label="تاريخ الدفع"
-              control={form.control}
-              type="date"
-            />
-            <InputField
-              name="note"
-              label="ملاحظة"
-              control={form.control}
-              type="text"
-            />
-            <Input type="file" {...form.register("image")} />
-          </CardContent>
-          <CardFooter>
-            <Button
-              type="submit"
-              disabled={isPending}
-              className="w-full hover:bg-orange-600 bg-primary-background transition-colors"
-            >
-              {isPending ? <Loader2 className="animate-spin" /> : "رفع السند"}
-            </Button>
-          </CardFooter>
-        </form>
-      </FormProvider>
-    </Card>
+    <>
+      <Card className="w-96">
+        <CardHeader>
+          <h1 className="font-bold text-xl text-center">أجراءات الدفع</h1>
+        </CardHeader>
+        <FormProvider {...form}>
+          <form encType="multipart/form-data" onSubmit={form.handleSubmit(onSubmit)}>
+            <CardContent className="space-y-4">
+              <FormField
+                control={form.control}
+                name="bank"
+                render={({ field }: { field: any }) => (
+                  <FormItem className="w-full">
+                    <Select dir="rtl" onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="حدد الصراف/البنك" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectGroup>
+                          {data?.data?.map((bank: Bank) => (
+                            <SelectItem key={bank.id} value={bank.id.toString()}>
+                              {bank.bankName}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <InputField
+                name="amount"
+                label="المبلغ المدفوع"
+                control={form.control}
+                type="number"
+              />
+              <InputField
+                name="number"
+                label="رقم السند"
+                control={form.control}
+                type="number"
+              />
+              <InputField
+                name="date"
+                label="تاريخ الدفع"
+                control={form.control}
+                type="date"
+              />
+              <InputField
+                name="note"
+                label="ملاحظة"
+                control={form.control}
+                type="text"
+              />
+              <Input type="file" {...form.register("image")} />
+            </CardContent>
+            <CardFooter>
+              <Button
+                type="submit"
+                disabled={isPending}
+                className="w-full hover:bg-orange-600 bg-primary-background transition-colors"
+              >
+                {isPending ? <Loader2 className="animate-spin" /> : "رفع السند"}
+              </Button>
+            </CardFooter>
+          </form>
+        </FormProvider>
+      </Card>
+      <SuccessDialog
+        open={isDialogOpen}
+        requestNumber={requestNumber}
+        onOpenChange={setIsDialogOpen}
+      />
+    </>
   );
 };
 
