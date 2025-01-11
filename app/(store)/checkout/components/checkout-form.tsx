@@ -16,7 +16,6 @@ import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { useRouter } from "next-nprogress-bar";
-import * as z from "zod";
 import {
   FormControl,
   FormField,
@@ -35,7 +34,7 @@ import InputField from "./input-field";
 import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
 import { useCartStore } from "@/app/stores/cartStore";
-import SuccessDialog from "./SuccessModal"; // تأكد من تعديل المسار حسب هيكلية مشروعك
+import SuccessDialog from "./SuccessModal";
 import { useState } from "react";
 
 function extractNumbers(str: string) {
@@ -52,7 +51,6 @@ const CheckoutForm = () => {
   const form = useForm<CheckoutType>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
-      amount: "",
       bank: "",
       date: "",
       image: undefined,
@@ -73,12 +71,21 @@ const CheckoutForm = () => {
     mutationKey: ["upload-bound"],
     mutationFn: async (data: z.infer<typeof checkoutSchema>) => {
       const formData = new FormData();
-      formData.append("BankId", String(+data.bank));
-      formData.append("Note", data.note || "");
-      formData.append("Amount", String(+data.amount));
-      formData.append("BondNumber", String(+data.number));
-      formData.append("BondDate", data.date || "");
-      formData.append("BondImageFile", data.image[0]);
+      if (data.bank) {
+        formData.append("BankId", String(+data.bank));
+      }
+      if (data.note) {
+        formData.append("Note", data.note);
+      }
+      if (data.number) {
+        formData.append("BondNumber", String(+data.number));
+      }
+      if (data.date) {
+        formData.append("BondDate", data.date);
+      }
+      if (data.image && data.image.length > 0) {
+        formData.append("BondImageFile", data.image[0]);
+      }
       formData.append("BondTyep", "1");
       formData.append("IsUrgentOrder", "false");
 
@@ -143,12 +150,6 @@ const CheckoutForm = () => {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
-              <InputField
-                name="amount"
-                label="المبلغ المدفوع"
-                control={form.control}
-                type="number"
               />
               <InputField
                 name="number"
