@@ -170,7 +170,7 @@ const HomeHeader = () => {
 
       <div className="nav-menus">
         <Link
-          href={"/shop?newProducts=true"}
+          href={"/shop?newProduct=t"}
           className="nav-menus-label"
         >
           <p> وصل حديث</p>

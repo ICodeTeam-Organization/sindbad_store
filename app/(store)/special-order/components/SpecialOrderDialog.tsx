@@ -1,0 +1,33 @@
+"use client";
+import { BiPlusCircle } from "react-icons/bi";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import SpecialOrderForm from "./special-order-form";
+
+const SpecialOrderDialog = ({
+  show = false,
+  setShow,
+  tab = 1,
+  category = "",
+}: {
+  show: boolean;
+  setShow: (s: boolean) => void;
+  tab?: number;
+  category?: string;
+}) => {
+  return (
+    <Dialog open={show} onOpenChange={setShow}>
+      <DialogContent className="[&>button]:hidden border-none p-0 m-auto overflow-hidden ">
+        <SpecialOrderForm
+          tabType={tab}
+          category={+category}
+          closeDialog={()=>{
+            setShow(false);
+          }}
+        />
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default SpecialOrderDialog;

@@ -17,7 +17,7 @@ const AddSpecialOrder = ({
   category:string
 }) => {
   return (
-    <Dialog open={show}  >
+    <Dialog open={show} onOpenChange={setShow}  >
       <DialogTrigger
         asChild  // this for close if it open from megamenus  or another page
       >
@@ -31,7 +31,7 @@ const AddSpecialOrder = ({
         </Button>
       </DialogTrigger>
       <DialogContent className="[&>button]:hidden m-auto">
-        <SpecialOrderForm tabType={tab} category={category} onClose={()=>{setShow(false)}} />
+        <SpecialOrderForm tabType={tab} category={+category}   />
       </DialogContent>
     </Dialog>
   );
