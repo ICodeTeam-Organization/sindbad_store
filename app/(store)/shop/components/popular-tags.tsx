@@ -1,6 +1,7 @@
+"use client"
 import { getApi } from "@/lib/http";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React , { useState }  from "react";
 
 // Define the type for the props (if using TypeScript)
 interface PopularTagsProps {
@@ -17,6 +18,13 @@ const PopularTags: React.FC<PopularTagsProps> = ({onSelectTag}) => {
     queryFn: () => getApi("Filter/GetTags"),
   });
 
+  const [activeTagId, setActiveTagId] = useState<number | null>(null);
+
+  const handleTagClick = (id: number)=>{
+    setActiveTagId(id)
+    onSelectTag(id)
+  }
+
   return (
     <div>
       <h3 className="mb-2">الأكثر بحثأ</h3>
@@ -32,10 +40,13 @@ const PopularTags: React.FC<PopularTagsProps> = ({onSelectTag}) => {
               <span
                 key={index}
                 onClick={()=>{
-                  onSelectTag(tag.id)
+                  handleTagClick(tag.id)
                 }}
-                className="px-2 py-1 text-xs bg-gray-50 border border-orange-500 text-orange-500 rounded-sm cursor-pointer"
-              >
+                className={`px-2 py-1 text-xs rounded-sm cursor-pointer ${
+                  activeTagId === tag.id
+                    ? "bg-orange-500 text-white"
+                    : "bg-gray-50 border border-orange-500 text-orange-500"
+                }`}              >
                 {tag.name}
               </span>
             ))}

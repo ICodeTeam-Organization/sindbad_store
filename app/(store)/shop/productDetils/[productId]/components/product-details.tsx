@@ -114,7 +114,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           }
         /> */}
         <div className="flex items-center gap-4 mt-8">
-          <div className="flex items-center gap-4">
+          {/* <div className="flex items-center gap-4">
             <button
               className="bg-gray-200 py-2 px-4 text-lg"
               onClick={handleDecrement}
@@ -128,9 +128,17 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             >
               +
             </button>
-          </div>
-          <AddToBasket productId={product.id} quantity={quantity} />
-        </div>
+          </div> */}
+
+          <AddToBasket
+        id={product.id}
+        productInfo={{
+          image: product.mainImageUrl,
+          productName: product.name,
+          price: product.priceAfterOffer,
+          oldPrice: product.priceBeforOffer,
+        }}
+      />        </div>
       </div>
     </div>
   );

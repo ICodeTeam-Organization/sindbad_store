@@ -1,4 +1,4 @@
-import { BiTrash } from "react-icons/bi";
+import { BiTrash, BiGift } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import { HiMinusSm } from "react-icons/hi";
 import { useToast } from "@/hooks/use-toast";
@@ -19,10 +19,11 @@ type Props = {
   price: number;
   quantity: number;
   shipCost: number;
+  freeProducts?: number;
   refreshItems: () => void;
 };
 
-const ProductRow = ({ ...props }: Props) => {
+const ProductRow = ({ ...props}: Props) => {
 
 
   const {updateQuantity:updateQuantityInStore,removeItem} = useCartStore()
@@ -30,6 +31,8 @@ const ProductRow = ({ ...props }: Props) => {
   const [quantity, setQuantity] = useState<number>(props.quantity);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
   const { toast } = useToast();
+  const freeProducts = props.freeProducts || 0;
+
 
   const updateQuantity = useMutation({
     mutationFn: async ({
@@ -108,7 +111,8 @@ const ProductRow = ({ ...props }: Props) => {
   };
 
   return (
-    <tr className="text-center" >
+    <>
+        <tr className="text-center border-t-2 border-gray-300" >
       <td className="py-2">
         <div className="flex items-center ">
           <div className="w-20 h-20 relative bg-slate-400 rounded-lg me-4 overflow-hidden" >
@@ -153,12 +157,48 @@ const ProductRow = ({ ...props }: Props) => {
           <Loader2 className="animate-spin" />
         ) : (
           <BiTrash
-            className="cursor-pointer hover:text-red-500 transition-colors duration-100"
+            className="text-2xl cursor-pointer hover:text-red-500 transition-colors duration-100"
             onClick={() => handleDeleteItem(props.id)}
           />
         )}
       </td>
     </tr>
+
+{ freeProducts > 0 ?
+          (
+            <tr className="opacity-90 text-center" >
+            <td className="">
+              <div className="flex items-center ">
+                <div className="h-[50px] w-[50px] mx-4 relative bg-slate-400 rounded-lg overflow-hidden" >
+                  <SafeImage
+                    fill
+                    className="ml-3"
+                    src={props.image||""}
+                    alt="Product"
+                  />
+                </div>
+                <span className="text-sm font-bold">{props.name}</span>
+              </div>
+            </td>
+            <td className="text-primary-background">هدية مجاناً</td>
+            
+            <td className="">
+              <div className="flex items-center justify-center text-primary-background">
+                {freeProducts}
+              </div>
+            </td>
+            <td className=""></td>
+            <td className=""></td>
+            <td className="">
+            <BiGift
+                  className=" text-2xl text-primary-background cursor-pointer hover:text-red-500 transition-colors duration-100"
+                  
+                />
+            </td>
+          </tr>
+          )
+          : null}
+    </>
   );
 };
 

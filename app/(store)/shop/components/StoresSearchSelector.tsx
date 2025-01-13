@@ -52,7 +52,7 @@ function StoresSearchSelector({
           pageNumber: params.pageNumber,
         },
       }),
-    enabled: params.storeName != "" || storeId != "",
+    // enabled: params.storeName != "" || storeId != "",
   });
 
   // const [stores, setStores] = React.useState<Store[]>([]);

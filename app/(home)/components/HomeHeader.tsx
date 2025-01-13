@@ -189,7 +189,7 @@ const HomeHeader = () => {
 
   return (
     <div className="  bg-header-gradient  ">
-      <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
+      <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 "  style={{position: "fixed",zIndex: "99", backgroundImage: "linear-gradient(to right, #FFE0DC, #FEEFEB, #F8F4E5, #F4EEE4, #EEEAE9)"}}>
         {/* logo section*/}
         <div>
           <div className="p-2 px-0  cursor-pointer lg:m-4 mdHalf:my-4 mdHalf:mx-1  hidden mdHalf:block absolute z-[99999999] ">

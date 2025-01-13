@@ -12,25 +12,22 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { deleteApi, postApi } from "@/lib/http";
 import SafeImage from "@/components/SafeImage";
-import { useRouter } from "next-nprogress-bar";
-
-const StoreCard = ({
-  id,
-  name,
-  websiteLink,
-  mainImageUrl,
-  imagesUrl,
-}: StoreCardProps) => {
+import { useRouter } from "next/navigation";
+const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCardProps) => {
+  
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
+  // const { data: session } = useSession();
   const { data: session, status } = useSession();
   const { toast } = useToast();
-
+  const router = useRouter();
   const linkToStore = `/stores/storeDetails/${id}`;
   const redirct = useRouter();
 
-  const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
+  const { 
+    mutate: mutateAddToFav,
+     isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
       return await postApi(
         `FavoriteShop/AddStore`,
@@ -62,7 +59,9 @@ const StoreCard = ({
     },
   });
 
-  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
+  const { 
+    mutate: mutateRemoveFromFav,
+     isPending: isPendingRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
         return await deleteApi(`FavoriteShop/RemoveStore/` + id, {
@@ -86,8 +85,8 @@ const StoreCard = ({
       },
     });
 
-  const handleFav = () => {
-    if (status === "unauthenticated") redirct.push("/auth");
+  const handleFav = () => {    
+    if (status === "unauthenticated") router.push("/auth");
     else if (status === "authenticated") {
       if (isFavorite) {
         mutateRemoveFromFav();
@@ -123,24 +122,14 @@ const StoreCard = ({
           >
             عرض المنتجات
           </Link>
-          {websiteLink != null ? (
-            <Link
-              href={
-                websiteLink.startsWith("https://")
-                  ? websiteLink
-                  : "https://" + websiteLink
-              }
-              target="_blank"
-              as=""
-              className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center "
-            >
-              متجر المحل
-            </Link>
-          ) : (
-            <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
-              لايوجد رابط
-            </button>
-          )}
+          {
+            websiteLink != null?           <Link href={websiteLink} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
+            الموقع الإلكتروني
+          </Link> :
+                    <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
+                    لايوجد رابط
+                  </button>
+          }
 
           <button
             onClick={(e) => {
