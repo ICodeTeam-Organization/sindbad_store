@@ -28,14 +28,14 @@ import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
 function SpecialProductOrderForm({
-  index,
+  orderKey,
   onChange,
 }: {
   onChange: (
     data: SpecialProductAndServiceOrderForm_FormValue,
     isFormsValid: boolean
   ) => void;
-  index:number
+  orderKey:string
 }) {
   const { categories:allCategories } = useCategoriesDataStore();
   const categories = allCategories.filter((ele)=>ele.categoryTypeNumber == 2)
@@ -46,6 +46,7 @@ function SpecialProductOrderForm({
       type: 1,
       quantity: 0,
       isUrgen: false,
+      orderKey:orderKey,
     },
   });
 
@@ -58,13 +59,13 @@ function SpecialProductOrderForm({
 
   return (
     <Form {...form}>
-      <div className="flex items-center gap-x-3 justify-between my-4">
+      <div className="mdHalf:flex items-center gap-x-3 justify-between my-4">
         <h1 className="w-fit whitespace-nowrap text-sm">الفئة </h1>
         <FormField
           control={form.control}
           name="category"
           render={({ field }) => (
-            <FormItem className="w-[90%]">
+            <FormItem className="mdHalf:w-[90%] w-full">
               <Select
                 dir="rtl"
                 onValueChange={(value) => {
@@ -96,13 +97,13 @@ function SpecialProductOrderForm({
       </div>
 
       <div className="space-y-3">
-        <div className="w-full flex items-center gap-2 justify-between">
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
           <h1 className="w-fit whitespace-nowrap text-sm"> الطلب </h1>
           <FormField
             control={form.control}
             name="orderDetails"
             render={({ field }) => (
-              <FormItem className="w-[90%]">
+              <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <Input
                     {...field}
@@ -121,9 +122,9 @@ function SpecialProductOrderForm({
         </div>
 
         <div>
-          <div className="w-full flex items-center gap-2 justify-between">
+          <div className="w-full mdHalf:flex items-center gap-2 justify-between">
             <h1 className="w-fit whitespace-nowrap text-sm"> الكمية </h1>
-            <div className="w-[90%] flex justify-between">
+            <div className="mdHalf:w-[90%] w-full flex justify-between">
               <FormField
                 control={form.control}
                 name="quantity"
@@ -152,7 +153,7 @@ function SpecialProductOrderForm({
                     <FormControl>
                       <div className="flex items-center gap-x-2 cursor-pointer">
                         <Checkbox
-                          id={"terms" + index}
+                          id={"terms" + orderKey}
                           checked={field.value}
                           onCheckedChange={(e) => {
                             field.onChange(e);
@@ -160,8 +161,8 @@ function SpecialProductOrderForm({
                           }}
                         />
                         <label
-                          htmlFor={"terms" + index}
-                          className="text-sm cursor-pointer font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          htmlFor={"terms" + orderKey}
+                          className="mdHalf:text-sm text-xs cursor-pointer font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
                           طلب مستعجل
                         </label>
@@ -175,16 +176,16 @@ function SpecialProductOrderForm({
           </div>
         </div>
 
-        <div className="w-full flex items-center gap-2 justify-between">
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
           <p className="w-fit text-nowrap text-sm "> الصورة </p>
           <FormField
             control={form.control}
             name="images"
             render={({ field }) => (
-              <FormItem className="w-[90%]">
+              <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <InputFile
-                    index={index}
+                    orderKey={orderKey}
                     multiple
                     onChange={(e) => {
                       field.onChange(e?.target?.files || []);
@@ -198,17 +199,17 @@ function SpecialProductOrderForm({
           />
         </div>
 
-        <div className="w-full flex items-center gap-2 justify-between">
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
           <p className="w-fit text-nowrap text-sm "> إرفاق ملفات </p>
           <FormField
             control={form.control}
             name="filePDF"
             render={({ field }) => (
-              <FormItem className="w-[90%]">
+              <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <div className={`flex items-center justify-center`}>
                     <label
-                      htmlFor={"filePDF" + index}
+                      htmlFor={"filePDF" + orderKey}
                       className="flex items-center w-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200"
                     >
                       <div className="flex justify-center gap-x-2 items-center  p-2 text-sm bg-white text-black border-l">
@@ -216,7 +217,7 @@ function SpecialProductOrderForm({
                         <span className="text-gray-700"> إضافة ملف </span>
                       </div>
                       <input
-                        id={"filePDF" + index}
+                        id={"filePDF" + orderKey}
                         type="file"
                         className="hidden"
                         onChange={(e)=>field.onChange(e.target.files?.item(0))} // Use the local file change handler
@@ -234,13 +235,13 @@ function SpecialProductOrderForm({
           />
         </div>
 
-        <div className="w-full flex items-center gap-2 justify-between">
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
           <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
           <FormField
             control={form.control}
             name="note"
             render={({ field }) => (
-              <FormItem className="w-[90%]">
+              <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <Input
                     {...field}
@@ -258,13 +259,13 @@ function SpecialProductOrderForm({
           />
         </div>
 
-        <div className="w-full flex items-center gap-2 justify-between">
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
           <p className="w-fit text-nowrap text-sm"> الرابط </p>
           <FormField
             control={form.control}
             name="linkUrl"
             render={({ field }) => (
-              <FormItem className="w-[90%]">
+              <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <Input
                     {...field}

@@ -17,7 +17,7 @@ const SpecialOrderDialog = ({
 }) => {
   return (
     <Dialog open={show} onOpenChange={setShow}>
-      <DialogContent className="[&>button]:hidden border-none p-0 m-auto overflow-hidden ">
+      <DialogContent className="[&>button]:hidden border-none p-0 mdHalf:m-auto overflow-hidden mdHalf:h-auto mdHalf:w-screen  h-screen w-screen ">
         <SpecialOrderForm
           tabType={tab}
           category={+category}

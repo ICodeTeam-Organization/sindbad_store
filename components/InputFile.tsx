@@ -6,14 +6,14 @@ interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
   placeholderText?: string;
   className?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Optional for custom onChange handling
-  index:number
+  orderKey:string
 }
 
 const InputFile: React.FC<InputFileProps> = ({
   labelText = "إضافة صورة",
   placeholderText = "إختر صورة",
   className = "",
-  index,
+  orderKey,
   onChange,
   ...inputProps // This will pass all other props down to the input element
 }) => {
@@ -37,7 +37,7 @@ const InputFile: React.FC<InputFileProps> = ({
   return (
     <div className={`flex items-center justify-center`}>
       <label
-        htmlFor={"picture" + index} 
+        htmlFor={"picture" + orderKey} 
         className="flex items-center w-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200"
       >
         <div className="flex flex-col items-center justify-center p-2 text-sm bg-white text-black border-l">
@@ -46,7 +46,7 @@ const InputFile: React.FC<InputFileProps> = ({
         </div>
         <input
           {...inputProps} 
-          id={"picture" + index}
+          id={"picture" + orderKey}
           type="file"
           className="hidden"
           onChange={handleFileChange} // Use the local file change handler

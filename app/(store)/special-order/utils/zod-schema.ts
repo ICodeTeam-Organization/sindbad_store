@@ -26,12 +26,15 @@ export const SpecialProductAndServiceOrderFormSchema = z.object({
   filePDF: z.any().optional(),
   images: z.any().optional(),
   isValid:z.boolean().optional(),
+  // this for map items just
+  orderKey: z.string().default(Math.random().toString(36).substring(2, 7)),
 });
 
 export type SpecialProductAndServiceOrderForm_FormValue = z.infer<typeof SpecialProductAndServiceOrderFormSchema>;
 
 
 export const SpecialOrderFromEcommerceSchema = z.object({
+  category: z.string({ required_error: "يرجى تحديد فئة" }),
   type: z.number({ required_error: "يرجى تحديد نوع الطلب" }),
   ecommerce: z.string().optional(),
   linkUrl:z.string({ required_error: "يرجى تحديد رابط المنتج المطلوب" }),
@@ -40,6 +43,7 @@ export const SpecialOrderFromEcommerceSchema = z.object({
   orderDetails: z.string().optional(),
   images: z.any().optional(),
   isValid:z.boolean().optional(),
+  orderKey: z.string().default(Math.random().toString(36).substring(2, 7)),
 
 });
 
@@ -49,15 +53,16 @@ export type SpecialOrderFromEcommerce_FormValue = z.infer<typeof SpecialOrderFro
 
 export const SpecialBulkOrderFormSchema = z.object({
   category: z.string({ required_error: "يرجى تحديد فئة" }),
-  orderDetails: z.string({ required_error: "تفاصيل المنتج مطلوبة" }),
+  orderDetails: z.string({ required_error: "أكتب تفاصيل المنتج مطلوبة" }),
   linkUrl: z.string().optional(),
-  type: z.number({ required_error: "يرجى تحديد نوع الطلب" }),
+  orderFrom: z.number({ required_error: "يرجى تحديد نوع الطلب" }),
   quantity: z.number({ required_error: "يرجى تحديد الكمية" }).min(1,"يجب تحديد الكمية"),
   isUrgen: z.boolean({ required_error: "يرجى تحديد الأهمية" }),
   note: z.string().optional(),
   filePDF: z.any().optional(),
   images: z.any().optional(),
   isValid:z.boolean().optional(),
+  orderKey: z.string().default(Math.random().toString(36).substring(2, 7)),
 });
 
 export type SpecialBulkOrderFormValues = z.infer<typeof SpecialBulkOrderFormSchema>;

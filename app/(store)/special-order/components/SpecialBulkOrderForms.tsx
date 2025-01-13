@@ -1,78 +1,299 @@
-
-import { cn } from "@/lib/utils";
-
+import React, { useEffect, useState } from "react";
 import {
-    SpecialBulkOrderFormValues,
-  SpecialOrderFromEcommerce_FormValue,
-  SpecialProductAndServiceOrderForm_FormValue,
-} from "../utils/zod-schema";
-import { IoClose } from "react-icons/io5";
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import Counter from "@/components/Counter";
+import { Checkbox } from "@/components/ui/checkbox";
+import InputFile from "@/components/InputFile";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import SpecialProductOrderForm from "./SpecialOrderFormsTypes/SpecialProductOrderForm";
-import SpecialServiceOrderForm from "./SpecialOrderFormsTypes/SpecialServiceOrderForm";
-import SpecialOrderFromShopForm from "./SpecialOrderFormsTypes/SpecialOrderFromShopForm";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { SpecialBulkOrderFormValues, SpecialBulkOrderFormSchema } from "../utils/zod-schema";
 
-interface Props {
-  index: number;
-  initCategory?: number;
-  ordersNumber?: number;
-  onChangeValues: (
-    values: | SpecialBulkOrderFormValues,
-    isValid: boolean
+function SpecialBulkOrderForms({
+  orderKey,
+  onChange,
+  orderFrom
+}: {
+  onChange: (
+    data: SpecialBulkOrderFormValues,
+    isFormsValid: boolean
   ) => void;
-  onDeleteOrderForm: (
-  ) => void;
-}
+  orderKey:string;
+  orderFrom:number
+}) {
+  const { categories:allCategories } = useCategoriesDataStore();
+  const categories = allCategories.filter((ele)=>ele.categoryTypeNumber == 4) // 4 = فئات الجملة
 
-function SpecialBulkOrderForms({index, onChangeValues,ordersNumber,onDeleteOrderForm }: Props) {
-  const tabs = [
-    { id: 4, label: "من السعودية" },
-    { id: 5, label: "من خارج السعودية" },
-  ];
-  const [curentTab, setCurentTab] = useState(4);
+  const form = useForm<SpecialBulkOrderFormValues>({
+    resolver: zodResolver(SpecialBulkOrderFormSchema),
+    defaultValues: {
+      orderFrom: orderFrom,
+      quantity: 0,
+      isUrgen: false,
+      orderKey:orderKey,
+    },
+  });
+
+  // Listen to form field changes
+  const handleFieldChange = async (fieldValue: any) => {
+    const isValid = await form.trigger();
+    // This will call the parent onChange function passing the updated form values
+    onChange(fieldValue, isValid);
+  };
+
+
+  // to change orderFrom in React Forms
+  useEffect(() => {
+    form.setValue("orderFrom",orderFrom)
+    // this return all values 
+    handleFieldChange({ ...form.getValues() });
+  }, [orderFrom])
+  
+
 
   return (
-    <div className="shadow-lg p-4 rounded-md border tajawal my-4">
-      <div className="mb-4 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          {tabs.map((tab) => (
-            <div
-              key={tab.id}
-              className={cn(
-                " tajawal font-bold px-4 py-1 border cursor-pointer text-gray-700 duration-200 rounded-full text-[12px]",
-                curentTab === tab.id && "bg-[#FFF6EB] text-black border-black"
-              )}
-              onClick={() => {
-                setCurentTab(tab.id);
-              }}
-            >
-              {tab.label}
-            </div>
-          ))}
+    <Form {...form}>
+      <div className="mdHalf:flex items-center gap-x-3 justify-between my-4">
+        <h1 className="w-fit whitespace-nowrap text-sm">الفئة </h1>
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem className="mdHalf:w-[90%] w-full">
+              <Select
+                dir="rtl"
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  handleFieldChange({ ...form.getValues() });
+                }}
+                value={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="حدد فئة المنتج المطلوب" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {categories?.map((category: any) => (
+                    <SelectItem
+                      key={category.id}
+                      value={category.id.toString()}
+                    >
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      <div className="space-y-3">
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
+          <h1 className="w-fit whitespace-nowrap text-sm"> الطلب </h1>
+          <FormField
+            control={form.control}
+            name="orderDetails"
+            render={({ field }) => (
+              <FormItem className="mdHalf:w-[90%] w-full">
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value || ""}
+                    placeholder="أكتب تفاصيل المنتج المطلوبة"
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleFieldChange({ ...form.getValues() });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
 
-        <div className="flex text-sm items-center  gap-x-4">
-          <p className="text-xs bg-gray-200 rounded p-1 px-4"> الرقم {index+1} من {ordersNumber} </p>
-          <div onClick={()=>{
-            console.log("ggggggggggggggggggggggggggggggggg");
-            
-          }} className="text-lg hover:bg-gray-200 rounded-full duration-200 cursor-pointer p-1">
-            <IoClose />
+        <div>
+          <div className="w-full mdHalf:flex items-center gap-2 justify-between">
+            <h1 className="w-fit whitespace-nowrap text-sm"> الكمية </h1>
+            <div className="mdHalf:w-[90%] w-full flex justify-between">
+              <FormField
+                control={form.control}
+                name="quantity"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      {/* @todo(abdulrahman): replace this with ur quantity input */}
+                      <Counter
+                        initialValue={field.value}
+                        onChange={(value) => {
+                          field.onChange(value);
+                          handleFieldChange({ ...form.getValues() });
+                        }}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="isUrgen"
+                render={({ field }) => (
+                  <FormItem className="flex items-center">
+                    <FormControl>
+                      <div className="flex items-center gap-x-2 cursor-pointer">
+                        <Checkbox
+                          id={"terms" + orderKey}
+                          checked={field.value}
+                          onCheckedChange={(e) => {
+                            field.onChange(e);
+                            handleFieldChange({ ...form.getValues() });
+                          }}
+                        />
+                        <label
+                          htmlFor={"terms" + orderKey}
+                          className="mdHalf:text-sm text-xs cursor-pointer font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          طلب مستعجل
+                        </label>
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
         </div>
-      </div>
-      <div>
-          <SpecialProductOrderForm
-            index={index}
-            onChange={(e, isValid) => {
-              // لانه طلب خاصه جملة
-              e.type = 4;
-              onChangeValues(e, isValid);
-            }}
+
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
+          <p className="w-fit text-nowrap text-sm "> الصورة </p>
+          <FormField
+            control={form.control}
+            name="images"
+            render={({ field }) => (
+              <FormItem className="mdHalf:w-[90%] w-full">
+                <FormControl>
+                  <InputFile
+                    orderKey={orderKey}
+                    multiple
+                    onChange={(e) => {
+                      field.onChange(e?.target?.files || []);
+                      handleFieldChange({ ...form.getValues() });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
+        </div>
+
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
+          <p className="w-fit text-nowrap text-sm "> إرفاق ملفات </p>
+          <FormField
+            control={form.control}
+            name="filePDF"
+            render={({ field }) => (
+              <FormItem className="mdHalf:w-[90%] w-full">
+                <FormControl>
+                  <div className={`flex items-center justify-center`}>
+                    <label
+                      htmlFor={"filePDF" + orderKey}
+                      className="flex items-center w-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200"
+                    >
+                      <div className="flex justify-center gap-x-2 items-center  p-2 text-sm bg-white text-black border-l">
+                        <Plus className="text-gray-500" />
+                        <span className="text-gray-700"> إضافة ملف </span>
+                      </div>
+                      <input
+                        id={"filePDF" + orderKey}
+                        type="file"
+                        className="hidden"
+                        onChange={(e)=>field.onChange(e.target.files?.item(0))} // Use the local file change handler
+                      />
+                      <p className="mx-4">
+                        {field?.value?.name ?? "إختر ملف" }
+                      </p>{" "}
+                      {/* Display file name or placeholder */}
+                    </label>
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
+          <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
+          <FormField
+            control={form.control}
+            name="note"
+            render={({ field }) => (
+              <FormItem className="mdHalf:w-[90%] w-full">
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value}
+                    placeholder="تفاصيل اضافية عن المنتج المطلوب (اختياري)"
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleFieldChange({ ...form.getValues() });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
+          <p className="w-fit text-nowrap text-sm"> الرابط </p>
+          <FormField
+            control={form.control}
+            name="linkUrl"
+            render={({ field }) => (
+              <FormItem className="mdHalf:w-[90%] w-full">
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value}
+                    placeholder="رابط المنتج"
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleFieldChange({ ...form.getValues() });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
       </div>
-    </div>
+    </Form>
   );
 }
 

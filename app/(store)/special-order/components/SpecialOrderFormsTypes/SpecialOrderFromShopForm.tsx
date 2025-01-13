@@ -29,14 +29,17 @@ import { Button } from "@/components/ui/button";
 
 function SpecialOrderFromShopForm({
   onChange,
-  index
+  orderKey
 }: {
   onChange: (
     data: SpecialOrderFromEcommerce_FormValue,
     isFormsValid: boolean
   ) => void;
-  index:number
+  orderKey:string
 }) { 
+
+   const { categories:allCategories } = useCategoriesDataStore();
+   const categories = allCategories.filter((ele)=>ele.categoryTypeNumber == 2)
 
   const form = useForm<SpecialOrderFromEcommerce_FormValue>({
     resolver: zodResolver(SpecialOrderFromEcommerceSchema),
@@ -45,7 +48,9 @@ function SpecialOrderFromShopForm({
       type: 3,
       quantity: 0,
       isUrgen: false,
-      orderDetails:"تفاصيل طلب من متجر الكتروني"
+      orderDetails:"تفاصيل طلب من متجر الكتروني",
+      orderKey:orderKey,
+
     },
   });
 
@@ -73,13 +78,50 @@ function SpecialOrderFromShopForm({
         />
       </div>
 
-      <div className="w-full flex items-center gap-2 justify-between mb-3">
-        <p className="w-fit text-wrap mb-6 text-sm"> رابط المنتج </p>
+      <div className="mdHalf:flex items-center gap-x-3 justify-between my-4">
+              <h1 className="w-fit whitespace-nowrap text-sm">الفئة </h1>
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem className="mdHalf:w-[90%] w-full">
+                    <Select
+                      dir="rtl"
+                      onValueChange={(value) => {
+                        field.onChange(value);
+                        handleFieldChange({ ...form.getValues() });
+                      }}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="حدد فئة الخدمة المطلوبة" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories?.map((category: any) => (
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+      <div className="w-full mdHalf:flex items-center gap-2 justify-between mb-3">
+        <p className="w-fit text-wrap mdHalf:mb-6 mb-1 text-sm"> رابط المنتج </p>
         <FormField
           control={form.control}
           name="linkUrl"
           render={({ field }) => (
-            <FormItem className="w-[90%]">
+            <FormItem className="mdHalf:w-[90%] w-full">
               <FormControl>
                 <Input
                   {...field}
@@ -99,9 +141,9 @@ function SpecialOrderFromShopForm({
 
       <div className="space-y-3">
         <div>
-          <div className="w-full flex items-center gap-2 justify-between">
+          <div className="w-full mdHalf:flex items-center gap-2 justify-between">
             <h1 className="w-fit whitespace-nowrap text-sm"> الكمية </h1>
-            <div className="w-[90%] flex justify-between">
+            <div className="mdHalf:w-[90%] w-full flex justify-between">
               <FormField
                 control={form.control}
                 name="quantity"
@@ -130,7 +172,7 @@ function SpecialOrderFromShopForm({
                     <FormControl>
                       <div className="flex items-center gap-x-2 cursor-pointer">
                         <Checkbox
-                          id={"terms" + index}
+                          id={"terms" + orderKey}
                           checked={field.value}
                           onCheckedChange={(e) => {
                             field.onChange(e);
@@ -138,8 +180,8 @@ function SpecialOrderFromShopForm({
                           }}
                         />
                         <label
-                          htmlFor={"terms" + index}
-                          className="text-sm cursor-pointer font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                          htmlFor={"terms" + orderKey}
+                          className="mdHalf:text-sm text-xs cursor-pointer font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         >
                           طلب مستعجل
                         </label>
@@ -153,16 +195,16 @@ function SpecialOrderFromShopForm({
           </div>
         </div>
 
-        <div className="w-full flex items-center gap-2 justify-between">
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
           <p className="w-fit text-nowrap text-sm "> الصورة </p>
           <FormField
             control={form.control}
             name="images"
             render={({ field }) => (
-              <FormItem className="w-[90%]">
+              <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <InputFile
-                    index={index}
+                    orderKey={orderKey}
                     onChange={(e) => {
                       field.onChange(e);
                       handleFieldChange({ ...form.getValues() });
@@ -175,13 +217,13 @@ function SpecialOrderFromShopForm({
           />
         </div>
 
-        <div className="w-full flex items-center gap-2 justify-between">
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
           <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
           <FormField
             control={form.control}
             name="orderDetails"
             render={({ field }) => (
-              <FormItem className="w-[90%]">
+              <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <Input
                     {...field}

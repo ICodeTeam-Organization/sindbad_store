@@ -4,23 +4,16 @@ import { postApi } from "@/lib/http";
 import { useToast } from "@/hooks/use-toast";
 
 import Link from "next/link";
-import { Check, Plus, Send } from "lucide-react";
-import { useState } from "react";
+import { Check, Plus, Send, X } from "lucide-react";
+import { useRef, useState } from "react";
 import SpecialOrderFormCard from "./SpecialOrderFormCard";
 import {
   SpecialOrderFromEcommerce_FormValue,
   SpecialProductAndServiceOrderForm_FormValue,
 } from "../utils/zod-schema";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
+import { BsCheck2Circle } from "react-icons/bs";
+import ResulteDialog from "./ResulteDialog";
 
 type SpecialOrderBody = {
   SpecialCategoryId?: number;
@@ -43,10 +36,11 @@ const initialSpecialProduct: SpecialProductAndServiceOrderForm_FormValue = {
   type: 0, // Required field, default to 0 or appropriate type
   quantity: 1, // Required field, minimum value enforced by schema
   isUrgen: false, // Required field, default to false
-  orderDetails:""
+  orderDetails: "",
   // note: undefined, // Optional field
   // filePDF: undefined, // Optional field
   // images: undefined, // Optional field
+  orderKey: "",
 };
 
 // Initial values for SpecialOrderFromEcommerce
@@ -58,6 +52,8 @@ const initialSpecialEcommerce: SpecialOrderFromEcommerce_FormValue = {
   isUrgen: false, // Required field, default to false
   // note: undefined, // Optional field
   // images: undefined, // Optional field
+  category: "",
+  orderKey: "",
 };
 
 const SpecialOrderForm = ({
@@ -73,16 +69,19 @@ const SpecialOrderForm = ({
   // هذي تحفظ الطلبات من اي نوع سوا منتج , خدمة , او متجر
   // الطلب ينحفظ مع حقل اسمه isValid لتحقق من ان الحقول المطلوبه حق الطلب  ريضه
   // حطيت قيمة افتراضية عشان اول ما يفتح المودل تظهر حقول الطلب الاول
-  const initOrderValues = [
-    tabType == 3 ? initialSpecialEcommerce : initialSpecialProduct,
-  ];
-  const [ordersValues, setOrdersValues] =
-    useState<
-      (
-        | SpecialProductAndServiceOrderForm_FormValue
-        | SpecialOrderFromEcommerce_FormValue
-      )[]
-    >(initOrderValues);
+  const initOrderValues =
+    tabType == 3 ? initialSpecialEcommerce : initialSpecialProduct;
+  const [ordersValues, setOrdersValues] = useState<
+    (
+      | SpecialProductAndServiceOrderForm_FormValue
+      | SpecialOrderFromEcommerce_FormValue
+    )[]
+  >([
+    {
+      ...initOrderValues,
+      orderKey: Math.random().toString(36).substring(2, 7),
+    },
+  ]);
   // ORDERS STATE //
 
   const [showResultesDialog, setShowResultesDialog] = useState<{
@@ -93,19 +92,19 @@ const SpecialOrderForm = ({
   const { toast } = useToast(); // @todo: find a better way to implement the toast notification
   const onSuccess = (res: any) => {
     // @todo: show a taost notifaction
-    toast({
-      variant: "default",
-      description: "تم إرسال الطلبات بنجاح",
-    });
+    // toast({
+    //   variant: "default",
+    //   description: "تم إرسال الطلبات بنجاح",
+    // });
     console.log("🚀 ~ onSuccess ~ res:", res);
   };
 
   const onError = (error: any) => {
     // @todo: show a taost notifaction
-    toast({
-      variant: "destructive",
-      description: "حدث خطاء أثناء إرسال الطلبات",
-    });
+    // toast({
+    //   variant: "destructive",
+    //   description: "حدث خطاء أثناء إرسال الطلبات",
+    // });
     console.log("error", { error });
   };
 
@@ -113,7 +112,7 @@ const SpecialOrderForm = ({
     mutationFn: async () => {
       const results = await Promise.allSettled(
         ordersValues.map(async (request, index) => {
-          const data = {
+          const data: SpecialOrderBody = {
             SpecialCategoryId: "category" in request ? +request.category : 0,
             // SpecialCategoryId: "dd",
             Name: "orderDetails" in request ? request.orderDetails : "",
@@ -188,13 +187,24 @@ const SpecialOrderForm = ({
     onError: onError,
   });
 
+  // ذا عشان لما يسوي طلب جديد ينزل به تحت
+  const divRefForScroll = useRef<HTMLDivElement>(null); // Create a ref for the div
+  const handleScrollToEnd = () => {
+    if (divRefForScroll.current) {
+      divRefForScroll.current.scrollTo({
+        top: divRefForScroll.current.scrollHeight - 100, // Scroll to the bottom
+        behavior: "smooth", // Smooth scrolling
+      });
+    }
+  };
+
   return (
     <div
       // onSubmit={form.handleSubmit((data) => handleOnSubmit.mutate(data))}
-      className=" h-[80vh]"
+      className=" mdHalf:h-[80vh] mdHalf:overflow-hidden overflow-auto"
     >
-      <Dialog
-        open={showResultesDialog != null}
+      <ResulteDialog
+        data={showResultesDialog}
         onOpenChange={() => {
           // هذا عشان يتحقق اذا كل الطلبات تم ارسالها بنجاح لما تضغط اغلاق بيقفل المودل حق الطلب الخاص كاملا
           // اما اذا كان هناك خطاء بيقفل المودل الي يعرض النتائج حق ارسال الطلبات
@@ -204,63 +214,14 @@ const SpecialOrderForm = ({
             setShowResultesDialog(null);
           }
         }}
-      >
-        <DialogTrigger asChild></DialogTrigger>
-        <DialogContent dir="rtl" className="sm:max-w-md ">
-          <DialogHeader>
-            <DialogTitle dir="ltr">
-              {" "}
-              <Check />{" "}
-            </DialogTitle>
-            {showResultesDialog?.success &&
-              showResultesDialog?.success.length > 0 && (
-                <>
-                  <DialogDescription
-                    dir="rtl"
-                    className="text-rightfont-semibold  text-green-400"
-                  >
-                    نجح إرسال الطلبات التالية :
-                  </DialogDescription>
-                  <DialogDescription dir="rtl" className="text-right">
-                    {showResultesDialog?.success?.map((ele, inx) => (
-                      <p>
-                        {" "}
-                        {inx + 1} - {ele.value?.message}{" "}
-                      </p>
-                    ))}
-                  </DialogDescription>
-                </>
-              )}
-            {showResultesDialog?.failed &&
-              showResultesDialog?.failed.length > 0 && (
-                <>
-                  <DialogDescription
-                    dir="rtl"
-                    className="text-right font-semibold text-red-600"
-                  >
-                    فشل إرسال الطلبات التالية :
-                  </DialogDescription>
-                  <DialogDescription dir="rtl" className="text-right">
-                    {showResultesDialog?.failed?.map((ele, inx) => (
-                      <p>- </p>
-                    ))}
-                  </DialogDescription>
-                </>
-              )}
-          </DialogHeader>
-
-          <DialogFooter className="sm:justify-start">
-            <DialogClose asChild>
-              <Button type="button" variant="secondary">
-                اغلاق
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+        open={showResultesDialog != null}
+      />
 
       <div className=" bg-[#257F24] p-4 text-white flex items-center justify-between">
-        <p>طلب خاص</p>
+       <div className="flex gap-x-3" >
+        <X  className="cursor-pointer" onClick={()=>{closeDialog()}} />
+       <p>طلب خاص</p>
+       </div>
         <Link href="/" className="text-xs underline">
           كيف تطلب طلب خاص ؟
         </Link>
@@ -268,8 +229,8 @@ const SpecialOrderForm = ({
 
       <div className="p-5">
         {/* section of addBtn and numOfOrders and SubmitBtn */}
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center justify-between gap-x-6">
+        <div className="flex items-center justify-between mb-4  ">
+          <div className=" flex items-center justify-between flex-wrap mdHalf:gap-x-6 gap-x-4 ">
             <Button
               onClick={() => {
                 // لتحقق من ان الحقول حق اخر طلب كامله لكي لايسوي طلب قبل ما يكمل الطلب الاول
@@ -282,34 +243,42 @@ const SpecialOrderForm = ({
                   const newOrder = initOrderValues;
                   setOrdersValues(
                     (prevOrders) =>
-                      [...prevOrders, newOrder[0]] as typeof prevOrders
+                      [
+                        ...prevOrders,
+                        {
+                          ...newOrder,
+                          orderKey: Math.random().toString(36).substring(2, 7),
+                        },
+                      ] as typeof prevOrders
                   );
+                  setTimeout(() => {
+                    handleScrollToEnd()
+                  }, 200);
                 }
               }}
+
               className="text-xs text-black bg-[#FFDBC3] hover:bg-[#FFDBC3] hover:bg-opacity-[0.7] tajawal"
             >
               <span className="mx-2 font-bold">اضافة طلب</span>
               <Plus size={17} />
             </Button>
-            <p className="text-xs">
+            <p className="text-xs mdHalf:block hidden">
               عدد الطلبات
               <span> ( {ordersValues.length} ) </span>
             </p>
           </div>
           <Button
             onClick={() => {
-              console.log(ordersValues);
-              
-              // if (!ordersValues[ordersValues.length - 1].isValid) {
-              //   toast({
-              //     variant: "destructive",
-              //     description: "يجب إكمال الطلب السابق قبل الإرسال ",
-              //   });
-              // } else {
-              //   handleOnSubmit.mutate();
-              // }
+              if (!ordersValues[ordersValues.length - 1].isValid) {
+                toast({
+                  variant: "destructive",
+                  description: "يجب إكمال الطلب السابق قبل الإرسال ",
+                });
+              } else {
+                handleOnSubmit.mutate();
+              }
             }}
-            className="bg-primary-background px-8 hover:bg-primary-background hover:bg-opacity-[0.7] tajawal "
+            className="bg-primary-background mdHalf:px-8 hover:bg-primary-background hover:bg-opacity-[0.7] tajawal "
           >
             {handleOnSubmit.isPending ? (
               <div className="">
@@ -327,10 +296,17 @@ const SpecialOrderForm = ({
           </Button>
         </div>
 
-        <div className="overflow-y-auto h-[60vh]">
+        <p className="text-xs mdHalf:hidden block mx-2 mb-4 ">
+              عدد الطلبات
+              <span> ( {ordersValues.length} ) </span>
+            </p>
+
+        <div ref={divRefForScroll} className="overflow-y-auto mdHalf:h-[60vh] ">
           {ordersValues?.map((order, index) => (
             <SpecialOrderFormCard
-              key={index}
+              orderKey={order?.orderKey}
+              key={order.orderKey}
+              orderslength={ordersValues.length}
               ordersNumber={ordersValues.length}
               index={index}
               initCategory={category}
@@ -341,6 +317,9 @@ const SpecialOrderForm = ({
                   updatedOrders[index] = { ...vals, isValid };
                   return updatedOrders;
                 });
+              }}
+              onOrderDelete={(key) => {
+                setOrdersValues(ordersValues.filter((i) => i.orderKey != key));
               }}
             />
           ))}

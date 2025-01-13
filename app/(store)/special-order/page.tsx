@@ -8,8 +8,7 @@ import OrdersWaitingForAcceptPrice from "./components/orders-waiting-for-accept-
 import PreviousOrder from "./components/previous-order";
 import BreadCrumb from "@/components/BreadCrumb";
 import { useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import SpecialOrderDialog from "./components/SpecialOrderDialog";
+import { Button } from "@/components/ui/button"; 
 import SpecialBulkOrderDialog from "./components/SpecialBulkOrderDialog";
 
 const SpecialOrderPage = () => {
@@ -51,10 +50,9 @@ const SpecialOrderPage = () => {
         ThirdDir=""
       />
       <Button onClick={()=>{setShwSia(true)}} >Opne</Button>
-      <SpecialOrderDialog
+      <SpecialBulkOrderDialog
         show={ShwSia}
         setShow={setShwSia}
-        
       />
       <AddSpecialOrder
         show={showDialog}

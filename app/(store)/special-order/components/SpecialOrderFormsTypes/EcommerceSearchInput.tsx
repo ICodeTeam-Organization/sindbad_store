@@ -99,15 +99,15 @@ function EcommerceSearchInput({onSelected}:{onSelected:(e:Shop)=>void}) {
           </div>
         </PopoverContent>
       </Popover>
-      <Link href={selectedEcommerce?.urlLinkOfStore + ""} target="_blank">
-        <Button className="text-xs text-black flex flex-col bg-[#288B5338] hover:bg-[#288B5339] hover:bg-opacity-[0.7] tajawal">
+      {selectedEcommerce?.urlLinkOfStore && <Link href={selectedEcommerce?.urlLinkOfStore??"?"}  target="_blank">
+        <Button className="mdHalf:text-xs text-[9px] text-black flex flex-col bg-[#288B5338] hover:bg-[#288B5339] hover:bg-opacity-[0.7] tajawal">
           <span className="mx-2 font-bold">الإنتقال الى المتجر</span>
-          <span className="mx-2 text-[9px] text-primary-background">
+          <span className="mx-2 mdHalf:text-[9px] text-[7px] text-primary-background">
             {" "}
             مع نسخ كوبون الخصم
           </span>
         </Button>
-      </Link>
+      </Link>}
     </div>
   );
 }
