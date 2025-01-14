@@ -51,7 +51,7 @@ export type SpecialOrderFromEcommerce_FormValue = z.infer<typeof SpecialOrderFro
 
 
 
-export const SpecialBulkOrderFormSchema = z.object({
+export const SpecialWholesalesOrderFormSchema = z.object({
   category: z.string({ required_error: "يرجى تحديد فئة" }),
   orderDetails: z.string({ required_error: "أكتب تفاصيل المنتج مطلوبة" }),
   linkUrl: z.string().optional(),
@@ -65,4 +65,4 @@ export const SpecialBulkOrderFormSchema = z.object({
   orderKey: z.string().default(Math.random().toString(36).substring(2, 7)),
 });
 
-export type SpecialBulkOrderFormValues = z.infer<typeof SpecialBulkOrderFormSchema>;
+export type SpecialWholesalesOrderFormValues = z.infer<typeof SpecialWholesalesOrderFormSchema>;

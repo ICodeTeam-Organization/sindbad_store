@@ -1,5 +1,5 @@
 "use client";
-import SpecialBulkOrderDialog from "@/app/(store)/special-order/components/SpecialBulkOrderDialog";
+import SpecialWholesalesOrderDialog from "@/app/(store)/special-order/components/SpecialWholesalesOrderDialog";
 import SpecialOrderDialog from "@/app/(store)/special-order/components/SpecialOrderDialog";
 import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
 import React from "react";
@@ -16,7 +16,7 @@ function SpecialOrderDialogsViewer() {
 
   return (
     <div>
-      <SpecialBulkOrderDialog
+      <SpecialWholesalesOrderDialog
         category={category?category+"":undefined}
         setShow={setshowSpecialOrderWholeSalesDialog}
         show={showSpecialOrderWholeSalesDialog}

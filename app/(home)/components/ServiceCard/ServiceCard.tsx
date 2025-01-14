@@ -8,14 +8,21 @@ import discounts from "@/public/images/discounts.svg";
 import onlineStores from "@/public/images/onlineStores.svg";
 import shoppingStore from "@/public/images/shoppingStore.svg";
 // import wholesaleSection from "@/public/images/wholesaleSection.svg";
-import Link from "next/link";
+// import Link from "next/link";
+import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
+import { useRouter } from "next-nprogress-bar";
 
 function ServiceCard() {
+
+  const {setSpecialOrderState} = useSpecialOrdersDialogsStore();
+  const router = useRouter()
+
   const cards = [
     {
       name: "طلب خاص",
       image: specialrequist,
-      href: "/special-order/",
+      // href: "/special-order/",
+      onClick:()=>{setSpecialOrderState(true)},
       color: "#1EAE98",
       transpColor: "#1EAE9826",
       desc: "اطلب ما تريد من السعودية ونحن نوصله لك الى عنوانك باليمن",
@@ -23,7 +30,8 @@ function ServiceCard() {
     {
       name: "طلب من متجر إلكتروني",
       image: onlineStores,
-      href: "/special-order?sh=1&tab=3",
+      // href: "/special-order?sh=1&tab=3",
+      onClick:()=>{setSpecialOrderState(true,3)},
       color: "#F57C00",
       transpColor: "#F57C0050",
       desc: " كل المتاجر الإلكترونية وضعناها بين يديك بأسعار منافسة ..",
@@ -31,7 +39,8 @@ function ServiceCard() {
     {
       name: "العروض",
       image: discounts,
-      href: "/shop?newProducts=true",
+      // href: "/shop?newProducts=true",
+      onClick:()=>{router.push( "/shop?newProducts=true")},
       color: "#CE2334",
       transpColor: "#CE233450",
 
@@ -40,7 +49,8 @@ function ServiceCard() {
     {
       name: "تسوق الآن ",
       image: shoppingStore,
-      href: "/shop/",
+      // href: "/shop/",
+      onClick:()=>{router.push( "/shop/")},
       color: "#B2C1C0",
       transpColor: "#B2C1C026",
       desc: "اطلب ما تريد من السعودية ونحن نوصله لك الى عنوانك باليمن",
@@ -62,9 +72,9 @@ function ServiceCard() {
             onMouseEnter={() => setIsHovered(x)}
             onMouseLeave={() => setIsHovered(-1)}
           >
-            <Link
-              href={ele.href}
-              className="group card education mdHalf:w-[170px] w-[140px] h-[200px] mdHalf:h-[220px] bg-white rounded-tr-lg overflow-hidden flex flex-col  items-center relative  transition-all duration-300 ease-out text-decoration-none hover:translate-y-[-5px] hover:scale-[1.005] "
+            <div
+              onClick={ele.onClick}
+              className="group card cursor-pointer education mdHalf:w-[170px] w-[140px] h-[200px] mdHalf:h-[220px] bg-white rounded-tr-lg overflow-hidden flex flex-col  items-center relative  transition-all duration-300 ease-out text-decoration-none hover:translate-y-[-5px] hover:scale-[1.005] "
               style={{
                 boxShadow: isHovered
                   ? `0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px ${ele.transpColor}`
@@ -77,7 +87,7 @@ function ServiceCard() {
               ></div>
 
               <div
-                className={`circle mdHalf:group-hover:-translate-y-5   mdHalf:w-[80px] w-[50px]  mdHalf:h-[80px] h-[50px]  mdHalf:top-[40px] top-[20px] rounded-full border-2   flex justify-center items-center relative z-50 transition-all duration-300 ease-out `}
+                className={`circle mdHalf:group-hover:-translate-y-5   mdHalf:w-[80px] w-[50px]  mdHalf:h-[80px] h-[50px]  mdHalf:top-[40px] top-[20px] rounded-full border-2   flex justify-center items-center relative z-[40] transition-all duration-300 ease-out `}
                 style={
                   isHovered
                     ? { backgroundColor: "#fff", borderColor: "#fff" }
@@ -118,7 +128,7 @@ function ServiceCard() {
                 {ele.desc}
               </p>
 
-            </Link>
+            </div>
           </div>
         );
       })}

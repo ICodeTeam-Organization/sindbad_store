@@ -23,15 +23,15 @@ import { useForm } from "react-hook-form";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { SpecialBulkOrderFormValues, SpecialBulkOrderFormSchema } from "../utils/zod-schema";
+import { SpecialWholesalesOrderFormValues, SpecialWholesalesOrderFormSchema } from "../utils/zod-schema";
 
-function SpecialBulkOrderForms({
+function SpecialWholesalesOrderForms({
   orderKey,
   onChange,
   orderFrom
 }: {
   onChange: (
-    data: SpecialBulkOrderFormValues,
+    data: SpecialWholesalesOrderFormValues,
     isFormsValid: boolean
   ) => void;
   orderKey:string;
@@ -40,8 +40,8 @@ function SpecialBulkOrderForms({
   const { categories:allCategories } = useCategoriesDataStore();
   const categories = allCategories.filter((ele)=>ele.categoryTypeNumber == 4) // 4 = فئات الجملة
 
-  const form = useForm<SpecialBulkOrderFormValues>({
-    resolver: zodResolver(SpecialBulkOrderFormSchema),
+  const form = useForm<SpecialWholesalesOrderFormValues>({
+    resolver: zodResolver(SpecialWholesalesOrderFormSchema),
     defaultValues: {
       orderFrom: orderFrom,
       quantity: 0,
@@ -297,4 +297,4 @@ function SpecialBulkOrderForms({
   );
 }
 
-export default SpecialBulkOrderForms;
+export default SpecialWholesalesOrderForms;

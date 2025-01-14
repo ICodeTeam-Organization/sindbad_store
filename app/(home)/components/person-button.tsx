@@ -21,43 +21,34 @@ type Props = {
 
 const PersonButton = ({ status }: Props) => {
 
-  const mutation = useSignOut()
+  const mutation = useSignOut();
+  // const router = 
 
   const menu = [
     {
       title: "معلومات الحساب",
       icon: <FaUser />,
-      onclickFun: () => {
-        /* Functionality for account info */
-      },
+      href:"/profile",
     },
     {
-      title: "الطلبات",
+      title: "طلباتي",
       icon: <FaClipboardList />,
-      onclickFun: () => {
-        /* Functionality for orders */
-      },
+      href:"/my-orders",
     },
     {
-      title: "الطلبات الخاصة",
+      title: "طلباتي الخاصة",
       icon: <FaTasks />,
-      onclickFun: () => {
-        /* Functionality for special orders */
-      },
+      href:"/my-special-orders"
     },
     {
       title: "الإشعارات",
       icon: <FaBell />,
-      onclickFun: () => {
-        /* Functionality for notifications */
-      },
+       href:"/my-notifications"
     },
     {
       title: "عناويني",
       icon: <FaAddressCard />,
-      onclickFun: () => {
-        /* Functionality for addresses */
-      },
+      href:"/user-addresses"
     },
     {
       title: "تسجيل الخروج",

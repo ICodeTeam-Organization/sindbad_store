@@ -9,7 +9,7 @@ import PreviousOrder from "./components/previous-order";
 import BreadCrumb from "@/components/BreadCrumb";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button"; 
-import SpecialBulkOrderDialog from "./components/SpecialBulkOrderDialog";
+import SpecialWholesalesOrderDialog from "./components/SpecialWholesalesOrderDialog";
 
 const SpecialOrderPage = () => {
   
@@ -50,7 +50,7 @@ const SpecialOrderPage = () => {
         ThirdDir=""
       />
       <Button onClick={()=>{setShwSia(true)}} >Opne</Button>
-      <SpecialBulkOrderDialog
+      <SpecialWholesalesOrderDialog
         show={ShwSia}
         setShow={setShwSia}
       />

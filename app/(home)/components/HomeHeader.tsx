@@ -19,10 +19,7 @@ import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useCartStore } from "@/app/stores/cartStore";
-import {
-  Sheet,
-  SheetContent,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import OrderFromAndHow from "./OrderFromAndHow";
 // import {useRouter} from "next/navigation";
 
@@ -59,13 +56,11 @@ const HomeHeader = () => {
   const [openNav, setopenNav] = useState<boolean>(false);
   const [searchKeyword, setsearchKeyword] = useState("");
   const { data: session, status } = useSession();
-  const {items:cartItems} = useCartStore()
+  const { items: cartItems } = useCartStore();
   const isAuth = status === "authenticated";
   // const router = useRouter()
 
   // const mutation = useSignOut();
-
- 
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -77,130 +72,123 @@ const HomeHeader = () => {
   //   };
   // }, []);
 
- 
-
-  const NavMenu = ()=>(
+  const NavMenu = () => (
     <div
-    onClick={(event) => {
-      event.stopPropagation();
-    }}
-    className={cn(
-      "flex flex-col mdHalf:flex-row mdHalf:relative hover:z-[9999999] bg-white mdHalf:shadow-md  xl:text-sm text-xs  xl:px-4  mdHalf:justify-between justify-start  mdHalf:h-auto mdHalf:w-auto h-full w-full transition-all duration-300 xl:pr-[170px]  mdHalf:pr-[170px] ",
-    )}
-  >
-    {/* this just show in mobile */}
-    <div className="p-4 flex justify-between items-center w-full mdHalf:hidden">
-      <Image
-        className="block relative"
-        src={"/images/sedebadLogo.svg"}
-        width={80}
-        height={80}
-        alt=""
-      />
-      <div
-        className="bg-white border p-2 rounded-full relative  cursor-pointer "
-        onClick={() => {
-          setopenNav(false);
-        }}
-      >
-        <ArrowRight size={30} />
-      </div>
-    </div>
-
-    <div className=" flex flex-col mdHalf:flex-row lg:justify-end mdHalf:justify-between xl:gap-x-4   ">
-      <div className="nav-menus group">
-        <div className="nav-menus-label">
-          <IoMenu size={22} className="hidden lg:block" />
-          <p className="">كل الفئات</p>
-        </div>
-
-        <AllCategoriesMegaMenu />
-      </div>
-
-      <div className="nav-menus group">
-        <div className="nav-menus-label">
-          <p> طلب خاص </p>
-          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-        </div>
-        <SpecialOrderMegaMenu />
-      </div>
-
-      <div className="nav-menus group ">
-        <div className="nav-menus-label">
-          <p> طلب من متجر إلكتروني </p>
-          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-        </div>
-        <OrderFromEshopMegaMenu />
-      </div>
-
-      <div className="nav-menus group">
-        <div className="nav-menus-label">
-          <p> المحلات </p>
-          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-        </div>
-        <StoresMegaMenu />
-      </div>
-
-      <div className="nav-menus group">
-        <div className="nav-menus-label">
-          <p> المتاجر الإلكترونية</p>
-          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-        </div>
-        <EShopsMegaMenu />
-      </div>
-
-      <div className="nav-menus group">
-        <div className="nav-menus-label">
-          <p> طلب جملة </p>
-          <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
-        </div>
-        <WholesalerOrderCategoriesMegaMenu />
-      </div>
-    </div>
-
-    <div className=" flex flex-col mdHalf:flex-row justify-end lg:gap-x-5 lg:ml-5">
-      <div className="nav-menus ">
-        <Link
-          href={"/shop?hasOffer=t"}
-          className="nav-menus-label"
+      onClick={(event) => {
+        event.stopPropagation();
+      }}
+      className={cn(
+        "flex flex-col mdHalf:flex-row mdHalf:relative hover:z-[9999999] bg-white mdHalf:shadow-md  xl:text-sm text-xs  xl:px-4  mdHalf:justify-between justify-start  mdHalf:h-auto mdHalf:w-auto h-full w-full transition-all duration-300 xl:pr-[170px]  mdHalf:pr-[170px] "
+      )}
+    >
+      {/* this just show in mobile */}
+      <div className="p-4 flex justify-between items-center w-full mdHalf:hidden">
+        <Image
+          className="block relative"
+          src={"/images/sedebadLogo.svg"}
+          width={80}
+          height={80}
+          alt=""
+        />
+        <div
+          className="bg-white border p-2 rounded-full relative  cursor-pointer "
+          onClick={() => {
+            setopenNav(false);
+          }}
         >
-          <p> عروض اليوم </p>
-        </Link>
+          <ArrowRight size={30} />
+        </div>
       </div>
 
-      <div className="nav-menus">
-        <Link
-          href={"/shop?newProduct=t"}
-          className="nav-menus-label"
-        >
-          <p> وصل حديث</p>
-        </Link>
+      <div className=" flex flex-col mdHalf:flex-row lg:justify-end mdHalf:justify-between xl:gap-x-4   ">
+        <div className="nav-menus group">
+          <div className="nav-menus-label">
+            <IoMenu size={22} className="hidden lg:block" />
+            <p className="">كل الفئات</p>
+          </div>
+
+          <AllCategoriesMegaMenu />
+        </div>
+
+        <div className="nav-menus group">
+          <div className="nav-menus-label">
+            <p> طلب خاص </p>
+            <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+          </div>
+          <SpecialOrderMegaMenu />
+        </div>
+
+        <div className="nav-menus group ">
+          <div className="nav-menus-label">
+            <p> طلب من متجر إلكتروني </p>
+            <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+          </div>
+          <OrderFromEshopMegaMenu />
+        </div>
+
+        <div className="nav-menus group">
+          <div className="nav-menus-label">
+            <p> المحلات </p>
+            <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+          </div>
+          <StoresMegaMenu />
+        </div>
+
+        <div className="nav-menus group">
+          <div className="nav-menus-label">
+            <p> المتاجر الإلكترونية</p>
+            <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+          </div>
+          <EShopsMegaMenu />
+        </div>
+
+        <div className="nav-menus group">
+          <div className="nav-menus-label">
+            <p> طلب جملة </p>
+            <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
+          </div>
+          <WholesalerOrderCategoriesMegaMenu />
+        </div>
+      </div>
+
+      <div className=" flex flex-col mdHalf:flex-row justify-end lg:gap-x-5 lg:ml-5">
+        <div className="nav-menus ">
+          <Link href={"/shop?hasOffer=t"} className="nav-menus-label">
+            <p> عروض اليوم </p>
+          </Link>
+        </div>
+
+        <div className="nav-menus">
+          <Link href={"/shop?newProduct=t"} className="nav-menus-label">
+            <p> وصل حديث</p>
+          </Link>
+        </div>
+      </div>
+      {/* profile info in mobile show in nav menu */}
+      <div className="mdHalf:hidden block ">
+        <PersonButton status={status} session={session} />
+      </div>
+      <div className="mdHalf:hidden mb-10 block  relative">
+        <OrderFromAndHow />
       </div>
     </div>
-    {/* profile info in mobile show in nav menu */}
-    <div className="mdHalf:hidden block " >
-      <PersonButton status={status} session={session} />
-    </div>
-    <div className="mdHalf:hidden mb-10 block  relative">
-      <OrderFromAndHow />
-    </div>
-  </div>
-  )
+  );
 
   return (
-    <div className="  bg-header-gradient  ">
-      <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 "  style={{position: "fixed",zIndex: "99", backgroundImage: "linear-gradient(to right, #FFE0DC, #FEEFEB, #F8F4E5, #F4EEE4, #EEEAE9)"}}>
+    <div className="  bg-header-gradient ">
+      <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
         {/* logo section*/}
         <div>
           <div className="p-2 px-0  cursor-pointer lg:m-4 mdHalf:my-4 mdHalf:mx-1  hidden mdHalf:block absolute z-[99999999] ">
-            <Link href="/" >
-            <Image
-              className="block relative "
-              src={"/images/sedebadLogo.svg"}
-              width={130}
-              height={100}
-              alt=""
-            /></Link>
+            <Link href="/">
+              <Image
+                className="block relative "
+                src={"/images/sedebadLogo.svg"}
+                width={130}
+                height={100}
+                alt=""
+              />
+            </Link>
           </div>
 
           {/* this for mobile */}
@@ -215,13 +203,13 @@ const HomeHeader = () => {
               <BiMenu className="cursor-pointer" size={40} />
             </div>
             <Link href="/">
-            <Image
-              className="block relative cursor-pointer"
-              src={"/images/sedebadLogo.svg"}
-              width={80}
-              height={80}
-              alt=""
-            />
+              <Image
+                className="block relative cursor-pointer"
+                src={"/images/sedebadLogo.svg"}
+                width={80}
+                height={80}
+                alt=""
+              />
             </Link>
           </div>
         </div>
@@ -258,7 +246,13 @@ const HomeHeader = () => {
                   <Link
                     href="/shopping-card"
                     className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500 hover:bg-[#66666611]  rounded-full"
-                  > {cartItems.length > 0 && <div className="bg-red-600 text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute" >{cartItems.length}</div>}
+                  >
+                    {" "}
+                    {cartItems.length > 0 && (
+                      <div className="bg-red-600 text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute">
+                        {cartItems.length}
+                      </div>
+                    )}
                     <BsCart className="text-[#666666]  text-[20px] m-2 " />
                   </Link>
                 </>
@@ -270,21 +264,21 @@ const HomeHeader = () => {
           </div>
 
           {/* down section this section in mobile become the navbarMenu */}
-          <div
-            className="tajawal   mdHalf:block hidden "
-          >
+          <div className="tajawal   mdHalf:block hidden ">
             {/* content of navmenu */}
-             <NavMenu/>
+            <NavMenu />
           </div>
 
-         <div className="mdHalf:hidden" >
-         <Sheet open={openNav} >
-            <SheetContent side="right" className="w-[90%] [&>button]:hidden overflow-y-auto p-0 m-0  " >
-                 <NavMenu/>
-            </SheetContent>
-          </Sheet>
-         </div>
-          
+          <div className="mdHalf:hidden">
+            <Sheet open={openNav}>
+              <SheetContent
+                side="right"
+                className="w-[90%] [&>button]:hidden overflow-y-auto p-0 m-0  "
+              >
+                <NavMenu />
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </div>
       {/* serach component for mobiles */}

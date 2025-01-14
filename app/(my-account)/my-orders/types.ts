@@ -1,16 +1,28 @@
 export interface DropdownProps {
     placeholder: string;
-    options: string[];
+    options: {key:number,status:string}[];
     icon: React.ReactNode;
-    onSelect: (option: string) => void;
+    onSelect: (option: {key:number,status:string}) => void;
 }
-interface MyOrders {
-    order_number: string;
-    order_value: string;
-    date: string,
-    status: string,
-    traking: string,
-}
-export interface MyOrdersTableProps {
-    orders: MyOrders[];
-}
+export type Order = {
+    id: number;
+    orderDate: string; // ISO date string format
+    orderStatus: string; // This is in Arabic and represents the status of the order
+    totalPrice: number; // Total price of the order
+    orderNumber: string; // Order number as a string
+};
+
+export type ResponsiveOrdersTypes = {
+    success: boolean; // Indicates if the operation was successful
+    message: string;  // Message about the operation's result
+    data: {
+      items: Order[];
+      totalCount: number;    // Total number of items
+      totalPages: number;    // Total number of pages
+      currentPage: number;   // Current page number
+      pageSize: number;      // Number of items per page
+    };
+  };
+  
+
+ 

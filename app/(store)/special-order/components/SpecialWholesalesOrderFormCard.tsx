@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 
 import {
-    SpecialBulkOrderFormValues,
+    SpecialWholesalesOrderFormValues,
   SpecialOrderFromEcommerce_FormValue,
   SpecialProductAndServiceOrderForm_FormValue,
 } from "../utils/zod-schema";
@@ -12,14 +12,14 @@ import SpecialProductOrderForm from "./SpecialOrderFormsTypes/SpecialProductOrde
 import SpecialServiceOrderForm from "./SpecialOrderFormsTypes/SpecialServiceOrderForm";
 import SpecialOrderFromShopForm from "./SpecialOrderFormsTypes/SpecialOrderFromShopForm";
 import { useState } from "react";
-import SpecialBulkOrderForms from "./SpecialBulkOrderForms";
+import SpecialWholesalesOrderForms from "./SpecialWholesalesOrderForms";
 
 interface Props {
   index: number;
   initCategory?: number;
   ordersNumber?: number;
   onChangeValues: (
-    values: | SpecialBulkOrderFormValues,
+    values: | SpecialWholesalesOrderFormValues,
     isValid: boolean
   ) => void;
   onDeleteOrderForm: (
@@ -28,7 +28,7 @@ interface Props {
   orderFrom:number; 
 }
 
-function SpecialBulkOrderFormCard({index, orderFrom = 200,ordersNumber,onDeleteOrderForm,orderKey ,onChangeValues}: Props) {
+function SpecialWholesalesOrderFormCard({index, orderFrom = 200,ordersNumber,onDeleteOrderForm,orderKey ,onChangeValues}: Props) {
   const orderFromTabs = [
     { id: 200, label: "من السعودية" },
     { id: 100, label: "من خارج السعودية" },
@@ -63,7 +63,7 @@ function SpecialBulkOrderFormCard({index, orderFrom = 200,ordersNumber,onDeleteO
         </div>
       </div>
       <div>
-          <SpecialBulkOrderForms
+          <SpecialWholesalesOrderForms
             orderFrom={curentTab}
             orderKey={orderKey}
             onChange={(e, isValid) => {
@@ -75,4 +75,4 @@ function SpecialBulkOrderFormCard({index, orderFrom = 200,ordersNumber,onDeleteO
   );
 }
 
-export default SpecialBulkOrderFormCard;
+export default SpecialWholesalesOrderFormCard;

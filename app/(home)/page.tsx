@@ -23,20 +23,22 @@ export default async function Home() {
     BeastSellerInWeek,
     RecentlyProducts,
   ] = await Promise.all([
-    getApi<{data:MainCategory[]}>(
+    getApi<{ data: MainCategory[] }>(
       "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/100000"
     ),
-    getApi<{data:Store[]}>("Market/Store/GetAllStoresForViewInSliderInMarketHomePage"),
-    getApi<{data:{items:Shop[]}}>(
+    getApi<{ data: Store[] }>(
+      "Market/Store/GetAllStoresForViewInSliderInMarketHomePage"
+    ),
+    getApi<{ data: { items: Shop[] } }>(
       "EcommercesStores/GetEcommerceStores?pageNumber=1&pageSize=20"
     ),
     // getApi<{data:Product[]}>(
     //   "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/20"
     // ),
-    getApi<{data:Product[]}>(
+    getApi<{ data: Product[] }>(
       "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/20"
     ),
-    getApi<{data:Product[]}>(
+    getApi<{ data: Product[] }>(
       "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/20"
     ),
   ]);
@@ -46,7 +48,9 @@ export default async function Home() {
       <Hero />
       <div className="w-full xl:container mx-auto ">
         <CategoriesSlider />
-        <ServiceCard />
+        <div className="mt-32" >
+          <ServiceCard />
+        </div>
         <CardsInfo />
         <Categories categories={categories?.data} />
         <div className="mb-10" />
@@ -68,7 +72,7 @@ export default async function Home() {
         <ShoppingNow />
       </div>
       <div className="my-10">
-        <AllEShops AllEShops={AllEcommrce}  />
+        <AllEShops AllEShops={AllEcommrce} />
       </div>
       <Feature />
     </section>

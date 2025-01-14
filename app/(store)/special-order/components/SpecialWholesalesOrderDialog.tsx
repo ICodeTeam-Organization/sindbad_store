@@ -6,19 +6,19 @@ import { useMutation } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import { toast, useToast } from "@/hooks/use-toast";
 import Link from "next/link";
-import { Plus, Send } from "lucide-react";
+import { Plus, Send, X } from "lucide-react";
 import { useState } from "react";
 import SpecialOrderFormCard from "./SpecialOrderFormCard";
 import {
-  SpecialBulkOrderFormValues,
+  SpecialWholesalesOrderFormValues,
   SpecialOrderFromEcommerce_FormValue,
   SpecialProductAndServiceOrderForm_FormValue,
 } from "../utils/zod-schema";
-import SpecialBulkOrderFormCard from "./SpecialBulkOrderFormCard";
+import SpecialWholesalesOrderFormCard from "./SpecialWholesalesOrderFormCard";
 import { isValid } from "zod";
 import ResulteDialog from "./ResulteDialog";
 
-function SpecialBulkOrderDialog({
+function SpecialWholesalesOrderDialog({
   show = false,
   setShow,
   category = "",
@@ -37,7 +37,7 @@ function SpecialBulkOrderDialog({
     quantity: 0,
   };
   const [ordersValues, setOrdersValues] = useState<
-    SpecialBulkOrderFormValues[]
+    SpecialWholesalesOrderFormValues[]
   >([initValues]);
 
   const [showResultesDialog, setShowResultesDialog] = useState<{
@@ -142,17 +142,22 @@ function SpecialBulkOrderDialog({
     onError: onError,
   });
 
+  const closeDialog = () => { 
+    setShowResultesDialog(null);
+    setShow(false);
+    setOrdersValues([initValues])
+   }
+
   return (
-    <Dialog open={show} onOpenChange={setShow}>
-      <DialogContent className="[&>button]:hidden border-none p-0 m-auto overflow-hidden ">
+    <Dialog open={show} onOpenChange={closeDialog}>
+      <DialogContent className="[&>button]:hidden border-none p-0 mdHalf:m-auto overflow-hidden mdHalf:h-auto mdHalf:w-screen  h-screen w-screen ">
         <ResulteDialog
           data={showResultesDialog}
           onOpenChange={() => {
             // هذا عشان يتحقق اذا كل الطلبات تم ارسالها بنجاح لما تضغط اغلاق بيقفل المودل حق الطلب الخاص كاملا
             // اما اذا كان هناك خطاء بيقفل المودل الي يعرض النتائج حق ارسال الطلبات
             if (showResultesDialog?.failed.length == 0) {
-              setShowResultesDialog(null);
-              setShow(false);
+              closeDialog()
             } else {
               setShowResultesDialog(null);
             }
@@ -160,9 +165,12 @@ function SpecialBulkOrderDialog({
           open={showResultesDialog != null}
         />
 
-        <div>
-          <div className=" bg-[#257F24] p-4 text-white flex items-center justify-between">
-            <p>طلب بالجملة</p>
+        <div className="mdHalf:h-[80vh] mdHalf:overflow-hidden overflow-auto" >
+          <div className=" bg-[#257F24] sticky top-0 z-10  p-4 text-white flex items-center justify-between">
+          <div className="flex gap-x-3" >
+        <X  className="cursor-pointer" onClick={closeDialog} />
+       <p>طلب بالجملة</p>
+       </div>
             <Link href="/" className="text-xs underline">
               كيف تطلب طلب خاص ؟
             </Link>
@@ -233,9 +241,9 @@ function SpecialBulkOrderDialog({
             </div>
 
             {/* orders forms cards */}
-            <div className="overflow-y-auto h-[60vh]">
+            <div className="overflow-y-auto mdHalf:h-[60vh]">
               {ordersValues?.map((order, index) => (
-                <SpecialBulkOrderFormCard
+                <SpecialWholesalesOrderFormCard
                   key={order.orderKey}
                   orderFrom={order?.orderFrom}
                   onDeleteOrderForm={() => {
@@ -266,4 +274,4 @@ function SpecialBulkOrderDialog({
   );
 }
 
-export default SpecialBulkOrderDialog;
+export default SpecialWholesalesOrderDialog;
