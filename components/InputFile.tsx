@@ -1,10 +1,10 @@
-import { ImagePlus, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import React, { useState } from "react";
 
 interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
   labelText?: string;
   placeholderText?: string;
-  className?: string;
+  // className?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Optional for custom onChange handling
   orderKey:string
 }
@@ -12,7 +12,7 @@ interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
 const InputFile: React.FC<InputFileProps> = ({
   labelText = "إضافة صورة",
   placeholderText = "إختر صورة",
-  className = "",
+  // className = "",
   orderKey,
   onChange,
   ...inputProps // This will pass all other props down to the input element

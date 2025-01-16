@@ -1,6 +1,7 @@
 import React from "react";
 import SideBar from "../(my-account)/components/SideBar";
 import StoreHeader from "../(store)/store-header";
+
 export default function HomeLayout({
   children,
 }: Readonly<{
@@ -9,10 +10,14 @@ export default function HomeLayout({
   return (
     <div className="">
       <StoreHeader />
-      <SideBar  />
-      <main className="space-y-4 mr-64 mx-4 transition-all duration-300 max-md:mr-8 ">
-        {children}
-      </main>
+      <div className="flex xl:container mx-auto relative">
+        <div className="mdHalf:block hidden border-l py-20 bg-white sticky top-0">
+          <SideBar />
+        </div>
+        <main className=" flex-1 ">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

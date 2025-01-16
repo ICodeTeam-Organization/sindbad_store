@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { AiFillHeart, AiFillStar } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";

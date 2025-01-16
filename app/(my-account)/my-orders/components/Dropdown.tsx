@@ -6,7 +6,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
@@ -36,8 +35,8 @@ const Dropdown: React.FC<DropdownProps> = ({ placeholder, options,icon, onSelect
       <SelectContent>
         <SelectGroup> 
           {
-            options.map((ele,ix)=>(
-                  <SelectItem value={JSON.stringify(ele)}  >{ele.status}</SelectItem>
+            options.map((ele)=>(
+                  <SelectItem key={ele.key} value={JSON.stringify(ele)}  >{ele.status}</SelectItem>
             ))
           }
         </SelectGroup>

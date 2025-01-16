@@ -1,7 +1,7 @@
 import { ProductDetailsProps } from '../types';
 
 
-const ProductTitle = ({name, description, rating }: Pick<ProductDetailsProps, 'name' | 'description' | 'rating'>) => {
+const ProductTitle = ({name, description }: Pick<ProductDetailsProps, 'name' | 'description' | 'rating'>) => {
     return (
       <div className="mb-4">
         {/* <div className="flex gap-1 mb-2">

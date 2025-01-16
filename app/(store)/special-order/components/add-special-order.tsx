@@ -31,7 +31,7 @@ const AddSpecialOrder = ({
         </Button>
       </DialogTrigger>
       <DialogContent className="[&>button]:hidden m-auto">
-        <SpecialOrderForm tabType={tab} category={+category}   />
+        <SpecialOrderForm tabType={tab} category={+category} closeDialog={()=>{setShow(false)}}   />
       </DialogContent>
     </Dialog>
   );

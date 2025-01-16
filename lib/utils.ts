@@ -26,4 +26,43 @@ export async function isLogged(): Promise<boolean> {
 }
 
 
+export function convertToArabicDate(dateString:string) {
+  // تحويل النص إلى كائن تاريخ
+  const date = new Date(dateString);
+
+  // تعريف أسماء الأيام والشهور بالعربية
+  const days = [
+    "الأحد",
+    "الإثنين",
+    "الثلاثاء",
+    "الأربعاء",
+    "الخميس",
+    "الجمعة",
+    "السبت"
+  ];
+  const months = [
+    "يناير",
+    "فبراير",
+    "مارس",
+    "أبريل",
+    "مايو",
+    "يونيو",
+    "يوليو",
+    "أغسطس",
+    "سبتمبر",
+    "أكتوبر",
+    "نوفمبر",
+    "ديسمبر"
+  ];
+
+  // استخراج اليوم والشهر والسنة
+  const dayName = days[date.getDay()];
+  const day = date.getDate();
+  const monthName = months[date.getMonth()];
+  const year = date.getFullYear();
+
+  // تنسيق النص النهائي
+  return `${dayName}، ${day} ${monthName} ${year}`;
+}
+
 

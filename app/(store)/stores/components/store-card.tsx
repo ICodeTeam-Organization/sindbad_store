@@ -23,7 +23,7 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
   const { toast } = useToast();
   const router = useRouter();
   const linkToStore = `/stores/storeDetails/${id}`;
-  const redirct = useRouter();
+  // const redirct = useRouter();
 
   const { 
     mutate: mutateAddToFav,

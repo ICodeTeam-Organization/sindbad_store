@@ -1,21 +1,17 @@
 import React from "react";
-import SpecialOrderForm from "./special-order-form";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
-import { toast, useToast } from "@/hooks/use-toast";
+import {  useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { Plus, Send, X } from "lucide-react";
 import { useState } from "react";
-import SpecialOrderFormCard from "./SpecialOrderFormCard";
 import {
   SpecialWholesalesOrderFormValues,
-  SpecialOrderFromEcommerce_FormValue,
-  SpecialProductAndServiceOrderForm_FormValue,
+
 } from "../utils/zod-schema";
 import SpecialWholesalesOrderFormCard from "./SpecialWholesalesOrderFormCard";
-import { isValid } from "zod";
 import ResulteDialog from "./ResulteDialog";
 
 function SpecialWholesalesOrderDialog({
@@ -67,7 +63,7 @@ function SpecialWholesalesOrderDialog({
   const handleOnSubmit = useMutation({
     mutationFn: async () => {
       const results = await Promise.allSettled(
-        ordersValues.map(async (request, index) => {
+        ordersValues.map(async (request) => {
           const data = {
             SpecialCategoryId: "category" in request ? +request.category : 0,
             // SpecialCategoryId: "dd",

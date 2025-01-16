@@ -1,5 +1,5 @@
 import React from "react";
-import { SidebarItemProps } from "../../types";
+import { SidebarItemProps } from "../../user-addresses/types";
 
 const SidebarItem: React.FC<SidebarItemProps> = ({ href, icon, label, badge }) => {
   return (

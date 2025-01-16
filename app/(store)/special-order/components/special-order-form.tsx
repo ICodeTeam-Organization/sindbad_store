@@ -4,7 +4,7 @@ import { postApi } from "@/lib/http";
 import { useToast } from "@/hooks/use-toast";
 
 import Link from "next/link";
-import { Check, Plus, Send, X } from "lucide-react";
+import {   Plus, Send, X } from "lucide-react";
 import { useRef, useState } from "react";
 import SpecialOrderFormCard from "./SpecialOrderFormCard";
 import {
@@ -12,7 +12,6 @@ import {
   SpecialProductAndServiceOrderForm_FormValue,
 } from "../utils/zod-schema";
 
-import { BsCheck2Circle } from "react-icons/bs";
 import ResulteDialog from "./ResulteDialog";
 
 type SpecialOrderBody = {
@@ -111,7 +110,7 @@ const SpecialOrderForm = ({
   const handleOnSubmit = useMutation({
     mutationFn: async () => {
       const results = await Promise.allSettled(
-        ordersValues.map(async (request, index) => {
+        ordersValues.map(async (request) => {
           const data: SpecialOrderBody = {
             SpecialCategoryId: "category" in request ? +request.category : 0,
             // SpecialCategoryId: "dd",

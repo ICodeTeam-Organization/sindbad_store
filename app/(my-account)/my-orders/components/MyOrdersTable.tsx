@@ -7,9 +7,7 @@ import { BsSortDown } from "react-icons/bs";
 import { CgSortAz } from "react-icons/cg";
 import { Button } from "@/components/ui/button";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getApi } from "@/lib/http";
-import { useRouter } from "next-nprogress-bar";
-import ProductCardSkeleton from "@/components/ProductCardSkeleton";
+import { getApi } from "@/lib/http"; 
 
 interface Props {
   initData: {
@@ -21,39 +19,60 @@ interface Props {
   };
 }
 
+const TABLE_HEAD = [
+  "التتبع",
+  "الحالة",
+  "التاريخ",
+  "قيمة الطلب",
+  "رقم الطلب",
+].reverse();
+
+const orderStatuses = [
+  { key: 0, status: "الطلب قيد انتظار التأكيد على السند التابع له" },
+  { key: 1, status: "تم قبول الطلب" },
+  { key: 2, status: "تم شحن الطلب" },
+  { key: 3, status: "تم تسليم الطلب الى الزبون" },
+  { key: 4, status: "تم الرفض" },
+  { key: 5, status: "تم استلام الطلب لدى مندوب الاستلام" },
+];
+
+const sortingOptions = [
+  { key: 1, status: "ترتيب تصاعدي" },
+  { key: 2, status: "ترتيب تنازلي" },
+];
+
 const MyOrdersTable: React.FC<Props> = ({ initData }) => {
-  const TABLE_HEAD = [
-    "التتبع",
-    "الحالة",
-    "التاريخ",
-    "قيمة الطلب",
-    "رقم الطلب",
-  ].reverse();
 
-  const orderStatuses = [
-    { key: 0, status: "الطلب قيد انتظار التأكيد على السند التابع له" },
-    { key: 1, status: "تم قبول الطلب" },
-    { key: 2, status: "تم شحن الطلب" },
-    { key: 3, status: "تم تسليم الطلب الى الزبون" },
-    { key: 4, status: "تم الرفض" },
-    { key: 5, status: "تم استلام الطلب لدى مندوب الاستلام" },
-  ];
 
-  const sortingOptions = [
-    { key: 1, status: "ترتيب تصاعدي" },
-    { key: 2, status: "ترتيب تنازلي" },
-  ];
-
-  const [ordersFilters, setOrdersFilters] = useState({
-    status: 0,
-    orderBy: 1,
+  const [ordersFilters, setOrdersFilters] = useState<{
+    status?: number,
+    orderBy?: number,
+    isRefeched: boolean,
+  }>({
     isRefeched: false,
   });
+  
 
   // Fetching paginated orders
   const fetchOrders = async ({ pageParam = 1 }) => {
+    let queryParams:any = {
+      pageNumber:pageParam,
+      pageSize:initData.pageSize,
+      orderBy:ordersFilters.orderBy  ,
+      status:ordersFilters.status  
+    };
+
+   // cleaning
+   queryParams = Object.fromEntries(
+    Object.entries(queryParams).filter(([, value]) => value !== undefined)
+  )
+    
+    console.log(queryParams);
+    
+
     const response = await getApi<ResponsiveOrdersTypes>(
-      `Orders/GetAllCustomerOrdersByFilter?pageNumber=${pageParam}&pageSize=${initData.pageSize}&orderBy=${ordersFilters.orderBy}&status=${ordersFilters.status}`
+      `Orders/GetAllCustomerOrdersByFilter`,
+      queryParams
     );
     if (!response.success) {
       throw new Error(response.message);
@@ -65,8 +84,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
 
   const {
     data,
-    isRefetching,
-    isFetched,
+    isRefetching, 
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
@@ -93,7 +111,6 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
     (ele) => !!ele
   );
 
-  console.log(orders);
 
   return (
     <div>
@@ -131,8 +148,8 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
       {/* Table */}
       {isRefetching && (
         <div className="animate-pulse">
-          {"123456".split("").map(() => (
-            <div className="h-4 px-4 py-6 bg-gray-200 my-1  rounded"></div>
+          {"123456".split("").map((s) => (
+            <div key={s} className="h-4 px-4 py-6 bg-gray-200 my-1  rounded"></div>
           ))}
         </div>
       )}
@@ -162,7 +179,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                   index
                 ) => (
                   <tr
-                    key={index}
+                    key={orderNumber}
                     className={`${
                       index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
                     } border-b border-gray-200`}

@@ -25,7 +25,6 @@ import {
 import { useForm } from "react-hook-form";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import EcommerceSearchInput from "./EcommerceSearchInput";
-import { Button } from "@/components/ui/button";
 
 function SpecialOrderFromShopForm({
   onChange,

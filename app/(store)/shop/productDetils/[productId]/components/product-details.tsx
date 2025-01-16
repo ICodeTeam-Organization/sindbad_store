@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React from "react";
 import ProductTitle from "./product-title";
 import PriceSection from "./price-section";
 import ImageGallery from "./image-gallery";
@@ -11,15 +11,7 @@ type ProductDetailsProps = {
   product: Product;
 };
 
-
 const ProductDetails = ({ product }: ProductDetailsProps) => {
-
-  const [quantity, setQuantity] = useState(1);
-
-  const handleIncrement = () => setQuantity(quantity + 1);
-  const handleDecrement = () => {
-    if (quantity > 1) setQuantity(quantity - 1);
-  };
 
 
   return (

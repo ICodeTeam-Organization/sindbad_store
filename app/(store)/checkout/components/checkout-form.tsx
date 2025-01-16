@@ -15,7 +15,7 @@ import { getApi, postApi } from "@/lib/http";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
-import { useRouter } from "next-nprogress-bar";
+// import { useRouter } from "next-nprogress-bar";
 import {
   FormControl,
   FormField,
@@ -36,6 +36,7 @@ import { useSession } from "next-auth/react";
 import { useCartStore } from "@/app/stores/cartStore";
 import SuccessDialog from "./SuccessModal";
 import { useState } from "react";
+import { z } from "zod";
 
 function extractNumbers(str: string) {
   const numbers = str.match(/\d+/g);
@@ -62,7 +63,6 @@ const CheckoutForm = () => {
   const { data: authData } = useSession();
   const { setCartItems } = useCartStore();
   const { toast } = useToast();
-  const router = useRouter();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [requestNumber, setRequestNumber] = useState("");
@@ -124,7 +124,7 @@ const CheckoutForm = () => {
           <h1 className="font-bold text-xl text-center">أجراءات الدفع</h1>
         </CardHeader>
         <FormProvider {...form}>
-          <form encType="multipart/form-data" onSubmit={form.handleSubmit(onSubmit)}>
+          <form encType="multipart/form-data" onSubmit={form.handleSubmit((s)=>{onSubmit(s)})}>
             <CardContent className="space-y-4">
               <FormField
                 control={form.control}

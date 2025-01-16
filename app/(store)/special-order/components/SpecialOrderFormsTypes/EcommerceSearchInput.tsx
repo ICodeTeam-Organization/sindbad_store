@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { ChevronsUpDown, Search } from "lucide-react";
+import {  Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -11,8 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Shop } from "@/types/storeTypes";
 import Spinner from "@/app/(home)/components/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import { getApi, postApi } from "@/lib/http";
-import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
+import {   postApi } from "@/lib/http";
 import Link from "next/link";
 
 function EcommerceSearchInput({onSelected}:{onSelected:(e:Shop)=>void}) {
@@ -26,7 +25,6 @@ function EcommerceSearchInput({onSelected}:{onSelected:(e:Shop)=>void}) {
     pageSize: 30,
   });
 
-  const [ecommerceId, setEcommerceId] = React.useState("");
 
   const { isLoading, data } = useQuery<{ data: { items: Shop[] } }>({
     queryKey: [

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -21,24 +21,26 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { SpecialWholesalesOrderFormValues, SpecialWholesalesOrderFormSchema } from "../utils/zod-schema";
+import {
+  SpecialWholesalesOrderFormValues,
+  SpecialWholesalesOrderFormSchema,
+} from "../utils/zod-schema";
 
 function SpecialWholesalesOrderForms({
   orderKey,
   onChange,
-  orderFrom
+  orderFrom,
 }: {
   onChange: (
     data: SpecialWholesalesOrderFormValues,
     isFormsValid: boolean
   ) => void;
-  orderKey:string;
-  orderFrom:number
+  orderKey: string;
+  orderFrom: number;
 }) {
-  const { categories:allCategories } = useCategoriesDataStore();
-  const categories = allCategories.filter((ele)=>ele.categoryTypeNumber == 4) // 4 = فئات الجملة
+  const { categories: allCategories } = useCategoriesDataStore();
+  const categories = allCategories.filter((ele) => ele.categoryTypeNumber == 4); // 4 = فئات الجملة
 
   const form = useForm<SpecialWholesalesOrderFormValues>({
     resolver: zodResolver(SpecialWholesalesOrderFormSchema),
@@ -46,7 +48,7 @@ function SpecialWholesalesOrderForms({
       orderFrom: orderFrom,
       quantity: 0,
       isUrgen: false,
-      orderKey:orderKey,
+      orderKey: orderKey,
     },
   });
 
@@ -57,15 +59,12 @@ function SpecialWholesalesOrderForms({
     onChange(fieldValue, isValid);
   };
 
-
   // to change orderFrom in React Forms
   useEffect(() => {
-    form.setValue("orderFrom",orderFrom)
-    // this return all values 
+    form.setValue("orderFrom", orderFrom);
+    // this return all values
     handleFieldChange({ ...form.getValues() });
-  }, [orderFrom])
-  
-
+  }, [orderFrom]);
 
   return (
     <Form {...form}>
@@ -230,11 +229,11 @@ function SpecialWholesalesOrderForms({
                         id={"filePDF" + orderKey}
                         type="file"
                         className="hidden"
-                        onChange={(e)=>field.onChange(e.target.files?.item(0))} // Use the local file change handler
+                        onChange={(e) =>
+                          field.onChange(e.target.files?.item(0))
+                        } // Use the local file change handler
                       />
-                      <p className="mx-4">
-                        {field?.value?.name ?? "إختر ملف" }
-                      </p>{" "}
+                      <p className="mx-4">{field?.value?.name ?? "إختر ملف"}</p>{" "}
                       {/* Display file name or placeholder */}
                     </label>
                   </div>
