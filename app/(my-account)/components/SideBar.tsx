@@ -9,8 +9,6 @@ const SideBar = () => {
 
   const pathname = usePathname(); 
 
-  console.log(pathname);
-  
 
   const sidebarItems = [
     {
@@ -50,9 +48,6 @@ const SideBar = () => {
     },
   ];
 
-  console.log(sidebarItems);
-  
-
   return (
     <aside>
       <div className=" py-8">
@@ -68,7 +63,7 @@ const SideBar = () => {
                 width={34}
                 height={34}
               />
-              <div className="flex flex-col">
+              <div className="flex flex-col text-xs">
                 <p>سالم علي بافضل</p>
                 <p>m.williams@example.com</p>
               </div>

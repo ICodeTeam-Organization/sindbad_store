@@ -14,6 +14,20 @@ interface AddressTable{
   phone:string,
 }
 
-export interface AddressTableProps {
-  address_table: AddressTable[];
+
+
+
+export type customerAddressType = {
+  customerAddressId: number;
+  regionId: number;
+  location: string;
+  regionName: string;
+  directorateName: string;
+  governorateName: string;
+}
+
+export type AddressResponse = {
+  success: boolean;
+  message: string;
+  data: customerAddressType[];
 }

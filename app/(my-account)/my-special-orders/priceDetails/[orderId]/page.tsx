@@ -1,0 +1,113 @@
+import ImagesViewr from "@/components/ImagesViewr";
+import React from "react";
+import OfferPricesTable from "../components/OfferPricesTable";
+import { getApi } from "@/lib/http";
+import { useSession } from "next-auth/react";
+import { OfferDetailsResponseType, SpecialOrderDetailsType } from "../../types";
+import { notFound } from "next/navigation";
+import CategoryName from "../components/CategoryName";
+import Link from "next/link";
+
+export default async function PriceDetails({
+  params,
+}: {
+  params: { orderId: string };
+}) {
+  const specialOrderDetails = await getApi<SpecialOrderDetailsType>(
+    `SpecialProducts/Market/GetSpecialProductDetails/${+params?.orderId}`
+  );
+  const prices = await getApi<OfferDetailsResponseType>(
+    `SpecialProducts/Market/GetAllOfferPriceOfSpecificSpecialProductByCustomer/${+params?.orderId}`
+  );
+
+  if (!specialOrderDetails.success || !prices.success) {
+    return notFound();
+  }
+
+  const { name: orderName, orderNumber , specialCategoryId , description , linkUrl} = specialOrderDetails?.data;
+
+  return (
+    <div className="m-10 tajawal  ">
+      <div className=" ">
+        <h1 className="font-bold">طلب خاص</h1>
+        <p className="mt-4 text-gray-600 font-bold text-sm"> تم تسعير الطلب </p>
+      </div>
+
+      <div className="mdHalf:flex mt-6  ">
+     
+        <div className=" flex items-center justify-center mdHalf:block mdHalf:mb-0 mb-10 ">
+          <div className=" relative">
+            <ImagesViewr
+              images={[
+                "/images/hero.jpg",
+                "/images/alogo.png",
+                "/images/hero.jpg",
+                "/images/alogo.png",
+                "/images/hero.jpg",
+                "/images/alogo.png",
+                "/images/hero.jpg",
+                "/images/alogo.png",
+                "/images/hero.jpg",
+                "/images/alogo.png",
+                "/images/hero.jpg",
+                "/images/alogo.png",
+              ]}
+              key={10}
+            />
+          </div>
+        </div>
+
+        <div className="  flex-1   ">
+      
+          <div className="flex justify-between items-center">
+            <p className="font-bold text-sm">
+              {" "}
+              الطلب : <span className="font-normal">{orderName}</span>{" "}
+            </p>
+            <p className="font-bold text-sm">
+              {" "}
+              رقم الطلب :{" "}
+              <span className=" text-primary-background font-normal ">
+                {" "}
+                {orderNumber ??
+                  "لا يوجد رقم بعد حتى يتم الموافقة على السعر"}{" "}
+              </span>{" "}
+            </p>
+          </div>
+          <div className=" mt-10 space-y-4 text-sm">
+            <div className="bg-gray-100 p-4">
+              <p className="font-bold  ">
+                {" "}
+                الفئة : <span className="font-normal"> <CategoryName id={specialCategoryId} /> </span> {" "}
+              </p>
+            </div>
+            <div className="bg-gray-100 p-4">
+              <p className="font-bold "> وصف الطلب :</p>
+              <p>
+                {description}
+              </p>
+            </div>
+            <div className="bg-gray-100 p-4">
+              <p className="font-bold ">
+                {" "}
+                رابط URL المنتج :
+                {linkUrl ? <Link href={linkUrl} className="font-normal"> {linkUrl} </Link> : <span className="font-normal"  > لا يوجد رابط</span>}{" "}
+              </p>
+            </div>
+          </div>
+
+     
+
+          
+        </div>
+        
+        
+
+      </div>
+      <div>
+        <h1 className="mt-8 font-bold" >التسعيرات : </h1>
+        <OfferPricesTable initData={prices} />
+        </div>
+    </div>
+  );
+}

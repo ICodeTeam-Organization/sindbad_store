@@ -7,6 +7,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { convertToArabicDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { Link } from "lucide-react";
 const TABLE_HEAD = [
   "العمليات",
   "التاريخ",
@@ -59,25 +60,24 @@ const PreviousOrdersTable: React.FC<{ initData: SpecialOrdersResponseType }> = (
           <p> لاتوجد طلبات </p>
         </div>
       )}
-       {orders.length > 0 && <table className="w-full border-collapse">
-          {/* Table Header */}
-          <thead className="bg-[#FFECE5] text-sm font-medium text-center text-[#000]">
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th key={head} className="px-4 py-3 font-medium">
-                  {head}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          {/* Table Body */}
-   
-          <tbody className="text-sm text-center text-[#000]">
-            {orders?.map(
-              (
-                { name, specialCategoryId, note, createdAt },
-                index
-              ) => (
+      <div className="w-full">
+      {/* Desktop Table */}
+      {orders.length > 0 && (
+        <div className="hidden md:block">
+          <table className="w-full border-collapse">
+            {/* Table Header */}
+            <thead className="bg-[#FFECE5] text-sm font-medium text-center text-[#000]">
+              <tr>
+                {TABLE_HEAD.map((head) => (
+                  <th key={head} className="px-4 py-3 font-medium">
+                    {head}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            {/* Table Body */}
+            <tbody className="text-sm text-center text-[#000]">
+              {orders?.map(({ name, specialCategoryId, note, createdAt, id }, index) => (
                 <tr
                   key={index}
                   className={`${
@@ -86,9 +86,12 @@ const PreviousOrdersTable: React.FC<{ initData: SpecialOrdersResponseType }> = (
                 >
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-2 cursor-pointer">
-                      <span className=" w-[140px] text-[#768396] h-[38px] bg-[#FFEBDD] px-4 py-2 rounded-lg whitespace-nowrap">
+                      <Link
+                        href={"/my-special-orders/priceDetails/" + id}
+                        className="w-[140px] text-[#768396] h-[38px] bg-[#FFEBDD] px-4 py-2 rounded-lg whitespace-nowrap"
+                      >
                         عرض تفاصيل السعر
-                      </span>
+                      </Link>
                       <Image
                         src="/images/MyAccountImages/ai-generative.svg"
                         alt="ai-generative"
@@ -97,20 +100,60 @@ const PreviousOrdersTable: React.FC<{ initData: SpecialOrdersResponseType }> = (
                       />
                     </div>
                   </td>
-                  <td className="px-4 py-3">{convertToArabicDate(createdAt)}</td>
+                  <td className="px-4 py-3">
+                    {convertToArabicDate(createdAt)}
+                  </td>
                   <td className="px-4 py-3">{note}</td>
                   <td className="px-4 py-3">
                     {getCategoryNameById(+specialCategoryId)}
                   </td>
                   <td className="px-4 py-3">{name}</td>
-                  {/* <td className="px-4 py-3">{orderNumber}</td> */}
                 </tr>
-              )
-            )}
-          </tbody>
-   
-        
-        </table>}
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {/* Mobile Cards */}
+      <div className="block md:hidden" dir="rtl">
+        {orders.length > 0 &&
+          orders.map(({ name, specialCategoryId, note, createdAt, id }, index) => (
+            <div
+              key={index}
+              className={`border rounded-lg p-4 mb-4 ${ 
+                index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
+               }`}
+            >
+              <div className="mb-2 text-sm flex items-center justify-between">
+                <span className="font-medium">الطلب: </span>
+                <span className="" >{name}</span>
+              </div>
+              <div className="mb-2 text-sm flex items-center justify-between">
+                <span className="font-medium">الفئة: </span>
+                <span>{getCategoryNameById(+specialCategoryId)}</span>
+              </div>
+              <div className="mb-2 text-sm flex items-center justify-between">
+                <span className="font-medium">ملاحظة: </span>
+                <span>{note ?? "لاتوجد ملاحظة"}</span>
+              </div>
+              <div className="mb-2 text-sm flex items-center justify-between">
+                <span className="font-medium">التاريخ: </span>
+                <span>{convertToArabicDate(createdAt)}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <Link
+                  href={"/my-special-orders/priceDetails/" + id}
+                  className="w-full mt-2 text-center text-sm text-white shadow-sm h-[38px] bg-primary-background px-4 py-2 rounded-lg whitespace-nowrap"
+                >
+                  عرض تفاصيل السعر
+                </Link>
+               
+              </div>
+            </div>
+          ))}
+      </div>
+    </div>
    
        <div className="flex items-center justify-center p-10" >
        {hasNextPage ? (

@@ -20,29 +20,29 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ tabs }) => {
 
   return (
     <>
-      <div className="flex flex-row justify-between  mb-4">
-        <h2 className="text-lg">طلباتي الخاصة</h2>
+      <div className="flex flex-row justify-between flex-wrap gap-y-4 items-center mb-4">
+        <h2 className="text-base">طلباتي الخاصة</h2>
         <div className="flex items-center justify-center gap-x-2">
-        <Button onClick={()=>{setSpecialOrderState(true)}} className="bg-primary-background hover:bg-primary-background hover:bg-opacity-60 text-sm">
+        <Button onClick={()=>{setSpecialOrderState(true)}} className="bg-primary-background hover:bg-primary-background hover:bg-opacity-60 text-xs">
           <IoMdAddCircleOutline className="ml-4 " size={20} />  طلب خاص جديد
         </Button>
-        <Button onClick={()=>{setWholeSalesOrderState(true)}} className="bg-primary-background hover:bg-primary-background hover:bg-opacity-60 text-sm">
+        <Button onClick={()=>{setWholeSalesOrderState(true)}} className="bg-primary-background hover:bg-primary-background hover:bg-opacity-60 text-xs">
           <IoMdAddCircleOutline className="ml-4 " size={20} />  طلب جملة جديد
         </Button>
         </div>
       </div>
   
-      <Tabs.Root defaultValue={tabs[0]?.value || ""} className="w-full">
+      <Tabs.Root defaultValue={tabs[0]?.value || ""} className="w-full mt-10">
         {/* Tab List */}
         <Tabs.List
-          className="flex items-start space-x-4 pb-2 w-full justify-start"
+          className="flex  items-start  w-full justify-start overflow-x-auto border-b-2 border-b-primary-background"
           dir="rtl"
         >
           {tabs.map((tab) => (
             <Tabs.Trigger
               key={tab.value}
               value={tab.value}
-              className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-[#9B1D20] data-[state=active]:text-black"
+              className="px-4 py-2 whitespace-nowrap font-medium text-sm text-gray-700 focus:outline-none data-[state=active]:bg-primary-background data-[state=active]:text-white rounded-tr-lg rounded-tl-lg"
             >
               {tab.label}
             </Tabs.Trigger>

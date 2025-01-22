@@ -1,6 +1,6 @@
 
 
-type SpecialProduct = {
+export type SpecialProduct = {
     id: number;
     customerId: string;
     salesmanId: string | null;
@@ -42,5 +42,74 @@ export type SpecialOrdersResponseType = {
       currentPage: number;
       pageSize: number;
     };
+  };
+  
+
+export type SpecialOrderDetailsType = {
+    success: boolean;
+    message: string;
+    data: {
+      id: number;
+      customerId: string;
+      salesmanId: string;
+      isThisOfferPrice: boolean;
+      parentId: number | null;
+      packageId: number | null;
+      specialCategoryId: number;
+      isUrgen: boolean;
+      name: string;
+      eCommerceName: string | null;
+      description: string;
+      linkUrl: string | null;
+      orderNumber: string | null;
+      source: string | null;
+      assosiatedFilePath: string | null;
+      type: number;
+      typeName: string;
+      quantity: number;
+      price: number;
+      shippingCost: number | null;
+      createdAt: string;
+      updatedAt: string;
+      status: number;
+      statusName: string;
+      images: string[]; // Array of image URLs or paths
+      note: string | null;
+    };
+  };
+  
+
+  export type Pricing = {
+    id: number;
+    customerId: string;
+    salesmanId: string;
+    isThisOfferPrice: boolean;
+    parentId: number | null;
+    packageId: number | null;
+    specialCategoryId: number;
+    isUrgen: boolean;
+    name: string;
+    eCommerceName: string | null;
+    description: string | null;
+    linkUrl: string | null;
+    orderNumber: string | null;
+    source: string | null;
+    assosiatedFilePath: string | null;
+    type: number;
+    typeName: string;
+    quantity: number;
+    price: number;
+    shippingCost: number | null;
+    createdAt: string;
+    updatedAt: string;
+    status: number;
+    statusName: string;
+    images: string[]; // Array of image URLs or paths
+    note: string | null;
+  }
+ export type OfferDetailsResponseType = {
+    success: boolean;
+    message: string;
+    data: Pricing[];
   };
   

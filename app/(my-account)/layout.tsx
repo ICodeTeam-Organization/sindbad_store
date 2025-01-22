@@ -8,16 +8,16 @@ export default function HomeLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="">
+    < >
       <StoreHeader />
-      <div className="flex xl:container mx-auto relative">
+      <div className="mdHalf:flex xl:container mx-auto relative">
         <div className="mdHalf:block hidden border-l py-20 bg-white sticky top-0">
           <SideBar />
         </div>
-        <main className=" flex-1 ">
+        <main className=" mdHalf:flex-1 ">
           {children}
         </main>
       </div>
-    </div>
+    </>
   );
 }

@@ -50,12 +50,11 @@ const MyAccountPage = async () => {
       OrdersWaitingPricingData,
       PreviousOrdersData,
       ] = await Promise.all([
-        getApi<SpecialOrdersResponseType>("SpecialProducts/Market/GetSpecialProductsByCustomerFilter/100/10/1"), // في انتظار المراجعه من قبل المندوب
         getApi<SpecialOrdersResponseType>("SpecialProducts/Market/GetSpecialProductsByCustomerFilter/200/10/1"), // تم تسعبرها
+        getApi<SpecialOrdersResponseType>("SpecialProducts/Market/GetSpecialProductsByCustomerFilter/100/10/1"), // في انتظار المراجعه من قبل المندوب
         getApi<SpecialOrdersResponseType>("SpecialProducts/Market/GetSpecialProductsByCustomerFilter/300/10/1"), // 
       ]);
 
-      console.log(OrdersPricedData);
       
 
   const tabsData = [
@@ -81,8 +80,7 @@ const MyAccountPage = async () => {
  
   return (
     <div className="p-6">
-      <div className="w-full overflow-hidden rounded-lg  mt-4">
-        
+      <div className="w-full overflow-hidden rounded-lg  mt-4"> 
         <TabsComponent tabs={tabsData} />
       </div>
     </div>
