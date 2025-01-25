@@ -9,11 +9,11 @@ import { LoginSchema } from "../schema";
 import { useForm } from "react-hook-form";  // تم إزالة SubmitHandler
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../helpers";
+import { useRouter } from "next-nprogress-bar";
 
 const LoginForm: React.FC = () => {
   const router = useRouter();

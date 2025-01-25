@@ -19,7 +19,7 @@ type TabsComponentProps = {
 };
 
 const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
-  <Tabs.Root defaultValue="details" className="w-full px-12 mt-5">
+  <Tabs.Root defaultValue="details" className="w-full mdHalf:px-12 p-4 mt-5">
     <Tabs.List
       className="flex items-start space-x-reverse space-x-4 border-b-2 border-orange-500 pb-2 w-full justify-start"
       dir="rtl"

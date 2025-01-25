@@ -1,15 +1,17 @@
-'use client';
+"use client";
 
 import React, { useEffect, useState } from "react";
 import ReviewForm from "./review-form";
 import ReviewComment from "./review-comment";
 import { ReviewProps } from "../types";
 import { getApi } from "@/lib/http";
-import {Product} from "./../types"
+import { Product } from "./../types";
+import { Rating, RoundedStar, ThinStar } from "@smastrom/react-rating";
+import { Dot } from "lucide-react";
 
 type ProductReviewsTapProps = {
   productId: string | number;
-    product: Product;
+  product: Product;
 };
 
 const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
@@ -25,7 +27,8 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
         const response = await getApi<any>(
           `CommentsAndRates/GetReviewsOfProduct?productId=${productId}&sort=1&pageNumber=1&pageSize=20`
         );
-
+         console.log(response,"<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
+         
         if (response?.success) {
           setReviews(response.data);
         } else {
@@ -38,7 +41,6 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
       }
     };
 
-    
     // تم حذف الدالة من قبل الباك اند
     // const fetchTotalRating = async () => {
     //   try {
@@ -64,7 +66,10 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
   }, [productId]);
 
   useEffect(() => {
-    const calculatedTotalRating = reviews.reduce((acc, review) => acc + review.numOfRate, 0);
+    const calculatedTotalRating = reviews.reduce(
+      (acc, review) => acc + review.numOfRate,
+      0
+    );
     setTotalRating(calculatedTotalRating); // تحديث totalRating
   }, [reviews]);
 
@@ -72,46 +77,76 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
     setVisibleReviewsCount((prevCount) => prevCount + 3);
   };
 
-  if (loading) return       <div className="flex items-center justify-center">
-  <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-orange-500"></div>
-</div>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-orange-500"></div>
+      </div>
+    );
   if (error) return <div>{error}</div>;
 
   const shouldShowMoreButton = visibleReviewsCount < reviews.length;
 
   return (
-    <div className="md:grid grid-cols-3 gap-6" dir="rtl">
-      <div className="bg-gray-50 border border-gray-300 rounded-md p-4 mb-4">
-       
-      <div className="bg-white border border-gray-300 rounded-md p-4 mb-4 shadow-md">
-  <h3 className="text-center text-lg font-semibold mb-2">التقييم والمراجعات</h3>
-  <div className="flex justify-between items-center mb-2">
-    <span className="text-xl font-bold">{totalRating.toFixed(1)} من 5</span>
-    <span className="text-gray-500 text-sm">عدد المراجعين: {reviews.length}</span>
-  </div>
+    <div className="mdHalf:grid grid-cols-3 gap-6" dir="rtl">
+      <div className="bg-gray-50 border border-gray-300 rounded-md p-3 mb-4">
+        <div className="bg-white border border-gray-300 rounded-md p-3 mb-4 ">
+          <h3 className=" mx-4 text-center text-base font-semibold mb-2">
+            التقييم والمراجعات
+          </h3>
+          <div className="flex">
+            <div className="flex flex-col w-[35%] py-0 justify-center  items-center mb-3 ">
+              <span className="text-3xl font-bold mb-1 ">
+                {totalRating.toFixed(1)}
+              </span>
+              
+              <Rating
+                style={{ maxWidth: 100 }}
+                halfFillMode="svg"
+                itemStyles={{
+                  itemShapes: RoundedStar,
+                  activeFillColor: "#ffb700",
+                  inactiveFillColor: "#eee",
+                }}
+                readOnly
+                value={totalRating}
+              /> 
+              <div className="flex items-center justify-center mt-2" >
+                {/* <span className="text-gray-500 text-sm">
+                {reviews.length} المراجعات
+              </span> */}
+              {/* <span><Dot size={30} /></span> */}
+              <span className="text-gray-500 text-xs">
+              {reviews.length}  تقييم   
+              </span>
+              </div>
+            </div>
 
-  {/* شريط التقييم */}
-  <div className="flex flex-col">
-    {[5, 4, 3, 2, 1].map((rating) => {
-      const count = reviews.filter(review => review.numOfRate === rating).length;
-      const percentage = (count / reviews.length) * 100;
+            {/* شريط التقييم */}
+            <div className="flex flex-col justify-center w-[65%]">
+              {[5, 4, 3, 2, 1].map((rating) => {
+                const count = reviews.filter(
+                  (review) => review.numOfRate === rating
+                ).length;
+                const percentage = (count / reviews.length) * 100;
 
-      return (
-        <div key={rating} className="flex items-center mb-1">
-          <span className="w-6 text-center">{rating}</span>
-          <div className="relative w-full h-2 bg-gray-200 rounded-full">
-            <div
-              className="absolute h-2 bg-black"
-              style={{ width: `${percentage}%` }}
-            ></div>
+                return (
+                  <div key={rating} className="flex items-center mb-1">
+                    <span className="w-6 text-center text-xs">{rating}</span>
+                    <div className="relative w-full h-[6px] bg-gray-200 rounded-full">
+                      <div
+                        className="absolute h-[6px] bg-black"
+                        style={{ width: `${percentage}%` }}
+                      ></div>
+                    </div>
+                    {/* <span className="ml-2 text-yellow-500">{'⭐'.repeat(rating)}</span> */}
+                  </div>
+                );
+              })}
+            </div>
           </div>
-          <span className="ml-2 text-yellow-500">{'⭐'.repeat(rating)}</span>
         </div>
-      );
-    })}
-  </div>
-</div>
-        
+
         <ReviewForm productId={Number(productId)} />
       </div>
 
@@ -128,9 +163,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
         </div>
 
         {reviews.length === 0 ? (
-          <div className="text-center text-gray-500">
-            لا توجد تعليقات
-          </div>
+          <div className="text-center text-gray-500">لا توجد تعليقات</div>
         ) : (
           <>
             {reviews.map((review, index) => (

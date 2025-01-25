@@ -10,7 +10,7 @@ const ShoppingNow = async () => {
   
   return (
     <>
-      <div className="pt-10 mx-auto sm:px-4 ">
+      <div className="pt-10 mx-auto  ">
         <SectionTitle title={"تسوق الآن"} href="/shop" />
         <div className="md:px8  lg:px-8   ">
           <div 

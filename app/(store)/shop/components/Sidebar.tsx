@@ -110,7 +110,7 @@ const Sidebar = () => {
           }
         }}
       />
-      <PopularTags onSelectTag={setTagId} />
+      <PopularTags onSelectTag={setTagId}  activeTagId={filters.tagId} />
     </aside>
   );
 };

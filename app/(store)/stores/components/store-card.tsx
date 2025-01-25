@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useFavorite } from "@/app/stores/favoritesStore";
 import { useMutation } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
-import { cn } from "@/lib/utils";
+import { cn, goToExtrnalLink } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { deleteApi, postApi } from "@/lib/http";
@@ -123,7 +123,7 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
             عرض المنتجات
           </Link>
           {
-            websiteLink != null?           <Link href={websiteLink} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
+            websiteLink != null?           <Link href={goToExtrnalLink(websiteLink)} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
             الموقع الإلكتروني
           </Link> :
                     <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">

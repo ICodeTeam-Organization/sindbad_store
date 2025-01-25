@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Form,
   FormControl,
@@ -24,30 +24,39 @@ import {
 } from "../../utils/zod-schema";
 import { useForm } from "react-hook-form";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import { Plus } from 'lucide-react';
+import { Plus } from "lucide-react";
 
-function SpecialServiceOrderForm({ onChange ,orderKey }: { onChange: (data: SpecialProductAndServiceOrderForm_FormValue,isFormsValid:boolean,) => void ,orderKey:string}) {
- 
-  const { categories:allCategories } = useCategoriesDataStore();
-  const categories = allCategories.filter((ele)=>ele.categoryTypeNumber == 3)
+function SpecialServiceOrderForm({
+  onChange,
+  orderKey,
+  category,
+}: {
+  onChange: (
+    data: SpecialProductAndServiceOrderForm_FormValue,
+    isFormsValid: boolean
+  ) => void;
+  orderKey: string;
+  category?: number;
+}) {
+  const { categories: allCategories } = useCategoriesDataStore();
+  const categories = allCategories.filter((ele) => ele.categoryTypeNumber == 3);
 
   const form = useForm<SpecialProductAndServiceOrderForm_FormValue>({
     resolver: zodResolver(SpecialProductAndServiceOrderFormSchema),
     defaultValues: {
       type: 2,
-      quantity:0,
-      isUrgen:false,
-      orderKey:orderKey,
-
+      quantity: 0,
+      isUrgen: false,
+      orderKey: orderKey,
+      category: category ? category + "" : undefined,
     },
-    
   });
 
   // Listen to form field changes
   const handleFieldChange = async (fieldValue: any) => {
     const isValid = await form.trigger();
     // This will call the parent onChange function passing the updated form values
-    if(onChange) onChange(fieldValue,isValid);
+    if (onChange) onChange(fieldValue, isValid);
   };
 
   return (
@@ -122,7 +131,7 @@ function SpecialServiceOrderForm({ onChange ,orderKey }: { onChange: (data: Spec
                 control={form.control}
                 name="quantity"
                 render={({ field }) => (
-                  <FormItem >
+                  <FormItem>
                     <FormControl>
                       {/* @todo(abdulrahman): replace this with ur quantity input */}
                       <Counter
@@ -131,7 +140,6 @@ function SpecialServiceOrderForm({ onChange ,orderKey }: { onChange: (data: Spec
                           field.onChange(value);
                           handleFieldChange({ ...form.getValues() });
                         }}
-
                       />
                     </FormControl>
                     <FormMessage />
@@ -139,7 +147,7 @@ function SpecialServiceOrderForm({ onChange ,orderKey }: { onChange: (data: Spec
                 )}
               />
 
-<FormField
+              <FormField
                 control={form.control}
                 name="isUrgen"
                 render={({ field }) => (
@@ -214,11 +222,11 @@ function SpecialServiceOrderForm({ onChange ,orderKey }: { onChange: (data: Spec
                         id={"filePDF" + orderKey}
                         type="file"
                         className="hidden"
-                        onChange={(e)=>field.onChange(e.target.files?.item(0))} // Use the local file change handler
+                        onChange={(e) =>
+                          field.onChange(e.target.files?.item(0))
+                        } // Use the local file change handler
                       />
-                      <p className="mx-4">
-                        {field?.value?.name ?? "إختر ملف" }
-                      </p>{" "}
+                      <p className="mx-4">{field?.value?.name ?? "إختر ملف"}</p>{" "}
                       {/* Display file name or placeholder */}
                     </label>
                   </div>
@@ -228,7 +236,6 @@ function SpecialServiceOrderForm({ onChange ,orderKey }: { onChange: (data: Spec
             )}
           />
         </div>
-
 
         <div className="w-full mdHalfflex items-center gap-2 justify-between">
           <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
@@ -280,7 +287,6 @@ function SpecialServiceOrderForm({ onChange ,orderKey }: { onChange: (data: Spec
       </div>
     </Form>
   );
-
 }
 
-export default SpecialServiceOrderForm
+export default SpecialServiceOrderForm;

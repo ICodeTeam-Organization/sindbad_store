@@ -107,3 +107,51 @@ export type CartItem = {
   quantity: number;
   shipCost?: number;
 };
+
+
+// for  /Stores/GetStoresWithFilter endpoint
+
+export type ApiResponse = {
+  success: boolean;
+  message: string;
+  errors: string[];
+  data: {
+    items: Item[];
+    totalCount: number;
+    totalPages: number;
+    currentPage: number;
+    pageSize: number;
+  };
+};
+
+type Item = {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  websiteUrl: string;
+  storeCategoriesIds: StoreCategory[];
+  images: Image[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+type StoreCategory = {
+  id: number;
+  categoryName: string;
+  categoryImageUrl: string;
+  subCategories: SubCategory[];
+};
+
+type SubCategory = {
+  id: number;
+  subCategoryName: string;
+  subCategoryImageUrle: string;
+};
+
+type Image = {
+  id: number;
+  imageUrl: string;
+};
+
+// for  /Stores/GetStoresWithFilter endpoint

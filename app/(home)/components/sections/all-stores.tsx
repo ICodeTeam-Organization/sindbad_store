@@ -19,9 +19,9 @@ const AllStores =  ({Allstores}:{Allstores:any}) => {
   return (
     <div className="bg-[#F8F8F8] w-full">
      <div className="xl:container mx-auto relative" >
-     <div className=" mx-4 pt-10">
-        <h1 className="text-[#333333] text-[24px]">جميع المحلات</h1>
-        <p className="text-[16px] text-[#666666]">
+     <div className=" mx-4 pt-10 mb-5">
+        <h1 className="text-[#333333] text-lg">جميع المحلات</h1>
+        <p className="text-base text-[#666666]">
           تسوق احدث المنتجات المميزة المضافة جديد
         </p>
       </div>

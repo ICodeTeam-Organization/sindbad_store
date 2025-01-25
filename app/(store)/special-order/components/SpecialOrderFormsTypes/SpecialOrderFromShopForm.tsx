@@ -28,13 +28,15 @@ import EcommerceSearchInput from "./EcommerceSearchInput";
 
 function SpecialOrderFromShopForm({
   onChange,
-  orderKey
+  orderKey,
+  category
 }: {
   onChange: (
     data: SpecialOrderFromEcommerce_FormValue,
     isFormsValid: boolean
   ) => void;
-  orderKey:string
+  orderKey:string,
+  category?:number
 }) { 
 
    const { categories:allCategories } = useCategoriesDataStore();
@@ -49,7 +51,7 @@ function SpecialOrderFromShopForm({
       isUrgen: false,
       orderDetails:"تفاصيل طلب من متجر الكتروني",
       orderKey:orderKey,
-
+      category:category?category+"":undefined
     },
   });
 

@@ -4,7 +4,6 @@ import { twMerge } from "tailwind-merge";
 import { authOption } from "./authOption";
 import { getSession } from "next-auth/react";
 
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -25,8 +24,7 @@ export async function isLogged(): Promise<boolean> {
   return session !== null;
 }
 
-
-export function convertToArabicDate(dateString:string) {
+export function convertToArabicDate(dateString: string) {
   // تحويل النص إلى كائن تاريخ
   const date = new Date(dateString);
 
@@ -38,7 +36,7 @@ export function convertToArabicDate(dateString:string) {
     "الأربعاء",
     "الخميس",
     "الجمعة",
-    "السبت"
+    "السبت",
   ];
   const months = [
     "يناير",
@@ -52,7 +50,7 @@ export function convertToArabicDate(dateString:string) {
     "سبتمبر",
     "أكتوبر",
     "نوفمبر",
-    "ديسمبر"
+    "ديسمبر",
   ];
 
   // استخراج اليوم والشهر والسنة
@@ -65,4 +63,10 @@ export function convertToArabicDate(dateString:string) {
   return `${dayName}، ${day} ${monthName} ${year}`;
 }
 
-
+export const goToExtrnalLink = (link: string) => {
+  return link != "" && link != null && !!link
+    ? !link?.startsWith("http://") || !link?.startsWith("http://")
+      ? link
+      : "https://" + link
+    : "";
+};

@@ -56,13 +56,14 @@ const ShopProductsGrid = () => {
         maxPrice: filters.price[1],
         mainCategories: [...filters.cats.map((id) => +id)],
         subCategories: [...filters.subCats.map((id) => +id)],
-        brandId:filters.brandId || 0
+        brandId:filters.brandId || 0,
+        tags:filters.tagId ? [filters.tagId] :null,
       };
       // Remove fields that have invalid values (0 or empty string)
       const filteredBody = Object.fromEntries(
         Object.entries(body).filter(([, value]) => {
           // Only keep the entries where value is not 0 or empty string
-          return value !== 0 && value !== "" && value;
+          return value !== 0 && value !== "" && value !== null && value;
         })
       );
 

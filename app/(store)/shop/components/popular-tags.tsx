@@ -6,10 +6,11 @@ import React , { useState }  from "react";
 // Define the type for the props (if using TypeScript)
 interface PopularTagsProps {
   // tags: string[];
-  onSelectTag:(id:number)=>void
+  onSelectTag:(id:number)=>void,
+  activeTagId:number | null
 }
 
-const PopularTags: React.FC<PopularTagsProps> = ({onSelectTag}) => {
+const PopularTags: React.FC<PopularTagsProps> = ({onSelectTag,activeTagId}) => {
 
   const { data: tags, isLoading } = useQuery<{
     data:{result:{ id: number; name: string }[]}
@@ -18,10 +19,8 @@ const PopularTags: React.FC<PopularTagsProps> = ({onSelectTag}) => {
     queryFn: () => getApi("Filter/GetTags"),
   });
 
-  const [activeTagId, setActiveTagId] = useState<number | null>(null);
 
   const handleTagClick = (id: number)=>{
-    setActiveTagId(id)
     onSelectTag(id)
   }
 

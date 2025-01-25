@@ -30,7 +30,7 @@ interface Props {
 
 }
 
-function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber,onOrderDelete,orderKey,orderslength}: Props) {
+function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber,onOrderDelete,orderKey,orderslength,initCategory}: Props) {
   const tabs = [
     { id: 1, label: "منتج" },
     { id: 2, label: "خدمة" },
@@ -70,6 +70,7 @@ function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber
       <div>
         {curentTab == 1 && (
           <SpecialProductOrderForm
+            category={initCategory}
             orderKey={orderKey}
             onChange={(e, isValid) => {
               onChangeValues(e, isValid);
@@ -78,6 +79,8 @@ function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber
         )}
         {curentTab == 2 && (
           <SpecialServiceOrderForm
+          category={initCategory}
+
             orderKey={orderKey}
             onChange={(e, isValid) => {
               onChangeValues(e, isValid);
@@ -86,6 +89,8 @@ function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber
         )}
         {curentTab == 3 && (
           <SpecialOrderFromShopForm
+          category={initCategory}
+
             orderKey={orderKey}
             onChange={(e, isValid) => {
               console.log(e);

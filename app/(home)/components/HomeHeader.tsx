@@ -1,6 +1,6 @@
 "use client";
 import { BiMenu, BiSearch } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -51,26 +51,40 @@ const SearchComponent = ({
 };
 
 const HomeHeader = () => {
-  // const [scrolled, setScrolled] = useState(false);
 
   const [openNav, setopenNav] = useState<boolean>(false);
   const [searchKeyword, setsearchKeyword] = useState("");
   const { data: session, status } = useSession();
   const { items: cartItems } = useCartStore();
   const isAuth = status === "authenticated";
-  // const router = useRouter()
+  
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [hideThreshold, setHideThreshold] = useState(false); // Tracks if scrolled past 500px
 
-  // const mutation = useSignOut();
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     // setScrolled(window.scrollY > 50);
-  //   };
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
+      if (currentScrollY > 500 && currentScrollY > lastScrollY) {
+        // Hide header when scrolling down past 500px
+        setIsVisible(false);
+        setHideThreshold(true); // Mark that we've passed 500px
+      } else if (hideThreshold) {
+        // Show header when scrolling up at least 100px
+        setIsVisible(true);
+        setHideThreshold(false); // Reset the threshold
+      }
+
+      setLastScrollY(currentScrollY); // Update last scroll position
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY, hideThreshold]);
 
   const NavMenu = () => (
     <div
@@ -175,7 +189,8 @@ const HomeHeader = () => {
   );
 
   return (
-    <div className="  bg-header-gradient ">
+    <div>
+      <div className={cn("  bg-header-gradient  ",!isVisible&&"shadow-lg border-b-4 mdHalf:border-b-0 mdHalf:shadow border-b-white")}>
       <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
         {/* logo section*/}
         <div>
@@ -282,7 +297,25 @@ const HomeHeader = () => {
         </div>
       </div>
       {/* serach component for mobiles */}
-      <div className="md:hidden block mx-5 ">
+    </div>
+      <div 
+      className={
+        cn(
+          "md:hidden block  bg-header-gradient w-full p-4 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  ",
+          isVisible ? "translate-y-0 opacity-[1] " : "translate-y-full opacity-0",
+
+        )
+      }
+        //  style={{
+        //   // transform: isVisible ? "translateY(0)" : "translateY(-100%)",
+        //   // opacity: isVisible ? 1 : 0,
+        //   transition: "transform 0.3s ease, opacity 0.3s ease",
+        //   top: 0,
+        //   width: "100%",
+        //   zIndex: 1000,
+        // }}
+      
+      >
         <SearchComponent
           searchKeyword={searchKeyword}
           setsearchKeyword={setsearchKeyword}

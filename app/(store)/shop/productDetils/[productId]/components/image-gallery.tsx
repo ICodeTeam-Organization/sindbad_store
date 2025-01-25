@@ -8,12 +8,18 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
+import Autoplay from "embla-carousel-autoplay"
 const ImageGallery = ({ images }: { images: string[] }) => {
   return (
     <div className="flex flex-col mx-5" style={{ direction: "ltr" }}>
       {images.length > 0 ? (
-        <Carousel>
+        <Carousel 
+        plugins={[
+          Autoplay({
+            delay: 5000,
+          }),
+        ]}
+        >
           <CarouselContent>
             {images.map((img, index) => (
               <CarouselItem key={index} style={{ height: "400px" }}>

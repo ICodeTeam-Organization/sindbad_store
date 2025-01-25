@@ -49,7 +49,7 @@ export default async function Home() {
       <Hero />
       <div className="w-full xl:container mx-auto ">
         <CategoriesSlider />
-        <div className="mt-32" >
+        <div className="mdHalf:mt-32 " >
           <ServiceCard />
         </div>
         <CardsInfo />

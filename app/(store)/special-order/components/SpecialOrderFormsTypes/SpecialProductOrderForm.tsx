@@ -29,15 +29,21 @@ import { Plus } from "lucide-react";
 function SpecialProductOrderForm({
   orderKey,
   onChange,
+  category
 }: {
   onChange: (
     data: SpecialProductAndServiceOrderForm_FormValue,
-    isFormsValid: boolean
+    isFormsValid: boolean,
   ) => void;
-  orderKey:string
+  orderKey:string,
+  category?:number,
+
 }) {
   const { categories:allCategories } = useCategoriesDataStore();
+  // categories for special products
   const categories = allCategories.filter((ele)=>ele.categoryTypeNumber == 2)
+
+  
 
   const form = useForm<SpecialProductAndServiceOrderForm_FormValue>({
     resolver: zodResolver(SpecialProductAndServiceOrderFormSchema),
@@ -46,6 +52,7 @@ function SpecialProductOrderForm({
       quantity: 0,
       isUrgen: false,
       orderKey:orderKey,
+      category:category ? category+"" : undefined
     },
   });
 
@@ -75,7 +82,7 @@ function SpecialProductOrderForm({
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="حدد فئة المنتج المطلوب" />
+                    <SelectValue placeholder={"حدد فئة المنتج المطلوب"} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>

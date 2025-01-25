@@ -3,7 +3,7 @@ import React from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { E_commerceCardProps } from "../types";
 import SafeImage from "@/components/SafeImage";
-import { cn } from "@/lib/utils";
+import { cn, goToExtrnalLink } from "@/lib/utils";
 import { useFavorite } from "@/app/stores/favoritesStore";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
@@ -123,7 +123,7 @@ const E_commerceCard = ({
         <div className="flex flex-wrap   w-full  gap-x-1 mt-6 ] ">
           <Link
             target="_blank"
-            href={LinkOFStore + ""}
+            href={goToExtrnalLink(LinkOFStore + "")}
             className="flex-1 min-w-[70px] h-[40px] border border-gray text-black text-[13px] rounded-md flex justify-center items-center "
           >
             الإنتقال الى المتجر

@@ -10,6 +10,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/http"; 
 import { convertToArabicDate } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
+import { useSession } from "next-auth/react";
 
 interface Props {
   initData: {
@@ -120,6 +121,11 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
     router.push("/OrderTrack/" + id)
    }
 
+   const {data:s} = useSession()
+   console.log(s?.user
+    
+   );
+   
 
   return (
     <div>

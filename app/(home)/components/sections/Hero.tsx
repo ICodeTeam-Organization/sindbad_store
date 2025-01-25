@@ -13,7 +13,7 @@ const Hero = () => {
       </div>
       <div className="relative">
         <div className="xl:container mx-auto">
-          <div className="absolute top-0 -z-50 xl:container mx-auto">
+          <div className="absolute mdHalf:top-0 -top-10 -z-50 xl:container mx-auto">
             <Image
               src={"/images/sndbadBG.svg"}
               width={2000}

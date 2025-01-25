@@ -3,6 +3,7 @@ import HowDialog from "@/components/HowDialog";
 import { getApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import React, { useState } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
 import { IoChevronDownOutline } from "react-icons/io5";
@@ -139,7 +140,7 @@ function OrderFromAndHow() {
         <div className="mdHalf:block hidden">
           <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0  mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] py-3 ">
             <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
-              <p className="text-[13px] mdHalf:m-0 "> طلباتي </p>
+              <Link href="/my-orders" className="text-[13px] mdHalf:m-0 "> طلباتي </Link>
             </div>
           </div>
         </div>
