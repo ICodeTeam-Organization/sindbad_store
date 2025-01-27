@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiMenu, BiSearch } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import PersonButton from "../(home)/components/person-button";
@@ -17,7 +17,9 @@ import { useCartStore } from "../stores/cartStore";
 import useStoreQuerySearch from "./stores/hooks/useStoreQuerySearch";
 import useEcommerceQuerySearch from "./e-commerce/hooks/useEcommerceQuerySearch";
 import OrderFromAndHow from "../(home)/components/OrderFromAndHow";
+import { cn } from "@/lib/utils";
 
+// search component contain the search input
 const SearchComponent = ({
   searchKeyword = "",
   setsearchKeyword = (str: string) => {
@@ -70,8 +72,8 @@ const SearchComponent = ({
               setEcommerceName(searchKeyword);
             } else if (isStorePage) {
               setStoreName(searchKeyword);
-            } else  {
-              setProductName(searchKeyword)
+            } else {
+              setProductName(searchKeyword);
             }
           }}
           className="  px-3  flex items-center justify-center hover:bg-slate-100 cursor-pointer "
@@ -95,12 +97,43 @@ const StoreHeader = () => {
 
   const { items: cartItems } = useCartStore();
 
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [hideThreshold, setHideThreshold] = useState(false); // Tracks if scrolled past 500px
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > 500 && currentScrollY > lastScrollY) {
+        // Hide header when scrolling down past 500px
+        setIsVisible(false);
+        setHideThreshold(true); // Mark that we've passed 500px
+      } else if (hideThreshold) {
+        // Show header when scrolling up at least 100px
+        setIsVisible(true);
+        setHideThreshold(false); // Reset the threshold
+      }
+
+      setLastScrollY(currentScrollY); // Update last scroll position
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY, hideThreshold]);
+
   return (
-    <header className="bg-white shadow  transition-all duration-300 sticky top-0 z-50">
+    <header className="transition-all duration-300 sticky top-0 z-50">
       <div
-        className={
-          "bg-[url('/images/header-bg.svg')] bg-cover bg-bottom bg-no-repeat  "
-        }
+        // className={
+        //   " bg-header-gradient bg-cover bg-bottom bg-no-repeat  "
+        //   // "bg-[url('/images/header-bg.svg')] bg-cover bg-bottom bg-no-repeat  "
+        // }
+        className={cn("  bg-header-gradient  ",!isVisible&&"shadow-lg  mdHalf:border-b-0 mdHalf:shadow border-b-white")}
+        // }
       >
         <div className="w-full h-full  flex flex-col  pb-3">
           <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
@@ -166,7 +199,7 @@ const StoreHeader = () => {
                       </Link>
                     </>
                   )}
-                  <div className="cursor-pointer hidden mdHalf:block ">
+                  <div className="cursor-pointer ">
                     <PersonButton status={status} session={session} />
                   </div>
                 </div>
@@ -175,12 +208,7 @@ const StoreHeader = () => {
           </div>
 
           {/* search for mobile */}
-          <div className="block md:hidden mx-5">
-            <SearchComponent
-              searchKeyword={searchKeyword}
-              setsearchKeyword={setsearchKeyword}
-            />
-          </div>
+         
           {/* menu for mobile */}
           <Sheet open={openMobileNav}>
             <SheetContent
@@ -204,13 +232,32 @@ const StoreHeader = () => {
                   />
                 </div>
 
-                <PersonButton status={status} session={session} />
+                {isAuth && (
+                  <PersonButton
+                    status={status}
+                    session={session}
+                    forMobile={true}
+                  />
+                )}
                 <OrderFromAndHow />
               </div>
             </SheetContent>
           </Sheet>
         </div>
       </div>
+      <div
+            className={cn(
+              "md:hidden block  bg-header-gradient w-full p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  ",
+              isVisible
+                ? "translate-y-0 opacity-[1] "
+                : "translate-y-full opacity-0"
+            )}
+          >
+            <SearchComponent
+              searchKeyword={searchKeyword}
+              setsearchKeyword={setsearchKeyword}
+            />
+          </div>
     </header>
   );
 };

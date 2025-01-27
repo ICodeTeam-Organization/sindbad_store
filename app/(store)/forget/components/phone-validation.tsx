@@ -33,7 +33,7 @@ const PhoneValidation = () => {
           name="phone"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">رقم الجوال</FormLabel>
+              <FormLabel className="text-sm">رقم الجوال</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -42,11 +42,11 @@ const PhoneValidation = () => {
           )}
         />
         <Button
-          className="min-w-[150px] w-full h-[48px] mt-10 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-[20px] flex justify-center items-center font-bold"
+          className="min-w-[150px] w-full h-[48px] mt-10 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded text-sm flex justify-center items-center font-bold"
           type="submit"
         >
           إرسال الرمز
-          <AiOutlineArrowLeft className="mr-2" />
+          {/* <AiOutlineArrowLeft className="mr-2" /> */}
         </Button>
       </form>
     </Form>

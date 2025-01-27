@@ -120,11 +120,11 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
   const track = (id:number) => { 
     router.push("/OrderTrack/" + id)
    }
+  const goToOrderDetails = (id:number) => { 
+  router.push("/Orderdetail/" + id)
+  }
 
-   const {data:s} = useSession()
-   console.log(s?.user
-    
-   );
+  
    
 
   return (
@@ -196,7 +196,8 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                 key={orderNumber}
                 className={`${
                   index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
-                } border-b border-gray-200`}
+                } border-b border-gray-200 cursor-pointer`}
+                onClick={()=>{goToOrderDetails(id)}}
               >
                 <td className="px-4 py-3">{orderNumber}</td>
                 <td className="px-4 py-3">{totalPrice}</td>
@@ -222,9 +223,10 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
         {orders.map(({ orderNumber, totalPrice, orderDate, orderStatus , id }, index) => (
           <div
             key={orderNumber}
-            className={`border rounded-lg p-4 mb-4 ${
+            className={`border rounded-lg p-4 mb-4 cursor-pointer ${
               index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
             }`}
+            onClick={()=>{goToOrderDetails(id)}}
           >
             <div className="mb-2 flex justify-between items-center text-sm">
               <span className="font-medium">رقم الطلب  : </span>
