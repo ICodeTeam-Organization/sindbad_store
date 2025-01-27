@@ -1,7 +1,6 @@
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
 import { cn } from "@/lib/utils";
-import Link from "next/link";
 import React, { useState } from "react";
 
 export default function SpecialOrderMegaMenu() {

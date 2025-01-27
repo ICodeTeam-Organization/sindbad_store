@@ -2,7 +2,7 @@
 
 import React from "react";
 import { StoreData } from "../../../typest";
-import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { IoMdHeart } from "react-icons/io";
 import SafeImage from "@/components/SafeImage";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";

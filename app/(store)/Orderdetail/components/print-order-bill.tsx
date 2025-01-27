@@ -5,7 +5,6 @@ import { useReactToPrint } from "react-to-print";
 import PriceLabel from "../../shopping-card/components/price-label";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 
 const PrintOrderBill = ({ Bill }: any) => {

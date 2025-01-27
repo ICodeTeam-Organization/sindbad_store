@@ -7,13 +7,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Copy } from "lucide-react";
-import { Input } from "@/components/ui/input";
 import { Pricing } from "../../types";
-import SafeImage from "@/components/SafeImage";
 import ImagesViewr from "@/components/ImagesViewr";
 
 function ShowPricingInfoDialog({

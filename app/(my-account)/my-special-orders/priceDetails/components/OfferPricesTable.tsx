@@ -1,9 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Carrot } from "lucide-react";
 import React, { useState } from "react";
-import { OfferDetailsResponseType, Pricing, SpecialProduct } from "../../types";
+import { OfferDetailsResponseType, Pricing } from "../../types";
 import { Checkbox } from "@/components/ui/checkbox";
 import ShowPricingInfoDialog from "./ShowPricingInfoDialog";
 import AddSpecialOrderToCartButton from "./AddSpecialOrderToCartButton";

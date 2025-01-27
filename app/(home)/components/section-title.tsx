@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./SectionTitle.module.css";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";
 
 type Props = {
   title: string;

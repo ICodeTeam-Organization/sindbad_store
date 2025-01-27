@@ -6,8 +6,7 @@ import ReviewComment from "./review-comment";
 import { ReviewProps } from "../types";
 import { getApi } from "@/lib/http";
 import { Product } from "./../types";
-import { Rating, RoundedStar, ThinStar } from "@smastrom/react-rating";
-import { Dot } from "lucide-react";
+import { Rating, RoundedStar } from "@smastrom/react-rating";
 
 type ProductReviewsTapProps = {
   productId: string | number;

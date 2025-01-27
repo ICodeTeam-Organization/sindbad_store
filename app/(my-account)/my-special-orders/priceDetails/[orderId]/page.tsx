@@ -2,7 +2,6 @@ import ImagesViewr from "@/components/ImagesViewr";
 import React from "react";
 import OfferPricesTable from "../components/OfferPricesTable";
 import { getApi } from "@/lib/http";
-import { useSession } from "next-auth/react";
 import { OfferDetailsResponseType, SpecialOrderDetailsType } from "../../types";
 import { notFound } from "next/navigation";
 import CategoryName from "../components/CategoryName";

@@ -10,7 +10,6 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/http"; 
 import { convertToArabicDate } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
-import { useSession } from "next-auth/react";
 
 interface Props {
   initData: {
@@ -72,7 +71,6 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
     Object.entries(queryParams).filter(([, value]) => value !== undefined)
   )
     
-    console.log(queryParams);
     
 
     const response = await getApi<ResponsiveOrdersTypes>(

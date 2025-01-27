@@ -7,12 +7,12 @@ export interface SidebarItemProps {
   badge?: string;
 }
 
-interface AddressTable{
-  address: string,
-  region:string,
-  recipient: string,
-  phone:string,
-}
+// interface AddressTable{
+//   address: string,
+//   region:string,
+//   recipient: string,
+//   phone:string,
+// }
 
 
 

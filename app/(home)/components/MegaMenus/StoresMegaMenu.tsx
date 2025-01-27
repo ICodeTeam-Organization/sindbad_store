@@ -2,7 +2,7 @@
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
-import { ApiResponse, MainCategory, Store } from "@/types/storeTypes";
+import { ApiResponse, MainCategory} from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { BiCategoryAlt } from "react-icons/bi";

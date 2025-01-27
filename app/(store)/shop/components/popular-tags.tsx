@@ -1,7 +1,7 @@
 "use client"
 import { getApi } from "@/lib/http";
 import { useQuery } from "@tanstack/react-query";
-import React , { useState }  from "react";
+import React  from "react";
 
 // Define the type for the props (if using TypeScript)
 interface PopularTagsProps {

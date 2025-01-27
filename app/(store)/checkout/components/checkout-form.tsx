@@ -6,8 +6,8 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
-import { checkoutSchema } from "../schema";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { checkoutSchema } from "../schema";
+// import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import { Bank, CheckoutType } from "@/types/checkout";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -36,7 +36,8 @@ import { useSession } from "next-auth/react";
 import { useCartStore } from "@/app/stores/cartStore";
 import SuccessDialog from "./SuccessModal";
 import { useState } from "react";
-import { z } from "zod";
+// import { z } from "zod";
+import { validateCheckoutForm } from "../schema";
 
 function extractNumbers(str: string) {
   const numbers = str.match(/\d+/g);
@@ -50,7 +51,7 @@ const CheckoutForm = () => {
   });
 
   const form = useForm<CheckoutType>({
-    resolver: zodResolver(checkoutSchema),
+    // resolver: zodResolver(checkoutSchema),
     defaultValues: {
       bank: "",
       date: "",
@@ -69,7 +70,7 @@ const CheckoutForm = () => {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["upload-bound"],
-    mutationFn: async (data: z.infer<typeof checkoutSchema>) => {
+    mutationFn: async (data:CheckoutType) => {
       const formData = new FormData();
       if (data.bank) {
         formData.append("BankId", String(+data.bank));
@@ -113,8 +114,11 @@ const CheckoutForm = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof checkoutSchema>) {
-    mutate(values);
+  async function onSubmit(values: CheckoutType) {
+    const vald = validateCheckoutForm(values)
+    if (vald.length == 0) {
+       mutate(values);
+    }
   }
 
   return (

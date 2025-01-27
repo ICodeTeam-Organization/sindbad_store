@@ -9,7 +9,6 @@ import {
   FormItem,
   FormLabel,
   FormControl,
-  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -46,7 +45,7 @@ function ProfileForm() {
     },
   });
 
-  const [isEditable, setisEditable] = useState(false)
+  const [isEditable] = useState(false)
 
   const onSubmit = (data:any) => {
     console.log('Form Data:', data);
