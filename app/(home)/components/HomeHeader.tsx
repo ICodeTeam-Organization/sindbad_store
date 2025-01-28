@@ -1,6 +1,6 @@
 "use client";
 import { BiMenu, BiSearch } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -58,9 +58,9 @@ const HomeHeader = () => {
   const { items: cartItems } = useCartStore();
   const isAuth = status === "authenticated";
   
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [hideThreshold, setHideThreshold] = useState(false); // Tracks if scrolled past 500px
+  // const [isVisible, setIsVisible] = useState(true);
+  // const [lastScrollY, setLastScrollY] = useState(0);
+  // const [hideThreshold, setHideThreshold] = useState(false); // Tracks if scrolled past 500px
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -190,7 +190,7 @@ const HomeHeader = () => {
 
   return (
     <div>
-      <div className={cn("  bg-header-gradient  ",!isVisible&&"shadow-lg border-b-0 mdHalf:border-b-0  border-b-white")}>
+      <div className={cn("  bg-header-gradient  ",!true&&"shadow-lg border-b-0 mdHalf:border-b-0  border-b-white")}>
       <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
         {/* logo section*/}
         <div>
@@ -302,7 +302,7 @@ const HomeHeader = () => {
       className={
         cn(
           "md:hidden block  bg-header-gradient w-full p-4 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  ",
-          isVisible ? "translate-y-0 opacity-[1] " : "translate-y-full opacity-0",
+          true ? "translate-y-0 opacity-[1] " : "translate-y-full opacity-0",
 
         )
       }

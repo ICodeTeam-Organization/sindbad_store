@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, {   useState } from "react";
 import { BiMenu, BiSearch } from "react-icons/bi";
 import { useSession } from "next-auth/react";
 import PersonButton from "../(home)/components/person-button";
@@ -97,9 +97,9 @@ const StoreHeader = () => {
 
   const { items: cartItems } = useCartStore();
 
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [hideThreshold, setHideThreshold] = useState(false); // Tracks if scrolled past 500px
+  // const [isVisible, setIsVisible] = useState(true);
+  // const [lastScrollY, setLastScrollY] = useState(0);
+  // const [hideThreshold, setHideThreshold] = useState(false); // Tracks if scrolled past 500px
 
   // useEffect(() => {
   //   const handleScroll = () => {
@@ -132,7 +132,7 @@ const StoreHeader = () => {
         //   " bg-header-gradient bg-cover bg-bottom bg-no-repeat  "
         //   // "bg-[url('/images/header-bg.svg')] bg-cover bg-bottom bg-no-repeat  "
         // }
-        className={cn("  bg-header-gradient  ",!isVisible&&"shadow-lg  mdHalf:border-b-0 mdHalf:shadow border-b-white")}
+        className={cn("  bg-header-gradient  ",!true&&"shadow-lg  mdHalf:border-b-0 mdHalf:shadow border-b-white")}
         // }
       >
         <div className="w-full h-full  flex flex-col mdHalf:pb-0  shadow-sm ">
@@ -248,7 +248,7 @@ const StoreHeader = () => {
       <div
             className={cn(
               "md:hidden block  bg-header-gradient shadow-lg w-full p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  ",
-              isVisible
+              true
                 ? "translate-y-0 opacity-[1] "
                 : "translate-y-full opacity-0"
             )}
