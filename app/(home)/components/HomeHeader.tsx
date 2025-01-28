@@ -62,29 +62,29 @@ const HomeHeader = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [hideThreshold, setHideThreshold] = useState(false); // Tracks if scrolled past 500px
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const currentScrollY = window.scrollY;
 
-      if (currentScrollY > 500 && currentScrollY > lastScrollY) {
-        // Hide header when scrolling down past 500px
-        setIsVisible(false);
-        setHideThreshold(true); // Mark that we've passed 500px
-      } else if (hideThreshold) {
-        // Show header when scrolling up at least 100px
-        setIsVisible(true);
-        setHideThreshold(false); // Reset the threshold
-      }
+  //     if (currentScrollY > 500 && currentScrollY > lastScrollY) {
+  //       // Hide header when scrolling down past 500px
+  //       setIsVisible(false);
+  //       setHideThreshold(true); // Mark that we've passed 500px
+  //     } else if (hideThreshold) {
+  //       // Show header when scrolling up at least 100px
+  //       setIsVisible(true);
+  //       setHideThreshold(false); // Reset the threshold
+  //     }
 
-      setLastScrollY(currentScrollY); // Update last scroll position
-    };
+  //     setLastScrollY(currentScrollY); // Update last scroll position
+  //   };
 
-    window.addEventListener("scroll", handleScroll);
+  //   window.addEventListener("scroll", handleScroll);
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [lastScrollY, hideThreshold]);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [lastScrollY, hideThreshold]);
 
   const NavMenu = () => (
     <div

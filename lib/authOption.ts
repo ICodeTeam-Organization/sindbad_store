@@ -16,7 +16,7 @@ export const authOption: NextAuthOptions = {
             const { phone, password } = validated.data;
 
             const res = await axios.post(
-              process.env.NEXT_PUBLIC_BASE_URL + "Auth/loginAsync",
+              process.env.NEXT_PUBLIC_BASE_URL + "Auth/Login",
               {
                 phoneNumber: phone,
                 password: password,
@@ -31,6 +31,8 @@ export const authOption: NextAuthOptions = {
               return null;
             }
           } catch (error: any) {
+            console.log(error.response?.data?.message || "فشلت عملية الدخول حاول مجددا");
+            
             throw new Error(
               error.response?.data?.message || "فشلت عملية الدخول حاول مجددا"
             );

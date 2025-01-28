@@ -15,7 +15,6 @@ import AllEShops from "./components/sections/all-Eshops";
 import { MainCategory, Product, Shop, Store } from "@/types/storeTypes";
 
 export default async function Home() {
-  
   const [
     categories,
     Allstores,
@@ -33,7 +32,7 @@ export default async function Home() {
     getApi<{ data: { items: Shop[] } }>(
       "EcommercesStores/GetEcommerceStores?pageNumber=1&pageSize=20"
     ),
-    getApi<{data:Product[]}>(
+    getApi<{ data: Product[] }>(
       "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/20"
     ),
     getApi<{ data: Product[] }>(
@@ -49,7 +48,7 @@ export default async function Home() {
       <Hero />
       <div className="w-full xl:container mx-auto ">
         <CategoriesSlider />
-        <div className="mdHalf:mt-32 " >
+        <div className="mdHalf:mt-32 ">
           <ServiceCard />
         </div>
         <CardsInfo />
