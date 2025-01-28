@@ -190,7 +190,7 @@ const HomeHeader = () => {
 
   return (
     <div>
-      <div className={cn("  bg-header-gradient  ",!isVisible&&"shadow-lg border-b-4 mdHalf:border-b-0 mdHalf:shadow border-b-white")}>
+      <div className={cn("  bg-header-gradient  ",!isVisible&&"shadow-lg border-b-0 mdHalf:border-b-0  border-b-white")}>
       <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
         {/* logo section*/}
         <div>
@@ -272,8 +272,8 @@ const HomeHeader = () => {
                   </Link>
                 </>
               )}
-              <div className="cursor-pointer hidden mdHalf:block">
-                <PersonButton status={status} session={session} />
+              <div className="cursor-pointer ">
+                <PersonButton status={status} session={session}  forMobile   />
               </div>
             </div>
           </div>

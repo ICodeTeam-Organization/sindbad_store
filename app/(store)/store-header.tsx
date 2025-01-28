@@ -135,7 +135,7 @@ const StoreHeader = () => {
         className={cn("  bg-header-gradient  ",!isVisible&&"shadow-lg  mdHalf:border-b-0 mdHalf:shadow border-b-white")}
         // }
       >
-        <div className="w-full h-full  flex flex-col  pb-3">
+        <div className="w-full h-full  flex flex-col mdHalf:pb-0  shadow-sm ">
           <div className="flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600 ">
             {/* logo section*/}
             <div className="p-2 px-0 pr-4  mx-0  flex  items-center z-10  ">
@@ -247,7 +247,7 @@ const StoreHeader = () => {
       </div>
       <div
             className={cn(
-              "md:hidden block  bg-header-gradient w-full p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  ",
+              "md:hidden block  bg-header-gradient shadow-lg w-full p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  ",
               isVisible
                 ? "translate-y-0 opacity-[1] "
                 : "translate-y-full opacity-0"
