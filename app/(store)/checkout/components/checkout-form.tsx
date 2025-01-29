@@ -73,7 +73,7 @@ const CheckoutForm = () => {
     mutationFn: async (data:CheckoutType) => {
       const formData = new FormData();
       if (data.bank) {
-        formData.append("BankId", String(+data.bank));
+        formData.append("BankAccountId", String(+data.bank));
       }
       if (data.note) {
         formData.append("Note", data.note);
@@ -100,6 +100,8 @@ const CheckoutForm = () => {
       });
     },
     onError: (err) => {
+      console.log(err);
+      
       toast({
         variant: "destructive",
         description: err.message || "حدث خطأ أثناء معالجة الطلب",
@@ -117,6 +119,8 @@ const CheckoutForm = () => {
   async function onSubmit(values: CheckoutType) {
     const vald = validateCheckoutForm(values)
     if (vald.length == 0) {
+      console.log(values);
+      
        mutate(values);
     }
   }
