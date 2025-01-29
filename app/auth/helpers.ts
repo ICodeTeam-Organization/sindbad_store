@@ -5,7 +5,8 @@ import { signIn } from "next-auth/react";
 
 export async function loginUser({ phone, password }: loginFormField) {
   const res = await signIn("credentials", {
-    redirect: false,
+    redirect: true,
+    callbackUrl:'/',
     phone,
     password,
   });

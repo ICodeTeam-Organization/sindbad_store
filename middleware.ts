@@ -4,7 +4,6 @@ import { getToken } from "next-auth/jwt";
 
 export default withAuth(
   async function middleware(request: NextRequest) {
-
     const token = await getToken({ req: request });
     const { pathname } = request.nextUrl;
 
@@ -18,7 +17,6 @@ export default withAuth(
     }
 
     return NextResponse.next();
-    
   },
   {
     callbacks: {

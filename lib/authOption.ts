@@ -4,6 +4,7 @@ import axios from "axios";
 import { LoginSchema } from "@/app/auth/schema";
 
 export const authOption: NextAuthOptions = {
+  
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -65,4 +66,5 @@ export const authOption: NextAuthOptions = {
     signOut: "/",
     error: "/auth",
   },
+  
 };
