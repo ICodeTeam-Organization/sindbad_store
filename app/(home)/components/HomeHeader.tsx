@@ -54,7 +54,7 @@ const HomeHeader = () => {
 
   const [openNav, setopenNav] = useState<boolean>(false);
   const [searchKeyword, setsearchKeyword] = useState("");
-  const { data: session, status } = useSession();
+  const {   status } = useSession();
   const { items: cartItems } = useCartStore();
   const isAuth = status === "authenticated";
   
@@ -180,7 +180,7 @@ const HomeHeader = () => {
       </div>
       {/* profile info in mobile show in nav menu */}
       <div className="mdHalf:hidden block ">
-        <PersonButton status={status} session={session} />
+        <PersonButton   />
       </div>
       <div className="mdHalf:hidden mb-10 block  relative">
         <OrderFromAndHow />
@@ -272,8 +272,8 @@ const HomeHeader = () => {
                   </Link>
                 </>
               )}
-              <div className="cursor-pointer ">
-                <PersonButton status={status} session={session}  forMobile   />
+              <div className="cursor-pointer hidden mdHalf:block ">
+                <PersonButton   forMobile   />
               </div>
             </div>
           </div>

@@ -1,4 +1,3 @@
-import { Session } from "next-auth";
 import React from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
@@ -15,14 +14,14 @@ import Link from "next/link";
 import { IoChevronDownOutline } from "react-icons/io5";
 import useSignOut from "@/hooks/useSignOut";
 import { cn } from "@/lib/utils";
+import { useSession } from "next-auth/react";
 type Props = {
-  session: Session | null;
-  status: "authenticated" | "loading" | "unauthenticated";
   forMobile?: boolean;
 };
 
-const PersonButton = ({ status, forMobile = false }: Props) => {
+const PersonButton = ({ forMobile = false }: Props) => {
   const mutation = useSignOut();
+  const { status } = useSession();
 
   const menu = [
     {

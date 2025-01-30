@@ -1,14 +1,15 @@
 import React from "react";
 
 import Image from "next/image";
-import HomeHeader from "../HomeHeader";
+import MainHeader from "@/components/MainHeader/MainHeader";
 
 const Hero = () => {
   return (
     <>
       <div className="sticky top-0 z-[50]">
         <div className="relative overflow-visible ">
-          <HomeHeader />
+          {/* <HomeHeader /> */}
+          <MainHeader isHomePage />
         </div>
       </div>
       <div className="relative">

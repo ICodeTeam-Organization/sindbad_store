@@ -55,7 +55,7 @@ const Categories = ({ categories }: categoriesPropsInterface) => {
           className="m-auto md:w-[90%] w-[100%]"
         >
           <CarouselContent dir="rtl">
-            {categories.map(
+            {categories && categories?.map(
               (category: Category, index: number) =>
                 index < 20 && (
                   <CarouselItem key={category.id} className="basis-1/8 group">

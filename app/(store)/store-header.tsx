@@ -90,7 +90,7 @@ const StoreHeader = () => {
   const productName = params.get("productName");
   const [searchKeyword, setsearchKeyword] = useState(productName || "");
 
-  const { data: session, status } = useSession();
+  const {  status } = useSession();
   const isAuth = status === "authenticated";
 
   const [openMobileNav, setopenMobileNav] = useState(false);
@@ -200,7 +200,7 @@ const StoreHeader = () => {
                     </>
                   )}
                   <div className="cursor-pointer ">
-                    <PersonButton status={status} session={session} />
+                    <PersonButton  />
                   </div>
                 </div>
               </div>
@@ -234,8 +234,7 @@ const StoreHeader = () => {
 
                 {isAuth && (
                   <PersonButton
-                    status={status}
-                    session={session}
+                     
                     forMobile={true}
                   />
                 )}

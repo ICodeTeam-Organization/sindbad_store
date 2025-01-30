@@ -36,8 +36,11 @@ const StoreGrid = () => {
       initialPageParam: 1,
     });
 
-  const stores = data?.pages?.flatMap((page) => page?.data?.items) || [];
+  const stores =( data?.pages?.flatMap((page) => page?.data?.items) || []).filter(e=>e);
   const totalCount = data?.pages[0]?.data?.totalCount || 0;
+
+  console.log(stores,"vmdkvmdkmvkdmvkdmvkdmvkdmvkm");
+  
 
   if (!isFetched) {
     return (
@@ -74,15 +77,15 @@ const StoreGrid = () => {
         />
       </div>
       <div className="px-5 mb-12 grid xl:grid-cols-3 sm:grid-cols-2   gap-5 justify-center items-center">
-        {stores.map((store) => (
+        { stores && stores?.length > 0 && stores?.map((store) => (
           <StoreCard
-            key={store.id}
-            id={store.id}
-            name={store.name}
-            websiteLink={store.websiteUrl}
-            imagesUrl={store.imageUrl}
-            mainImageUrl={store.imageUrl}
-            storeCategories={store.storeCategories}
+            key={store?.id}
+            id={store?.id}
+            name={store?.name || ""}
+            websiteLink={store?.websiteUrl || ""}
+            imagesUrl={store?.imageUrl || []}
+            mainImageUrl={store?.imageUrl || ""}
+            storeCategories={store?.storeCategories || []}
           />
         ))}
 
