@@ -35,7 +35,7 @@ function EShopsMegaMenu() {
         },
         
       }),
-      retry:false
+      retry:3,
   });
 
   useEffect(() => {

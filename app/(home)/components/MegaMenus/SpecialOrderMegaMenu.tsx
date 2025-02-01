@@ -1,18 +1,41 @@
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
+import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import { ToastAction } from "@radix-ui/react-toast";
+import Link from "next/link";
+import React, { useState } from "react"; 
 
-export default function SpecialOrderMegaMenu() {
+export default function SpecialOrderMegaMenu({isAuth}:{isAuth:boolean}) {
+
+
   const { categories } = useCategoriesDataStore((state) => state);
   const [CatType, setCatType] = useState("p");
   const { setSpecialOrderState } = useSpecialOrdersDialogsStore();
+  const {toast} = useToast()
+
+  const openDialog = (type:"product"|"service",id:number) => { 
+    if(!isAuth){
+      toast({
+        variant: "default",
+        description: ` يجب عليك تسجيل الدخول اولاً `,
+        action: <ToastAction altText="Try again"><Link href="/auth" className="text-sm" >تسجيل الدخول </Link></ToastAction>,
+        duration:2000
+      });
+      return
+    }
+    if (type == "service") {
+      setSpecialOrderState(true, 2, id);
+    } else if (type == "product") {
+      setSpecialOrderState(true, 1,id);
+    } 
+   }
 
   return (
     <div
       className={cn(
-        " transition-all duration-200  opacity-0 invisible hidden  mdHalf:flex -mt-2  group-hover:flex mdHalf:flex-row flex-col  mdHalf:translate-y-5 translate-y-0  group-hover:-translate-y-0 group-hover:opacity-[1] group-hover:visible mdHalf:mt-1 rounded top-10 min-h-[400px] max-h-[540px]  overflow-y-hidden z-[99999]  bg-white   xl:w-[40%] lg:w-[50%] mdHalf:w-[60%]  w-full  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute  ",
-        "right-15"
+        " transition-all duration-200 opacity-0 invisible hidden   mdHalf:flex -mt-2  group-hover:flex mdHalf:flex-row flex-col  mdHalf:translate-y-5 translate-y-0  group-hover:-translate-y-0 group-hover:opacity-[1] group-hover:visible mdHalf:mt-1 rounded top-10 min-h-[400px] max-h-[540px]  overflow-y-hidden z-[99999]  bg-white   xl:w-[40%] lg:w-[50%] mdHalf:w-[60%]  w-full  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute  ",
+        "right-0"
       )}
     >
       <div className="flex justify-center items-center mt-4 gap-8">
@@ -56,7 +79,7 @@ export default function SpecialOrderMegaMenu() {
                   <div
                     key={i.id}
                     onClick={() => {
-                      setSpecialOrderState(true, 1, i.id);
+                      openDialog('product', i.id);
                     }}
                     // href={"/special-order?sh=1&tab=1&category="+i.id}
                     className="text-[11px] me-2 font-semibold my-[2px] hover:bg-gray-200  transition-colors duration-200 px-2 p-1 rounded  text-black "
@@ -74,10 +97,10 @@ export default function SpecialOrderMegaMenu() {
           {/* <Link href={"/"} className='hover:underline hover:text-blue-600 ' ><p>عرض الكل</p></Link> */}
         </div>
       </div>
-
+         
       <div
         className={cn(
-          "flex flex-col xl:w-[60%] mdHalf:w-[50%] w-full mdHalf:h-auto h-[90%]  px-4 py-8  text-sm text-gray-500 dark:text-gray-400 md:grid-cols-3 md:px-6 gap-x-4",
+          "flex flex-col xl:w-[60%] mdHalf:w-[50%] mdHalf:border-r  w-full mdHalf:h-auto h-[90%]  px-4 my-8  text-sm text-gray-500 dark:text-gray-400 md:grid-cols-3 md:px-6 gap-x-4",
           CatType != "k" && "mdHalf:flex hidden"
         )}
       >
@@ -85,7 +108,7 @@ export default function SpecialOrderMegaMenu() {
           {" "}
           فئات الخدمات{" "}
         </h3>
-        <div className="w-full overflow-y-auto text-end " dir="ltr">
+        <div className="w-full overflow-y-auto text-end  " dir="ltr">
           {categories.filter((i) => i.categoryTypeNumber == 3).length != 0 ? (
             <div className="grid  gap-x-4  mb-5 ">
               {categories
@@ -93,7 +116,7 @@ export default function SpecialOrderMegaMenu() {
                 ?.map((i) => (
                   <div
                     onClick={() => {
-                      setSpecialOrderState(true, 2, i.id);
+                      openDialog("service",i?.id)
                     }}
                     // href={"/special-order?sh=1&tab=2&category="+i.id}
                     key={i.id}

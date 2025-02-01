@@ -24,7 +24,7 @@ function TopSectionOfHeader({isHomePage=false}) {
               )}
             >
               <div className="hidden mdHalf:block">
-                <OrderFromAndHow />
+                <OrderFromAndHow isAuth={isAuth} />
               </div>
 
               <div className="hidden md:block mdHalf:w-auto flex-1 ">
@@ -61,8 +61,8 @@ function TopSectionOfHeader({isHomePage=false}) {
                   </>
                 )}
                 {/* web */}
-                <div className="cursor-pointer mdHalf:block hidden ">
-                  <PersonButton  forMobile />
+                <div className="cursor-pointer ">
+                  <PersonButton  />
                 </div>
               </div>
             </div>

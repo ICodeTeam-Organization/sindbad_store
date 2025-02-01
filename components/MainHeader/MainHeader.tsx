@@ -9,11 +9,13 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import MenusSection from "./headerSections/MenusSection";
 import SearchComponent from "./headerSections/SearchComponent";
 import TopSectionOfHeader from "./headerSections/TopSectionOfHeader";
+import { useSession } from "next-auth/react";
 
 const MainHeader = ({ isHomePage = false }) => {
 
   const [openNav, setopenNav] = useState<boolean>(false);
-
+  const session = useSession();
+  const isAuth = session.status === "authenticated";
   return (
     <div>
       <div
@@ -75,7 +77,7 @@ const MainHeader = ({ isHomePage = false }) => {
           {/* down section this section in mobile become the navbarMenu */}
           <div className="tajawal   mdHalf:block hidden ">
             {/* content of navmenu */}
-            <MenusSection onClose={setopenNav} isHomePage={isHomePage} />
+            <MenusSection onClose={setopenNav} isHomePage={isHomePage} isAuth={isAuth} />
           </div>
 
           {/* this drawer for mobile */}
@@ -85,7 +87,7 @@ const MainHeader = ({ isHomePage = false }) => {
                 side="right"
                 className="w-[90%] [&>button]:hidden overflow-y-auto p-0 m-0  "
               >
-                <MenusSection onClose={setopenNav} isHomePage={isHomePage} />
+                <MenusSection onClose={setopenNav} isHomePage={isHomePage} isAuth={isAuth} />
               </SheetContent>
             </Sheet>
           </div>
@@ -95,7 +97,7 @@ const MainHeader = ({ isHomePage = false }) => {
       {/* serach component for mobiles */}
       <div
         className={cn(
-          "md:hidden block  bg-header-gradient w-full p-4 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  "
+          "md:hidden block  bg-header-gradient w-full p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  "
         )}
       >
         <SearchComponent isHomePage={isHomePage} />

@@ -57,7 +57,7 @@ export default async function RootLayout({
           </NextAuthProvider>
 
           {/* to show toaster messages */}
-          <Toaster />
+          <Toaster  />
           <SonanerToaster richColors />
         </ProgressBarProvider>
       </body>

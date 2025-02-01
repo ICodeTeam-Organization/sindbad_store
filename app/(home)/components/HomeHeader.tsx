@@ -129,7 +129,7 @@ const HomeHeader = () => {
             <p> طلب خاص </p>
             <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
           </div>
-          <SpecialOrderMegaMenu />
+          <SpecialOrderMegaMenu isAuth={isAuth} />
         </div>
 
         <div className="nav-menus group ">
@@ -180,10 +180,10 @@ const HomeHeader = () => {
       </div>
       {/* profile info in mobile show in nav menu */}
       <div className="mdHalf:hidden block ">
-        <PersonButton   />
+        <PersonButton forMobile  />
       </div>
       <div className="mdHalf:hidden mb-10 block  relative">
-        <OrderFromAndHow />
+        <OrderFromAndHow isAuth={isAuth} />
       </div>
     </div>
   );
@@ -233,7 +233,7 @@ const HomeHeader = () => {
           {/* top section */}
           <div className="flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center ms-5 mdHalf:mr-[170px]  ">
             <div className="hidden mdHalf:block">
-              <OrderFromAndHow />
+              <OrderFromAndHow isAuth={isAuth} />
             </div>
 
             <div className="hidden md:block mdHalf:w-auto flex-1 ">
@@ -273,7 +273,7 @@ const HomeHeader = () => {
                 </>
               )}
               <div className="cursor-pointer hidden mdHalf:block ">
-                <PersonButton   forMobile   />
+                <PersonButton    />
               </div>
             </div>
           </div>

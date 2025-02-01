@@ -36,7 +36,7 @@ function StoresMegaMenu() {
           pageNumber: params.pageNumber,
         },
       }),
-      retry:false
+      retry:3
   });
 
   useEffect(() => {

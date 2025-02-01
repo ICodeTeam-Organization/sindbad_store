@@ -160,7 +160,7 @@ const StoreHeader = () => {
             <div className="flex flex-col md:w-full   ">
               <div className="flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center ms-5   ">
                 <div className="hidden mdHalf:block">
-                  <OrderFromAndHow />
+                  <OrderFromAndHow isAuth={isAuth} />
                 </div>
 
                 <div className="hidden md:block mdHalf:w-auto flex-1 ">
@@ -238,7 +238,7 @@ const StoreHeader = () => {
                     forMobile={true}
                   />
                 )}
-                <OrderFromAndHow />
+                <OrderFromAndHow isAuth={isAuth} />
               </div>
             </SheetContent>
           </Sheet>

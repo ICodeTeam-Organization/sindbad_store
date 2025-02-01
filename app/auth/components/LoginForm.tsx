@@ -13,15 +13,14 @@ import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../helpers";
-// import { useRouter } from "next-nprogress-bar";
 
 const LoginForm: React.FC = () => {
-  // const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const { mutate, isPending } = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
-      // router.push("/")
+      // router.replace("/")
+      window.location.replace('/')
     },
     onError: (err) => setError(err.message),
   });

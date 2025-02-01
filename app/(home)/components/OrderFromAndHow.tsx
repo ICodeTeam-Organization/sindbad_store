@@ -16,7 +16,7 @@ const Loader = () => (
   </div>
 );
 
-function OrderFromAndHow() {
+function OrderFromAndHow({isAuth}:{isAuth:boolean}) {
   const [showHowDialog, setshowHowDialog] = useState<number | null>(null);
 
   const { data: questions, isFetching } = useQuery<{
@@ -32,14 +32,14 @@ function OrderFromAndHow() {
         <div className="mdHalf:flex flex-row items-center mdHalf:justify-center mdHalf:p-0 px-6 ">
           <DropDownMenuOrderFrom />
         </div>
-        <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
-        <div className="mdHalf:block hidden">
+        {isAuth &&<div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />}
+        {isAuth && <div className="mdHalf:block hidden">
           <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0  mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] py-3 ">
             <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
               <Link href="/my-orders" className="text-[13px] mdHalf:m-0 "> طلباتي </Link>
             </div>
           </div>
-        </div>
+        </div>}
         <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
         <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0 mt-2 mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] pt-3 ">
           <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
@@ -52,10 +52,11 @@ function OrderFromAndHow() {
             <ul
               role="menu"
               className={cn(
-                "mdHalf:absolute mdHalf:opacity-0 mdHalf:invisible  group-hover:visible group-hover:opacity-100 transition-all top-12 z-[999999] mdHalf:min-w-[180px] mdHalf:w-auto w-full overflow-auto rounded-lg mdHalf:border border-slate-200 bg-white p-1.5 mdHalf:shadow-lg focus:outline-none ",
+                "mdHalf:absolute mdHalf:opacity-0 mdHalf:invisible  group-hover:visible group-hover:opacity-100 transition-all top-10 z-[999999] mdHalf:min-w-[180px] mdHalf:w-auto w-full overflow-auto rounded-lg mdHalf:border border-slate-200 bg-white p-1.5 mdHalf:shadow-lg focus:outline-none ",
                 "right-0"
               )}
             >
+                {!isFetching && questions?.data?.items.length ==  0 && <p className="text-center text-xs p-4" >لا توجد اسئلة</p>}
               {isFetching ? (
                 <Loader />
               ) : (
@@ -75,6 +76,7 @@ function OrderFromAndHow() {
                 ))
               )}
             </ul>
+         
           </div>
           {/* mobile */}
           <div className="mdHalf:hidden block">
@@ -84,6 +86,7 @@ function OrderFromAndHow() {
                 " mt-2 opacity-0 invisible  group-hover:visible group-hover:opacity-100 hidden group-hover:block transition-all top-12 z-[999999] min-w-[180px] overflow-y-scroll overflow-x-hidden  bg-white focus:outline-none border-b p-2"
               )}
             >
+               {!isFetching && questions?.data?.items.length ==  0 && <p className="text-center text-xs p-4" >لا توجد اسئلة</p>}
               {isFetching ? (
                 <Loader />
               ) : (

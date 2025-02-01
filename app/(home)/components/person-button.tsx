@@ -65,8 +65,8 @@ const PersonButton = ({ forMobile = false }: Props) => {
     <div className="flex justify-between items-center  group">
       <div
         className={cn(
-          "  mdHalf:ml-3 rounded-full relative w-full mdHalf:w-auto z-[999999]",
-          !forMobile && "hidden mdHalf:block"
+          "  mdHalf:ml-3 rounded-full relative my-5 mdHalf:w-auto z-[999999]",
+          !forMobile && "hidden mdHalf:block w-full m-0"
         )}
       >
         {!isAuth ? (
