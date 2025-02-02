@@ -3,7 +3,6 @@ import SpecialWholesalesOrderDialog from "@/app/(store)/special-order/components
 import SpecialOrderDialog from "@/app/(store)/special-order/components/SpecialOrderDialog";
 import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
 import React from "react";
-import { useSession } from "next-auth/react";
 
 function SpecialOrderDialogsViewer() {
   const {

@@ -161,7 +161,7 @@ const HomeHeader = () => {
             <p> طلب جملة </p>
             <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
           </div>
-          <WholesalerOrderCategoriesMegaMenu />
+          <WholesalerOrderCategoriesMegaMenu isAuth={isAuth} />
         </div>
       </div>
 

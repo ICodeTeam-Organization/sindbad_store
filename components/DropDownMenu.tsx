@@ -22,7 +22,7 @@ const DropdownMenu: React.FC<{ menu: MenuItem[]; dir: "left" | "right" }> = ({
     <ul
       role="menu"
       className={cn(
-        "mdHalf:absolute mdHalf:opacity-0 mdHalf:invisible  group-hover:visible group-hover:opacity-100 transition-all top-12 z-[999999] mdHalf:min-w-[180px] mdHalf:w-auto w-full overflow-auto rounded-lg mdHalf:border border-slate-200 bg-white p-1.5 mdHalf:shadow-lg focus:outline-none ",
+        "mdHalf:absolute mdHalf:opacity-0 mdHalf:invisible  group-hover:visible group-hover:opacity-100 transition-all top-12 z-[999999] mdHalf:min-w-[180px] mdHalf:w-auto w-full  overflow-auto rounded-lg mdHalf:border border-slate-200 bg-white p-1.5 mdHalf:shadow-lg focus:outline-none ",
         direction
       )}
     >

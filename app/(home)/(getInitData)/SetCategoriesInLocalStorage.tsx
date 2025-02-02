@@ -13,8 +13,9 @@ export default function SetCategoriesInLocalStorage({
 const setCategories = useCategoriesDataStore((state) => state.setCategories);
 
   useEffect(() => {
-    if (localStorage.getItem("categories")) {
-        setCategories(JSON.parse(localStorage.getItem("categories") || '[]') || [])
+    const cats = JSON.parse(localStorage.getItem("categories") || '[]')
+    if (cats && cats?.length > 0) {
+        setCategories(cats)
     }else{
         setCategories(AllCategoriesWihtSubcategories || [])
     }

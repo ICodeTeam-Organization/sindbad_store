@@ -34,7 +34,6 @@ export async function registerUser(formData: registerFormField) {
       }
     );
     const user: User = res.data;
-    alert("تم إنشاء الحساب");
     if (res.status === 200 && user.data) {
       await loginUser({
         phone: formData.phone,

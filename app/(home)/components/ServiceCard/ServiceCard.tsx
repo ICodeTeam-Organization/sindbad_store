@@ -23,7 +23,7 @@ function ServiceCard() {
   const {status} = useSession();
   const isAuth = status === "authenticated"
 
-  const openDialog = (type:"product"|"market",id?:number) => { 
+  const openDialog = (type:"product"|"market") => { 
     if(!isAuth){
       toast({
         variant: "default",

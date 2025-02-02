@@ -22,10 +22,10 @@ import {
 } from "@/components/ui/select";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -34,6 +34,7 @@ import { getApi, postApi } from "@/lib/http";
 import { useEffect, useState } from "react";
 import { SelectLabel } from "@radix-ui/react-select";
 import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
 
 type addAdress = {
   regionId: number;
@@ -50,7 +51,7 @@ const AddAddressDialog = ({
   const router = useRouter();
   const [showForm, setShowForm] = useState(true);
   const [directorates, setDirectorates] = useState<any[]>([]);
-  const [regions, setRegions] = useState<any>([]);
+  const [, setRegions] = useState<any>([]);
   const form = useForm<z.infer<typeof AddshipingadressSchema>>({
     resolver: zodResolver(AddshipingadressSchema),
     defaultValues: {
@@ -63,7 +64,7 @@ const AddAddressDialog = ({
     },
   });
 
-  const { isPending, error, data } = useQuery({
+  const {  data } = useQuery({
     queryKey: ["city"],
     queryFn: () => getApi<any>(`Locations/GetGovernorateWithChildren`),
   });
@@ -114,41 +115,24 @@ const AddAddressDialog = ({
     });
   }
 
-  if (isPending) return "Loading...";
-
-  if (error) return "An error has occurred: " + error.message;
 
   return (
     <Dialog open={show} onOpenChange={setShow} >
-      <DialogTrigger asChild>
-        
-      </DialogTrigger>
+      
       {showForm && (
         <DialogContent className="m-auto">
+          
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" dir="rtl">
               <DialogHeader>
-                <div className="m-auto p-8">
-                  <FormField
-                    control={form.control}
-                    name="title"
-                    render={({ field }) => (
-                      <FormItem className="my-4 text-right">
-                        <FormLabel className="m-auto text-3xl font-bold mb-2">
-                          <p>العنوان</p>
-                        </FormLabel>
-                        <FormControl>
-                          <Input {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div className=" mdHalf:p-8">
+                <h1 className="text-right text-base font-bold my-6" > إضافة عنوان جديد </h1>
+                  
 
-                  <FormLabel className="m-auto text-3xl font-bold mb-2">
+                  <FormLabel className="m-auto text-sm font-bold mb-2">
                     <p className=" text-right">المنطقة</p>
                   </FormLabel>
-                  <div className="grid grid-cols-3 gap-2 ">
+                  <div className="grid grid-cols-2 gap-2 ">
                     <FormField
                       control={form.control}
                       name="stateid"
@@ -156,7 +140,7 @@ const AddAddressDialog = ({
                         <FormItem className="text-center">
                           <FormControl>
                             <Select onValueChange={field.onChange}>
-                              <SelectTrigger className="text-xl">
+                              <SelectTrigger className="text-sm" dir="rtl">
                                 <SelectValue placeholder="المحافظة" />
                               </SelectTrigger>
                               <SelectContent>
@@ -181,7 +165,7 @@ const AddAddressDialog = ({
                         <FormItem className="text-center">
                           <FormControl>
                             <Select onValueChange={field.onChange}>
-                              <SelectTrigger className="text-xl">
+                              <SelectTrigger className="text-sm" dir="rtl">
                                 <SelectValue placeholder="المديرية" />
                               </SelectTrigger>
                               <SelectContent>
@@ -208,14 +192,14 @@ const AddAddressDialog = ({
                         </FormItem>
                       )}
                     />
-                    <FormField
+                    {/* <FormField
                       control={form.control}
                       name="place"
                       render={({ field }) => (
                         <FormItem className="text-center">
                           <FormControl>
                             <Select onValueChange={field.onChange}>
-                              <SelectTrigger className="text-xl">
+                              <SelectTrigger className="text-sm" dir="rtl">
                                 <SelectValue placeholder="المنطقة" />
                               </SelectTrigger>
                               <SelectContent>
@@ -241,14 +225,14 @@ const AddAddressDialog = ({
                           <FormMessage />
                         </FormItem>
                       )}
-                    />
+                    /> */}
                   </div>
                   <FormField
                     control={form.control}
                     name="reciver"
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
-                        <FormLabel className="m-auto text-3xl font-bold mb-2">
+                        <FormLabel className="m-auto text-sm font-bold mb-2">
                           <p>المستلم</p>
                         </FormLabel>
                         <FormControl>
@@ -263,7 +247,7 @@ const AddAddressDialog = ({
                     name="phone"
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
-                        <FormLabel className="m-auto text-3xl font-bold mb-2">
+                        <FormLabel className="m-auto text-sm font-bold mb-2">
                           <p>رقم التلفون</p>
                         </FormLabel>
                         <FormControl>
@@ -273,11 +257,31 @@ const AddAddressDialog = ({
                       </FormItem>
                     )}
                   />
+
+<FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem className="my-4 text-right">
+                        <FormLabel className="m-auto text-sm font-bold mb-2">
+                          <p>العنوان</p>
+                        </FormLabel>
+                        <FormControl>
+                          <Textarea {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
                 </div>
               </DialogHeader>
 
-              <DialogFooter>
-                <Button type="submit">حفظ التعديلات</Button>
+              <DialogFooter className=" flex flex-row mdHalf:px-8 gap-x-2 " dir="ltr" >
+                <Button type="submit" className="bg-primary-background hover:bg-primary-background" >حفظ العنوان</Button>
+                <DialogClose>
+                <Button type="submit">إلغاء</Button>
+                </DialogClose>
               </DialogFooter>
             </form>
           </Form>

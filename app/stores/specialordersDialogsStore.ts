@@ -1,4 +1,3 @@
-import { useSession } from 'next-auth/react';
 import { create } from 'zustand';
 
 interface specialordersDialogsStoreStateTypes {
