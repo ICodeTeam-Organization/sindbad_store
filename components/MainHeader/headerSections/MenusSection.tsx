@@ -99,7 +99,7 @@ function MenusSection({onClose,isHomePage,isAuth}:PropsType) {
               <p> طلب جملة </p>
               <IoChevronDownOutline className="group-hover:rotate-180 transition-transform" />
             </div>
-            <WholesalerOrderCategoriesMegaMenu />
+            <WholesalerOrderCategoriesMegaMenu isAuth={isAuth} />
           </div>
         </div>
       )}
@@ -107,13 +107,13 @@ function MenusSection({onClose,isHomePage,isAuth}:PropsType) {
       {isHomePage && (
         <div className=" mdHalf:flex  flex-col mdHalf:flex-row justify-end lg:gap-x-5 lg:ml-5">
           <div className="nav-menus ">
-            <Link href={"/shop?hasOffer=t"} className="nav-menus-label">
+            <Link href={"/shop?hasOffer=t"} className="nav-menus-label h-full ">
               <p> عروض اليوم </p>
             </Link>
           </div>
 
           <div className="nav-menus">
-            <Link href={"/shop?newProduct=t"} className="nav-menus-label">
+            <Link href={"/shop?newProduct=t"} className="nav-menus-label h-full ">
               <p> وصل حديث</p>
             </Link>
           </div>

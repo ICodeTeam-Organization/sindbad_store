@@ -1,6 +1,6 @@
 "use client";
 import { BiMenu } from "react-icons/bi";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -16,11 +16,46 @@ const MainHeader = ({ isHomePage = false }) => {
   const [openNav, setopenNav] = useState<boolean>(false);
   const session = useSession();
   const isAuth = session.status === "authenticated";
+
+  let lastScrollTop = 0; 
+  const handleScroll = () => {
+    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    const divElement = document.getElementById("hideSearchComponentInMobileWhenScoll");
+    
+    if (divElement) {
+      if (currentScroll > lastScrollTop) {
+        // Scrolling down, hide the div by translating it upwards
+        divElement.style.zIndex = "0";
+        divElement.style.opacity = "0";
+        divElement.style.visibility = "hidden";
+        divElement.style.transform = 'translateY(-100%)';
+        divElement.style.position = 'absolute'; // Ensure it doesn't take up space
+      } else {
+        // Scrolling up, show the div by resetting the transform
+        divElement.style.opacity = "1";
+        divElement.style.visibility = "visible";
+        divElement.style.transform = 'translateY(0)';
+        divElement.style.position = 'static'; // Ensure it's fixed on the screen again
+      }
+  
+      // Update last scroll position
+      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Prevent negative values
+    }
+  };
+  
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+
   return (
-    <div>
+    <div className="duration-300  ">
       <div
         className={cn(
-          "  bg-header-gradient  shadow-sm border-b-0 mdHalf:border-b-0  border-b-white flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600"
+          "  bg-header-gradient z-50 mdHalf:shadow-sm shadow-md border-b-0 mdHalf:border-b-0  border-b-white flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600"
         )}
       >
         {/* logo section*/}
@@ -96,8 +131,9 @@ const MainHeader = ({ isHomePage = false }) => {
 
       {/* serach component for mobiles */}
       <div
+        id='hideSearchComponentInMobileWhenScoll'
         className={cn(
-          "md:hidden block  bg-header-gradient w-full p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  "
+          "md:hidden block z-10 mdHalf:shadow-sm shadow-md bg-header-gradient w-full relative p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  "
         )}
       >
         <SearchComponent isHomePage={isHomePage} />

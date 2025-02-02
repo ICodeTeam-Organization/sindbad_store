@@ -7,7 +7,11 @@ const StoreLayout = ({ children }: { children: React.ReactNode }) => {
     <>
       {
         // <StoreHeader />
+        <div className="sticky top-0 z-[50]">
+        <div className="relative overflow-visible ">
         <MainHeader/>
+        </div>
+        </div>
         }
       <main>{children}</main>
       {/* <StoreFooter/> => => and this as well*/}

@@ -11,18 +11,41 @@ import shoppingStore from "@/public/images/shoppingStore.svg";
 // import Link from "next/link";
 import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
 import { useRouter } from "next-nprogress-bar";
+import { useSession } from "next-auth/react";
+import { toast } from "@/hooks/use-toast";
+import { ToastAction } from "@radix-ui/react-toast";
+import Link from "next/link";
 
 function ServiceCard() {
 
   const {setSpecialOrderState} = useSpecialOrdersDialogsStore();
-  const router = useRouter()
+  const router = useRouter();
+  const {status} = useSession();
+  const isAuth = status === "authenticated"
+
+  const openDialog = (type:"product"|"market",id?:number) => { 
+    if(!isAuth){
+      toast({
+        variant: "default",
+        description: ` يجب عليك تسجيل الدخول اولاً `,
+        action: <ToastAction altText="Try again"><Link href="/auth" className="text-sm" >تسجيل الدخول </Link></ToastAction>,
+        duration:2000
+      });
+      return
+    }
+    if (type == "product") {
+      setSpecialOrderState(true,1);
+    } else if (type == "market") {
+      setSpecialOrderState(true,3)
+    } 
+   }
 
   const cards = [
     {
       name: "طلب خاص",
       image: specialrequist,
       // href: "/special-order/",
-      onClick:()=>{setSpecialOrderState(true)},
+      onClick:()=>{openDialog("product")},
       color: "#1EAE98",
       transpColor: "#1EAE9826",
       desc: "اطلب ما تريد من السعودية ونحن نوصله لك الى عنوانك باليمن",
@@ -31,7 +54,7 @@ function ServiceCard() {
       name: "طلب من متجر إلكتروني",
       image: onlineStores,
       // href: "/special-order?sh=1&tab=3",
-      onClick:()=>{setSpecialOrderState(true,3)},
+      onClick:()=>{openDialog("market")},
       color: "#F57C00",
       transpColor: "#F57C0050",
       desc: " كل المتاجر الإلكترونية وضعناها بين يديك بأسعار منافسة ..",

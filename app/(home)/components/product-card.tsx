@@ -66,8 +66,9 @@ const ProductCard = ({
         <SafeImage
             src={image} // رابط الصورة
             alt="صورة منتج"
-            className="max-sm:h-28 rounded-t-[8px] object-cover "
+            className="max-sm:h-28 rounded-t-[8px] "
             fill
+            style={{objectFit:"contain"}}
             loading="lazy" 
           />
         </div>

@@ -47,7 +47,7 @@ function SpecialOrderFromShopForm({
 
     defaultValues: {
       type: 3,
-      quantity: 0,
+      quantity: 1,
       isUrgen: false,
       orderDetails:"تفاصيل طلب من متجر الكتروني",
       orderKey:orderKey,

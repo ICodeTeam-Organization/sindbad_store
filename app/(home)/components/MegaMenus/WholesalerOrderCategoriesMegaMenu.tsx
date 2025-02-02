@@ -1,14 +1,32 @@
 "use client"
 import { useCategoriesDataStore } from '@/app/stores/categoriesStore';
+import { useSpecialOrdersDialogsStore } from '@/app/stores/specialordersDialogsStore';
+import { ToastAction } from '@/components/ui/toast';
+import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils'
 import { MainCategory } from '@/types/storeTypes';
+import Link from 'next/link';
 import React from 'react'
 
 
-function WholesalerOrderCategoriesMegaMenu() {
+function WholesalerOrderCategoriesMegaMenu({isAuth}:{isAuth:boolean}) {
   
   const {categories} = useCategoriesDataStore((state)=>state)
   const wholesalerCateg = categories?.filter(i=>i.categoryTypeNumber==4);
+  const {setWholeSalesOrderState}  = useSpecialOrdersDialogsStore()
+
+  const openDialog = (id?:number) => { 
+    if(!isAuth){
+      toast({
+        variant: "default",
+        description: ` يجب عليك تسجيل الدخول اولاً `,
+        action: <ToastAction altText="Try again"><Link href="/auth" className="text-sm" >تسجيل الدخول </Link></ToastAction>,
+        duration:2000
+      });
+      return
+    }
+    setWholeSalesOrderState(true,1,id)
+   }
 
   return (
     <div className={cn(
@@ -22,7 +40,7 @@ function WholesalerOrderCategoriesMegaMenu() {
        ? <div className='grid lg:grid-cols-1 mdHalf:grid-rows-4 gap-x-4  mb-5 ' >
             {
                wholesalerCateg?.map((i:MainCategory)=>(
-                    <p  key={i.id} onClick={()=>{}}  className=' text-[11px] my-[2px] hover:bg-gray-200 font-bold transition-colors duration-200 px-2 p-1 rounded mdHalf:whitespace-nowrap text-black ' > {i.name} </p>
+                    <p  key={i.id} onClick={()=>{openDialog(i.id)}}  className=' text-[11px] my-[2px] hover:bg-gray-200 font-bold transition-colors duration-200 px-2 p-1 rounded mdHalf:whitespace-nowrap text-black ' > {i.name} </p>
                 ))
             }
         </div>

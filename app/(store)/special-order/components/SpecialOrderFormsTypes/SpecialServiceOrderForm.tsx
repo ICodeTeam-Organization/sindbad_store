@@ -45,7 +45,7 @@ function SpecialServiceOrderForm({
     resolver: zodResolver(SpecialProductAndServiceOrderFormSchema),
     defaultValues: {
       type: 2,
-      quantity: 0,
+      quantity: 1,
       isUrgen: false,
       orderKey: orderKey,
       category: category ? category + "" : undefined,

@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react';
 import { create } from 'zustand';
 
 interface specialordersDialogsStoreStateTypes {
@@ -35,11 +36,13 @@ export const useSpecialOrdersDialogsStore = create<specialordersDialogsStoreStat
     category: undefined,
   }),
 
-  setSpecialOrderState: (status, tab, category) => set({
-    showSpecialOrderDialog: status,
-    tab,
-    category,
-  }),
+  setSpecialOrderState: (status, tab, category) => {
+    return set({
+      showSpecialOrderDialog: status,
+      tab,
+      category,
+    })
+  },
 
   setWholeSalesOrderState: (status, tab, category) => set({
     showSpecialOrderWholeSalesDialog: status,

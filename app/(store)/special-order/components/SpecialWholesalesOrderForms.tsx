@@ -31,6 +31,7 @@ function SpecialWholesalesOrderForms({
   orderKey,
   onChange,
   orderFrom,
+  initCategory
 }: {
   onChange: (
     data: SpecialWholesalesOrderFormValues,
@@ -38,6 +39,7 @@ function SpecialWholesalesOrderForms({
   ) => void;
   orderKey: string;
   orderFrom: number;
+  initCategory?:number
 }) {
   const { categories: allCategories } = useCategoriesDataStore();
   const categories = allCategories.filter((ele) => ele.categoryTypeNumber == 4); // 4 = فئات الجملة
@@ -46,9 +48,10 @@ function SpecialWholesalesOrderForms({
     resolver: zodResolver(SpecialWholesalesOrderFormSchema),
     defaultValues: {
       orderFrom: orderFrom,
-      quantity: 0,
+      quantity:1,
       isUrgen: false,
       orderKey: orderKey,
+      category:initCategory != undefined ? initCategory+"" : undefined
     },
   });
 

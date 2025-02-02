@@ -25,7 +25,7 @@ function SpecialWholesalesOrderDialog({
 }) {
   const initValues = {
     orderKey: Math.random().toString(36).substring(2, 7),
-    category: "",
+    category:category || "",
     orderDetails: "",
     orderFrom: 200,
     isValid: false,

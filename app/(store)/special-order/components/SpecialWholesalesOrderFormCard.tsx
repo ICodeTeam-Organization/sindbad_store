@@ -25,7 +25,7 @@ interface Props {
   orderFrom:number; 
 }
 
-function SpecialWholesalesOrderFormCard({index, orderFrom = 200,ordersNumber,onDeleteOrderForm,orderKey ,onChangeValues}: Props) {
+function SpecialWholesalesOrderFormCard({index, orderFrom = 200,ordersNumber,onDeleteOrderForm,orderKey ,onChangeValues,initCategory}: Props) {
   const orderFromTabs = [
     { id: 200, label: "من السعودية" },
     { id: 100, label: "من خارج السعودية" },
@@ -61,6 +61,7 @@ function SpecialWholesalesOrderFormCard({index, orderFrom = 200,ordersNumber,onD
       </div>
       <div>
           <SpecialWholesalesOrderForms
+            initCategory={initCategory}
             orderFrom={curentTab}
             orderKey={orderKey}
             onChange={(e, isValid) => {

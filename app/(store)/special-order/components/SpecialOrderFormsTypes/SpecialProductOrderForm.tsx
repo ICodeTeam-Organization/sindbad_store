@@ -49,7 +49,7 @@ function SpecialProductOrderForm({
     resolver: zodResolver(SpecialProductAndServiceOrderFormSchema),
     defaultValues: {
       type: 1,
-      quantity: 0,
+      quantity: 1,
       isUrgen: false,
       orderKey:orderKey,
       category:category ? category+"" : undefined

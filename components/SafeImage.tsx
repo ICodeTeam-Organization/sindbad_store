@@ -8,6 +8,7 @@ interface SafeImageProps extends Omit<ImageProps, 'src' | 'width' | 'height'> {
   fallbackSrc?: string; // رابط الصورة الافتراضية (اختياري)
   alt: string; 
   width?: number; 
+  objectFit?:string
   height?: number; 
 }
 
@@ -17,6 +18,7 @@ const SafeImage: React.FC<SafeImageProps> = ({
   alt = 'صورة', 
   width,
   height,
+  objectFit,
   ...rest // أخذ باقي الخصائص مثل className، priority وغيرها
 }) => {
   const [validSrc, setValidSrc] = useState<string>(fallbackSrc);
@@ -55,6 +57,7 @@ const SafeImage: React.FC<SafeImageProps> = ({
     <Image
       src={validSrc}
       loader={()=>validSrc}
+      objectFit={objectFit}
       alt={alt}
       onError={()=>setValidSrc(fallbackSrc)}
       width={width} // سيتم تمريرها فقط إذا كانت موجودة
