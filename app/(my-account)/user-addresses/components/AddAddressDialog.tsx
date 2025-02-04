@@ -1,5 +1,4 @@
 "use client";
-import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,104 +29,166 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getApi, postApi } from "@/lib/http";
+import { getApi, postApi, putApi } from "@/lib/http";
 import { useEffect, useState } from "react";
 import { SelectLabel } from "@radix-ui/react-select";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
+import { Loader2 } from "lucide-react";
+import { customerAddressType, UpdateAdressResponse } from "../types";
 
-type addAdress = {
-  regionId: number;
-  locationDescription: string;
-};
+// type addAdress = {
+//   directorateId: number;
+//   locationDescription: string;
+//   phoneNumber: string;
+//   customerName: string;
+// };
 
 const AddAddressDialog = ({
   show = false,
   setShow,
+  isEditing=false,
+  dataEditing,
+  onEditEnd,
+  onAddAddressEnd,
 }: {
   show: boolean;
   setShow: (status: boolean) => void;
+  isEditing?:boolean;
+  dataEditing?:customerAddressType,
+  onEditEnd?:(data:customerAddressType)=>void;
+  onAddAddressEnd?:(data:customerAddressType)=>void;
 }) => {
-  const router = useRouter();
-  const [showForm, setShowForm] = useState(true);
   const [directorates, setDirectorates] = useState<any[]>([]);
-  const [, setRegions] = useState<any>([]);
-  const form = useForm<z.infer<typeof AddshipingadressSchema>>({
-    resolver: zodResolver(AddshipingadressSchema),
-    defaultValues: {
-      title: "",
-      reciver: "محمد علي سالم عبدالله",
-      phone: "770700718",
-      stateid: "",
-      city: "",
-      place: "",
-    },
-  });
 
-  const {  data } = useQuery({
+  const { data } = useQuery({
     queryKey: ["city"],
     queryFn: () => getApi<any>(`Locations/GetGovernorateWithChildren`),
   });
-  const selectedState = form.watch("stateid");
-  const selectedCity = form.watch("city");
+  
 
-  useEffect(() => {
-    if (selectedState) {
-      const newDirectorates = data.data.find(
-        (state: any) => state.name === selectedState
-      ).directorates;
 
-      setDirectorates(() => [...newDirectorates]);
+  function getGovernorateByDirectorateId(directorateId:number) {
+    if(data?.data){
+      for (const governorate of data?.data) {
+        const directorate = governorate.directorates.find((dir:any) => dir.id === directorateId);
+        if (directorate) {
+            return governorate;
+        }
     }
-  }, [selectedState]);
-
-  //-----------------this for get regions
-  useEffect(() => {
-    if (selectedCity) {
-      const newRegions = directorates.find(
-        (city: any) => city.name === selectedCity
-      ).regions;
-      setRegions(() => [...newRegions]);
+    return null;
     }
-  }, [selectedCity]);
+}
 
-  const { mutate } = useMutation({
-    mutationFn: async ({ locationDescription, regionId }: addAdress) =>
-      await postApi<any>(`CustomerAddress/AddCustomerAddress`, {
+const form = useForm<z.infer<typeof AddshipingadressSchema>>({
+  resolver: zodResolver(AddshipingadressSchema),
+  defaultValues: {
+    locationDescription: "",
+    customerName: "",
+    phoneNumber: "",
+    stateid: "",
+    city: "",
+  },
+});
+
+// Effect to reset form when isEditing or dataEditing changes
+useEffect(() => {
+  if (isEditing && dataEditing) {
+    form.reset({
+      locationDescription: dataEditing.locationDescription ?? "",
+      customerName: dataEditing.customerName ?? "",
+      phoneNumber: dataEditing.phoneNumber  ?? "",
+      stateid: dataEditing.directorateId && getGovernorateByDirectorateId(dataEditing.directorateId)?.id ? getGovernorateByDirectorateId(dataEditing.directorateId)?.id +"": "",
+      city: dataEditing.directorateId ? String(dataEditing.directorateId) : "",
+    });
+
+    setDirectorates(getGovernorateByDirectorateId(dataEditing.directorateId||0)?.directorates);
+    
+  }
+}, [isEditing, dataEditing]);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async ({
+      city,
+      customerName,
+      phoneNumber,
+      locationDescription,
+    }: z.infer<typeof AddshipingadressSchema>) =>
+      await postApi<UpdateAdressResponse>(`CustomerAddress/AddCustomerAddress`, {
         body: {
-          regionId,
-          locationDescription,
+          directorateId: +city,
+          customerName: customerName,
+          phoneNumber: phoneNumber,
+          locationDescription: locationDescription,
         },
       }),
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast.success("تم إضافة العنوان");
-      router.refresh();
-      setShowForm(false);
+       if(onAddAddressEnd) onAddAddressEnd(data?.data as customerAddressType)
+      form.reset()
+      setShow(false);
     },
     onError: (error) => {
       toast.error(error.message);
     },
   });
+
+  const { mutate:mutateForEditing, isPending:isPendingForEditing } = useMutation({
+    mutationFn: async ({
+      city,
+      customerName,
+      phoneNumber,
+      locationDescription,
+    }: z.infer<typeof AddshipingadressSchema>) =>
+      await putApi<UpdateAdressResponse>(`CustomerAddress/UpdateCustomerAddress?customerAddressId=${dataEditing?.id}`, {
+         body:{
+          directorateId: +city,
+          customerName: customerName,
+          phoneNumber: phoneNumber,
+          locationDescription: locationDescription,
+        },
+      }),
+    onSuccess: (data) => {
+      console.log(data,"address editable");
+      
+      toast.success("تم تعديل العنوان");
+       if(onEditEnd) onEditEnd(data.data as customerAddressType)
+        form.reset()
+        setShow(false);
+    },
+    onError: (error) => {
+      console.log(error);
+      
+      toast.error(error.message);
+    },
+  });
+
+
   function onSubmit(values: z.infer<typeof AddshipingadressSchema>) {
-    mutate({
-      regionId: parseInt(values.place),
-      locationDescription: values.title,
-    });
+    if (isEditing) {
+      console.log(values);
+      mutateForEditing(values)
+    } else {
+      mutate(values);
+    }
   }
 
-
   return (
-    <Dialog open={show} onOpenChange={setShow} >
-      
-      {showForm && (
+    <Dialog open={show} onOpenChange={setShow}>
+      {  (
         <DialogContent className="m-auto">
-          
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8" dir="rtl">
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-8"
+              dir="rtl"
+            >
               <DialogHeader>
                 <div className=" mdHalf:p-8">
-                <h1 className="text-right text-base font-bold my-6" > إضافة عنوان جديد </h1>
-                  
+                  <h1 className="text-right text-base font-bold my-6">
+                    {" "}
+                    إضافة عنوان جديد{" "}
+                  </h1>
 
                   <FormLabel className="m-auto text-sm font-bold mb-2">
                     <p className=" text-right">المنطقة</p>
@@ -139,15 +200,28 @@ const AddAddressDialog = ({
                       render={({ field }) => (
                         <FormItem className="text-center">
                           <FormControl>
-                            <Select onValueChange={field.onChange}>
+                            <Select
+                              onValueChange={(e) => {
+                                field.onChange(e);
+                                const der = data?.data?.find(
+                                  (dir: any) => +dir.id == +e
+                                );
+                                setDirectorates(der?.directorates || []);
+                              }}
+ 
+                            >
                               <SelectTrigger className="text-sm" dir="rtl">
-                                <SelectValue placeholder="المحافظة" />
+                                <SelectValue placeholder={ getGovernorateByDirectorateId(dataEditing?.directorateId||0)?.name ?? "المحافظة"} />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectGroup {...field}>
-                                  {data.data.map((itm: any) => (
-                                    <SelectItem key={itm.id} value={itm.name}>
-                                      {itm.name}
+                                  {data?.data?.map((itm: any) => (
+                                    <SelectItem
+                                      key={itm?.id}
+                                      value={itm?.id + ""}
+                                      dir="rtl"
+                                    >
+                                      {itm?.name}
                                     </SelectItem>
                                   ))}
                                 </SelectGroup>
@@ -164,24 +238,25 @@ const AddAddressDialog = ({
                       render={({ field }) => (
                         <FormItem className="text-center">
                           <FormControl>
-                            <Select onValueChange={field.onChange}>
+                            <Select onValueChange={field.onChange} >
                               <SelectTrigger className="text-sm" dir="rtl">
-                                <SelectValue placeholder="المديرية" />
+                                <SelectValue placeholder={dataEditing?.directorateName ?? "المديرية"}  />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectGroup {...field}>
                                   <SelectLabel>
-                                    {directorates.length > 0
-                                      ? "المديريات"
-                                      : "يجب اختيار المحاظة اولا"}
+                                    {form.getValues().stateid &&
+                                      "يجب اختيار المحاظة اولا"}
                                   </SelectLabel>
-                                  {directorates.length > 0 &&
-                                    directorates.map((city: any) => (
+                                  {form.getValues().stateid &&
+                                    directorates?.length > 0 &&
+                                    directorates?.map((city: any) => (
                                       <SelectItem
-                                        key={city.id}
-                                        value={city.name}
+                                        key={city?.id}
+                                        value={city?.id + ""}
+                                        dir="rtl"
                                       >
-                                        {city.name}
+                                        {city?.name}
                                       </SelectItem>
                                     ))}
                                 </SelectGroup>
@@ -229,14 +304,14 @@ const AddAddressDialog = ({
                   </div>
                   <FormField
                     control={form.control}
-                    name="reciver"
+                    name="customerName"
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
                         <FormLabel className="m-auto text-sm font-bold mb-2">
                           <p>المستلم</p>
                         </FormLabel>
                         <FormControl>
-                          <Input disabled {...field} />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -244,23 +319,23 @@ const AddAddressDialog = ({
                   />
                   <FormField
                     control={form.control}
-                    name="phone"
+                    name="phoneNumber"
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
                         <FormLabel className="m-auto text-sm font-bold mb-2">
                           <p>رقم التلفون</p>
                         </FormLabel>
                         <FormControl>
-                          <Input disabled {...field} />
+                          <Input {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
                     )}
                   />
 
-<FormField
+                  <FormField
                     control={form.control}
-                    name="title"
+                    name="locationDescription"
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
                         <FormLabel className="m-auto text-sm font-bold mb-2">
@@ -273,14 +348,25 @@ const AddAddressDialog = ({
                       </FormItem>
                     )}
                   />
-
                 </div>
               </DialogHeader>
 
-              <DialogFooter className=" flex flex-row mdHalf:px-8 gap-x-2 " dir="ltr" >
-                <Button type="submit" className="bg-primary-background hover:bg-primary-background" >حفظ العنوان</Button>
+              <DialogFooter
+                className=" flex flex-row mdHalf:px-8 gap-x-2 "
+                dir="ltr"
+              >
+                <Button
+                  type="submit"
+                  className="bg-primary-background hover:bg-primary-background"
+                >
+                  {isPending || isPendingForEditing? (
+                    <Loader2 className="animate-spin" />
+                  ) : (
+                    isEditing ? "تعديل" :"حفظ العنوان"
+                  )}
+                </Button>
                 <DialogClose>
-                <Button type="submit">إلغاء</Button>
+                  <Button type="submit">إلغاء</Button>
                 </DialogClose>
               </DialogFooter>
             </form>

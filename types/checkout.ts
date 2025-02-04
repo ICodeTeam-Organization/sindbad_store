@@ -9,4 +9,5 @@ export type CheckoutType = {
 export type Bank = {
   id: string;
   bankName: string;
+  accountNumber:number
 };

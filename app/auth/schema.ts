@@ -55,11 +55,12 @@ export const ResetPassSchema = z
   );
 
 export const AddshipingadressSchema = z.object({
-  title: z.string().min(1, "يجب إدخال العنوان"),
-  reciver: z.string().min(1, "يجب إدخال اسم المستلم"),
-  phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
+  locationDescription: z.string().min(1, "يجب إدخال العنوان"),
+  customerName: z.string().min(1, "يجب إدخال اسم المستلم"),
+  phoneNumber: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
   // state: z.string().min(1, "اختر المحافظة"),
   stateid: z.string().min(1, "اختر المحافظة"),
   city: z.string().min(1, "اختر المدينة"),
-  place: z.string().min(1, "اختر المنطقة"),
+  // place: z.string().min(1, "اختر المنطقة"),
 });
+

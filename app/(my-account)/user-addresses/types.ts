@@ -18,12 +18,12 @@ export interface SidebarItemProps {
 
 
 export type customerAddressType = {
-  customerAddressId: number;
-  regionId: number;
-  location: string;
-  regionName: string;
+  id: number,
+  directorateId: number;
+  locationDescription: string;
+  customerName: string;
   directorateName: string;
-  governorateName: string;
+  phoneNumber: string;
 }
 
 export type AddressResponse = {
@@ -31,3 +31,17 @@ export type AddressResponse = {
   message: string;
   data: customerAddressType[];
 }
+
+
+export type UpdateAdressResponse = {
+  success: boolean;
+  message: string;
+  data: {
+    id: number;
+    directorateId: number;
+    directorateName: string;
+    customerName: string;
+    phoneNumber: string;
+    locationDescription: string;
+  };
+};

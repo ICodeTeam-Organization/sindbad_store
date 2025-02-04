@@ -47,7 +47,7 @@ function extractNumbers(str: string) {
 const CheckoutForm = () => {
   const { data } = useQuery<any>({
     queryKey: ["banks"],
-    queryFn: async () => await getApi("Cart/GetAllBanksForViewInCartPage"),
+    queryFn: async () => await getApi("BankAccountsGetAccountsByCompany"),
   });
 
   const form = useForm<CheckoutType>({
@@ -148,8 +148,8 @@ const CheckoutForm = () => {
                       <SelectContent>
                         <SelectGroup>
                           {data?.data?.map((bank: Bank) => (
-                            <SelectItem key={bank.id} value={bank.id.toString()}>
-                              {bank.bankName}
+                            <SelectItem key={bank?.id} value={bank?.id.toString()}>
+                              {bank?.bankName} -  {bank?.accountNumber}
                             </SelectItem>
                           ))}
                         </SelectGroup>
