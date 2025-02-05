@@ -35,7 +35,7 @@ function CardsInfo() {
           }
         },
         {
-          title: "أطلب بل جملة",
+          title: "أطلب بالجملة",
           desc: "نوفر لك ما تريد من كل الأصناف والمنتجات",
           image: "/images/track_ic.svg",
           bgc: "#DCEBFF",
