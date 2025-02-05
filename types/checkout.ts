@@ -5,6 +5,7 @@ export type CheckoutType = {
   image: FileList; 
   note: string;
   amount: string;
+  customerAdressId:number
 };
 export type Bank = {
   id: string;

@@ -38,6 +38,13 @@ import SuccessDialog from "./SuccessModal";
 import { useState } from "react";
 // import { z } from "zod";
 import { validateCheckoutForm } from "../schema";
+import { Label } from "@/components/ui/label";
+import {
+  AddressResponse,
+  customerAddressType,
+} from "@/app/(my-account)/user-addresses/types";
+import Link from "next/link";
+import { useRouter } from "next-nprogress-bar";
 
 function extractNumbers(str: string) {
   const numbers = str.match(/\d+/g);
@@ -48,6 +55,11 @@ const CheckoutForm = () => {
   const { data } = useQuery<any>({
     queryKey: ["banks"],
     queryFn: async () => await getApi("BankAccountsGetAccountsByCompany"),
+  });
+
+  const { data: addressData } = useQuery<AddressResponse>({
+    queryKey: ["address-checkout"],
+    queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress`),
   });
 
   const form = useForm<CheckoutType>({
@@ -63,6 +75,7 @@ const CheckoutForm = () => {
 
   const { data: authData } = useSession();
   const { setCartItems } = useCartStore();
+  const router = useRouter();
   const { toast } = useToast();
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -70,7 +83,7 @@ const CheckoutForm = () => {
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["upload-bound"],
-    mutationFn: async (data:CheckoutType) => {
+    mutationFn: async (data: CheckoutType) => {
       const formData = new FormData();
       if (data.bank) {
         formData.append("BankAccountId", String(+data.bank));
@@ -83,6 +96,9 @@ const CheckoutForm = () => {
       }
       if (data.date) {
         formData.append("BondDate", data.date);
+      }
+      if (data.customerAdressId) {
+        formData.append("customerAdressId", ""+data.customerAdressId );
       }
       if (data.image && data.image.length > 0) {
         formData.append("BondImageFile", data.image[0]);
@@ -101,7 +117,7 @@ const CheckoutForm = () => {
     },
     onError: (err) => {
       console.log(err);
-      
+
       toast({
         variant: "destructive",
         description: err.message || "حدث خطأ أثناء معالجة الطلب",
@@ -117,11 +133,14 @@ const CheckoutForm = () => {
   });
 
   async function onSubmit(values: CheckoutType) {
-    const vald = validateCheckoutForm(values)
+    const vald = validateCheckoutForm(values);
     if (vald.length == 0) {
-      console.log(values);
-      
        mutate(values);
+    } else {
+      toast({
+        variant: "destructive",
+        description: vald[0], 
+      });
     }
   }
 
@@ -132,14 +151,88 @@ const CheckoutForm = () => {
           <h1 className="font-bold text-xl text-center">أجراءات الدفع</h1>
         </CardHeader>
         <FormProvider {...form}>
-          <form encType="multipart/form-data" onSubmit={form.handleSubmit((s)=>{onSubmit(s)})}>
+          <form
+            encType="multipart/form-data"
+            onSubmit={form.handleSubmit((s) => {
+              onSubmit(s);
+            })}
+          >
             <CardContent className="space-y-4">
+              <FormField
+                control={form.control}
+                name="customerAdressId"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <Label>عنوان الإستلام</Label>
+                    <Select dir="rtl" onValueChange={field.onChange}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="حدد عنوان الإستلام" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectGroup>
+                          {addressData?.data?.map(
+                            (address: customerAddressType) => (
+                              <SelectItem
+                                key={address?.id}
+                                value={address?.id.toString()}
+                              >
+                                {address?.directorateName}
+                              </SelectItem>
+                            )
+                          )}
+                        </SelectGroup>
+                        {addressData?.data.length == 0 && <div className="text-sm flex flex-col items-center justify-center p-4">
+                          <h1 className="mb-2"> لا توجد لديك عناوين </h1>
+                          <Link
+                            href={"/user-addresses"}
+                            className="text-primary-background"
+                          >
+                            إضافة عنوان
+                          </Link>
+                        </div>}
+                      </SelectContent>
+                    </Select>
+                    {field?.value && (
+                      <p className="text-[10px] text-gray-500 mx-1">
+                        <span>
+                          {" "}
+                          المستلم :{" "}
+                          {
+                            addressData?.data?.find(
+                              (e) => +e.id == +field.value
+                            )?.customerName
+                          }{" "}
+                        </span>
+                        -
+                        <span>
+                          {" "}
+                          العنوان :{" "}
+                          {
+                            addressData?.data?.find(
+                              (e) => +e.id == +field.value
+                            )?.locationDescription
+                          }{" "}
+                        </span>
+                      </p>
+                    )}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <FormField
                 control={form.control}
                 name="bank"
                 render={({ field }: { field: any }) => (
                   <FormItem className="w-full">
-                    <Select dir="rtl" onValueChange={field.onChange} value={field.value}>
+                    <Label>الصراف</Label>
+                    <Select
+                      dir="rtl"
+                      onValueChange={field.onChange}
+                      value={field.value}
+                    >
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="حدد الصراف/البنك" />
@@ -148,8 +241,11 @@ const CheckoutForm = () => {
                       <SelectContent>
                         <SelectGroup>
                           {data?.data?.map((bank: Bank) => (
-                            <SelectItem key={bank?.id} value={bank?.id.toString()}>
-                              {bank?.bankName} -  {bank?.accountNumber}
+                            <SelectItem
+                              key={bank?.id}
+                              value={bank?.id.toString()}
+                            >
+                              {bank?.bankName} - {bank?.accountNumber}
                             </SelectItem>
                           ))}
                         </SelectGroup>
@@ -194,7 +290,10 @@ const CheckoutForm = () => {
       <SuccessDialog
         open={isDialogOpen}
         requestNumber={requestNumber}
-        onOpenChange={setIsDialogOpen}
+        onOpenChange={(e)=>{
+          setIsDialogOpen(e);
+          router.push("/")
+        }}
       />
     </>
   );

@@ -12,52 +12,59 @@ export default async function PriceDetails({
 }: {
   params: { orderId: string };
 }) {
-  const specialOrderDetails = await getApi<SpecialOrderDetailsType>(
-    `SpecialProducts/Market/GetSpecialProductDetails/${+params?.orderId}`
-  );
-  const prices = await getApi<OfferDetailsResponseType>(
-    `SpecialProducts/Market/GetAllOfferPriceOfSpecificSpecialProductByCustomer/${+params?.orderId}`
-  );
+  let prices, specialOrderDetails;
 
-  if (!specialOrderDetails.success || !prices.success) {
+  try {
+    prices = await getApi<OfferDetailsResponseType>(
+      `SpecialProducts/Market/GetAllOfferPriceOfSpecificSpecialProductByCustomer/${+params?.orderId}`
+    );
+  } catch (error) {
+    console.error("خطأ أثناء جلب الأسعار:", error);
+  }
+
+  try {
+    specialOrderDetails = await getApi<SpecialOrderDetailsType>(
+      `SpecialProducts/Market/GetSpecialProductDetails/${+params?.orderId}`
+    );
+  } catch (error) {
+    console.error("خطأ أثناء جلب تفاصيل الطلب الخاص:", error);
     return notFound();
   }
 
-  const { name: orderName, orderNumber , specialCategoryId , description , linkUrl} = specialOrderDetails?.data;
+  const {
+    name: orderName,
+    orderNumber,
+    specialCategoryId,
+    description,
+    linkUrl,
+    images,
+  } = specialOrderDetails?.data;
 
   return (
     <div className="m-10 tajawal  ">
       <div className=" ">
         <h1 className="font-bold">طلب خاص</h1>
-        <p className="mt-4 text-gray-600 font-bold text-sm"> تم تسعير الطلب </p>
+        {prices?.success ? (
+          <p className="mt-4 text-gray-600 font-bold text-sm">
+            {" "}
+            تم تسعير الطلب{" "}
+          </p>
+        ) : (
+          <p className="mt-4 text-gray-600 font-bold text-sm">
+            {" "}
+            لم يتم تسعير الطلب بعد{" "}
+          </p>
+        )}
       </div>
 
       <div className="mdHalf:flex mt-6  ">
-     
         <div className=" flex items-center justify-center mdHalf:block mdHalf:mb-0 mb-10 ">
           <div className=" relative">
-            <ImagesViewr
-              images={[
-                "/images/hero.jpg",
-                "/images/alogo.png",
-                "/images/hero.jpg",
-                "/images/alogo.png",
-                "/images/hero.jpg",
-                "/images/alogo.png",
-                "/images/hero.jpg",
-                "/images/alogo.png",
-                "/images/hero.jpg",
-                "/images/alogo.png",
-                "/images/hero.jpg",
-                "/images/alogo.png",
-              ]}
-              key={10}
-            />
+            <ImagesViewr images={images} key={10} />
           </div>
         </div>
 
         <div className="  flex-1   ">
-      
           <div className="flex justify-between items-center">
             <p className="font-bold text-sm">
               {" "}
@@ -77,36 +84,42 @@ export default async function PriceDetails({
             <div className="bg-gray-100 p-4">
               <p className="font-bold  ">
                 {" "}
-                الفئة : <span className="font-normal"> <CategoryName id={specialCategoryId} /> </span> {" "}
+                الفئة :{" "}
+                <span className="font-normal">
+                  {" "}
+                  <CategoryName id={specialCategoryId} />{" "}
+                </span>{" "}
               </p>
             </div>
             <div className="bg-gray-100 p-4">
               <p className="font-bold "> وصف الطلب :</p>
-              <p>
-                {description}
-              </p>
+              <p>{description}</p>
             </div>
             <div className="bg-gray-100 p-4">
               <p className="font-bold ">
                 {" "}
                 رابط URL المنتج :
-                {linkUrl ? <Link href={linkUrl} className="font-normal"> {linkUrl} </Link> : <span className="font-normal"  > لا يوجد رابط</span>}{" "}
+                {linkUrl ? (
+                  <Link href={linkUrl} className="font-normal">
+                    {" "}
+                    {linkUrl}{" "}
+                  </Link>
+                ) : (
+                  <span className="font-normal"> لا يوجد رابط</span>
+                )}{" "}
               </p>
             </div>
           </div>
-
-     
-
-          
         </div>
-        
-        
-
       </div>
-      <div>
-        <h1 className="mt-8 font-bold" >التسعيرات : </h1>
-        <OfferPricesTable initData={prices} />
+
+      {prices?.success && (
+        <div>
+          {" "}
+          <h1 className="mt-8 font-bold">التسعيرات : </h1>
+          <OfferPricesTable initData={prices} />
         </div>
+      )}
     </div>
   );
 }

@@ -28,7 +28,7 @@ function TopSectionOfHeader({isHomePage=false}) {
               </div>
 
               <div className="hidden md:block mdHalf:w-auto flex-1 ">
-                <SearchComponent  />
+                <SearchComponent isHomePage={isHomePage}  />
               </div>
 
               <div className="flex flex-row items-center  md:gap-2 gap-6">

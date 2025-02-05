@@ -2,9 +2,13 @@
 
 import { useState } from "react";
 import SafeImage from "@/components/SafeImage";
+import { useSession } from "next-auth/react";
 
 const ImagesViewr = ({ images }: { images: string[] }) => {
   const [selectedImage, setSelectedImage] = useState(images[0]);
+  const {data} = useSession()
+  console.log(data);
+  
 
   return (
     <div className="flex flex-col items-center mx-5 w-[300px]" style={{ direction: "ltr" }}>
@@ -43,7 +47,7 @@ const ImagesViewr = ({ images }: { images: string[] }) => {
 
         </div>
       ) : (
-        <div className="text-center text-gray-500">لا توجد صور متوفرة</div>
+        <div className="text-center text-gray-500 aspect-square w-[300px] flex items-center justify-center border rounded-sm">لا توجد صور متوفرة</div>
       )}
     </div>
   );

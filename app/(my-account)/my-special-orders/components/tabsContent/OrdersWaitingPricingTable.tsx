@@ -92,7 +92,7 @@ const OrdersWaitingPricingTable: React.FC<{
                         href={"/my-special-orders/priceDetails/" + id}
                         className="w-[140px] text-[#768396] h-[38px] bg-[#FFEBDD] px-4 py-2 rounded-lg whitespace-nowrap"
                       >
-                        عرض تفاصيل السعر
+                        عرض تفاصيل الطلب
                       </Link>
                       <Image
                         src="/images/MyAccountImages/ai-generative.svg"
