@@ -2,18 +2,20 @@
 import React from "react";
 
 import ProfileForm from "./components/ProfileForm";
+import { getApi } from "@/lib/http";
+import { ProfileResponsiveType } from "./types";
+
+
+
+
 const UserForm = async () => {
-
-  // const data = await getSession()
-
-  // console.log(data,"userrrrrrrrrrrrrrrrr");
-  
-  
+ 
+  const resulte = await getApi<ProfileResponsiveType>("Customer/profile");
 
   return (
     <div>
       <div className="">
-          <ProfileForm/>
+          <ProfileForm profile={resulte?.data} />
       </div>
     </div>
   );

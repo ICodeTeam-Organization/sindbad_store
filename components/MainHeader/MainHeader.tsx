@@ -15,6 +15,8 @@ const MainHeader = ({ isHomePage = false }) => {
 
   const [openNav, setopenNav] = useState<boolean>(false);
   const session = useSession();
+  console.log(session);
+  
   const isAuth = session.status === "authenticated";
 
   let lastScrollTop = 0; 

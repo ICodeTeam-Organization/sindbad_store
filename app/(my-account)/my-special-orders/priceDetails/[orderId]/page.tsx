@@ -40,6 +40,9 @@ export default async function PriceDetails({
     images,
   } = specialOrderDetails?.data;
 
+  console.log(specialOrderDetails?.data);
+  
+
   return (
     <div className="m-10 tajawal  ">
       <div className=" ">
@@ -60,7 +63,7 @@ export default async function PriceDetails({
       <div className="mdHalf:flex mt-6  ">
         <div className=" flex items-center justify-center mdHalf:block mdHalf:mb-0 mb-10 ">
           <div className=" relative">
-            <ImagesViewr images={images} key={10} />
+            <ImagesViewr images={images.map(e=>e.imageUrl)} key={10} />
           </div>
         </div>
 
@@ -98,9 +101,10 @@ export default async function PriceDetails({
             <div className="bg-gray-100 p-4">
               <p className="font-bold ">
                 {" "}
-                رابط URL المنتج :
+                رابط   المنتج 
+                <br/>
                 {linkUrl ? (
-                  <Link href={linkUrl} className="font-normal">
+                  <Link href={linkUrl} className="font-normal   text-blue-600 underline">
                     {" "}
                     {linkUrl}{" "}
                   </Link>

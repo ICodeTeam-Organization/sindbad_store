@@ -20,3 +20,19 @@ export interface ButtonProps {
     className?: string;
 }
   
+export type ProfileType = {
+    name: string;
+    email: string;
+    telePhone: string;
+    phoneNumber: string;
+    directorate: string;
+    governorate: string;
+    directorateId: number;
+    governorId: number;
+  };
+
+export type ProfileResponsiveType = {
+  success: boolean;
+  message: string;
+  data: ProfileType
+};

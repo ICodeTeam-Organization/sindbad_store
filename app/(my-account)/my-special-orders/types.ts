@@ -73,7 +73,7 @@ export type SpecialOrderDetailsType = {
       updatedAt: string;
       status: number;
       statusName: string;
-      images: string[]; // Array of image URLs or paths
+      images: {imageUrl:string}[]; // Array of image URLs or paths
       note: string | null;
     };
   };
