@@ -1,7 +1,8 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import SafeImage from "@/components/SafeImage";
 import ProductReviewsTap from "./reviews-tap";
-import {Product} from "./../types"
+import { Product } from "./../types";
+import ProductFeaturesTable from "./features-table";
 
 type TabsComponentProps = {
   product: Product;
@@ -18,34 +19,37 @@ type TabsComponentProps = {
   // };
 };
 
-const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
+const TabsComponent: React.FC<TabsComponentProps> = ({
+  product,
+  productId,
+}) => (
   <Tabs.Root defaultValue="details" className="w-full mdHalf:px-12 p-4 mt-5">
     <Tabs.List
-      className="flex items-start space-x-reverse space-x-4 border-b-2 border-orange-500 pb-2 w-full justify-start"
+      className="flex items-start space-x-reverse space-x-4 border-b-2 border-orange-500   w-full justify-start"
       dir="rtl"
     >
       <Tabs.Trigger
         value="details"
-        className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
+        className="px-6 rounded-t-lg data-[state=active]:bg-primary-background   p-2  font-medium text-gray-700 focus:outline-none  data-[state=active]:border-orange-500 data-[state=active]:text-white"
       >
         لمحة
       </Tabs.Trigger>
       <Tabs.Trigger
         value="features"
-        className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
+        className="px-6 rounded-t-lg data-[state=active]:bg-primary-background   p-2  font-medium text-gray-700 focus:outline-none  data-[state=active]:border-orange-500 data-[state=active]:text-white"
       >
         التفاصيل
       </Tabs.Trigger>
       <Tabs.Trigger
         value="reviews"
-        className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
+        className="px-6 rounded-t-lg data-[state=active]:bg-primary-background   p-2  font-medium text-gray-700 focus:outline-none  data-[state=active]:border-orange-500 data-[state=active]:text-white"
       >
         التقييمات
       </Tabs.Trigger>
     </Tabs.List>
 
     {/* Dynamic Tab Content */}
-    <div className="pt-4 w-full" dir="rtl" >
+    <div className="pt-4 w-full" dir="rtl">
       <Tabs.Content
         value="details"
         className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
@@ -91,7 +95,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
         value="features"
         className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
       >
-        {
+        {/* {
           product.attributesWithValues && product.attributesWithValues.length > 0  ? (        product.attributesWithValues?.map((attribute, index) => (
             <div key={index} className="flex items-center mb-2">
               <span className="font-medium ml-1">{attribute.attributeName}: </span>
@@ -100,14 +104,15 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ product, productId}) => (
           ))) : (
             <p className="text-center">لا يوجد معلومات اضافية</p>
           )
-}
+} */}
+        <ProductFeaturesTable features={product?.attributesWithValues} />
       </Tabs.Content>
 
       <Tabs.Content
         value="reviews"
         className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
       >
-        <ProductReviewsTap productId={productId} product={product}/>
+        <ProductReviewsTap productId={productId} product={product} />
       </Tabs.Content>
     </div>
   </Tabs.Root>

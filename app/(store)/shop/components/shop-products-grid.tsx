@@ -67,6 +67,9 @@ const ShopProductsGrid = () => {
         })
       );
 
+      console.log(filteredBody);
+      
+
 
       const response = await postApi(
         `Products/GetProductsWitheFilter?returnDtoName=2`,

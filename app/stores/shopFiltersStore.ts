@@ -45,7 +45,7 @@ type ShopFiltersStore = {
 };
 
 const initState = {
-  price: [0, 1000] as [number, number],
+  price: [0, 20000] as [number, number],
   storeId: "",
   cats: [] as string[],
   subCats: [] as string[],

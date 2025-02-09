@@ -29,6 +29,7 @@ function SearchComponent({ isHomePage = false }) {
     } else if (isStorePage) {
       setStoreName(searchKeyword);
     } else {
+      router.push(`/shop?productName=${searchKeyword}`);
       setProductName(searchKeyword);
     }
 

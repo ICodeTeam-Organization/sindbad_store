@@ -1,9 +1,11 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { ProductFeaturesTableProps } from "../types";
+import { AttributeWithValues } from "@/types/pruductDetails";
 
-const ProductFeaturesTable: React.FC<ProductFeaturesTableProps> = ({
+const ProductFeaturesTable  = ({
   features,
+} : {
+  features:AttributeWithValues[]
 }) => {
   return (
     <Table className="table-auto w-full text-right" dir="rtl">
@@ -13,8 +15,8 @@ const ProductFeaturesTable: React.FC<ProductFeaturesTableProps> = ({
             key={index}
             className={index % 2 === 0 ? "bg-gray-100" : ""}
           >
-            <TableCell>{feature.label}</TableCell>
-            <TableCell>{feature.value}</TableCell>
+            <TableCell>{feature.attributeName}</TableCell>
+            <TableCell>{feature.values[0]}</TableCell>
           </TableRow>
         ))}
       </TableBody>

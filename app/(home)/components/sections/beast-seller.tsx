@@ -19,8 +19,6 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
   const [IsHover, setIsHover] = useState(true)
 
 
-  console.log(BeastSellerInWeek.data);
-  
 
   return (
     <div className=" mx-auto ">
