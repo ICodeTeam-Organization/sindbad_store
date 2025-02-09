@@ -57,9 +57,8 @@ async function http<T>(
   if (!response.ok) {
     
     const errorResponse = await response;
-    // const faliure = (await response.json())
-    const faliure = "";
-    content = errorResponse.statusText || "حدث خطأ ما!";
+    const faliure = (await response?.json())
+    content = errorResponse.statusText || faliure?.message || "حدث خطأ ما!";
     if (errorResponse.status === 404) {
       return notFound();
     }

@@ -25,7 +25,7 @@ const AddSpecialOrderToCartButton: React.FC<
     // mutationKey:[pricingId + "AcceptOrRejectOfferPriceByCustomer"],
     mutationFn: async () => {
       return await putApi(
-        `SpecialProducts/Market/AcceptOrRejectOfferPriceByCustomer/${pricingId}/true`
+        `SpecialProducts/Market/AcceptOrRejectOfferPriceByCustomer/${pricingId}`
       );
     },
     onSuccess: (data:any) => {
@@ -36,7 +36,7 @@ const AddSpecialOrderToCartButton: React.FC<
       };
       addItem(newCart)
       toast({
-        variant: "destructive",
+        variant: "default",
         description: "تم الإضافة الى السلة بنجاح",
       });
     },
