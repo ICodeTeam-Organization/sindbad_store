@@ -323,7 +323,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
                     </SelectTrigger>
                     <SelectContent>
                       {allGovs?.find(e=> +e?.id == +form?.getValues()?.governorate)?.directorates?.map((ele: any) => (
-                          <SelectItem value={ele?.id + ""}>
+                          <SelectItem key={ele?.id} value={ele?.id + ""}>
                             {ele?.name}
                           </SelectItem>
                         ))}
