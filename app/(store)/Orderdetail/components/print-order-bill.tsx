@@ -2,8 +2,7 @@
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import React, { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
-import PriceLabel from "../../shopping-card/components/price-label";
-import Link from "next/link";
+import PriceLabel from "../../shopping-card/components/price-label"; 
 import { Button } from "@/components/ui/button";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 
@@ -15,7 +14,19 @@ const PrintOrderBill = ({ Bill }: any) => {
     reactToPrintFn();
   };
   return (
-    
+     <div>
+        { 
+      <CardContent ref={contentRef} className="text-sm p-0 mdHalf:p-6 mdHalf:pt-0 pb-6 m-4 hidden print:block" >
+      <PriceLabel title="المجموع" price={Bill.totalOrderDetailsPrice} />
+      <PriceLabel title="الشحن" price={Bill.totalShipCost} />
+      <PriceLabel title="الخصم" price={Bill.totalDiscount} />
+      <hr className="my-2" />
+      <div className="flex justify-between mb-2">
+        <span className="font-semibold">الإجمالي</span>
+        <span className="font-semibold">{Bill.totalPrice} رس</span>
+      </div>
+    </CardContent>
+     }
     <Card className="mdHalf:sticky mdHalf:top-[100px] mdHalf:z-10 border-white shadow-none  mdHalf:border-gray-200 " >
     <CardHeader className="p-0 mdHalf:p-6 " >
       <div className="flex items-center mb-4 gap-x-2" >
@@ -25,7 +36,7 @@ const PrintOrderBill = ({ Bill }: any) => {
       </h2>
        </div>
     </CardHeader>
-    <CardContent className="text-sm p-0 mdHalf:p-6 mdHalf:pt-0 pb-6" >
+    <CardContent   className="text-sm p-0 mdHalf:p-6 mdHalf:pt-0 pb-6 " >
       <PriceLabel title="المجموع" price={Bill.totalOrderDetailsPrice} />
       <PriceLabel title="الشحن" price={Bill.totalShipCost} />
       <PriceLabel title="الخصم" price={Bill.totalDiscount} />
@@ -36,13 +47,14 @@ const PrintOrderBill = ({ Bill }: any) => {
       </div>
     </CardContent>
     { <CardFooter >
-      <Link href={"/checkout"}  className=" w-full" >
+      <div  className="w-full" >
         <Button onClick={handlePrint} className="bg-primary-background hover:bg-orange-600 text-white text-base  w-full">
               تصدير PDF
         </Button>
-      </Link>
+      </div>
     </CardFooter>}
   </Card>
+     </div>
   );
 };
 

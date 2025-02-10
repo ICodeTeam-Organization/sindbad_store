@@ -25,10 +25,8 @@ export type ProfileType = {
     email: string;
     telePhone: string;
     phoneNumber: string;
-    directorate: string;
-    governorate: string;
-    directorateId: number;
-    governorId: number;
+    directorateId: string;
+    governorId: string;
   };
 
 export type ProfileResponsiveType = {

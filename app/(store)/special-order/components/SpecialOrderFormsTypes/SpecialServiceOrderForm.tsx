@@ -48,7 +48,7 @@ function SpecialServiceOrderForm({
       quantity: 1,
       isUrgen: false,
       orderKey: orderKey,
-      category: category ? category + "" : undefined,
+      category: category && categories?.find(e=> e?.id == category) ? category + "" : undefined,
     },
   });
 
@@ -187,10 +187,9 @@ function SpecialServiceOrderForm({
               <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <InputFile
-                    orderKey={orderKey}
-                    multiple
+                    orderKey={orderKey} 
                     onChange={(e) => {
-                      field.onChange(e?.target?.files || []);
+                      field.onChange(e || []);
                       handleFieldChange({ ...form.getValues() });
                     }}
                   />

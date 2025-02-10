@@ -4,7 +4,7 @@ import { postApi } from "@/lib/http";
 import { useToast } from "@/hooks/use-toast";
 
 import Link from "next/link";
-import {   Plus, Send, X } from "lucide-react";
+import { Plus, Send, X } from "lucide-react";
 import { useRef, useState } from "react";
 import SpecialOrderFormCard from "./SpecialOrderFormCard";
 import {
@@ -131,18 +131,15 @@ const SpecialOrderForm = ({
 
           Object.entries(data).forEach(([key, value]) => {
             if (key === "Images" && Array.isArray(value)) {
-              value.forEach((file, index) => {
-                formData.append(`Images[${index}]`, file);
-              });
+              value.map((v)=>{
+                formData.append("Images",v); 
+              })
             } else if (key === "FilePDF" && value instanceof File) {
               formData.append("FilePDF", value);
             } else if (value !== null && value !== undefined) {
               formData.append(key, value.toString());
             }
           });
-
-          console.log(formData.get("SpecialCategoryId"));
-
           // إرسال الطلب إلى API
           return await postApi(
             `SpecialProducts/Market/AskNewSpecialProductByCustomer`,
@@ -175,8 +172,6 @@ const SpecialOrderForm = ({
       //   console.error("Failed requests:", failedRequests.map(f => f.reason));
       //   throw new Error("Some requests failed. Check console for details.");
       // }
-
-      console.log(response);
 
       setShowResultesDialog(response);
 
@@ -216,11 +211,16 @@ const SpecialOrderForm = ({
         open={showResultesDialog != null}
       />
 
-      <div className=" bg-[#257F24] p-4 text-white flex items-center justify-between">
-       <div className="flex gap-x-3" >
-        <X  className="cursor-pointer" onClick={()=>{closeDialog()}} />
-       <p>طلب خاص</p>
-       </div>
+      <div className=" bg-[#257F24] p-4 text-white flex items-center justify-between sticky top-0 z-50 ">
+        <div className="flex gap-x-3">
+          <X
+            className="cursor-pointer"
+            onClick={() => {
+              closeDialog();
+            }}
+          />
+          <p>طلب خاص</p>
+        </div>
         <Link href="/" className="text-xs underline">
           كيف تطلب طلب خاص ؟
         </Link>
@@ -251,11 +251,10 @@ const SpecialOrderForm = ({
                       ] as typeof prevOrders
                   );
                   setTimeout(() => {
-                    handleScrollToEnd()
+                    handleScrollToEnd();
                   }, 200);
                 }
               }}
-
               className="text-xs text-black bg-[#FFDBC3] hover:bg-[#FFDBC3] hover:bg-opacity-[0.7] tajawal"
             >
               <span className="mx-2 font-bold">اضافة طلب</span>
@@ -275,6 +274,7 @@ const SpecialOrderForm = ({
                 });
               } else {
                 handleOnSubmit.mutate();
+                
               }
             }}
             className="bg-primary-background mdHalf:px-8 hover:bg-primary-background hover:bg-opacity-[0.7] tajawal "
@@ -296,17 +296,17 @@ const SpecialOrderForm = ({
         </div>
 
         <p className="text-xs mdHalf:hidden block mx-2 mb-4 ">
-              عدد الطلبات
-              <span> ( {ordersValues.length} ) </span>
-            </p>
+          عدد الطلبات
+          <span> ( {ordersValues.length} ) </span>
+        </p>
 
         <div ref={divRefForScroll} className="overflow-y-auto mdHalf:h-[60vh] ">
           {ordersValues?.map((order, index) => (
             <SpecialOrderFormCard
               orderKey={order?.orderKey}
-              key={order.orderKey}
-              orderslength={ordersValues.length}
-              ordersNumber={ordersValues.length}
+              key={order?.orderKey}
+              orderslength={ordersValues?.length}
+              ordersNumber={ordersValues?.length}
               index={index}
               initCategory={category}
               initOrderType={tabType}

@@ -1,5 +1,4 @@
-"use client";
-
+"use client"; 
 import React, { useState } from "react";
 import { Order, ResponsiveOrdersTypes } from "../types";
 import Dropdown from "./Dropdown";
@@ -7,7 +6,7 @@ import { BsSortDown } from "react-icons/bs";
 import { CgSortAz } from "react-icons/cg";
 import { Button } from "@/components/ui/button";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getApi } from "@/lib/http"; 
+import { getApi } from "@/lib/http";
 import { convertToArabicDate } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
 
@@ -44,34 +43,29 @@ const sortingOptions = [
 ];
 
 const MyOrdersTable: React.FC<Props> = ({ initData }) => {
-
-
-  const router = useRouter()
+  const router = useRouter();
 
   const [ordersFilters, setOrdersFilters] = useState<{
-    status?: number,
-    orderBy?: number,
-    isRefeched: boolean,
+    status?: number;
+    orderBy?: number;
+    isRefeched: boolean;
   }>({
     isRefeched: false,
   });
-  
 
   // Fetching paginated orders
   const fetchOrders = async ({ pageParam = 1 }) => {
-    let queryParams:any = {
-      pageNumber:pageParam,
-      pageSize:initData.pageSize,
-      orderBy:ordersFilters.orderBy  ,
-      status:ordersFilters.status  
+    let queryParams: any = {
+      pageNumber: pageParam,
+      pageSize: initData.pageSize,
+      orderBy: ordersFilters.orderBy,
+      status: ordersFilters.status,
     };
 
-   // cleaning
-   queryParams = Object.fromEntries(
-    Object.entries(queryParams).filter(([, value]) => value !== undefined)
-  )
-    
-    
+    // cleaning
+    queryParams = Object.fromEntries(
+      Object.entries(queryParams).filter(([, value]) => value !== undefined)
+    );
 
     const response = await getApi<ResponsiveOrdersTypes>(
       `Orders/GetAllCustomerOrdersByFilter`,
@@ -85,45 +79,36 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
     return data;
   };
 
-  const {
-    data,
-    isRefetching, 
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["customerOrders", ordersFilters],
-    queryFn: fetchOrders,
-    getNextPageParam: (lastPage) => {
-      if (lastPage?.currentPage < lastPage?.totalPages) {
-        return lastPage?.currentPage + 1;
-      }
-      return undefined;
-    },
-    initialPageParam: 1,
-    // عشان تجربة المستخم نجيب اول صفحة من البينات ونمررها هنا
-    initialData: {
-      pages: [initData],
-      pageParams: [1],
-    },
-    enabled: ordersFilters.isRefeched, // هذا عشان ما يعمل فتش اول مره من الرياكت كويري لاني جلبت الداتا من السيرفر ومررتها كبينانات اولية
-  });
+  const { data, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["customerOrders", ordersFilters],
+      queryFn: fetchOrders,
+      getNextPageParam: (lastPage) => {
+        if (lastPage?.currentPage < lastPage?.totalPages) {
+          return lastPage?.currentPage + 1;
+        }
+        return undefined;
+      },
+      initialPageParam: 1,
+      // عشان تجربة المستخم نجيب اول صفحة من البينات ونمررها هنا
+      initialData: {
+        pages: [initData],
+        pageParams: [1],
+      },
+      enabled: ordersFilters.isRefeched, // هذا عشان ما يعمل فتش اول مره من الرياكت كويري لاني جلبت الداتا من السيرفر ومررتها كبينانات اولية
+    });
 
   // Combine all orders from fetched pages
   const orders = (data?.pages.flatMap((page) => page?.items) || []).filter(
     (ele) => !!ele
   );
 
-
-  const track = (id:number) => { 
-    router.push("/OrderTrack/" + id)
-   }
-  const goToOrderDetails = (id:number) => { 
-  router.push("/Orderdetail/" + id)
-  }
-
-  
-   
+  const track = (id: number) => {
+    router.push("/OrderTrack/" + id);
+  };
+  const goToOrderDetails = (id: number) => {
+    router.push("/Orderdetail/" + id);
+  };
 
   return (
     <div>
@@ -162,7 +147,10 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
       {isRefetching && (
         <div className="animate-pulse">
           {"123456".split("").map((s) => (
-            <div key={s} className="h-4 px-4 py-6 bg-gray-200 my-1  rounded"></div>
+            <div
+              key={s}
+              className="h-4 px-4 py-6 bg-gray-200 my-1  rounded"
+            ></div>
           ))}
         </div>
       )}
@@ -175,84 +163,110 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
 
       {!isRefetching && orders.length > 0 && (
         <div className="overflow-x-auto">
-            <div className="w-full">
-      {/* Desktop Table */}
-      <div className="hidden md:block">
-        <table className="min-w-full">
-          <thead className="bg-[#FFECE5] text-sm font-medium text-center text-[#000]">
-            <tr>
-              {TABLE_HEAD.map((head) => (
-                <th key={head} className="px-4 py-3 font-medium">
-                  {head}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody className="text-sm text-center text-[#000]">
-            {orders.map(({ orderNumber, totalPrice, orderDate, orderStatus , id}, index) => (
-              <tr
-                key={orderNumber}
-                className={`${
-                  index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
-                } border-b border-gray-200 cursor-pointer`}
-                onClick={()=>{goToOrderDetails(id)}}
-              >
-                <td className="px-4 py-3">{orderNumber}</td>
-                <td className="px-4 py-3">{totalPrice}</td>
-                <td className="px-4 py-3">{orderDate}</td>
-                <td className="px-4 py-3">
-                  <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm">
-                    {orderStatus}
-                  </span>
-                </td>
-                <td className="px-4 py-3">
-                  <span onClick={()=>{track(id)}} className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] cursor-pointer rounded-lg bg-[#288B5326] text-sm">
-                    تتبع
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          <div className="w-full">
+            {/* Desktop Table */}
+            <div className="hidden md:block">
+              <table className="min-w-full">
+                <thead className="bg-[#FFECE5] text-sm font-medium text-center text-[#000]">
+                  <tr>
+                    {TABLE_HEAD.map((head) => (
+                      <th key={head} className="px-4 py-3 font-medium">
+                        {head}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="text-sm text-center text-[#000]">
+                  {orders.map(
+                    (
+                      { orderNumber, totalPrice, orderDate, orderStatus, id },
+                      index
+                    ) => (
+                      <tr
+                        key={orderNumber}
+                        className={`${
+                          index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
+                        } border-b border-gray-200 cursor-pointer`}
+                        onClick={() => {
+                          goToOrderDetails(id);
+                        }}
+                      >
+                        <td className="px-4 py-3">{orderNumber}</td>
+                        <td className="px-4 py-3">{totalPrice}</td>
+                        <td className="px-4 py-3">{orderDate}</td>
+                        <td className="px-4 py-3">
+                          <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm">
+                            {orderStatus}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3">
+                          <span
+                            onClick={() => {
+                              track(id);
+                            }}
+                            className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] cursor-pointer rounded-lg bg-[#288B5326] text-sm"
+                          >
+                            تتبع
+                          </span>
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-      {/* Mobile Cards */}
-      <div className="block md:hidden">
-        {orders.map(({ orderNumber, totalPrice, orderDate, orderStatus , id }, index) => (
-          <div
-            key={orderNumber}
-            className={`border rounded-lg p-4 mb-4 cursor-pointer ${
-              index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
-            }`}
-            onClick={()=>{goToOrderDetails(id)}}
-          >
-            <div className="mb-2 flex justify-between items-center text-sm">
-              <span className="font-medium">رقم الطلب  : </span>
-              <span>{orderNumber}</span>
-            </div>
-            <div className="mb-2 flex justify-between items-center text-sm">
-              <span className="font-medium"> إجمالي السعر : </span>
-              <span className="text-primary-background font-bold">{totalPrice} رس</span>
-            </div>
-            <div className="mb-2 flex justify-between items-center text-sm">
-              <span className="font-medium"> تاريخ الطلب : </span>
-              <span>{convertToArabicDate(orderDate)}</span>
-            </div>
-            <div className="mb-2 flex justify-between items-center text-sm">
-              <span className="font-medium">الحالة: </span>
-              <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm rounded">
-                {orderStatus}
-              </span>
-            </div>
-            <div className="text-right">
-              <span  onClick={()=>{track(id)}} className="inline-block p-3 mt-2 w-full text-center whitespace-nowrap text-[#2E9E2C] cursor-pointer rounded-lg bg-[#288B5326] text-sm">
-                تتبع
-              </span>
+            {/* Mobile Cards */}
+            <div className="block md:hidden">
+              {orders.map(
+                (
+                  { orderNumber, totalPrice, orderDate, orderStatus, id },
+                  index
+                ) => (
+                  <div
+                    key={orderNumber}
+                    className={`border rounded-lg p-4 mb-4 cursor-pointer ${
+                      index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
+                    }`}
+                    onClick={() => {
+                      goToOrderDetails(id);
+                    }}
+                  >
+                    <div className="mb-2 flex justify-between items-center text-sm">
+                      <span className="font-medium">رقم الطلب : </span>
+                      <span>{orderNumber}</span>
+                    </div>
+                    <div className="mb-2 flex justify-between items-center text-sm">
+                      <span className="font-medium"> إجمالي السعر : </span>
+                      <span className="text-primary-background font-bold">
+                        {totalPrice} رس
+                      </span>
+                    </div>
+                    <div className="mb-2 flex justify-between items-center text-sm">
+                      <span className="font-medium"> تاريخ الطلب : </span>
+                      <span>{convertToArabicDate(orderDate)}</span>
+                    </div>
+                    <div className="mb-2 flex flex-wrap justify-between items-center text-sm">
+                      <span className="font-medium">الحالة: </span>
+                      <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm rounded">
+                        {orderStatus}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span
+                        onClick={() => {
+                          track(id);
+                        }}
+                        className="inline-block p-3 mt-2 w-full text-center whitespace-nowrap text-[#2E9E2C] cursor-pointer rounded-lg bg-[#288B5326] text-sm"
+                      >
+                        تتبع
+                      </span>
+                    </div>
+                  </div>
+                )
+              )}
             </div>
           </div>
-        ))}
-      </div>
-    </div>
         </div>
       )}
 

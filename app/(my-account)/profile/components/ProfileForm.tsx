@@ -16,7 +16,7 @@ import {
   Select,
   SelectTrigger,
   SelectContent,
-  SelectItem,
+  SelectItem, 
 } from "@/components/ui/select";
 import HeadTitle from "./HeadTitle";
 import { ProfileType } from "../types";
@@ -64,10 +64,10 @@ const ProfileFormSchema = z.object({
     .string()
     .regex(/^\d*$/, "رقم الهاتف يجب أن يحتوي على أرقام فقط")
     .optional(),
-  governorate: z.string().optional().default('') ,
-  directorate: z.string().optional().default('') ,
-  governorId: z.string().optional().default(''),
-  directorateId: z.string().optional().default(''),
+  // governorate: z.string().optional().default(""),
+  // directorate: z.string().optional().default(""),
+  governorId: z.string().optional().default(""),
+  directorateId: z.string().optional().default(""),
 });
 
 function ProfileForm({ profile }: { profile: ProfileType }) {
@@ -88,8 +88,8 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
       email: profileData?.email ?? "",
       phoneNumber: profileData?.phoneNumber ?? "",
       telePhone: profileData?.telePhone ?? "",
-      governorate: profileData?.governorId+"" || "",
-      directorate: profileData?.directorateId+"" || "",
+      governorId: profileData?.governorId + "" || "",
+      directorateId: profileData?.directorateId + "" || "",
     },
   });
 
@@ -99,8 +99,8 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
     mutationFn: async ({
       name,
       email,
-      directorate,
-      governorate,
+      directorateId,
+      governorId,
       telePhone,
       phoneNumber,
     }: z.infer<typeof ProfileFormSchema>) => {
@@ -108,8 +108,8 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
         body: {
           name,
           email,
-          directorate: directorate ?? null,
-          governorate: governorate ?? null,
+          directorateId: directorateId ?? null,
+          governorateId: governorId ?? null,
           telePhone,
         },
       });
@@ -117,17 +117,15 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
       return {
         name,
         email,
-        directorate,
-        governorate,
+        directorateId,
+        governorId,
         telePhone,
         phoneNumber,
       } as ProfileType;
     },
     onSuccess: (dataPr) => {
       setIsEditable(false);
-
       setProfileData(dataPr);
-
       toast({
         variant: "default",
         description: "تم تحديث معلوماتك",
@@ -260,7 +258,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
 
           <FormField
             control={form.control}
-            name="governorate"
+            name="governorId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>المحافظة</FormLabel>
@@ -268,19 +266,15 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
                   <Select
                     disabled={!isEditable}
                     dir="rtl"
-                    onValueChange={field.onChange}
+                    onValueChange={(f) => {
+                      field.onChange(f);
+                      form?.resetField("directorateId", { defaultValue: "" });
+                    }}
                   >
-                    {/* <SelectTrigger>
-                      <span>{field.value || 'اختر المحافظة'}</span>
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="اليمن">اليمن</SelectItem>
-                      <SelectItem value="السعودية">السعودية</SelectItem>
-                    </SelectContent> */}
                     <SelectTrigger className="text-sm" dir="rtl">
                       <span>
-                        {allGovs?.find((e) => +e?.id == +field?.value)
-                          ?.name || "المحافظة"}
+                        {allGovs?.find((e) => +e?.id == +field?.value)?.name ||
+                          "المحافظة"}
                       </span>
                     </SelectTrigger>
                     <SelectContent>
@@ -305,7 +299,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
 
           <FormField
             control={form.control}
-            name="directorate"
+            name="directorateId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>المديرية</FormLabel>
@@ -318,11 +312,18 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
                     <SelectTrigger>
                       <span>
                         {allDirects?.find((im: any) => im?.id == field?.value)
-                          ?.name  || "اختر مديرية"}
+                          ?.name || "اختر مديرية"}
                       </span>
                     </SelectTrigger>
                     <SelectContent>
-                      {allGovs?.find(e=> +e?.id == +form?.getValues()?.governorate)?.directorates?.map((ele: any) => (
+                      {(!form?.getValues()?.governorId  || form?.getValues()?.governorId == "") && (
+                        <span className="text-sm text-center p-2">
+                          يجب أن تختار محافظة اولا
+                        </span>
+                      )}
+                      {allGovs
+                        ?.find((e) => +e?.id == +form?.getValues()?.governorId)
+                        ?.directorates?.map((ele: any) => (
                           <SelectItem key={ele?.id} value={ele?.id + ""}>
                             {ele?.name}
                           </SelectItem>
@@ -342,7 +343,6 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
             <Button
               onClick={() => {
                 setIsEditable(false);
-                
                 form.reset(profileData);
               }}
               variant="secondary"

@@ -18,19 +18,27 @@ interface Props {
   initOrderType?: number;
   initCategory?: number;
   ordersNumber?: number;
-  orderKey:string,
+  orderKey: string;
   onChangeValues: (
     values:
       | SpecialOrderFromEcommerce_FormValue
       | SpecialProductAndServiceOrderForm_FormValue,
     isValid: boolean
   ) => void;
-  onOrderDelete:(orderKey:string)=>void,
-  orderslength:number
-
+  onOrderDelete: (orderKey: string) => void;
+  orderslength: number;
 }
 
-function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber,onOrderDelete,orderKey,orderslength,initCategory}: Props) {
+function SpecialOrderFormCard({
+  initOrderType,
+  index,
+  onChangeValues,
+  ordersNumber,
+  onOrderDelete,
+  orderKey,
+  orderslength,
+  initCategory,
+}: Props) {
   const tabs = [
     { id: 1, label: "منتج" },
     { id: 2, label: "خدمة" },
@@ -41,13 +49,22 @@ function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber
   return (
     <div className="shadow-lg p-4 rounded-md border tajawal my-4">
       <div className="mb-4 mdHalf:flex flex-row-reverse flex-wrap mdHalf:justify-between justify-center items-center">
-        
-      <div className="flex text-sm items-center mdHalf:justify-center justify-between   gap-x-4">
-          <p className="text-xs bg-gray-200 rounded p-1 px-4"> الرقم {index+1} من {ordersNumber} </p>
-          {orderslength > 1 && <div onClick={()=>{onOrderDelete(orderKey)}} className="text-lg hover:bg-gray-200 rounded-full duration-200 cursor-pointer p-1">
-            <IoClose />
-          </div>}
-        </div> 
+        <div className="flex text-sm items-center mdHalf:justify-center justify-between   gap-x-4">
+          <p className="text-xs bg-gray-200 rounded p-1 px-4">
+            {" "}
+            الرقم {index + 1} من {ordersNumber}{" "}
+          </p>
+          {orderslength > 1 && (
+            <div
+              onClick={() => {
+                onOrderDelete(orderKey);
+              }}
+              className="text-lg hover:bg-gray-200 rounded-full duration-200 cursor-pointer p-1"
+            >
+              <IoClose />
+            </div>
+          )}
+        </div>
         <div className="flex  items-center gap-2 mdHalf:mt-0 mt-4">
           {tabs.map((tab) => (
             <div
@@ -64,7 +81,6 @@ function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber
             </div>
           ))}
         </div>
-
       </div>
       {/* one of this Forms will be change حسب النوع */}
       <div>
@@ -73,14 +89,15 @@ function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber
             category={initCategory}
             orderKey={orderKey}
             onChange={(e, isValid) => {
+              console.log(e);
+              
               onChangeValues(e, isValid);
             }}
           />
         )}
         {curentTab == 2 && (
           <SpecialServiceOrderForm
-          category={initCategory}
-
+            category={initCategory}
             orderKey={orderKey}
             onChange={(e, isValid) => {
               onChangeValues(e, isValid);
@@ -89,12 +106,9 @@ function SpecialOrderFormCard({ initOrderType,index, onChangeValues,ordersNumber
         )}
         {curentTab == 3 && (
           <SpecialOrderFromShopForm
-          category={initCategory}
-
+            category={initCategory}
             orderKey={orderKey}
             onChange={(e, isValid) => {
-              console.log(e);
-              
               onChangeValues(e, isValid);
             }}
           />

@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import {
   Form,
   FormControl,
@@ -29,21 +29,18 @@ import { Plus } from "lucide-react";
 function SpecialProductOrderForm({
   orderKey,
   onChange,
-  category
+  category,
 }: {
   onChange: (
     data: SpecialProductAndServiceOrderForm_FormValue,
-    isFormsValid: boolean,
+    isFormsValid: boolean
   ) => void;
-  orderKey:string,
-  category?:number,
-
+  orderKey: string;
+  category?: number;
 }) {
-  const { categories:allCategories } = useCategoriesDataStore();
+  const { categories: allCategories } = useCategoriesDataStore();
   // categories for special products
-  const categories = allCategories.filter((ele)=>ele.categoryTypeNumber == 2)
-
-  
+  const categories = allCategories.filter((ele) => ele.categoryTypeNumber == 2);
 
   const form = useForm<SpecialProductAndServiceOrderForm_FormValue>({
     resolver: zodResolver(SpecialProductAndServiceOrderFormSchema),
@@ -51,8 +48,11 @@ function SpecialProductOrderForm({
       type: 1,
       quantity: 1,
       isUrgen: false,
-      orderKey:orderKey,
-      category:category ? category+"" : undefined
+      orderKey: orderKey,
+      category:
+        category && categories?.find((e) => e?.id == category)
+          ? category + ""
+          : undefined,
     },
   });
 
@@ -191,10 +191,9 @@ function SpecialProductOrderForm({
               <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <InputFile
-                    orderKey={orderKey}
-                    multiple
+                    orderKey={orderKey} 
                     onChange={(e) => {
-                      field.onChange(e?.target?.files || []);
+                      field.onChange(e || []);
                       handleFieldChange({ ...form.getValues() });
                     }}
                   />
@@ -226,11 +225,11 @@ function SpecialProductOrderForm({
                         id={"filePDF" + orderKey}
                         type="file"
                         className="hidden"
-                        onChange={(e)=>field.onChange(e.target.files?.item(0))} // Use the local file change handler
+                        onChange={(e) =>
+                          field.onChange(e.target.files?.item(0))
+                        } // Use the local file change handler
                       />
-                      <p className="mx-4">
-                        {field?.value?.name ?? "إختر ملف" }
-                      </p>{" "}
+                      <p className="mx-4">{field?.value?.name ?? "إختر ملف"}</p>{" "}
                       {/* Display file name or placeholder */}
                     </label>
                   </div>

@@ -1,43 +1,45 @@
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import React, { useState } from "react";
 
-interface InputFileProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputFileProps   {
   labelText?: string;
   placeholderText?: string;
-  // className?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void; // Optional for custom onChange handling
-  orderKey:string
+  onChange?: (e: File[]) => void;
+  orderKey: string;
 }
 
 const InputFile: React.FC<InputFileProps> = ({
   labelText = "إضافة صورة",
   placeholderText = "إختر صورة",
-  // className = "",
   orderKey,
   onChange,
-  ...inputProps // This will pass all other props down to the input element
+  ...inputProps
 }) => {
-  const [fileName, setFileName] = useState<string | null>(null); // State to store the file name
+  const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
-  // Handle the change when a file is selected
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    if (file) {
-      setFileName(file.name); // Set the file name to state
-    } else {
-      setFileName(null); // Reset if no file is selected
-    }
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      const allFiles = [...selectedImages, ...newFiles]
+      setSelectedImages(allFiles);
+      if (onChange) {
+        onChange(allFiles);
+      }
+    } 
+  };
 
-    // Call the provided onChange function if it exists
+  const handleRemoveImage = (index: number) => {
+    const imagesAfterRemove = selectedImages?.filter((_, i) => i !== index)
+    setSelectedImages(imagesAfterRemove);
     if (onChange) {
-      onChange(e);
+      onChange(imagesAfterRemove);
     }
   };
 
   return (
-    <div className={`flex items-center justify-center`}>
+    <div className="flex flex-col items-center w-full">
       <label
-        htmlFor={"picture" + orderKey} 
+        htmlFor={"picture" + orderKey}
         className="flex items-center w-full border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:bg-gray-200"
       >
         <div className="flex flex-col items-center justify-center p-2 text-sm bg-white text-black border-l">
@@ -45,14 +47,34 @@ const InputFile: React.FC<InputFileProps> = ({
           <span className="text-gray-700">{labelText}</span>
         </div>
         <input
-          {...inputProps} 
+          {...inputProps}
           id={"picture" + orderKey}
           type="file"
           className="hidden"
-          onChange={handleFileChange} // Use the local file change handler
+          multiple
+          onChange={handleFileChange}
         />
-        <p className="mx-4">{fileName ? `تم اختيار: ${fileName}` : placeholderText}</p> {/* Display file name or placeholder */}
+        <p className="mx-4">
+          {selectedImages.length > 0 ? `تم اختيار ${selectedImages.length} صورة` : placeholderText}
+        </p>
       </label>
+
+      {/* Display selected images */}
+      {selectedImages.length > 0 && (
+        <ul className="mt-2 w-full border p-2 rounded-lg">
+          {selectedImages.map((file, index) => (
+            <li
+              key={index}
+              className="flex justify-between items-center bg-gray-100 p-2 rounded-md mb-1"
+            >
+              <span className="text-sm text-gray-700 truncate">{file.name}</span>
+              <button onClick={() => handleRemoveImage(index)} className="text-red-500 hover:text-red-700">
+                <X size={16} />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

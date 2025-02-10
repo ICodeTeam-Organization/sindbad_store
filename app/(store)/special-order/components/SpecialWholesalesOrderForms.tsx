@@ -197,10 +197,9 @@ function SpecialWholesalesOrderForms({
               <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <InputFile
-                    orderKey={orderKey}
-                    multiple
+                    orderKey={orderKey} 
                     onChange={(e) => {
-                      field.onChange(e?.target?.files || []);
+                      field.onChange(e || []);
                       handleFieldChange({ ...form.getValues() });
                     }}
                   />

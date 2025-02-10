@@ -29,18 +29,18 @@ import EcommerceSearchInput from "./EcommerceSearchInput";
 function SpecialOrderFromShopForm({
   onChange,
   orderKey,
-  category
+  category,
 }: {
   onChange: (
     data: SpecialOrderFromEcommerce_FormValue,
     isFormsValid: boolean
   ) => void;
-  orderKey:string,
-  category?:number
-}) { 
+  orderKey: string;
+  category?: number;
+}) {
 
-   const { categories:allCategories } = useCategoriesDataStore();
-   const categories = allCategories.filter((ele)=>ele.categoryTypeNumber == 2)
+  const { categories: allCategories } = useCategoriesDataStore();
+  const categories = allCategories.filter((ele) => ele.categoryTypeNumber == 2);
 
   const form = useForm<SpecialOrderFromEcommerce_FormValue>({
     resolver: zodResolver(SpecialOrderFromEcommerceSchema),
@@ -49,9 +49,9 @@ function SpecialOrderFromShopForm({
       type: 3,
       quantity: 1,
       isUrgen: false,
-      orderDetails:"تفاصيل طلب من متجر الكتروني",
-      orderKey:orderKey,
-      category:category?category+"":undefined
+      orderDetails: "",
+      orderKey: orderKey,
+      category: category && categories?.find(e=> e?.id == category) ? category + "" : undefined,
     },
   });
 
@@ -63,7 +63,7 @@ function SpecialOrderFromShopForm({
   };
 
   return (
-    <Form {...form}> 
+    <Form {...form}>
       <div className="flex items-center gap-x-3 justify-between my-4">
         <FormField
           control={form.control}
@@ -71,7 +71,11 @@ function SpecialOrderFromShopForm({
           render={({ field }) => (
             <FormItem className="w-[100%]">
               <div className="">
-                <EcommerceSearchInput onSelected={(shop)=>{ field.onChange(shop?.name) }} /> 
+                <EcommerceSearchInput
+                  onSelected={(shop) => {
+                    field.onChange(shop?.name);
+                  }}
+                />
               </div>
               <FormMessage />
             </FormItem>
@@ -80,44 +84,47 @@ function SpecialOrderFromShopForm({
       </div>
 
       <div className="mdHalf:flex items-center gap-x-3 justify-between my-4">
-              <h1 className="w-fit whitespace-nowrap text-sm">الفئة </h1>
-              <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                  <FormItem className="mdHalf:w-[90%] w-full">
-                    <Select
-                      dir="rtl"
-                      onValueChange={(value) => {
-                        field.onChange(value);
-                        handleFieldChange({ ...form.getValues() });
-                      }}
-                      value={field.value}
+        <h1 className="w-fit whitespace-nowrap text-sm">الفئة </h1>
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem className="mdHalf:w-[90%] w-full">
+              <Select
+                dir="rtl"
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  handleFieldChange({ ...form.getValues() });
+                }}
+                value={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="حدد فئة الخدمة المطلوبة" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {categories?.map((category: any) => (
+                    <SelectItem
+                      key={category.id}
+                      value={category.id.toString()}
                     >
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="حدد فئة الخدمة المطلوبة" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {categories?.map((category: any) => (
-                          <SelectItem
-                            key={category.id}
-                            value={category.id.toString()}
-                          >
-                            {category.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
+                      {category.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
 
       <div className="w-full mdHalf:flex items-center gap-2 justify-between mb-3">
-        <p className="w-fit text-wrap mdHalf:mb-6 mb-1 text-sm"> رابط المنتج </p>
+        <p className="w-fit text-wrap mdHalf:mb-6 mb-1 text-sm">
+          {" "}
+          رابط المنتج{" "}
+        </p>
         <FormField
           control={form.control}
           name="linkUrl"
