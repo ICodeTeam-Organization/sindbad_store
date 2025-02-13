@@ -19,7 +19,7 @@ const Sidebar = () => {
   const {
     setPriceRange,
     setStoreId,
-    setHasOffer,
+    setTodayOffer,
     setNewProduct,
     filters,
     setBrandId,
@@ -43,12 +43,12 @@ const Sidebar = () => {
        
          <div className="flex items-center space-x-2  ">
           <Checkbox
-            id="hasOffers"
-            checked={filters.hasOffer == "t"}
-            onCheckedChange={(checked) => setHasOffer(checked ? "t" : "f")}
+            id="todayOffer"
+            checked={filters.todayOffer == "t"}
+            onCheckedChange={(checked) => setTodayOffer(checked ? "t" : "f")}
           />
           <label
-            htmlFor="hasOffers"
+            htmlFor="todayOffer"
             className="text-[13px] px-2 cursor-pointer font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             عروض اليوم

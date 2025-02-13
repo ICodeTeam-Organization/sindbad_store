@@ -8,6 +8,7 @@ type ShopFiltersStore = {
     subCats: string[];
     productName: string;
     hasOffer: string;
+    todayOffer: string;
     newProduct: string;
     pageNumber: number;
     pageSize: number;
@@ -32,7 +33,8 @@ type ShopFiltersStore = {
   setCats: (cats: string[]) => void;
   setSubCats: (subCats: string[]) => void;
   setProductName: (name: string) => void;
-  setHasOffer: (hasOffer: string) => void;
+  setHasOffer: (hasOffer: string) => void; 
+  setTodayOffer: (todayOffer: string) => void; 
   setNewProduct: (newPro: string) => void;
   setPageNumber: (page: number) => void;
   setPageSize: (size: number) => void;
@@ -51,6 +53,7 @@ const initState = {
   subCats: [] as string[],
   productName: "",
   hasOffer: "f",
+  todayOffer: "f",
   newProduct: "f",
   pageNumber: 1,
   pageSize: 40,
@@ -109,6 +112,13 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       filters: {
         ...state.filters,
         hasOffer,
+      },
+    })),
+  setTodayOffer: (todayOffer) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        todayOffer,
       },
     })),
 

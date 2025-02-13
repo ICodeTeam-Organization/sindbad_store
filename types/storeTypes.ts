@@ -97,16 +97,21 @@ export type Product = {
   
 //////////////////////
 
-export type CartItem = {
-  cartId: number;
+export type CartItem =  {
+  cartId: number,
   productId: number,
-  name?: string;
-  price?: number;
-  priceAfterDiscount?: number | null;
-  imageUrl?: string;
-  quantity: number;
-  shipCost?: number;
-};
+  specialProductId?: number,
+  name: string,
+  price: number,
+  priceAfterDiscount: number,
+  finalPrice?: number,
+  percentageDiscount?: number,
+  imageUrl: string,
+  quantity: number,
+  amountYouBuy?: number,
+  amountYouGet?: number,
+  shipCost: number
+}
 
 
 // for  /Stores/GetStoresWithFilter endpoint

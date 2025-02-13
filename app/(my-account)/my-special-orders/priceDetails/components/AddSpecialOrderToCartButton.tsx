@@ -29,7 +29,7 @@ const AddSpecialOrderToCartButton: React.FC<
       );
     },
     onSuccess: (data:any) => {
-      const newCart = {
+      const newCart:any = {
         cartId: data?.id,
         productId: data?.id,
         quantity: data?.quantity,

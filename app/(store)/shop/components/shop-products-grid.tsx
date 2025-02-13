@@ -15,7 +15,7 @@ type ProductsResponsive = {
     items: Product[];
     currentPage: number;
     totalPages: number;
-    totalCount:number
+    totalCount: number;
   };
 };
 
@@ -49,16 +49,18 @@ const ShopProductsGrid = () => {
       const body = {
         pageNumber: pageParam || 1,
         pageSize: filters.pageSize,
-        todayOffers: filters.hasOffer == "t",
+        hasOffer: filters.hasOffer == "t",
+        todayOffers: filters.todayOffer == "t",
         storeId: filters.storeId || "",
         productName: filters.productName || "",
         minPrice: filters.price[0],
         maxPrice: filters.price[1],
         mainCategories: [...filters.cats.map((id) => +id)],
         subCategories: [...filters.subCats.map((id) => +id)],
-        brandId:filters.brandId || 0,
-        tags:filters.tagId ? [filters.tagId] :null,
+        brandId: filters.brandId || 0,
+        tags: filters.tagId ? [filters.tagId] : null,
       };
+
       // Remove fields that have invalid values (0 or empty string)
       const filteredBody = Object.fromEntries(
         Object.entries(body).filter(([, value]) => {
@@ -66,10 +68,6 @@ const ShopProductsGrid = () => {
           return value !== 0 && value !== "" && value !== null && value;
         })
       );
-
-      console.log(filteredBody);
-      
-
 
       const response = await postApi(
         `Products/GetProductsWitheFilter?returnDtoName=2`,
@@ -87,7 +85,7 @@ const ShopProductsGrid = () => {
     },
     initialPageParam: 1,
   });
-  const totalCount = data?.pages[0]?.data?.totalCount
+  const totalCount = data?.pages[0]?.data?.totalCount;
 
   const updateQueryParams = () => {
     const newParams = new URLSearchParams();
@@ -113,7 +111,6 @@ const ShopProductsGrid = () => {
     // Update the URL with the new query parameters
     router.replace(`?${newParams.toString()}`);
   };
-
 
   // to set filters from query params in state
   const initializeFiltersFromParams = () => {
@@ -170,19 +167,23 @@ const ShopProductsGrid = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
- 
   return (
     <>
-      {!isPending&&<div>
-        <SearchResultsHeader totalResults={totalCount} />
-      </div>}
+      {!isPending && (
+        <div>
+          <SearchResultsHeader totalResults={totalCount} />
+        </div>
+      )}
       <div className="mb-12 flex flex-wrap  justify-center mdHalf:gap-6  gap-3">
         {!isPending ? (
           data?.pages && data?.pages?.length > 0 ? (
-            data?.pages?.map((page,x) => {
+            data?.pages?.map((page, x) => {
               if (page?.data?.items?.length == 0 && isFetched) {
                 return (
-                  <div key={x} className="h-[65vh] flex items-center justify-center">
+                  <div
+                    key={x}
+                    className="h-[65vh] flex items-center justify-center"
+                  >
                     <p className="text-center text-lg tajawal font-bold py-12">
                       لايتوفر أي منتج في الوقت الحالي
                     </p>
@@ -197,11 +198,15 @@ const ShopProductsGrid = () => {
                     ProductDet={+product.id}
                     image={product.mainImageUrl}
                     price={
-                      !!(product.priceAfterDiscount)
+                      !!product.priceAfterDiscount
                         ? product.priceAfterDiscount
                         : product.priceBeforeDiscount
                     }
-                    oldPrice={product.priceAfterDiscount? product.priceBeforeDiscount : null}
+                    oldPrice={
+                      product.priceAfterDiscount
+                        ? product.priceBeforeDiscount
+                        : null
+                    }
                     productName={product.name}
                     offerSentence={product.buyAndGet}
                     rate={product.rate}

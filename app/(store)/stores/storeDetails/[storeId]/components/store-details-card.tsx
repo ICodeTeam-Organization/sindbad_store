@@ -25,7 +25,7 @@ const StoreDetailsCard = ({
   id,
   name,
   description,
-  imageUrl,
+  // imageUrl,
   websiteUrl,
   storeCategoriesIds,
   images,
@@ -105,12 +105,12 @@ const StoreDetailsCard = ({
       <div className="flex flex-col mdHalf:flex-row gap-6">
         {/* Image Section */}
         <div className="lg:w-1/2 w-full aspect-video relative">
-          <SafeImage
+          {/* <SafeImage
             src={imageUrl}
             alt={name}
             className="w-full h-[350px] aspect-video object-cover rounded-lg border shadow-sm"
             fill
-          />
+          /> */}
           {images && images.length > 0 && (
             <div className="px-12">
               <Carousel className="mt-4">
@@ -118,14 +118,13 @@ const StoreDetailsCard = ({
                   {images.map((image) => (
                     <CarouselItem
                       key={image.id}
-                      className="sm:basis-1/2 md:basis-1/3"
+                      className="w-full h-[350px] aspect-video object-cover rounded-lg border shadow-sm"
                     >
                       <SafeImage
                         src={image.imageUrl}
                         alt={name}
-                        className="object-cover rounded-lg border shadow-sm"
-                        width={380}
-                        height={250}
+                        className="w-full h-[350px] aspect-video object-cover rounded-lg border shadow-sm"
+                        fill
                       />
                     </CarouselItem>
                   ))}
@@ -163,7 +162,7 @@ const StoreDetailsCard = ({
                 <span className="font-normal text-sm"></span>
               </span> */}
               <div className="flex items-center gap-4">
-              <button
+                <button
                   onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
@@ -185,23 +184,23 @@ const StoreDetailsCard = ({
                 <Link
                   href={goToExtrnalLink(websiteUrl) || "#"}
                   target={websiteUrl ? "_blank" : ""}
-                  
                   className={`px-2 py-3 rounded-md text-sm  ${
                     false
                       ? "text-primary-background underline"
                       : "text-gray-400 border cursor-not-allowed"
                   }`}
                 >
-                  {false ? "الموقع الإلكتروني للمحل" : "لا يوجد موقع الكتروني للمحل"}
+                  {false
+                    ? "الموقع الإلكتروني للمحل"
+                    : "لا يوجد موقع الكتروني للمحل"}
                 </Link>
-              
               </div>
             </div>
 
             <Link
               href={"/shop?storeId=" + id}
               className="mt-6 inline-block w-full text-center text-base  bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg"
-            > 
+            >
               عرض منتجات المحل
             </Link>
           </div>

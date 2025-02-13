@@ -193,7 +193,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                       >
                         <td className="px-4 py-3">{orderNumber}</td>
                         <td className="px-4 py-3">{totalPrice}</td>
-                        <td className="px-4 py-3">{orderDate}</td>
+                        <td className="px-4 py-3">{convertToArabicDate(orderDate)}</td>
                         <td className="px-4 py-3">
                           <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm">
                             {orderStatus}

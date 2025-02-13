@@ -7,7 +7,7 @@ const ShoppingCart = async () => {
 
 
   const initCartProducts = await getApi<{data:CartItem[]}>("Cart/GetAllCustomerProductsInCartForViewInCartPage");
-
+  console.log(initCartProducts?.data);
   return (
     <div className="py-8">
       <div className="mdHalf:container mx-auto px-4">

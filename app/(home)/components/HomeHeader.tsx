@@ -167,7 +167,7 @@ const HomeHeader = () => {
 
       <div className=" flex flex-col mdHalf:flex-row justify-end lg:gap-x-5 lg:ml-5">
         <div className="nav-menus ">
-          <Link href={"/shop?hasOffer=t"} className="nav-menus-label">
+          <Link href={"/shop?todayOffer=t"} className="nav-menus-label">
             <p> عروض اليوم </p>
           </Link>
         </div>

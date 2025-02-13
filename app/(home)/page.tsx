@@ -46,33 +46,43 @@ export default async function Home() {
   return (
     <section className="w-full">
       <Hero />
-      <div className="w-full xl:container mx-auto ">
+      <div className="w-full xl:container mx-auto">
         <CategoriesSlider />
-        <div className="mdHalf:mt-32 ">
+        <div className="mdHalf:mt-32">
           <ServiceCard />
         </div>
         <CardsInfo />
-        <Categories categories={categories?.data} />
+        {categories?.data?.length > 0 && (
+          <Categories categories={categories.data} />
+        )}
         <div className="mb-10" />
-        <TodayOffers Offersproducts={Offersproducts} />
+        {Offersproducts?.data?.length > 0 && (
+          <TodayOffers Offersproducts={Offersproducts} />
+        )}
         <ShoppingNow />
       </div>
       <div className="my-10">
-        <AllStores Allstores={Allstores} />
+        {Allstores?.data?.length > 0 && <AllStores Allstores={Allstores} />}
       </div>
-      <div className="w-full xl:container mx-auto ">
-        <BeastSeller BeastSellerInWeek={BeastSellerInWeek} />
+      <div className="w-full xl:container mx-auto">
+        {BeastSellerInWeek?.data?.length > 0 && (
+          <BeastSeller BeastSellerInWeek={BeastSellerInWeek} />
+        )}
       </div>
       <div className="my-8">
         <Ads />
       </div>
-      <div className="w-full xl:container mx-auto mb-10 ">
-        <RecentlyAdded RecentlyProducts={RecentlyProducts} />
+      <div className="w-full xl:container mx-auto mb-10">
+        {RecentlyProducts?.data?.length > 0 && (
+          <RecentlyAdded RecentlyProducts={RecentlyProducts} />
+        )}
         <div className="mb-10" />
         <ShoppingNow />
       </div>
       <div className="my-10">
-        <AllEShops AllEShops={AllEcommrce} />
+        {AllEcommrce?.data?.items?.length > 0 && (
+          <AllEShops AllEShops={AllEcommrce} />
+        )}
       </div>
       <Feature />
     </section>

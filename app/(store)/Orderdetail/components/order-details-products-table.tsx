@@ -35,7 +35,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                 <th className="px-8 py-4">السعر</th>
                 <th className="px-8 py-4">الكمية</th>
                 <th className="px-8 py-4">تكلفة الشحن</th>
-                <th className="px-8 py-4">الأجمالي</th>
+                <th className="px-8 py-4">الإجمالي</th>
               </tr>
             </thead>
             <tbody>

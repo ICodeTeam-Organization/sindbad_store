@@ -68,14 +68,19 @@ const AddToBasket = ({ id, productInfo }: Props) => {
         productId: number;
       };
       if (res) {
-        const newCart = {
+        
+        const newCart:any = {
           cartId: res?.id,
           productId: res?.productId,
           imageUrl: productInfo.image,
-          price: productInfo.oldPrice,
+          price: productInfo.oldPrice || 0,
           priceAfterDiscount: productInfo.price,
           quantity: res?.quantity,
+          shipCost:0,
+          name:""
         };
+
+         
         setQuantity(1);
         addItem(newCart);
       }

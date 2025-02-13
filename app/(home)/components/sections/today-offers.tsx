@@ -50,7 +50,7 @@ const TodayOffers = ({ Offersproducts = { data: [] } }: { Offersproducts: { data
 
   return (
     <div className="mx-auto">
-      <SectionTitle title={"عروض اليوم"} href="/shop?hasOffer=t" />
+      <SectionTitle title={"عروض اليوم"} href="/shop?todayOffer=t" />
       {/* Countdown Timer */}
       <div className="mdHalf:mx-4 mx-1  text-center text-white bg-red-400 py-2 px-4 rounded-md ">
         <p className="flex items-center sm:justify-center justify-between  gap-3 font-system-ui mdHalf:text-lg text-sm tajawal font-bold">

@@ -16,6 +16,7 @@ const AllStores =  ({Allstores}:{Allstores:any}) => {
   
   const [IsHover, setIsHover] = useState(true)
 
+
   return (
     <div className="bg-[#F8F8F8] w-full">
      <div className="xl:container mx-auto relative" >
@@ -64,6 +65,7 @@ const AllStores =  ({Allstores}:{Allstores:any}) => {
                name={store?.name}
                websiteLink={store?.websiteLink}
                imagesUrl={store?.imagesUrl}
+              //  rate={store?.}
               />
             </CarouselItem>
           ))}

@@ -68,7 +68,7 @@ const AddToBasket = ({ id, productInfo }: Props) => {
         productId: number;
       };
       if (res) {
-        const newCart = {
+        const newCart:any = {
           cartId: res?.id,
           productId: res?.productId,
           imageUrl: productInfo.image,
@@ -197,9 +197,9 @@ const AddToBasket = ({ id, productInfo }: Props) => {
   }, [debounceQuantity]);
 
   return (
-    <div className="cursor-pointer tajawal my-1 flex gap-x-2 px-2 mb-2   ">
+    <div className="cursor-pointer  my-1 flex gap-x-2 px-2 mb-2   ">
       {inCart ? (
-        <div className="w-full max-sm:h-[30px]  h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1">
+        <div className="w-full h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1">
           <div
             className="text-[20px] bg-slate-100 px-2 h-[90%] aspect-square flex items-center justify-center rounded-full "
             onClick={() => {
@@ -247,7 +247,7 @@ const AddToBasket = ({ id, productInfo }: Props) => {
           ) : (
             <div className="flex items-center justify-center gap-2">
               <MdOutlineLocalGroceryStore />
-              <p className="max-sm:text-[10px] ">اضف للسلة</p>
+              <p className="text-sm font-bold ">اضف للسلة</p>
             </div>
           )}
         </Button>

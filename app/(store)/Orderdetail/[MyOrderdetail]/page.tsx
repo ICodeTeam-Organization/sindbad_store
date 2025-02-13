@@ -5,16 +5,21 @@ import { notFound } from "next/navigation";
 import OrderDetailProductsTable from "../components/order-details-products-table";
 import { convertToArabicDate } from "@/lib/utils";
 import { FcPackage } from "react-icons/fc";
+import { ApiResponseTypeForOrderDetails } from "../type";
 
 interface Detail {
   params: { MyOrderdetail: string };
 }
 const OrderDetail = async ({ params }: Detail) => {
-  const OrderDetails = await getApi<any>(
+  const OrderDetails = await getApi<ApiResponseTypeForOrderDetails>(
     `OrderDetails/Market/OrdersPage/GetOrderDetailsForViewInOrderDetailsPage?orderId=${params.MyOrderdetail}&pageNumber=1&pageSize=10`
   );
   if (!OrderDetails) return notFound();
   const data = OrderDetails.data;
+
+  console.log(OrderDetails.data.pagedOrderDetails.items);
+  
+  
   return (
     <div className="xl:container mx-auto">
       {/* <BreadCrumb

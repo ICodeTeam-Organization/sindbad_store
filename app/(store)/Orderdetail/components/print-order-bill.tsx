@@ -5,14 +5,16 @@ import { useReactToPrint } from "react-to-print";
 import PriceLabel from "../../shopping-card/components/price-label"; 
 import { Button } from "@/components/ui/button";
 import { FaMoneyCheckAlt } from "react-icons/fa";
+import { OrderData } from "../type";
 
-const PrintOrderBill = ({ Bill }: any) => {
+const PrintOrderBill = ({ Bill }: {Bill:OrderData}) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
 
   const handlePrint = () => {
     reactToPrintFn();
   };
+
   return (
      <div>
         { 

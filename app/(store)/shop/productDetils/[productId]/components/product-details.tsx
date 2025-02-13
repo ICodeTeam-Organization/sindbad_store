@@ -36,8 +36,70 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           ]}
         />
       </div>
-      <div className="flex flex-1 flex-col">
+      <div className="flex flex-1 flex-col justify-between">
         {/* <ProductTitle name={product.name} description={product.name} rating={5} /> */}
+       
+        {/* <div className="flex gap-x-2 text-sm text-gray-700">
+
+         
+
+          <div className="flex items-center mb-2">
+            <span className="font-medium ml-1">
+              {product.brandName !== null ? "الماركة: " : ""}
+            </span>
+            <span>{product.brandName !== null ? product.brandName : ""}</span>
+          </div>
+
+          <div className="" >
+          {product.attributesWithValues?.length > 3
+            ? product.attributesWithValues
+                ?.slice(0, 3)
+                .map((attribute: AttributeWithValues, index) => (
+                  <div key={index} className="flex items-center mb-2">
+                    <span className="font-medium ml-1">
+                      {attribute.attributeName} : {" "}
+                    </span>
+                    <span>{attribute.values.join(", ")}</span>
+                  </div>
+                ))
+            : product.attributesWithValues?.map((attribute, index) => (
+                <div key={index} className="flex items-center mb-2">
+                  <span className="font-medium ml-1">
+                    {attribute.attributeName}:{" "}
+                  </span>
+                  <span>{attribute.values.join(", ")}</span>
+                </div>
+              ))}
+          </div>
+        </div> */}
+
+        {/* <ProductInfoRow
+          label1="الألوان"
+          value1={
+            <select className="border border-gray-300 rounded-md p-2">
+              {product.attributesWithValues
+                .find((attr: any) => attr.attributeName === "Color")
+                ?.values.map((color: any, index: any) => (
+                  <option key={index} value={color}>
+                    {color}
+                  </option>
+                )) || <option>N/A</option>}
+            </select>
+          }
+          label2="الحجم"
+          value2={
+            <select className="border border-gray-300 rounded-md p-2">
+              {product.attributesWithValues
+                .find((attr: any) => attr.attributeName === "Size")
+                ?.values.map((size: any, index: any) => (
+                  <option key={index} value={size}>
+                    {size}
+                  </option>
+                )) || <option>N/A</option>}
+            </select>
+          }
+        /> */}
+        <div>
         <div className="mb-4 my-6">
           <h2 className="text-black text-lg font-bold">{product?.name}</h2>
 
@@ -121,66 +183,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
 
         </div>
 
-        {/* <div className="flex gap-x-2 text-sm text-gray-700">
-
-         
-
-          <div className="flex items-center mb-2">
-            <span className="font-medium ml-1">
-              {product.brandName !== null ? "الماركة: " : ""}
-            </span>
-            <span>{product.brandName !== null ? product.brandName : ""}</span>
-          </div>
-
-          <div className="" >
-          {product.attributesWithValues?.length > 3
-            ? product.attributesWithValues
-                ?.slice(0, 3)
-                .map((attribute: AttributeWithValues, index) => (
-                  <div key={index} className="flex items-center mb-2">
-                    <span className="font-medium ml-1">
-                      {attribute.attributeName} : {" "}
-                    </span>
-                    <span>{attribute.values.join(", ")}</span>
-                  </div>
-                ))
-            : product.attributesWithValues?.map((attribute, index) => (
-                <div key={index} className="flex items-center mb-2">
-                  <span className="font-medium ml-1">
-                    {attribute.attributeName}:{" "}
-                  </span>
-                  <span>{attribute.values.join(", ")}</span>
-                </div>
-              ))}
-          </div>
-        </div> */}
-
-        {/* <ProductInfoRow
-          label1="الألوان"
-          value1={
-            <select className="border border-gray-300 rounded-md p-2">
-              {product.attributesWithValues
-                .find((attr: any) => attr.attributeName === "Color")
-                ?.values.map((color: any, index: any) => (
-                  <option key={index} value={color}>
-                    {color}
-                  </option>
-                )) || <option>N/A</option>}
-            </select>
-          }
-          label2="الحجم"
-          value2={
-            <select className="border border-gray-300 rounded-md p-2">
-              {product.attributesWithValues
-                .find((attr: any) => attr.attributeName === "Size")
-                ?.values.map((size: any, index: any) => (
-                  <option key={index} value={size}>
-                    {size}
-                  </option>
-                )) || <option>N/A</option>}
-            </select>
-          }
-        /> */}
+        </div>
         <div className="flex items-center gap-4 mt-8">
           <AddToBasket
             id={product.id}

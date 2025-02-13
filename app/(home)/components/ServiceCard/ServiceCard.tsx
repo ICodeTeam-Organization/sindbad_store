@@ -63,7 +63,7 @@ function ServiceCard() {
       name: "العروض",
       image: discounts,
       // href: "/shop?newProducts=true",
-      onClick:()=>{router.push( "/shop?newProducts=true")},
+      onClick:()=>{router.push( "/shop?hasOffer=t")},
       color: "#CE2334",
       transpColor: "#CE233450",
 

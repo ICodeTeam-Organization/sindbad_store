@@ -99,7 +99,7 @@ const AddToFavorite = ({ id }: Props) => {
             disabled={mutationFav.isPending}
             variant={"outline"}
             onClick={() => handleAddToFav()}
-            className={cn("cursor-pointer group hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-sm:w-[30px] max-sm:h-[30px] w-[50px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1",isInFavorite&&"bg-[#F55157]")}
+            className={cn("cursor-pointer group hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] aspect-square rounded-[5px] border-[1px] flex justify-center items-center p-1",isInFavorite&&"bg-[#F55157]")}
         >
             {
                 mutationFav.isPending || mutationFavDel.isPending  ? (

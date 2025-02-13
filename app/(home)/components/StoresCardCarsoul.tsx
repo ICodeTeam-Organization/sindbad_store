@@ -1,5 +1,5 @@
 import React from "react";
-import { AiFillHeart, AiFillStar } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -11,16 +11,24 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import { Store } from "@/types/storeTypes";
 import { deleteApi, postApi } from "@/lib/http";
 import SafeImage from "@/components/SafeImage";
 
-const StoresCardCarsoul: React.FC<Store> = ({
+const StoresCardCarsoul: React.FC<{
+  id: string;
+  name: string;
+  websiteLink: string;
+  description: string;
+  mainImageUrl: string;
+  imagesUrl:string[];
+  rate?: number;
+}> = ({
   description,
   name,
   mainImageUrl,
   // websiteLink,
   id,
+  // rate
 }) => {
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
@@ -111,7 +119,8 @@ const StoresCardCarsoul: React.FC<Store> = ({
                 : "/" + mainImageUrl
             }
             alt={"store"}
-            layout="fill"
+            // layout="fill"
+            fill
           />
         )}
       </div>
@@ -120,13 +129,13 @@ const StoresCardCarsoul: React.FC<Store> = ({
           <h1 className="mdHalf:text-md text-sm font-bold text-right line-clamp-1 mt-1">
             {name}
           </h1>
-          <p className="mdHalf:text-sm text-[11px] line-clamp-1 text-[#666666]">
+          <p className="mdHalf:text-sm text-[11px] my-2 line-clamp-1 text-[#666666]">
             {description ? description : " ."}
           </p>
-          <div className="flex items-center max-sm:w-20 mb-1">
+          {/* <div className="flex items-center max-sm:w-20 mb-1">
             <AiFillStar className="text-[#FFC62A] text-xs" />
             <p className="text-[#A5A5A5] text-[12px] mr-1">(4.5)</p>
-          </div>
+          </div> */}
         </div>
         <div className="flex  w-full gap-x-2   ">
           <Link
