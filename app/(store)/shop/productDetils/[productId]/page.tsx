@@ -3,8 +3,8 @@ import React from "react";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import ProductDetails from "./components/product-details";
-import TabsComponent from "./components/taps";
 import { Product } from "./types";
+import ProductDetailsAccordingmenus from "./components/ProductDetailsAccordingmenus";
 
 type ProductPageProps = {
   params: {
@@ -46,7 +46,10 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   return (
     <div className="xl:container mx-auto">
       <ProductDetails product={product} />
-      <TabsComponent product={product} productId={productId} />
+      <div className="  m-10" >
+      <ProductDetailsAccordingmenus product={product} productId={productId} />
+      </div>
+      {/* <TabsComponent product={product} productId={productId} /> */}
     </div>
   );
 };

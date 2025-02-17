@@ -101,7 +101,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         /> */}
         <div>
         <div className="mb-4 my-6">
-          <h2 className="text-black text-lg font-bold">{product?.name}</h2>
+          <h2 className="text-black text-xl font-bold">{product?.name}</h2>
 
           <div className="flex  my-4 mt-6 items-center gap-x-4 ">
             <div className=" border-l-2 pl-4 border-l-gray-200 py-1 flex">
@@ -127,16 +127,16 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             />
           </div>
 
-          {product.offerSentence && (
+          { (
             <div>
-              <div className="flex items-center col-span-2 mb-2 text-xs bg-primary-background text-white p-1 w-fit px-2 rounded-md tajawal">
+              {product.offerSentence && <div className="flex items-center col-span-2 mb-2 text-xs bg-primary-background text-white p-1 w-fit px-2 rounded-md tajawal">
                 <span>
                   {product.offerSentence !== null ? product.offerSentence : ""}
                 </span>
-              </div>
+              </div>}
 
               {/* OFFER TIME  */}
-              <div className="flex flex-wrap gap-x-4 text-xs text-primary-background">
+              <div className="flex flex-wrap gap-x-4 text-sm text-primary-background ">
                 <div className="flex items-center mb-2">
                   <span className="font-medium ml-1">
                     {product.offerStartDate !== null ? "بداية العرض: " : ""}
@@ -160,7 +160,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             </div>
           )}
            <hr className="my-4 border-dashed border border-primary-background border-opacity-40" />
-          <p className="text-sm text-gray-600 mt-4">{product?.description}</p>
+          <p className="text-base text-gray-600 mt-4">{product?.description}</p>
         </div>
 
         <div className="text-sm" >

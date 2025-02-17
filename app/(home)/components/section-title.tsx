@@ -9,7 +9,7 @@ type Props = {
 
 const SectionTitle = ({ title,href="/shop" }: Props) => {
   return (
-    <div className="py-5 w-full">
+    <div className="pt-5 w-full">
       <div className="flex justify-between items-center mdHalf:mx-4  mx-1 ">
         <div>
           <h3 className={styles.title + "  lg:text-lg text-base font-normal relative pr-3"}>

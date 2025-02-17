@@ -79,8 +79,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
     return data;
   };
 
-  const { data, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery({
+  const { data, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
       queryKey: ["customerOrders", ordersFilters],
       queryFn: fetchOrders,
       getNextPageParam: (lastPage) => {

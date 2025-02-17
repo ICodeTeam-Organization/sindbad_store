@@ -1,17 +1,19 @@
-import ShoppingCart from "./components/shopping-card";
+import { CartItem } from "@/types/storeTypes";
+import CartBody from "./components/cart-body";
+import { getApi } from "@/lib/http";
 
-const page = () => {
+const ShoppingCart = async () => {
+  const initCartProducts = await getApi<{data:CartItem[]}>("Cart/GetAllCustomerProductsInCartForViewInCartPage");
   return (
-    <div className="">
-      {/* <div className="flex items-center w-full px-4">
-        <SelectShppingAdress />
-        <div className="mr-3 flex items-center">
-          <span className="ml-3">مستعجلة</span> <Checkbox />
+    <div className="py-8">
+      <div className="mdHalf:container mx-auto px-4">
+        <h1 className="text-2xl font-semibold mb-4">سلة المشتريات</h1>
+        <div className="flex flex-col mdHalf:flex-row gap-4 ">
+            <CartBody initCartProducts={initCartProducts} />
         </div>
-      </div> */}
-      <ShoppingCart />
+      </div>
     </div>
   );
 };
 
-export default page;
+export default ShoppingCart;

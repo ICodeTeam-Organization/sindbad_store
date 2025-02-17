@@ -71,6 +71,7 @@ export default function GetFavorite() {
       return theData;
     },
     enabled: trigged,
+    retry: 2 ,
   });
 
   useEffect(() => {

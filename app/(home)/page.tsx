@@ -3,16 +3,14 @@ import CategoriesSlider from "./components/CategoriesSlider";
 import ServiceCard from "./components/ServiceCard/ServiceCard";
 import CardsInfo from "./components/sections/CardsInfo";
 import Categories from "./components/sections/Categories";
-import TodayOffers from "./components/sections/today-offers";
 import ShoppingNow from "./components/sections/shopping-now";
 import AllStores from "./components/sections/all-stores";
-import BeastSeller from "./components/sections/beast-seller";
 import Ads from "./components/sections/Ads";
-import RecentlyAdded from "./components/sections/recently-added";
 import Feature from "./components/sections/Feature";
 import { getApi } from "@/lib/http";
 import AllEShops from "./components/sections/all-Eshops";
 import { MainCategory, Product, Shop, Store } from "@/types/storeTypes";
+import ProductCarsoule from "@/components/ProductCarsoule";
 
 export default async function Home() {
   const [
@@ -55,18 +53,26 @@ export default async function Home() {
         {categories?.data?.length > 0 && (
           <Categories categories={categories.data} />
         )}
+
+        {/* <div>
+          <h1>hello</h1>
+          <ProductCarsoule products={BeastSellerInWeek} />
+        </div> */}
         <div className="mb-10" />
         {Offersproducts?.data?.length > 0 && (
-          <TodayOffers Offersproducts={Offersproducts} />
+          <ProductCarsoule products={Offersproducts} sectionHref="/shop?todayOffer=t" sectionTitle="عروض اليوم"  />
+          // <TodayOffers Offersproducts={Offersproducts} />
         )}
         <ShoppingNow />
       </div>
-      <div className="my-10">
+      <div className="my-10 ">
         {Allstores?.data?.length > 0 && <AllStores Allstores={Allstores} />}
       </div>
       <div className="w-full xl:container mx-auto">
         {BeastSellerInWeek?.data?.length > 0 && (
-          <BeastSeller BeastSellerInWeek={BeastSellerInWeek} />
+          // <BeastSeller BeastSellerInWeek={BeastSellerInWeek} />
+          <ProductCarsoule products={BeastSellerInWeek} sectionHref="/shop?bestseller=true"  sectionTitle="الاكثر مبيعا في اسبوع"  />
+
         )}
       </div>
       <div className="my-8">
@@ -74,7 +80,9 @@ export default async function Home() {
       </div>
       <div className="w-full xl:container mx-auto mb-10">
         {RecentlyProducts?.data?.length > 0 && (
-          <RecentlyAdded RecentlyProducts={RecentlyProducts} />
+          // <RecentlyAdded RecentlyProducts={RecentlyProducts} />
+          <ProductCarsoule products={RecentlyProducts} sectionHref="/shop?newProduct=t"  sectionTitle="اضيفت مؤخرا" />
+
         )}
         <div className="mb-10" />
         <ShoppingNow />

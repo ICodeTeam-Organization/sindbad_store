@@ -9,12 +9,14 @@ import { useCartStore } from '@/app/stores/cartStore'
 import { BsCart } from 'react-icons/bs'
 import PersonButton from '@/app/(home)/components/person-button'
 import Link from 'next/link'
+import { useNotificationsDataStore } from '@/app/stores/notificationStore'
 
 function TopSectionOfHeader({isHomePage=false}) {
 
     const { status } = useSession();
     const isAuth = status === "authenticated";
     const {items:cartItems} = useCartStore();
+    const { notificationCount } = useNotificationsDataStore();
 
   return (
     <div
@@ -35,9 +37,14 @@ function TopSectionOfHeader({isHomePage=false}) {
                 {isAuth && (
                   <>
                     <Link
-                      href="/Favorites"
+                      href="/my-notifications" 
                       className="cursor-pointer bg-[#66666611] md:bg-transparent transition-[background-color] duration-500  hover:bg-[#66666611]  rounded-full"
                     >
+                       {notificationCount+1 > 0 && (
+                        <div className="bg-red-600 text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute">
+                          {notificationCount}
+                        </div>
+                      )}
                       <IoMdNotificationsOutline className="text-[#666666]  text-[20px] m-2 " />
                     </Link>
                     <Link
