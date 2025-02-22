@@ -1,49 +1,50 @@
 "use client";
-
 import React from "react";
-import Image from "next/image";
 import { StoreCardProps } from "../typest";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useToast } from "@/hooks/use-toast";
 import { useSession } from "next-auth/react";
 import { useFavorite } from "@/app/stores/favoritesStore";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
-import { cn } from "@/lib/utils";
-import { DivideCircle, Loader2 } from "lucide-react";
+import { cn, goToExtrnalLink } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { deleteApi, postApi } from "@/lib/http";
 import SafeImage from "@/components/SafeImage";
-
-const StoreCard = ({ id, name, websiteLink , imagesUrl }: StoreCardProps) => {
+import { useRouter } from "next/navigation";
+const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCardProps) => {
+  
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
     useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
+  // const { data: session } = useSession();
   const { data: session, status } = useSession();
-  const redirct = useRouter();
   const { toast } = useToast();
-
+  const router = useRouter();
   const linkToStore = `/stores/storeDetails/${id}`;
+  // const redirct = useRouter();
 
-  const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
+  const { 
+    mutate: mutateAddToFav,
+     isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/AddStore`,
-        {
-          storeId: id,
-        },
+      return await postApi(
+        `FavoriteShop/AddStore`,
+
         {
           headers: {
             "Accept-Language": "ar",
             "Content-type": "application/json",
             Authorization: `Bearer ${session?.user.data.token}`,
           },
+          body: {
+            storeId: id,
+          },
         }
       );
-      return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       addStoreToFavorite(id + "");
     },
     onError: (error: any) => {
@@ -58,20 +59,18 @@ const StoreCard = ({ id, name, websiteLink , imagesUrl }: StoreCardProps) => {
     },
   });
 
-  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
+  const { 
+    mutate: mutateRemoveFromFav,
+     isPending: isPendingRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
-        const res = await axios.delete(
-          process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/RemoveStore/` + id,
-          {
-            headers: {
-              Authorization: `Bearer ${session?.user.data.token}`,
-            },
-          }
-        );
-        return res.data;
+        return await deleteApi(`FavoriteShop/RemoveStore/` + id, {
+          headers: {
+            Authorization: `Bearer ${session?.user.data.token}`,
+          },
+        });
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         delStoreToFavorite(id + "");
       },
       onError: (error: any) => {
@@ -86,8 +85,8 @@ const StoreCard = ({ id, name, websiteLink , imagesUrl }: StoreCardProps) => {
       },
     });
 
-  const handleFav = () => {
-    if (status === "unauthenticated") redirct.push("/auth");
+  const handleFav = () => {    
+    if (status === "unauthenticated") router.push("/auth");
     else if (status === "authenticated") {
       if (isFavorite) {
         mutateRemoveFromFav();
@@ -97,49 +96,59 @@ const StoreCard = ({ id, name, websiteLink , imagesUrl }: StoreCardProps) => {
     }
   };
 
-
   return (
     <div
       dir="rtl"
       className="border rounded-lg shadow-sm overflow-hidden relative w-full max-w-[380px] mx-auto "
     >
-      <Link href={linkToStore} >
-      <SafeImage
-          src={imagesUrl[0]}
+      <Link href={linkToStore}>
+        <SafeImage
+          src={mainImageUrl || imagesUrl[0]}
           alt={name}
           className="w-full h-[220px] object-cover "
           width={380}
           height={250}
-      />
+        />
       </Link>
-      
+
       <div className="p-4">
-      <Link href={`/stores/storeDetails/${id}`} >
-         <h2 className="font-bold  mb-4">{name}</h2>
-      </Link>
+        <Link href={`/stores/storeDetails/${id}`}>
+          <h2 className="font-bold text-[13px] mb-4">{name}</h2>
+        </Link>
         <div className="flex flex-wrap   w-full  gap-x-1 ">
-          <button className="flex-1 min-w-[70px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
+          <Link
+            href={"/shop?storeId=" + id}
+            className="flex-1 min-w-[70px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center "
+          >
             عرض المنتجات
-          </button>
-          <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ">
-            متجر المحل
-          </button>
+          </Link>
+          {
+            websiteLink != null?           <Link href={goToExtrnalLink(websiteLink)} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
+            الموقع الإلكتروني
+          </Link> :
+                    <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
+                    لايوجد رابط
+                  </button>
+          }
+
           <button
-            onClick={(e)=>{
-              e.stopPropagation()
-              e.preventDefault()
-              handleFav()
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              handleFav();
             }}
             className={cn(
               "group w-[40px] z-10 hover:shadow transition h-[40px] border border-gray text-black text-base rounded-md flex justify-center items-center ",
               isFavorite && "bg-red-500 text-white"
             )}
           >
-            { isPendingAddToFav || isPendingRemoveFromFav ? <Loader2 className="animate-spin" /> : (isFavorite ? (
+            {isPendingAddToFav || isPendingRemoveFromFav ? (
+              <Loader2 className="animate-spin" />
+            ) : isFavorite ? (
               <IoMdHeart className="w-4 h-4" />
             ) : (
               <IoMdHeartEmpty className="w-4 h-4" />
-            ))}
+            )}
           </button>
         </div>
       </div>

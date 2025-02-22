@@ -1,17 +1,16 @@
 "use client";
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next-nprogress-bar";
 import { useSession } from "next-auth/react";
 import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { Button } from "@/components/ui/button";
 import { Loader2, Minus, Plus } from "lucide-react";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import AddToFavorite from "./add-to-favorite";
 import { useCartStore } from "@/app/stores/cartStore";
-import { deleteApi, putApi } from "@/lib/http";
+import { deleteApi, postApi, putApi } from "@/lib/http";
 import Spinner from "./Spinner";
 import { useDebounce } from "@/hooks/useDebounce";
 
@@ -35,23 +34,25 @@ const AddToBasket = ({ id, productInfo }: Props) => {
     updateQuantity,
     removeItem,
   } = useCartStore();
+
   const inCart = cartItems.find((ele) => ele.productId == id);
+  
+  
   const [quantity, setQuantity] = useState<number>(inCart?.quantity || 0);
 
   useEffect(() => {
-    setQuantity(inCart?.quantity||0)
-  }, [inCart])
-  
+    setQuantity(inCart?.quantity || 0);
+  }, [inCart]);
 
   const mutationAdd = useMutation({
     mutationFn: async () => {
-      return await axios.post(
-        "https://icode-sendbad-store.runasp.net/api/Cart/AddProductToCart?productId=" +
+      return await postApi<{data:any}>(
+        "Cart/AddProductToCart?productId=" +
           id,
         {
-          quantity: 1,
-        },
-        {
+          body: {
+            quantity: 1,
+          },
           headers: {
             "Accept-Language": "ar",
             "Content-type": "multipart/form-data",
@@ -61,20 +62,25 @@ const AddToBasket = ({ id, productInfo }: Props) => {
       );
     },
     onSuccess: (data) => {
-      const res = data?.data?.data as {
+      const res = data?.data as {
         id: number;
         quantity: number;
         productId: number;
       };
       if (res) {
-        const newCart = {
+        
+        const newCart:any = {
           cartId: res?.id,
           productId: res?.productId,
-          imageUrl:productInfo.image,
-          price:productInfo.oldPrice,
-          priceAfterDiscount:productInfo.price,
+          imageUrl: productInfo.image,
+          price: productInfo.oldPrice || 0,
+          priceAfterDiscount: productInfo.price,
           quantity: res?.quantity,
+          shipCost:0,
+          name:""
         };
+
+         
         setQuantity(1);
         addItem(newCart);
       }
@@ -181,7 +187,6 @@ const AddToBasket = ({ id, productInfo }: Props) => {
   const debounceQuantity = useDebounce(quantity, 1000);
   useEffect(() => {
     if (debounceQuantity >= 0 && isUpdated) {
-
       setIsUpdated(false);
       if (inCart) {
         if (quantity == 0) {
@@ -211,7 +216,7 @@ const AddToBasket = ({ id, productInfo }: Props) => {
           {mutationUpdateQ.isPending || deleteItemFromCart.isPending ? (
             <div className="w-full flex items-center justify-center">
               {" "}
-              <Spinner className="h-5 w-5"  />{" "}
+              <Spinner className="h-5 w-5" />{" "}
             </div>
           ) : (
             <input
@@ -219,7 +224,7 @@ const AddToBasket = ({ id, productInfo }: Props) => {
               type="number"
               onChange={(e) => {
                 setQuantity(+e.target.value);
-                setIsUpdated(true)
+                setIsUpdated(true);
               }}
               className=" w-full  text-center remove-arrow outline-none"
             />

@@ -2,7 +2,7 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { getApi } from "@/lib/http";
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React from "react";
 
 // Define the type for the props
 interface BrandsProps {
@@ -11,6 +11,7 @@ interface BrandsProps {
 }
 
 const Brands: React.FC<BrandsProps> = ({ brand, onSelectBrand }) => {
+  
   const { data, isLoading } = useQuery<{
     data: { id: number; name: string }[];
   }>({
@@ -23,8 +24,8 @@ const Brands: React.FC<BrandsProps> = ({ brand, onSelectBrand }) => {
       <h3 className=" mb-2">الماركات</h3>
       <div className="grid grid-cols-2 gap-2 gap-x-6">
         {isLoading
-          ? [1, 2, 3, 3, 3, 3, 4, 2, 5, 4].map(() => (
-              <div className="p-1 px-2 rounded animate-pulse flex gap-x-2 items-center ">
+          ? [1, 2, 3, 3, 3, 3, 4, 2, 5, 4].map((_,x) => (
+              <div key={x} className="p-1 px-2 rounded animate-pulse flex gap-x-2 items-center ">
                 <div className="h-[16px] w-[16px] rounded-full bg-zinc-200 "></div>
                 <div className="h-[13px] w-[80%] rounded-full bg-zinc-200 "></div>
               </div>

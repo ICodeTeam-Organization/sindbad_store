@@ -10,21 +10,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { PanelLeft } from "lucide-react";
 import { useState } from "react";
-import { BiDockLeft, BiDownArrow, BiLeftArrow } from "react-icons/bi";
-import { FaCaretDown } from "react-icons/fa";
-import { FcDown, FcLeft } from "react-icons/fc";
+
 import { GrDown } from "react-icons/gr";
 import { RiArrowLeftLine } from "react-icons/ri";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 
 const orderFrom = [
   {
@@ -62,9 +52,11 @@ const orderFrom = [
 export default function DropDownMenuOrderFrom() {
   const { toast } = useToast();
 
-  const [showAlert, setShowAlert] = useState(false)
 
-  const [selectedCountry, setselectedCountry] = useState({
+  const [
+    selectedCountry, 
+    // setselectedCountry
+  ] = useState({
     name: "السعودية",
     key: "SA",
   });
@@ -78,6 +70,8 @@ export default function DropDownMenuOrderFrom() {
     }
     // setselectedCountry(item)
   };
+
+  
 
   return (
     <div className="flex items-center gap-x-2 w-full">
@@ -109,6 +103,7 @@ export default function DropDownMenuOrderFrom() {
                   <DropdownMenuSubContent>
                     {ele.sub.map((subEle) => (
                       <DropdownMenuItem
+                        key={subEle.key}
                         onClick={() =>
                           onSelect({ name: subEle.name, key: subEle.key })
                         }
@@ -138,6 +133,7 @@ export default function DropDownMenuOrderFrom() {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
+      
     </div>
   );
 }

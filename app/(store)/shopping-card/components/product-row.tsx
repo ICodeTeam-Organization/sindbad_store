@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { BiTrash } from "react-icons/bi";
+import { BiTrash, BiGift } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import { HiMinusSm } from "react-icons/hi";
 import { useToast } from "@/hooks/use-toast";
@@ -12,25 +11,48 @@ import { deleteApi, putApi } from "@/lib/http";
 import Spinner from "@/app/(home)/components/Spinner";
 import { useCartStore } from "@/app/stores/cartStore";
 import SafeImage from "@/components/SafeImage";
+import { CartItem } from "@/types/storeTypes";
+
+// type Props = {
+//   id: number;
+//   name: string;
+//   image?: string;
+//   price: number;
+//   quantity: number;
+//   shipCost: number;
+//   freeProducts?: number;
+//   refreshItems: () => void;
+// };
 
 type Props = {
-  id: number;
-  name: string;
-  image?: string;
-  price: number;
-  quantity: number;
-  shipCost: number;
+  cartItemData: CartItem;
   refreshItems: () => void;
 };
 
-const ProductRow = ({ ...props }: Props) => {
+const ProductRow = ({ cartItemData, refreshItems }: Props) => {
 
+  const {
+    cartId,
+    // productId,
+    // specialProductId,
+    name,
+    price,
+    priceAfterDiscount,
+    finalPrice,
+    // percentageDiscount,
+    imageUrl,
+    quantity: initialQuantity,
+    amountYouBuy,
+    amountYouGet,
+    shipCost,
+  } = cartItemData;
+  const thePrice = priceAfterDiscount || price;
+  const { updateQuantity: updateQuantityInStore, removeItem } = useCartStore();
 
-  const {updateQuantity:updateQuantityInStore,removeItem} = useCartStore()
-
-  const [quantity, setQuantity] = useState<number>(props.quantity);
+  const [quantity, setQuantity] = useState<number>(initialQuantity);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
   const { toast } = useToast();
+  // const freeProducts = 0;
 
   const updateQuantity = useMutation({
     mutationFn: async ({
@@ -51,8 +73,8 @@ const ProductRow = ({ ...props }: Props) => {
         "PATCH"
       ),
     onSuccess: () => {
-      props.refreshItems();
-      updateQuantityInStore(quantity,props.id)
+      refreshItems();
+      updateQuantityInStore(quantity, cartId);
     },
     onError: (res) => {
       toast({
@@ -64,15 +86,14 @@ const ProductRow = ({ ...props }: Props) => {
   });
 
   const deleteItem = useMutation({
-    mutationFn: async (id: number) =>{
-      
+    mutationFn: async (id: number) => {
       await deleteApi("Cart/DeleteCart?cartId=" + id);
       return id;
     },
 
     onSuccess: (id) => {
-      props.refreshItems();
-      removeItem(id)
+      refreshItems();
+      removeItem(id);
     },
     onError: (res: any) => {
       toast({
@@ -83,24 +104,23 @@ const ProductRow = ({ ...props }: Props) => {
     },
   });
 
-  const handleQuantity = (quantity: number) => {
+  const handleQuantity = (quantityPar: number) => {
     setIsUpdated(true);
-    setQuantity(quantity);
+    setQuantity(quantityPar);
   };
 
   const debounceQuantity = useDebounce(quantity, 500);
   useEffect(() => {
-    if (debounceQuantity >=0 && isUpdated) {
+    if (debounceQuantity >= 0 && isUpdated) {
       setIsUpdated(false);
       if (quantity == 0) {
-        deleteItem.mutate(props.id);
+        deleteItem.mutate(cartId);
       } else {
         updateQuantity.mutate({
-          cartId: props.id,
+          cartId: cartId,
           quantity: quantity,
         });
       }
-      
     }
   }, [debounceQuantity]);
 
@@ -109,57 +129,98 @@ const ProductRow = ({ ...props }: Props) => {
   };
 
   return (
-    <tr className="text-center" >
-      <td className="py-2">
-        <div className="flex items-center ">
-          <div className="w-20 h-20 relative bg-slate-400 rounded-lg me-4 overflow-hidden" >
-            <SafeImage
-              fill
-              className="ml-3"
-              src={props.image||""}
-              alt="Product"
+    <>
+      <tr className="text-center ">
+        <td className="py-2">
+          <div className="flex items-center ">
+            <div className="w-20 h-20 relative  border rounded-lg me-4 overflow-hidden">
+              <SafeImage
+                fill
+                className="ml-3"
+                src={imageUrl || ""}
+                alt="Product"
+              />
+            </div>
+            <span className="text-sm font-bold">{name}</span>
+          </div>
+        </td>
+        <td className="" >
+          <span>{thePrice?.toFixed(2)} رس</span>
+          {/* <span className="text-[10px] text-gray-400" >{percentageDiscount}%</span> */}
+        </td>
+
+        <td className="py-2">
+          <div className="flex items-center justify-center">
+            <IoMdAdd
+              onClick={() => handleQuantity(quantity + 1)}
+              className="cursor-pointer"
+            />
+            {updateQuantity.isPending || deleteItem.isPending ? (
+              <div className="w-14 flex items-center justify-center ">
+                {" "}
+                <Spinner className="w-4 h-4" />{" "}
+              </div>
+            ) : (
+              <input
+                value={quantity}
+                type="number"
+                onChange={(e) => {
+                  setQuantity(+e.target.value);
+                  setIsUpdated(true);
+                }}
+                className="w-14 text-center remove-arrow outline-none"
+              />
+            )}
+
+            <HiMinusSm
+              onClick={() => handleQuantity(quantity - 1)}
+              className="cursor-pointer"
             />
           </div>
-          <span className="text-sm font-bold">{props.name}</span>
-        </div>
-      </td>
-      <td className="py-2">{props.price.toFixed(2)} رس</td>
-      
-      <td className="py-2">
-        <div className="flex items-center justify-center">
-          <IoMdAdd
-            onClick={() => handleQuantity(quantity + 1)}
-            className="cursor-pointer"
-          />
-         {updateQuantity.isPending || deleteItem.isPending ? <div className="w-14 flex items-center justify-center " > <Spinner className="w-4 h-4" /> </div> :  <input
-              value={quantity}
-              type="number"
-              onChange={(e) => {
-                setQuantity(+e.target.value);
-                setIsUpdated(true)
-              }}
-              className="w-14 text-center remove-arrow outline-none"
-            />}
+        </td>
+        <td className="py-2">{shipCost?.toFixed(2)} رس</td>
+        <td className="py-2">{finalPrice?.toFixed(2)} رس</td>
+        <td className="py-2">
+          {deleteItem.isPending ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            <BiTrash
+              className="text-2xl cursor-pointer hover:text-red-500 transition-colors duration-100"
+              onClick={() => handleDeleteItem(cartId)}
+            />
+          )}
+        </td>
+      </tr>
+      {(!!amountYouBuy && !!amountYouGet) ? (
+        <tr className="opacity-90 text-center">
+          <td className="">
+            {/* <div className="flex items-center ">
+              <div className="h-[50px] w-[50px] mx-4 relative bg-slate-400 rounded-lg overflow-hidden">
+                <SafeImage
+                  fill
+                  className="ml-3"
+                  src={imageUrl || ""}
+                  alt="Product"
+                />
+              </div>
+              <span className="text-sm font-bold">{name}</span>
+            </div> */}
+          </td>
+          <td className="text-primary-background">هدية مجاناً</td>
 
-          <HiMinusSm
-            onClick={() => handleQuantity(quantity - 1)}
-            className="cursor-pointer"
-          />
-        </div>
-      </td>
-      <td className="py-2">{props.shipCost.toFixed(2)} رس</td>
-      <td className="py-2">{(quantity*props.price).toFixed(2)} رس</td>
-      <td className="py-2">
-        {deleteItem.isPending ? (
-          <Loader2 className="animate-spin" />
-        ) : (
-          <BiTrash
-            className="cursor-pointer hover:text-red-500 transition-colors duration-100"
-            onClick={() => handleDeleteItem(props.id)}
-          />
-        )}
-      </td>
-    </tr>
+          <td className="">
+            <div className="flex items-center justify-center text-primary-background">
+              {amountYouGet}
+            </div>
+          </td>
+          <td className=""></td>
+          <td className=""></td>
+          <td className="">
+            <BiGift className=" text-2xl text-primary-background cursor-pointer hover:text-red-500 transition-colors duration-100" />
+          </td>
+        </tr>
+      ) : null}
+    </>
   );
 };
 

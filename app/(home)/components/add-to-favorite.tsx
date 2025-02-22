@@ -7,10 +7,11 @@ import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import axios from "axios";
 import React from "react";
 import { useFavorite } from "@/app/stores/favoritesStore";
 import { cn } from "@/lib/utils";
+import { deleteApi, postApi } from "@/lib/http";
+import { FavoriteProduct } from "@/types/storeTypes";
 
 type Props = {
     id: string | number;
@@ -22,13 +23,13 @@ const AddToFavorite = ({ id }: Props) => {
     const { data: session, status } = useSession();
     const { toast } = useToast();
     const {productsIds,addProductToFavorite,delProductFromFavorite} = useFavorite()
+    const isInFavorite = productsIds.includes(+id);
 
     // add to favorite
     const mutationFav = useMutation({
         mutationFn: async () => {
-            const res = await axios.post(
-                `https://icode-sendbad-store.runasp.net/api/Favorites/AddProductToFavorite/${id}`,
-                {},
+            const res = await postApi<{data:FavoriteProduct}>(
+                `Favorites/AddProductToFavorite/${id}`,
                 {
                     headers: {
                         "Accept-Language": "ar",
@@ -39,7 +40,7 @@ const AddToFavorite = ({ id }: Props) => {
             );
             return res.data;
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             addProductToFavorite(+id)
         },
         onError: (error: any) => {
@@ -55,8 +56,8 @@ const AddToFavorite = ({ id }: Props) => {
     });
     const mutationFavDel = useMutation({
         mutationFn: async () => {
-            const res = await axios.delete(
-                `https://icode-sendbad-store.runasp.net/api/Favorites/DeleteFavorite?productId=${id}`,
+            return await deleteApi<{data:string}>(
+                `Favorites/DeleteFavorite?productId=${id}`,
                 {
                     headers: {
                         "Accept-Language": "ar",
@@ -65,9 +66,8 @@ const AddToFavorite = ({ id }: Props) => {
                     },
                 }
             );
-            return res.data;
         },
-        onSuccess: (data) => {
+        onSuccess: () => {
             delProductFromFavorite(+id)
         },
         onError: (error: any) => {
@@ -86,7 +86,7 @@ const AddToFavorite = ({ id }: Props) => {
     const handleAddToFav = () => {
         if (status === "unauthenticated") redirct.push("/auth");
         else if (status === "authenticated") {
-            if (productsIds.includes(+id)) {
+            if (isInFavorite) {
                 mutationFavDel.mutate()
             } else {
                 mutationFav.mutate();
@@ -99,14 +99,14 @@ const AddToFavorite = ({ id }: Props) => {
             disabled={mutationFav.isPending}
             variant={"outline"}
             onClick={() => handleAddToFav()}
-            className={cn("cursor-pointer group hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-sm:w-[30px] max-sm:h-[30px] w-[50px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1",productsIds.includes(+id)&&"bg-[#F55157]")}
+            className={cn("cursor-pointer group hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-sm:w-[30px] max-sm:h-[30px] w-[50px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1",isInFavorite&&"bg-[#F55157]")}
         >
             {
                 mutationFav.isPending || mutationFavDel.isPending  ? (
                     <Loader2 className="animate-spin" />
                 ) : (<>
-                    <AiOutlineHeart className={cn("w-[20px] h-[20px]  group-hover:hidden",productsIds.includes(+id)&&"hidden")} color="#D5D5D5" />
-                    <AiFillHeart className={cn("w-[20px] h-[20px] hidden group-hover:block",productsIds.includes(+id)&&"block")} color="#fff" />
+                    <AiOutlineHeart className={cn("w-[20px] h-[20px]  group-hover:hidden",isInFavorite&&"hidden")} color="#D5D5D5" />
+                    <AiFillHeart className={cn("w-[20px] h-[20px] hidden group-hover:block",isInFavorite&&"block")} color="#fff" />
                     </> )
             }
         </Button>

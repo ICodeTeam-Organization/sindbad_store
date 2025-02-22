@@ -3,16 +3,16 @@ import React from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { E_commerceCardProps } from "../types";
 import SafeImage from "@/components/SafeImage";
-import { cn } from "@/lib/utils";
+import { cn, goToExtrnalLink } from "@/lib/utils";
 import { useFavorite } from "@/app/stores/favoritesStore";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import { deleteApi, postApi } from "@/lib/http";
 
 const E_commerceCard = ({
     id,
@@ -20,8 +20,8 @@ const E_commerceCard = ({
     LinkOFStore,
     description,
     logo,
-    categories,
-    ecommerceStoreImages,
+    // categories,
+    // ecommerceStoreImages,
 }: E_commerceCardProps) => {
   const {
     favoriteEcommerceIds,
@@ -34,22 +34,22 @@ const E_commerceCard = ({
 
   const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
-      const res = await axios.post(
-        process.env.NEXT_PUBLIC_BASE_URL + `FavoriteShop/AddEcommerceStore`,
-        {
-          ecommerceStoreId: id,
-        },
+      return postApi(
+        `FavoriteShop/AddEcommerceStore`,
+        
         {
           headers: {
             "Accept-Language": "ar",
             "Content-type": "application/json",
             Authorization: `Bearer ${session?.user.data.token}`,
           },
+          body:{
+            ecommerceStoreId: id,
+          },
         }
       );
-      return res.data;
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       addEcommerceToFavorite(+id);
     },
     onError: (error: any) => {
@@ -67,8 +67,7 @@ const E_commerceCard = ({
   const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
-        const res = await axios.delete(
-          process.env.NEXT_PUBLIC_BASE_URL +
+        return await deleteApi(
             `FavoriteShop/RemoveEcommerceStore/` +
             id,
           {
@@ -77,9 +76,8 @@ const E_commerceCard = ({
             },
           }
         );
-        return res.data;
       },
-      onSuccess: (data) => {
+      onSuccess: () => {
         delEcommerceFromFavorite(+id);
       },
       onError: (error: any) => {
@@ -125,7 +123,7 @@ const E_commerceCard = ({
         <div className="flex flex-wrap   w-full  gap-x-1 mt-6 ] ">
           <Link
             target="_blank"
-            href={LinkOFStore + ""}
+            href={goToExtrnalLink(LinkOFStore + "")}
             className="flex-1 min-w-[70px] h-[40px] border border-gray text-black text-[13px] rounded-md flex justify-center items-center "
           >
             الإنتقال الى المتجر

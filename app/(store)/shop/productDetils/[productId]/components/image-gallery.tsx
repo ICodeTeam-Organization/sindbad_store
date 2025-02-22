@@ -1,38 +1,60 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import SafeImage from "@/components/SafeImage";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 
 const ImageGallery = ({ images }: { images: string[] }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [images.length,activeIndex]);
+
   return (
     <div className="flex flex-col mx-5" style={{ direction: "ltr" }}>
       {images.length > 0 ? (
-        <Carousel>
-          <CarouselContent>
-            {images.map((img, index) => (
-              <CarouselItem key={index} style={{ height: "400px" }}>
+        <>
+          <div className="flex justify-center overflow-hidden relative mdHalf:w-[400px] h-[360px] rounded-lg">
+            <div
+              className="w-full h-full flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+            >
+              {images.map((img, index) => (
+                <div key={index} className="w-full flex-shrink-0">
+                  <SafeImage
+                    src={img}
+                    alt="صور للمنتج"
+                    width={400}
+                    height={360}
+                    className="w-full h-full object-contain rounded cursor-pointer"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div dir="rtl" className="flex w-full overflow-x-auto   space-x-2 gap-x-3 mt-4 p-2 scrollbar-hide">
+            {images.map((ele, ix) => (
+              <div
+                key={ix}
+                className={`flex p-2 min-w-[80px] h-[80px] border rounded-lg cursor-pointer transition-all duration-300 ${activeIndex === ix ? 'border-orange-500 scale-105' : ''}`}
+                onClick={() => setActiveIndex(ix % images.length)}
+              >
                 <SafeImage
-                  src={img}
-                  alt="صور للمنتج"
-                  width={400}
-                  height={400}
-                  className={`w-full h-full rounded cursor-pointer`}
-                  style={{ objectFit: "fill" }}
+                  src={ele}
+                  alt={"صور للمنتج" + ix}
+                  width={80}
+                  height={80}
+                  className="w-[70px] h-[70px] object-contain rounded"
                 />
-              </CarouselItem>
+              </div>
             ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+          </div>
+        </>
       ) : (
-        <div className="text-center text-gray-500">
+        <div className="text-center text-gray-500 w-full border flex items-center justify-center h-[350px] rounded-lg">
           لا توجد صور متوفرة
         </div>
       )}
@@ -41,28 +63,3 @@ const ImageGallery = ({ images }: { images: string[] }) => {
 };
 
 export default ImageGallery;
-
-       {/* Main Image Display */}
-      {/* <Image
-        src={activeImage}
-        width={400}
-        height={50}
-        alt="Product"
-        className="object-cover border-1 border-gray-400 px-8"
-      />
-
-
-      <div className="flex gap-2 mt-4 justify-center">
-        {images?.slice(0, 3).map((img, index: number) => (
-          <Image
-            key={index}
-            src={img}
-            width={84}
-            height={84}
-            alt="Thumbnail"
-            className={`w-16 h-16 rounded cursor-pointer ${activeImage === img ? 'border-1 border-orange-500' : ''
-              }`}
-            onClick={() => setActiveImage(img)}
-          />
-        ))}
-      </div> */}

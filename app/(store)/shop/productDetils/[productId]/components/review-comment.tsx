@@ -1,7 +1,7 @@
 import React from "react";
 // import { ReviewProps } from "../types";
 import Image from "next/image";
-import { AiFillStar } from "react-icons/ai";
+// import { AiFillStar } from "react-icons/ai";
 
 const ReviewComment = ({
   reviewer,
@@ -10,18 +10,18 @@ const ReviewComment = ({
   comment,
   customerImage,
 }: any) => {
-  const renderStars = () => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <AiFillStar
-          key={i}
-          className={i <= rating ? "text-yellow-500" : "text-gray-300"}
-        />
-      );
-    }
-    return stars;
-  };
+  // const renderStars = () => {
+  //   const stars = [];
+  //   for (let i = 1; i <= 5; i++) {
+  //     stars.push(
+  //       <AiFillStar
+  //         key={i}
+  //         className={i <= rating ? "text-yellow-500" : "text-gray-300"}
+  //       />
+  //     );
+  //   }
+  //   return stars;
+  // };
 
   return (
     <div className="border border-gray-300 rounded-md p-4 mb-4">

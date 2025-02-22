@@ -57,7 +57,7 @@ const MyNewOrder = () => {
     data: newOrders,
     isLoading,
     // refetch,
-  } = useQuery({
+  } = useQuery<any>({
     queryKey: ["newSpecialOrder", pageNumber, pageSize],
     queryFn: () => {
       console.log("newOrders")
@@ -70,8 +70,8 @@ const MyNewOrder = () => {
 
   // دمج البيانات الجديدة مع القديمة عند استرجاعها
   useEffect(() => {
-    if (newOrders && newOrders.success) {
-      setAllNewOrders((prevOrders) => [...prevOrders, ...newOrders.data.items]);
+    if (newOrders && newOrders?.success) {
+      setAllNewOrders((prevOrders) => [...prevOrders, ...newOrders?.data?.items]);
       if (
         newOrders?.data?.currentPage == newOrders?.data?.totalPages
       ) {

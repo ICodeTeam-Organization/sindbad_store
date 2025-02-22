@@ -1,48 +1,73 @@
 import React from "react";
-import Orderdetails from "../components/order-details";
-import PrintOrderBill from "../components/print-order-bill";
-import BreadCrumb from "@/components/BreadCrumb";
+import PrintOrderBill from "../components/print-order-bill"; 
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
+import OrderDetailProductsTable from "../components/order-details-products-table";
+import { convertToArabicDate } from "@/lib/utils";
+import { FcPackage } from "react-icons/fc";
+import { ApiResponseTypeForOrderDetails } from "../type";
 
 interface Detail {
   params: { MyOrderdetail: string };
 }
 const OrderDetail = async ({ params }: Detail) => {
-  const OrderDetails = await getApi<any>(
+  const OrderDetails = await getApi<ApiResponseTypeForOrderDetails>(
     `OrderDetails/Market/OrdersPage/GetOrderDetailsForViewInOrderDetailsPage?orderId=${params.MyOrderdetail}&pageNumber=1&pageSize=10`
   );
   if (!OrderDetails) return notFound();
   const data = OrderDetails.data;
+
+  console.log(OrderDetails.data.pagedOrderDetails.items);
+  
+  
   return (
-    <>
-      <BreadCrumb
+    <div className="xl:container mx-auto">
+      {/* <BreadCrumb
         SecondName="طلباتي"
         SecondDir="/Orders"
         ThirdName="تفاصيل الطلب"
         ThirdDir=""
-      />
-      <div className="m-auto my-16">
-        <div className="mx-8 m-auto rounded-sm py-3 mt-6">
-          <div className="flex justify-between items-center border-2 p-3 max-md:text-xs text-lg">
-            <div className="flex max-sm:flex-wrap justify-center m-auto">
-              <p className="text-gray-600">رقم الطلب :</p>
-              <p className="pr-3 font-bold text-gray-700">{data.orderNumber}</p>
+      /> */}
+
+      <div className="m-10">
+        <div className="">
+          <div>
+            <div className="flex items-center gap-x-2" >
+            <FcPackage className="text-2xl" />
+            <h1 className="font-bold text-sm" > معلومات الطلب </h1>
             </div>
-            <div className="flex max-sm:flex-wrap  justify-between items-center m-auto">
-              <p className="text-gray-600">تاريخ الطلب :</p>
-              <p className="pr-3 font-bold text-gray-700">{data.orderDate}</p>
-            </div>
-            <div className="flex max-sm:flex-wrap  justify-start items-center m-auto">
-              <p className="text-gray-600">حالة الطلب :</p>
-              <p className="pr-3 font-bold text-gray-700">{data.orderStatus}</p>
+            <div className=" text-sm mdHalf:flex flex-wrap gap-x-4 my-6 space-y-3 mdHalf:space-y-0 ">
+              <div className="flex justify-between mdHalf:justify-start">
+                <p className="text-gray-600 ">رقم الطلب </p>
+                <p className="pr-3 font-bold text-gray-700">
+                  {data.orderNumber}
+                </p>
+              </div>
+              <div className="flex justify-between mdHalf:justify-start">
+                <p className="text-gray-600 ">تاريخ الطلب </p>
+                <p className="pr-3 font-bold text-gray-700">
+                  {convertToArabicDate(data.orderDate)}
+                </p>
+              </div>
+              <div className="flex justify-between mdHalf:justify-start">
+                <p className="text-gray-600 ">حالة الطلب </p>
+                <p className="pr-3 font-bold text-gray-700">
+                  {data.orderStatus}
+                </p>
+              </div>
             </div>
           </div>
-          <Orderdetails detail={data.pagedOrderDetails.items} />
+        </div>
+        <div className="flex mdHalf:flex-row flex-col-reverse gap-4 w-full" >
+          <div className="lg:w-3/4 mdHalf:w-[65%]" >
+            <OrderDetailProductsTable detail={data.pagedOrderDetails.items} />
+          </div>
+          <div className="lg:w-1/4 mdHalf:w-[35%] " >
+            <PrintOrderBill Bill={data} />
+          </div>
         </div>
       </div>
-      <PrintOrderBill Bill={data} />
-    </>
+    </div>
   );
 };
 

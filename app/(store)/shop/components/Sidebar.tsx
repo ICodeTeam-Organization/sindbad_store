@@ -8,70 +8,52 @@ import PopularTags from "./popular-tags";
 import Brands from "./Brands";
 
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import CategoriesAndSubCheckBox from "./CategoriesTreeCheckBox";
+import CategoriesShopFilter from "./CategoriesShopFilter";
 import StoresSearchSelector from "./StoresSearchSelector";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 import { MainCategory } from "@/types/storeTypes";
 import { Checkbox } from "@/components/ui/checkbox";
+import { GrPowerReset } from "react-icons/gr";
 
 const Sidebar = () => {
   const {
     setPriceRange,
     setStoreId,
-    setHasOffer,
+    setTodayOffer,
     setNewProduct,
     filters,
     setBrandId,
+    resetFilters,
+    setTagId
   } = useShopFiltersStore();
   const { categories } = useCategoriesDataStore();
 
-  const brandList = [
-    "Google",
-    "Apple",
-    "Samsung",
-    "Microsoft",
-    "HP",
-    "Dell",
-    "Xiaomi",
-    "Symphony",
-    "Panasonic",
-    "Sony",
-    "Intel",
-    "LG",
-    "One Plus",
-  ];
-  const tags = [
-    "Graphics Cards",
-    "TV",
-    "iPhone",
-    "Game",
-    "Asus Laptops",
-    "SSD",
-    "Mackbook",
-    "Speakers",
-    "Smart TV",
-    "Power Bank",
-    "Samsung",
-    "Microsoft",
-    "Tablet",
-  ];
+
 
   return (
-    <aside className=" h-full ">
+    <aside className=" h-full  tajawal">
+
+        <div className="mb-8 flex gap-x-2 items-center cursor-pointer" onClick={resetFilters}  >
+            <GrPowerReset size={18}  />
+            <p className="text-sm" > إعادة ضبط الفلاتر </p> 
+         </div>
+
+         {/* today offers and new products filter */}
       <div className=" mb-3 flex-row flex items-center justify-start mt-10 mdHalf:mt-0 ">
-        <div className="flex items-center space-x-2  ">
+       
+         <div className="flex items-center space-x-2  ">
           <Checkbox
-            id="hasOffers"
-            checked={filters.hasOffer == "t"}
-            onCheckedChange={(checked) => setHasOffer(checked ? "t" : "f")}
+            id="todayOffer"
+            checked={filters.todayOffer == "t"}
+            onCheckedChange={(checked) => setTodayOffer(checked ? "t" : "f")}
           />
           <label
-            htmlFor="hasOffers"
+            htmlFor="todayOffer"
             className="text-[13px] px-2 cursor-pointer font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             عروض اليوم
           </label>
-        </div>
+         </div>
 
         <div className="flex items-center space-x-2 ">
           <Checkbox
@@ -109,7 +91,11 @@ const Sidebar = () => {
         <h3 className="mb-2">الفئات</h3>
         <div className="max-h-[50vh] overflow-auto ">
           {categories.map((ele: MainCategory) => {
-            return <CategoriesAndSubCheckBox key={ele.id} data={ele} />;
+            return <CategoriesShopFilter 
+            key={ele.id} 
+            data={ele}
+            
+            />;
           })}
         </div>
       </div>
@@ -124,7 +110,7 @@ const Sidebar = () => {
           }
         }}
       />
-      {/* <PopularTags tags={tags} /> */}
+      <PopularTags onSelectTag={setTagId}  activeTagId={filters.tagId} />
     </aside>
   );
 };

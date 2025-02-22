@@ -1,19 +1,23 @@
 "use client";
 import { BiPlusCircle } from "react-icons/bi";
-import { Dialog, DialogContent, DialogTrigger , DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger  } from "@/components/ui/dialog";
 // import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import SpecialOrderForm from "./special-order-form";
-import { number } from "zod";
 
 const AddSpecialOrder = ({
   show = false,
-  setShow = (s:boolean) => {},
+  setShow ,
   tab = 1,
   category = "",
+}:{
+  show:boolean,
+  setShow:(s:boolean) => void
+  tab:number,
+  category:string
 }) => {
   return (
-    <Dialog open={show}  >
+    <Dialog open={show} onOpenChange={setShow}  >
       <DialogTrigger
         asChild  // this for close if it open from megamenus  or another page
       >
@@ -27,7 +31,7 @@ const AddSpecialOrder = ({
         </Button>
       </DialogTrigger>
       <DialogContent className="[&>button]:hidden m-auto">
-        <SpecialOrderForm tabType={tab} category={category} onClose={()=>{setShow(false)}} />
+        <SpecialOrderForm tabType={tab} category={+category} closeDialog={()=>{setShow(false)}}   />
       </DialogContent>
     </Dialog>
   );

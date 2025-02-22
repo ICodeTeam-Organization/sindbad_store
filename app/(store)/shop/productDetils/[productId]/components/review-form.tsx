@@ -1,36 +1,36 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@radix-ui/react-toast";
+import { useToast } from "@/hooks/use-toast"; 
 import { ReviewFormProps } from "../types";
 import { useSession } from "next-auth/react";
+import { postApi } from "@/lib/http";
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const [reviewText, setReviewText] = useState("");
   const [rate, setRate] = useState(3);
   const [validationError, setValidationError] = useState<string | null>(null);
   const { toast } = useToast();
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
 
   const mutation = useMutation({
     mutationFn: async () => {
       if (!session) {
         throw new Error("لا يوجد جلسة نشطة");
       }
-      const res = await axios.post(
-        "https://icode-sendbad-store.runasp.net/api/CommentsAndRates/AddReviewToProduct",
-        {
-          productId,
-          rate,
-          reviewText,
-          reviewImageUrl: "string", // يمكن تغيير هذا لاحقًا ليكون حقلًا اختياريًا
-        },
+      const res = await postApi(
+        "CommentsAndRates/AddReviewToProduct",
+       
         {
           headers: {
             "Accept-Language": "ar",
             "Content-Type": "application/json",
             Authorization: `Bearer ${session.user.data.token}`,
+          },
+          body:{
+            productId,
+            rate,
+            reviewText,
+            reviewImageUrl: "string", // يمكن تغيير هذا لاحقًا ليكون حقلًا اختياريًا
           },
         }
       );
@@ -50,13 +50,18 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
       });
     },
     onError: (error: any) => {
-      const errorMessage = error?.response?.data?.message || "حدث خطأ أثناء إضافة تعليقك.";
+      const errorMessage = error?.message || "حدث خطأ أثناء إضافة تعليقك.";
       
       toast({
         variant: "destructive",
         description: errorMessage,
-        action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+        // action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
       });
+
+      console.log(JSON.stringify(error));
+      console.log(error);
+      console.log(error?.message);
+
     },
   });
 

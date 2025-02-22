@@ -95,7 +95,7 @@ body {
     @apply bg-background text-foreground;
   }
   .nav-menus {
-    @apply flex flex-col gap-2 items-center mdHalf:justify-center mdHalf:p-2 text-base hover:bg-[#FF8F7E22] cursor-pointer transition;
+    @apply flex flex-col gap-2 items-center mdHalf:justify-center mdHalf:p-2 text-base hover:bg-[#FF8F7E22] cursor-pointer transition ;
   }
 
   .nav-menus-label {
@@ -165,9 +165,8 @@ body {
   position: absolute;
   z-index: 1;
   font-size: 10px;
-  left: 0;
-  padding: 2px;
-  border-radius: 4px;
+  right: 0;
+  border-radius: 0 0 0px 4px;
   background: rgb(250 130 50 / 92%);
   color: white;
 }

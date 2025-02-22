@@ -1,11 +1,16 @@
 module.exports = {
   images: {
     remotePatterns: [
+      // this for allow all domains
+      {
+        protocol: "https",
+        hostname: "**",
+      },
       {
         protocol: "https",
         hostname: "example.com",
         port: "",
-        pathname: "/images/**",
+        pathname: "/**",
       },
       {
         protocol: "https",
@@ -68,6 +73,9 @@ module.exports = {
         pathname: "/**",
       },
     ],
+  },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
   },
 };
 

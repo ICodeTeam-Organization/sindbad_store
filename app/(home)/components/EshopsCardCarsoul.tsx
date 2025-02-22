@@ -1,108 +1,104 @@
 import React from "react";
 import Image from "next/image";
-import { AiFillHeart, AiFillStar, AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiFillStar } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useFavorite } from "@/app/stores/favoritesStore";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { Shop } from "@/types/storeTypes";
-
+import { deleteApi, postApi } from "@/lib/http";
 
 const EshopsCardCarsoul: React.FC<Shop> = ({
   description,
   name,
-  ecommerceStoreImages,
-  id:ecommrcesId,
+  // ecommerceStoreImages,
+  id: ecommrcesId,
   logo,
-  urlLinkOfStore
+  urlLinkOfStore,
 }) => {
-
-
-  const { favoriteEcommerceIds , addEcommerceToFavorite ,delEcommerceFromFavorite} = useFavorite();
-  const isFavorite = favoriteEcommerceIds.find(
-    (ele) => ele == ecommrcesId
-  );
-  const { data:session , status } = useSession()
+  const {
+    favoriteEcommerceIds,
+    addEcommerceToFavorite,
+    delEcommerceFromFavorite,
+  } = useFavorite();
+  const isFavorite = favoriteEcommerceIds.find((ele) => ele == ecommrcesId);
+  const { data: session, status } = useSession();
   const { toast } = useToast();
 
-  const {mutate:mutateAddToFav,isPending:isPendingAddToFav} = useMutation({
+  const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
-        const res = await axios.post(
-          process.env.NEXT_PUBLIC_BASE_URL +`FavoriteShop/AddEcommerceStore`,
-            {
-              "ecommerceStoreId": ecommrcesId
-            },
-            {
-                headers: {
-                    "Accept-Language": "ar",
-                    "Content-type": "application/json",
-                    Authorization: `Bearer ${session?.user.data.token}`,
-                },
-            }
-        );
-        return res.data;
+      return await postApi(`FavoriteShop/AddEcommerceStore`, {
+        body: {
+          ecommerceStoreId: ecommrcesId,
+        },
+        headers: {
+          "Accept-Language": "ar",
+          "Content-type": "application/json",
+          Authorization: `Bearer ${session?.user.data.token}`,
+        },
+      });
     },
-    onSuccess: (data) => {
-         addEcommerceToFavorite(ecommrcesId)
+    onSuccess: () => {
+      addEcommerceToFavorite(ecommrcesId);
     },
     onError: (error: any) => {
-        const errorMessage =
-            error.response?.data?.message || 'حدث خطأ أثناء إضافة المتجر إلى المفضلة';
-        toast({
-            variant: 'destructive',
-            description: `خطأ: ${errorMessage}`,
-            action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-        });
-    },
-});
-
-const {mutate:mutateRemoveFromFav,isPending:isPendingRemoveFromFav} = useMutation({
-  mutationFn: async () => {
-      const res = await axios.delete(
-        process.env.NEXT_PUBLIC_BASE_URL +`FavoriteShop/RemoveEcommerceStore/`+ecommrcesId,
-          {
-              headers: {
-                  Authorization: `Bearer ${session?.user.data.token}`,
-              },
-          }
-      );
-      return res.data;
-  },
-  onSuccess: (data) => {
-    delEcommerceFromFavorite(ecommrcesId)
-  },
-  onError: (error: any) => {
       const errorMessage =
-          error.response?.data?.message || 'حدث خطأ أثناء حذف المتجر إلى المفضلة';
+        error.response?.data?.message ||
+        "حدث خطأ أثناء إضافة المتجر إلى المفضلة";
       toast({
-          variant: 'destructive',
+        variant: "destructive",
+        description: `خطأ: ${errorMessage}`,
+        action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
+      });
+    },
+  });
+
+  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
+    useMutation({
+      mutationFn: async () => {
+        return await deleteApi(
+            `FavoriteShop/RemoveEcommerceStore/` +
+            ecommrcesId,
+          {
+            headers: {
+              Authorization: `Bearer ${session?.user.data.token}`,
+            },
+          }
+        );
+      },
+      onSuccess: () => {
+        delEcommerceFromFavorite(ecommrcesId);
+      },
+      onError: (error: any) => {
+        const errorMessage =
+          error.response?.data?.message ||
+          "حدث خطأ أثناء حذف المتجر إلى المفضلة";
+        toast({
+          variant: "destructive",
           description: `خطأ: ${errorMessage}`,
           action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-      });
-  },
-});
-const redirct = useRouter();
+        });
+      },
+    });
+  const redirct = useRouter();
 
-const handleAddToFav = () => {
-  if (status === "unauthenticated") redirct.push("/auth");
-  else if (status === "authenticated") {
-  if (isFavorite) {
-    mutateRemoveFromFav()
-  } else {
-    mutateAddToFav()
-  }
-}
-};
-
-
+  const handleAddToFav = () => {
+    if (status === "unauthenticated") redirct.push("/auth");
+    else if (status === "authenticated") {
+      if (isFavorite) {
+        mutateRemoveFromFav();
+      } else {
+        mutateAddToFav();
+      }
+    }
+  };
 
   return (
     <>
@@ -111,11 +107,7 @@ const handleAddToFav = () => {
           <h1>لاتوجد صورة للمتجر</h1>
         ) : (
           <Image
-            src={
-              logo?.startsWith("http")
-                ? logo
-                : "/" + logo
-            }
+            src={logo?.startsWith("http") ? logo : "/" + logo}
             alt={"shop"}
             layout="fill"
             className="object-contain"
@@ -144,6 +136,7 @@ const handleAddToFav = () => {
           ) : (
             <Link
               href={urlLinkOfStore}
+              target="_blank"
               className="flex-1 p-2 cursor-pointer rounded-sm border-[1px] group-hover:bg-[#F58634] group-hover:border-[#F58634] group-hover:text-white transition-all duration-300 flex justify-center items-center border-gray-200"
             >
               <h1 className="text-base">زيارة المتجر</h1>
@@ -159,19 +152,15 @@ const handleAddToFav = () => {
               isFavorite && "bg-[#F55157] text-white"
             )}
           >
-            {
-              isPendingAddToFav  || isPendingRemoveFromFav ? (
-                  <Loader2 className="animate-spin" />
-              ) :
+            {isPendingAddToFav || isPendingRemoveFromFav ? (
+              <Loader2 className="animate-spin" />
+            ) : (
               <>
                 <AiFillHeart
-                  className={cn(
-                    "w-[20px] h-[20px] ",
-                    isFavorite && "block"
-                  )}
+                  className={cn("w-[20px] h-[20px] ", isFavorite && "block")}
                 />
               </>
-            }
+            )}
           </Button>
         </div>
       </div>

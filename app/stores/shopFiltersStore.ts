@@ -8,10 +8,12 @@ type ShopFiltersStore = {
     subCats: string[];
     productName: string;
     hasOffer: string;
+    todayOffer: string;
     newProduct: string;
     pageNumber: number;
     pageSize: number;
     brandId: number | null;
+    tagId: number | null; // Added tagId
   };
   initState: {
     price: [number, number];
@@ -24,17 +26,20 @@ type ShopFiltersStore = {
     pageNumber?: number;
     pageSize?: number;
     brandId: number | null;
+    tagId: number | null; // Added tagId
   };
   setPriceRange: (range: [number, number]) => void;
   setStoreId: (id: string) => void;
   setCats: (cats: string[]) => void;
   setSubCats: (subCats: string[]) => void;
   setProductName: (name: string) => void;
-  setHasOffer: (hasOffer: string) => void;
+  setHasOffer: (hasOffer: string) => void; 
+  setTodayOffer: (todayOffer: string) => void; 
   setNewProduct: (newPro: string) => void;
   setPageNumber: (page: number) => void;
   setPageSize: (size: number) => void;
   setBrandId: (id: number | null) => void;
+  setTagId: (id: number | null) => void; // Added setTagId
   resetFilters: () => void;
   setFiltersFromObject: (newFilters: ShopFiltersStore["filters"]) => void;
   toggleCat: (cat: string) => void;
@@ -42,16 +47,18 @@ type ShopFiltersStore = {
 };
 
 const initState = {
-  price: [0, 1000] as [number, number],
+  price: [0, 20000] as [number, number],
   storeId: "",
   cats: [] as string[],
   subCats: [] as string[],
   productName: "",
   hasOffer: "f",
+  todayOffer: "f",
   newProduct: "f",
   pageNumber: 1,
-  pageSize: 30,
+  pageSize: 40,
   brandId: null,
+  tagId: null, // Added tagId to initState
 };
 
 export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
@@ -107,6 +114,13 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         hasOffer,
       },
     })),
+  setTodayOffer: (todayOffer) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        todayOffer,
+      },
+    })),
 
   setNewProduct: (newPro) =>
     set((state) => ({
@@ -137,6 +151,14 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       filters: {
         ...state.filters,
         brandId: id,
+      },
+    })),
+
+  setTagId: (id) => // Added setTagId method
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        tagId: id,
       },
     })),
 

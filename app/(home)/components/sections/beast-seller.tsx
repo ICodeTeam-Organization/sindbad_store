@@ -19,6 +19,7 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
   const [IsHover, setIsHover] = useState(true)
 
 
+
   return (
     <div className=" mx-auto ">
       <SectionTitle title={"الاكثر مبيعا في اسبوع"} href="/shop?bestseller=true" />
@@ -44,6 +45,7 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
       className="m-auto cursor-pointer md:w-[88%] sm:w-[85%] w-[100%]">
         <CarouselContent dir="rtl" className="py-10" >
           {BeastSellerInWeek?.data?.map((product: any) => (
+           
             <CarouselItem
               key={product.id}
               className="pl-0 ml-4 xlHalf:basis-1/6 2lg:basis-[22%] mdHalf:basis-[25%] 2sm:basis-[35%] sm:basis-[42%] 2xs:basis-[34%] 1xs:basis-[45%] basis-1/2 rounded-t-[8px] "
@@ -61,7 +63,6 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
                 }
                 oldPrice={product.priceAfterOffer ? product.price : 0}
                 ProductDet={product.id}
-                offerSentence={product.offerSentence}
                 offerSentence={product.offerSentence}
                 oneStarCount = {product.oneStarCount}
                 twoStarCount = {product.twoStarCount}

@@ -9,7 +9,7 @@ type Props = {
 
 const CategoryCard = ({ name, imageUrl , id }: Props) => {
   return (
-    <Link href={"/shop?cat="+id}>
+    <Link href={"/shop?cats="+id}>
       <div className="text-center w-28 flex flex-col items-center ">
         <div className=" w-28 h-28 p-4  relative overflow-hidden bg-neutral-100 rounded-full border-2 group-hover:border-sky-500 border-transparent transition-[border,shadow]  flex justify-center items-center group-hover:cursor-pointer    group-hover:shadow-lg  ">
           <Image

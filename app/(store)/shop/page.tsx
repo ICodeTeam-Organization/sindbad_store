@@ -8,31 +8,31 @@ import {
 } from "@/components/ui/sheet";
 import { FilterIcon } from "lucide-react";
 
-interface searchParamsType {
-  searchParams:{
-    skw?:string;//search keyword
-    cats?:string;
-    subCats?:string;
-    storeId?:string;
-    brands?:string;
-    tags?:string;
-    newProducts?:"t"|"f";
-    todayOffers?:"t"|"f";
-  }
+// interface searchParamsType {
+//   searchParams:{
+//     productName?:string;//search keyword
+//     cats?:string;
+//     subCats?:string;
+//     storeId?:string;
+//     brands?:string;
+//     tags?:string;
+//     newProducts?:"t"|"f";
+//     todayOffers?:"t"|"f";
+//   }
   
-}
+// }
 
-const ProductPage = async ({searchParams}:searchParamsType) => {
+const ProductPage = async () => {
 
 
-  // const {skw,brands,cats,newProducts,store,subCats,tags,todayOffers} = searchParams
+  // const {productName,brands,cats,newProducts,store,subCats,tags,todayOffers} = searchParams
   
 
   return (
     <div className="xl:container mx-auto mdHalf:py-6 mdHalf:px-4">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Sidebar */}
-        <div className=" lg:w-[25%] mdHalf:w-[30%] mdHalf:block hidden mt-10 ms-7   " >
+        <div className=" xl:w-[20%] mdHalf:w-[30%] mdHalf:block hidden mt-10 ms-7 border-l pl-4  " >
          <Sidebar/>
         </div>
         <div className="mdHalf:hidden" >
@@ -51,14 +51,10 @@ const ProductPage = async ({searchParams}:searchParamsType) => {
           </Sheet>
         </div>
         {/* Main content */}
-        <main className="w-full lg:w-[75%] mdHalf:w-[70%] md:my-10 mb-16  ">
-          {/* Tags and Results */}
-          {/* <SearchResultsHeader products={[]} /> */}
-
+        <main className="w-full xl:w-[80%] mdHalf:w-[70%] md:my-10 mb-16  ">
           {/* Products Section */}
           <section>
             <ShopProductsGrid  />
-            
           </section>
         </main>
       </div>

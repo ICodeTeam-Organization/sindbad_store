@@ -21,7 +21,7 @@ function OrderFromEshopMegaMenu() {
     pageNumber: 1,
     pageSize: 60,
   });
-  const { data, isLoading,error } = useQuery<{ data: { items: Shop[] } }>({
+  const { data, isLoading  } = useQuery<{ data: { items: Shop[] } }>({
     queryKey: [params.selectedCategory, "FilterECommerceInMegaMenu"],
     queryFn: () =>
       postApi(`EcommercesStores/FilterECommerce`, {
@@ -60,7 +60,7 @@ function OrderFromEshopMegaMenu() {
             </h3>
           </div>
           <div className="mdHalf:grid lg:grid-cols-1 flex  mdHalf:place-content-start  mdHalf:overflow-y-scroll mdHalf:overflow-x-hidden overflow-x-scroll  gap-x-4  mdHalf:mb-5 mb-2  mdHalf:h-[80%]">
-            {allMainCat.map((i, x) => (
+            {allMainCat.map((i) => (
               <p
                 key={i.id}
                 onClick={() => {

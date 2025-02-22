@@ -8,11 +8,11 @@ import { Label } from "@radix-ui/react-label";
 import { registrationSchema } from "../schema";
 import { useForm } from "react-hook-form"; // تم إزالة SubmitHandler
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { registerUser } from "../helpers";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next-nprogress-bar";
 
 const SignUpForm: React.FC = () => {
   const router = useRouter();

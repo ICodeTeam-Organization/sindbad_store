@@ -8,8 +8,11 @@ import OrdersWaitingForAcceptPrice from "./components/orders-waiting-for-accept-
 import PreviousOrder from "./components/previous-order";
 import BreadCrumb from "@/components/BreadCrumb";
 import { useSearchParams } from "next/navigation";
+import { Button } from "@/components/ui/button"; 
+import SpecialWholesalesOrderDialog from "./components/SpecialWholesalesOrderDialog";
 
 const SpecialOrderPage = () => {
+  
   const searchParams = useSearchParams();
 
   const tab = searchParams.get("tab");
@@ -36,6 +39,8 @@ const SpecialOrderPage = () => {
     setOrdersWaitingForAccept(false);
     setPreviousOrders(true);
   };
+
+  const [ShwSia, setShwSia] = useState(false)
   return (
     <>
       <BreadCrumb
@@ -44,10 +49,15 @@ const SpecialOrderPage = () => {
         ThirdName="طلب خاص"
         ThirdDir=""
       />
+      <Button onClick={()=>{setShwSia(true)}} >Opne</Button>
+      <SpecialWholesalesOrderDialog
+        show={ShwSia}
+        setShow={setShwSia}
+      />
       <AddSpecialOrder
-        // This show dirct when the user select category from home
         show={showDialog}
         setShow={setshowDialog}
+        // This show dirct when the user select category from home
         tab={tab ? Number.parseInt(tab) : 1}
         category={category ? category : ""}
       />

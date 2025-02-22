@@ -2,7 +2,7 @@
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
-import { MainCategory, Store } from "@/types/storeTypes";
+import { ApiResponse, MainCategory} from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -22,7 +22,7 @@ function StoresMegaMenu() {
     pageSize: 60,
   });
 
-  const { data, isLoading } = useQuery<{ data: { items: Store[] } }>({
+  const { data, isLoading } = useQuery<ApiResponse>({
     queryKey: [
       params.selectedCategory,
       params.pageNumber,
@@ -36,6 +36,7 @@ function StoresMegaMenu() {
           pageNumber: params.pageNumber,
         },
       }),
+      retry:3
   });
 
   useEffect(() => {
@@ -45,7 +46,7 @@ function StoresMegaMenu() {
   }, [categories]);
 
   return (
-    <div className="transition-all duration-200 right-0 opacity-0 invisible hidden mdHalf:block  group-hover:block  translate-y-5  group-hover:-translate-y-0  w-full group-hover:opacity-100 group-hover:visible mdHalf:mt-1 -mt-2 rounded top-10 left-0   min-h-[400px] max-h-[540px] mdHalf:overflow-y-hidden overflow-y-scroll z-[99999]  bg-white  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute   ">
+    <div className="transition-all duration-200 right-0 opacity-0 invisible hidden  mdHalf:block  group-hover:block  translate-y-5  group-hover:-translate-y-0  w-full group-hover:opacity-100 group-hover:visible mdHalf:mt-1 -mt-2 rounded top-10 left-0   min-h-[400px] max-h-[540px] mdHalf:overflow-y-hidden overflow-y-scroll z-[99999]  bg-white  mdHalf:shadow-md mdHalf:border-y border-b dark:bg-gray-800  mdHalf:absolute   ">
       <div className="flex mdHalf:flex-row flex-col px-4 py-5 mx-auto text-sm text-gray-500 dark:text-gray-400 md:px-6 gap-x-4 w-full">
         <div className="flex mdHalf:block  bg-white flex-col xl:w-[20%] mdHalf:w-[30%] justify-between mdHalf:min-h-[400px] mdHalf:max-h-[540px] overflow-hidden ">
           <div className="flex items-center  gap-2 mb-4  ">
@@ -106,8 +107,8 @@ function StoresMegaMenu() {
                       <SafeImage
                         alt={i.name}
                         fill
-                        className="bg-gray-100"
-                        src={"/images/alogo.png"}
+                        className="bg-gray-50"
+                        src={i.imageUrl}
                       />
                     </div>
                     <p className="line-clamp-1 flex-grow overflow-hidden text-ellipsis">

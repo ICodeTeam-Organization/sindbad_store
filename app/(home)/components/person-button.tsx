@@ -1,4 +1,3 @@
-import { Session } from "next-auth";
 import React from "react";
 import { FaAngleDown } from "react-icons/fa";
 import { GoPerson } from "react-icons/go";
@@ -14,66 +13,63 @@ import DropdownMenu from "@/components/DropDownMenu";
 import Link from "next/link";
 import { IoChevronDownOutline } from "react-icons/io5";
 import useSignOut from "@/hooks/useSignOut";
+import { cn } from "@/lib/utils";
+// import { useSession } from "next-auth/react";
 type Props = {
-  session: Session | null;
-  status: "authenticated" | "loading" | "unauthenticated";
+  forMobile?: boolean;
+  isAuth?: boolean;
 };
 
-const PersonButton = ({ status }: Props) => {
-
-  const mutation = useSignOut()
-
+const PersonButton = ({ forMobile = false ,isAuth }: Props) => {
+  const mutation = useSignOut();
+  // const { status } = useSession();
+  // const isAuth = status === "authenticated";
   const menu = [
     {
       title: "معلومات الحساب",
       icon: <FaUser />,
-      onclickFun: () => {
-        /* Functionality for account info */
-      },
+      href: "/profile",
     },
     {
-      title: "الطلبات",
+      title: "طلباتي",
       icon: <FaClipboardList />,
-      onclickFun: () => {
-        /* Functionality for orders */
-      },
+      href: "/my-orders",
     },
     {
-      title: "الطلبات الخاصة",
+      title: "طلباتي الخاصة",
       icon: <FaTasks />,
-      onclickFun: () => {
-        /* Functionality for special orders */
-      },
+      href: "/my-special-orders",
     },
     {
       title: "الإشعارات",
       icon: <FaBell />,
-      onclickFun: () => {
-        /* Functionality for notifications */
-      },
+      href: "/my-notifications",
     },
     {
       title: "عناويني",
       icon: <FaAddressCard />,
-      onclickFun: () => {
-        /* Functionality for addresses */
-      },
+      href: "/user-addresses",
     },
     {
       title: "تسجيل الخروج",
       icon: <BiLogOutCircle />,
       onclickFun: () => {
-        mutation.mutate()
+        mutation.mutate();
       },
       isLogout: true,
     },
   ];
 
-  const isAuth = status === "authenticated";
+  
 
   return (
     <div className="flex justify-between items-center  group">
-      <div className="  mdHalf:ml-3 rounded-full relative w-full mdHalf:w-auto z-[999999]">
+      <div
+        className={cn(
+          "  mdHalf:ml-3 rounded-full relative my-5 mdHalf:w-auto w-full z-[999999]",
+          !forMobile && "hidden mdHalf:block w-full m-0"
+        )}
+      >
         {!isAuth ? (
           <GoPerson className="text-[25px] mdHalf:block hidden sm:mx-2 md:mx-0 md:text-[25px] text-[#666]  " />
         ) : (
@@ -85,23 +81,26 @@ const PersonButton = ({ status }: Props) => {
               data-popover-target="profile-menu"
             />
             <div className="mdHalf:flex gap-2 items-center justify-center hidden">
-              <p className="text-[13px]" > حسابي </p>
-              <IoChevronDownOutline className="group-hover:rotate-180 transition-all"  />
+              <p className="text-[13px]"> حسابي </p>
+              <IoChevronDownOutline className="group-hover:rotate-180 transition-all" />
             </div>
           </div>
         )}
         {isAuth && <DropdownMenu menu={menu} dir="left" />}
       </div>
-      {!isAuth && <div className="flex items-end mdHalf:w-auto w-full">
-        <div className="md:ml-2 sm:ml-1  text-xs sm:text-sm md:text-md mdHalf:p-0 px-6  mdHalf:w-auto w-full mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] cursor-pointer mdHalf:py-0 py-1  ">
-         
+      {!isAuth && (
+        <div className="flex items-end mdHalf:w-auto w-full">
+          <div className="md:ml-2 sm:ml-1  text-xs sm:text-sm md:text-md mdHalf:p-0 px-6  mdHalf:w-auto w-full mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] cursor-pointer mdHalf:py-0 py-1  ">
             <Link className="hover:cursor-pointer " href="/auth">
               <p className="text-[#666] text-[10px] md:text-xs"> مرحبا بك </p>
-              <h3 className="mdHalf:text-[12px] whitespace-nowrap">تسجيل الدخول</h3>
+              <h3 className="mdHalf:text-[12px] whitespace-nowrap">
+                تسجيل الدخول
+              </h3>
             </Link>
+          </div>
+          <FaAngleDown size={16} className="mb-1 mdHalf:block hidden" />
         </div>
-       <FaAngleDown size={16} className="mb-1 mdHalf:block hidden" />
-      </div>}
+      )}
     </div>
   );
 };

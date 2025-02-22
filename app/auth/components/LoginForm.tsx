@@ -9,18 +9,19 @@ import { LoginSchema } from "../schema";
 import { useForm } from "react-hook-form";  // تم إزالة SubmitHandler
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../helpers";
 
 const LoginForm: React.FC = () => {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const { mutate, isPending } = useMutation({
     mutationFn: loginUser,
-    onSuccess: () => router.push("/"),
+    onSuccess: () => {
+      // router.replace("/")
+      window.location.replace('/')
+    },
     onError: (err) => setError(err.message),
   });
 

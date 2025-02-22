@@ -6,20 +6,24 @@ import { signIn } from "next-auth/react";
 export async function loginUser({ phone, password }: loginFormField) {
   const res = await signIn("credentials", {
     redirect: false,
+    callbackUrl: "/",
     phone,
     password,
   });
 
+  if (res?.status == 200) {
+    return res;
+  }
+
   if (res?.error) {
     throw new Error(res.error);
   }
-  return res;
 }
 
 export async function registerUser(formData: registerFormField) {
   try {
     const res = await axios.post(
-      (process.env.NEXT_PUBLIC_BASE_URL as string) + "Auth/RegisterUserAsync?roleName=Customer",
+      (process.env.NEXT_PUBLIC_BASE_URL as string) + "Auth/Register/Customer",
       {
         name: formData.name,
         phoneNumber: formData.phone,

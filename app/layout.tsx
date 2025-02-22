@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientProviders from "@/components/client-providers";
-import {  Noto_Kufi_Arabic, Tajawal } from "next/font/google";
+import { Noto_Kufi_Arabic, Tajawal } from "next/font/google";
 import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
@@ -9,6 +9,8 @@ import { Toaster as SonanerToaster } from "sonner";
 import Footer from "@/components/Footer";
 import About from "@/components/About";
 import GetInitialData from "./GetInitialData";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import SpecialOrderDialogsViewer from "@/components/SpecialOrderDialogsViewer";
 
 const Noto_Kufi = Noto_Kufi_Arabic({
   weight: ["400", "700"],
@@ -25,7 +27,8 @@ const tajawal = Tajawal({
 
 export const metadata: Metadata = {
   title: "متجر سندباد",
-  description: "وصف لمتجر سندباد",
+  description:
+    "متجر سندباد هو منصة تجارة إلكترونية متعددة البائعين تقدم مجموعة واسعة من المنتجات المتنوعة. يمكن للمستخدمين تقديم الطلبات الخاصة واستلام المنتجات بسهولة من أي بلد في العالم. بالإضافة إلى ذلك، يتيح المتجر للمستخدمين إمكانية طلب أي منتج من متاجر عالمية مثل علي بابا وأمازون، مما يوفر تجربة تسوق شاملة ومرنة تلبي جميع الاحتياجات.",
 };
 
 export default async function RootLayout({
@@ -33,28 +36,28 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
-      <body
-        className={`${Noto_Kufi.variable} ${tajawal.variable}`}
-        dir="rtl"
-      >
+      <body className={`${Noto_Kufi.variable} ${tajawal.variable}`} dir="rtl">
         <ProgressBarProvider>
           <NextAuthProvider>
             <main>
               <ClientProviders>
                 {/* this to get init data like categories , favorites */}
-                <GetInitialData/>
-                {children}
-                </ClientProviders>
+                <GetInitialData />
+                <NuqsAdapter>
+                  <SpecialOrderDialogsViewer/>
+                  {children}
+                  <About />
+                  <Footer />
+                </NuqsAdapter>
+              </ClientProviders>
             </main>
             {/* <Subscribe /> */}
           </NextAuthProvider>
-          <About />
-          <Footer />
+
           {/* to show toaster messages */}
-          <Toaster />
+          <Toaster  />
           <SonanerToaster richColors />
         </ProgressBarProvider>
       </body>

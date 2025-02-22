@@ -1,48 +1,62 @@
 "use client";
+import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import React, { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
+import PriceLabel from "../../shopping-card/components/price-label"; 
+import { Button } from "@/components/ui/button";
+import { FaMoneyCheckAlt } from "react-icons/fa";
+import { OrderData } from "../type";
 
-const PrintOrderBill = ({ Bill }: any) => {
+const PrintOrderBill = ({ Bill }: {Bill:OrderData}) => {
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
 
   const handlePrint = () => {
     reactToPrintFn();
   };
+
   return (
-    <div
-      ref={contentRef}
-      className="text-center border-2 lg:w-1/3 max-md:w-full md:w-full m-auto mb-9 rounded-sm py-3 mt-6 text-xl max-md:text-lg pr-2 font-bold"
-    >
-      <h1>تفاصيل قيمة الطلب</h1>
-      <div className="mt-4 mb-2">
-        <div className="flex">
-          <p className="text-gray-600">المجموع :</p>
-          <p className="">{Bill.totalOrderDetailsPrice} ر.س</p>
-        </div>
-        <div className="flex">
-          <p className="text-gray-600">الشحن :</p>
-          <p className="mr-3">{Bill.totalShipCost} ر.س</p>
-        </div>
-        <div className="flex">
-          <p className="text-gray-600">الخصم :</p>
-          <p className="mr-3">{Bill.totalDiscount} ر.س</p>
-        </div>
+     <div>
+        { 
+      <CardContent ref={contentRef} className="text-sm p-0 mdHalf:p-6 mdHalf:pt-0 pb-6 m-4 hidden print:block" >
+      <PriceLabel title="المجموع" price={Bill.totalOrderDetailsPrice} />
+      <PriceLabel title="الشحن" price={Bill.totalShipCost} />
+      <PriceLabel title="الخصم" price={Bill.totalDiscount} />
+      <hr className="my-2" />
+      <div className="flex justify-between mb-2">
+        <span className="font-semibold">الإجمالي</span>
+        <span className="font-semibold">{Bill.totalPrice} رس</span>
       </div>
-      <hr className="w-1/2" />
-      <div className="flex justify-around items-center mt-2">
-        <div className="flex items-center justify-between">
-          <p>الإجمالي:</p>
-        <p className="mr-3">{Bill.totalPrice} ر.س</p>
-        </div>
-        <button
-          onClick={handlePrint}
-          className="bg-primary-background print:hidden text-white py-2 px-3 rounded-sm hover:bg-orange-600 transition-all duration-700"
-        >
-          تصدير PDF
-        </button>
+    </CardContent>
+     }
+    <Card className="mdHalf:sticky mdHalf:top-[100px] mdHalf:z-10 border-white shadow-none  mdHalf:border-gray-200 " >
+    <CardHeader className="p-0 mdHalf:p-6 " >
+      <div className="flex items-center mb-4 gap-x-2" >
+      <FaMoneyCheckAlt className="text-2xl text-primary-background" />
+      <h2 className="text-sm mdHalf:text-center font-bold ">
+        تفاصيل قيمة الطلب
+      </h2>
+       </div>
+    </CardHeader>
+    <CardContent   className="text-sm p-0 mdHalf:p-6 mdHalf:pt-0 pb-6 " >
+      <PriceLabel title="المجموع" price={Bill.totalOrderDetailsPrice} />
+      <PriceLabel title="الشحن" price={Bill.totalShipCost} />
+      <PriceLabel title="الخصم" price={Bill.totalDiscount} />
+      <hr className="my-2" />
+      <div className="flex justify-between mb-2">
+        <span className="font-semibold">الإجمالي</span>
+        <span className="font-semibold">{Bill.totalPrice} رس</span>
       </div>
-    </div>
+    </CardContent>
+    { <CardFooter >
+      <div  className="w-full" >
+        <Button onClick={handlePrint} className="bg-primary-background hover:bg-orange-600 text-white text-base  w-full">
+              تصدير PDF
+        </Button>
+      </div>
+    </CardFooter>}
+  </Card>
+     </div>
   );
 };
 

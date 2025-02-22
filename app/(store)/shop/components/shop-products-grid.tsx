@@ -3,21 +3,23 @@ import React, { useEffect, useState } from "react";
 import ProductCard from "@/app/(home)/components/product-card";
 import { Product } from "@/types/storeTypes";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { useRouter } from "next/navigation";
 import { useInView } from "react-intersection-observer";
+import SearchResultsHeader from "./search-results-header";
 
 type ProductsResponsive = {
   data: {
     items: Product[];
     currentPage: number;
     totalPages: number;
+    totalCount: number;
   };
 };
 
-const ShopProductsGrid = ({ allProducts }: any) => {
+const ShopProductsGrid = () => {
   const router = useRouter();
 
   const { ref: footerRef, inView } = useInView({
@@ -31,48 +33,59 @@ const ShopProductsGrid = ({ allProducts }: any) => {
     setFiltersFromObject,
     initState: initialFilters,
   } = useShopFiltersStore();
-  
+
   const [firstRender, setfirstRender] = useState(true);
 
-  const { isPending, data, fetchNextPage, isFetchingNextPage, hasNextPage } =
-    useInfiniteQuery<ProductsResponsive>({
-      queryKey: ["GetProductsWitheFilter", filters],
-      queryFn: async ({ pageParam }) => {
-        const body = {
-          pageNumber: pageParam || 1,
-          pageSize: filters.pageSize || 30,
-          todayOffers: filters.hasOffer == "t",
-          categoryId: null,
-          storeId: filters.storeId || "",
-          productName: filters.productName || "",
-          isDeleted: false,
-          minPrice: filters.price[0],
-          maxPrice: filters.price[1],
-        };
-        // Remove fields that have invalid values (0 or empty string)
-        const filteredBody = Object.fromEntries(
-          Object.entries(body).filter(([key, value]) => {
-            // Only keep the entries where value is not 0 or empty string
-            return value !== 0 && value !== "" && value;
-          })
-        );
+  const {
+    isPending,
+    data,
+    fetchNextPage,
+    isFetchingNextPage,
+    hasNextPage,
+    isFetched,
+  } = useInfiniteQuery<ProductsResponsive>({
+    queryKey: ["GetProductsWitheFilter", filters],
+    queryFn: async ({ pageParam }) => {
+      const body = {
+        pageNumber: pageParam || 1,
+        pageSize: filters.pageSize,
+        hasOffer: filters.hasOffer == "t",
+        todayOffers: filters.todayOffer == "t",
+        storeId: filters.storeId || "",
+        productName: filters.productName || "",
+        minPrice: filters.price[0],
+        maxPrice: filters.price[1],
+        mainCategories: [...filters.cats.map((id) => +id)],
+        subCategories: [...filters.subCats.map((id) => +id)],
+        brandId: filters.brandId || 0,
+        tags: filters.tagId ? [filters.tagId] : null,
+      };
 
-        const response = await postApi(
-          `Products/GetProductsWitheFilter?returnDtoName=2`,
-          {
-            body: filteredBody,
-          }
-        );
-        return response as ProductsResponsive;
-      },
-      getNextPageParam: (lastPage) => {
-        if (lastPage?.data.currentPage < lastPage?.data.totalPages) {
-          return lastPage?.data.currentPage + 1;
+      // Remove fields that have invalid values (0 or empty string)
+      const filteredBody = Object.fromEntries(
+        Object.entries(body).filter(([, value]) => {
+          // Only keep the entries where value is not 0 or empty string
+          return value !== 0 && value !== "" && value !== null && value;
+        })
+      );
+
+      const response = await postApi(
+        `Products/GetProductsWitheFilter?returnDtoName=2`,
+        {
+          body: filteredBody,
         }
-        return undefined;
-      },
-      initialPageParam: 1,
-    });
+      );
+      return response as ProductsResponsive;
+    },
+    getNextPageParam: (lastPage) => {
+      if (lastPage?.data.currentPage < lastPage?.data.totalPages) {
+        return lastPage?.data.currentPage + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
+  });
+  const totalCount = data?.pages[0]?.data?.totalCount;
 
   const updateQueryParams = () => {
     const newParams = new URLSearchParams();
@@ -156,10 +169,28 @@ const ShopProductsGrid = ({ allProducts }: any) => {
 
   return (
     <>
+      {!isPending && (
+        <div>
+          <SearchResultsHeader totalResults={totalCount} />
+        </div>
+      )}
       <div className="mb-12 flex flex-wrap  justify-center mdHalf:gap-6  gap-3">
         {!isPending ? (
           data?.pages && data?.pages?.length > 0 ? (
-            data?.pages?.map((page) => {
+            data?.pages?.map((page, x) => {
+              if (page?.data?.items?.length == 0 && isFetched) {
+                return (
+                  <div
+                    key={x}
+                    className="h-[65vh] flex items-center justify-center"
+                  >
+                    <p className="text-center text-lg tajawal font-bold py-12">
+                      لايتوفر أي منتج في الوقت الحالي
+                    </p>
+                  </div>
+                );
+              }
+
               return page.data.items.map((product: any) => (
                 <div key={product.id} className="sm:w-[220px]  w-[180px] ">
                   <ProductCard
@@ -167,21 +198,19 @@ const ShopProductsGrid = ({ allProducts }: any) => {
                     ProductDet={+product.id}
                     image={product.mainImageUrl}
                     price={
-                      product.priceAfterDiscount
+                      !!product.priceAfterDiscount
                         ? product.priceAfterDiscount
                         : product.priceBeforeDiscount
                     }
-                    oldPrice={product.priceBeforeDiscount}
+                    oldPrice={
+                      product.priceAfterDiscount
+                        ? product.priceBeforeDiscount
+                        : null
+                    }
                     productName={product.name}
+                    offerSentence={product.buyAndGet}
+                    rate={product.rate}
                   />
-                  {/* 
-                  "id": 0,
-        "name": "string",
-        "mainImageUrl": "string",
-        "priceBeforeDiscount": 0,
-        "priceAfterDiscount": 0,
-        "buyAndGet": "string",
-        "rate": 0 */}
                 </div>
               ));
             })
