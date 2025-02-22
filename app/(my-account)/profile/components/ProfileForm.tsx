@@ -35,7 +35,7 @@ type Region = {
 type Directorate = {
   id: number;
   name: string;
-  governorId: number;
+  governorateId: number;
   regions: Region[];
 };
 
@@ -66,7 +66,7 @@ const ProfileFormSchema = z.object({
     .optional(),
   // governorate: z.string().optional().default(""),
   // directorate: z.string().optional().default(""),
-  governorId: z.string().optional().default(""),
+  governorateId: z.string().optional().default(""),
   directorateId: z.string().optional().default(""),
 });
 
@@ -88,7 +88,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
       email: profileData?.email ?? "",
       phoneNumber: profileData?.phoneNumber ?? "",
       telePhone: profileData?.telePhone ?? "",
-      governorId: profileData?.governorId + "" || "",
+      governorateId: profileData?.governorateId + "" || "",
       directorateId: profileData?.directorateId + "" || "",
     },
   });
@@ -100,7 +100,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
       name,
       email,
       directorateId,
-      governorId,
+      governorateId,
       telePhone,
       phoneNumber,
     }: z.infer<typeof ProfileFormSchema>) => {
@@ -109,7 +109,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
           name,
           email,
           directorateId: directorateId ?? null,
-          governorateId: governorId ?? null,
+          governorateId: governorateId ?? null,
           telePhone,
         },
       });
@@ -118,7 +118,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
         name,
         email,
         directorateId,
-        governorId,
+        governorateId,
         telePhone,
         phoneNumber,
       } as ProfileType;
@@ -258,7 +258,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
 
           <FormField
             control={form.control}
-            name="governorId"
+            name="governorateId"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>المحافظة</FormLabel>
@@ -316,13 +316,13 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
                       </span>
                     </SelectTrigger>
                     <SelectContent>
-                      {(!form?.getValues()?.governorId  || form?.getValues()?.governorId == "") && (
+                      {(!form?.getValues()?.governorateId  || form?.getValues()?.governorateId == "") && (
                         <span className="text-sm text-center p-2">
                           يجب أن تختار محافظة اولا
                         </span>
                       )}
                       {allGovs
-                        ?.find((e) => +e?.id == +form?.getValues()?.governorId)
+                        ?.find((e) => +e?.id == +form?.getValues()?.governorateId)
                         ?.directorates?.map((ele: any) => (
                           <SelectItem key={ele?.id} value={ele?.id + ""}>
                             {ele?.name}

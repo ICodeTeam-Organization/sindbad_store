@@ -14,15 +14,16 @@ import Link from "next/link";
 import { IoChevronDownOutline } from "react-icons/io5";
 import useSignOut from "@/hooks/useSignOut";
 import { cn } from "@/lib/utils";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 type Props = {
   forMobile?: boolean;
+  isAuth?: boolean;
 };
 
-const PersonButton = ({ forMobile = false }: Props) => {
+const PersonButton = ({ forMobile = false ,isAuth }: Props) => {
   const mutation = useSignOut();
-  const { status } = useSession();
-
+  // const { status } = useSession();
+  // const isAuth = status === "authenticated";
   const menu = [
     {
       title: "معلومات الحساب",
@@ -59,7 +60,7 @@ const PersonButton = ({ forMobile = false }: Props) => {
     },
   ];
 
-  const isAuth = status === "authenticated";
+  
 
   return (
     <div className="flex justify-between items-center  group">

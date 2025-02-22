@@ -4,46 +4,52 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-const SideBar = () => {
-
-  const pathname = usePathname(); 
-
+const SideBar = ({
+  user,
+}: {
+  user?: { fullName: string; email: string };
+}) => {
+  const pathname = usePathname();
+ 
+  console.log(user, "user");
+  
 
   const sidebarItems = [
     {
       name: "الإشعارات",
       icon: "/images/MyAccountImages/notifications.svg",
       href: "/my-notifications",
-      isActive:pathname.includes("/my-notifications"),
+      isActive: pathname.includes("/my-notifications"),
       alt: "الإشعارات",
     },
     {
       name: "طلباتي",
       icon: "/images/MyAccountImages/my-orders.svg",
       href: "/my-orders",
-      isActive:pathname.includes("/my-orders"),
+      isActive: pathname.includes("/my-orders"),
       alt: "طلباتي",
     },
     {
       name: "طلباتي الخاصة",
       icon: "/images/MyAccountImages/my-special-orders.svg",
       href: "/my-special-orders",
-      isActive:pathname.includes("/my-special-orders"),
+      isActive: pathname.includes("/my-special-orders"),
       alt: "الطلبات الخاصة",
     },
     {
       name: "عناويني",
       icon: "/images/MyAccountImages/my-address.svg",
       href: "/user-addresses",
-      isActive:pathname.includes("/user-addresses"),
+      isActive: pathname.includes("/user-addresses"),
       alt: "العناوين",
     },
     {
       name: "بيانات المستخدم",
       icon: "/images/MyAccountImages/user-data.svg",
       href: "/profile",
-      isActive:pathname.includes("/profile"),
+      isActive: pathname.includes("/profile"),
       alt: "بيانات المستخدم",
     },
   ];
@@ -64,8 +70,8 @@ const SideBar = () => {
                 height={34}
               />
               <div className="flex flex-col text-xs">
-                <p>سالم علي بافضل</p>
-                <p>m.williams@example.com</p>
+                <p>{user?.fullName}</p>
+                <p>{user?.email}</p>
               </div>
             </div>
           </Link>

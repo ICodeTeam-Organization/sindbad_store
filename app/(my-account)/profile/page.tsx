@@ -11,7 +11,6 @@ import { ProfileResponsiveType } from "./types";
 const UserForm = async () => {
  
   const resulte = await getApi<ProfileResponsiveType>("Customer/profile");
-console.log(resulte);
 
   return (
     <div>

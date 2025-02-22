@@ -9,15 +9,12 @@ import { Sheet, SheetContent } from "@/components/ui/sheet";
 import MenusSection from "./headerSections/MenusSection";
 import SearchComponent from "./headerSections/SearchComponent";
 import TopSectionOfHeader from "./headerSections/TopSectionOfHeader";
-import { useSession } from "next-auth/react";
 
-const MainHeader = ({ isHomePage = false }) => {
+const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boolean , isAuth : boolean }) => {
 
   const [openNav, setopenNav] = useState<boolean>(false);
-  const session = useSession();
-  console.log(session);
-  
-  const isAuth = session.status === "authenticated";
+  // const session = useSession();
+  // const isAuth = session.status === "authenticated";
 
   let lastScrollTop = 0; 
   const handleScroll = () => {
@@ -109,7 +106,7 @@ const MainHeader = ({ isHomePage = false }) => {
         {/* header => top,down sections */}
         <div className="flex flex-col md:w-full   ">
           {/* top section */}
-          <TopSectionOfHeader isHomePage={isHomePage} />
+          <TopSectionOfHeader isHomePage={isHomePage} isAuth={isAuth} />
 
           {/* down section this section in mobile become the navbarMenu */}
           <div className="tajawal   mdHalf:block hidden ">

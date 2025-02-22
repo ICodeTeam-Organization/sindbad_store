@@ -14,13 +14,13 @@ import ProductCarsoule from "@/components/ProductCarsoule";
 
 export default async function Home() {
   const [
-    categories,
-    Allstores,
-    AllEcommrce,
-    Offersproducts,
-    BeastSellerInWeek,
-    RecentlyProducts,
-  ] = await Promise.all([
+    categoriesResult,
+    AllstoresResult,
+    AllEcommrceResult,
+    OffersproductsResult,
+    BeastSellerInWeekResult,
+    RecentlyProductsResult,
+  ] = await Promise.allSettled([
     getApi<{ data: MainCategory[] }>(
       "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/100000"
     ),
@@ -41,6 +41,13 @@ export default async function Home() {
     ),
   ]);
 
+  const categories = categoriesResult.status === "fulfilled" ? categoriesResult.value : null;
+  const Allstores = AllstoresResult.status === "fulfilled" ? AllstoresResult.value : null;
+  const AllEcommrce = AllEcommrceResult.status === "fulfilled" ? AllEcommrceResult.value : null;
+  const Offersproducts = OffersproductsResult.status === "fulfilled" ? OffersproductsResult.value : null;
+  const BeastSellerInWeek = BeastSellerInWeekResult.status === "fulfilled" ? BeastSellerInWeekResult.value : null;
+  const RecentlyProducts = RecentlyProductsResult.status === "fulfilled" ? RecentlyProductsResult.value : null;
+
   return (
     <section className="w-full">
       <Hero />
@@ -50,7 +57,7 @@ export default async function Home() {
           <ServiceCard />
         </div>
         <CardsInfo />
-        {categories?.data?.length > 0 && (
+        {categories && categories?.data?.length > 0 && (
           <Categories categories={categories.data} />
         )}
 
@@ -59,36 +66,34 @@ export default async function Home() {
           <ProductCarsoule products={BeastSellerInWeek} />
         </div> */}
         <div className="mb-10" />
-        {Offersproducts?.data?.length > 0 && (
-          <ProductCarsoule products={Offersproducts} sectionHref="/shop?todayOffer=t" sectionTitle="عروض اليوم"  />
+        {Offersproducts && Offersproducts?.data?.length > 0 && (
+          <ProductCarsoule products={Offersproducts} sectionHref="/shop?todayOffer=t" sectionTitle="عروض اليوم" />
           // <TodayOffers Offersproducts={Offersproducts} />
         )}
         <ShoppingNow />
       </div>
       <div className="my-10 ">
-        {Allstores?.data?.length > 0 && <AllStores Allstores={Allstores} />}
+        { Allstores && Allstores?.data?.length > 0 && <AllStores Allstores={Allstores} />}
       </div>
       <div className="w-full xl:container mx-auto">
-        {BeastSellerInWeek?.data?.length > 0 && (
+        { BeastSellerInWeek && BeastSellerInWeek?.data?.length > 0 && (
           // <BeastSeller BeastSellerInWeek={BeastSellerInWeek} />
-          <ProductCarsoule products={BeastSellerInWeek} sectionHref="/shop?bestseller=true"  sectionTitle="الاكثر مبيعا في اسبوع"  />
-
+          <ProductCarsoule products={BeastSellerInWeek} sectionHref="/shop?bestseller=true" sectionTitle="الاكثر مبيعا في اسبوع" />
         )}
       </div>
       <div className="my-8">
         <Ads />
       </div>
       <div className="w-full xl:container mx-auto mb-10">
-        {RecentlyProducts?.data?.length > 0 && (
+        {RecentlyProducts && RecentlyProducts?.data?.length > 0 && (
           // <RecentlyAdded RecentlyProducts={RecentlyProducts} />
-          <ProductCarsoule products={RecentlyProducts} sectionHref="/shop?newProduct=t"  sectionTitle="اضيفت مؤخرا" />
-
+          <ProductCarsoule products={RecentlyProducts} sectionHref="/shop?newProduct=t" sectionTitle="اضيفت مؤخرا" />
         )}
         <div className="mb-10" />
         <ShoppingNow />
       </div>
       <div className="my-10">
-        {AllEcommrce?.data?.items?.length > 0 && (
+        { AllEcommrce && AllEcommrce?.data?.items?.length > 0 && (
           <AllEShops AllEShops={AllEcommrce} />
         )}
       </div>

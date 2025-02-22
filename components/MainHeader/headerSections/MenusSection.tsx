@@ -121,7 +121,7 @@ function MenusSection({onClose,isHomePage,isAuth}:PropsType) {
       )}
       {/* profile info in mobile show in nav menu */}
       <div className="mdHalf:hidden block ">
-        <PersonButton forMobile   />
+        <PersonButton forMobile  isAuth={isAuth}  />
       </div>
       <div className="mdHalf:hidden mb-10 block  relative">
         <OrderFromAndHow isAuth={isAuth} />

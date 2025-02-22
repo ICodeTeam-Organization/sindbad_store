@@ -281,7 +281,7 @@ const CheckoutForm = () => {
                 disabled={isPending}
                 className="w-full hover:bg-orange-600 bg-primary-background transition-colors"
               >
-                {isPending ? <Loader2 className="animate-spin" /> : "رفع السند"}
+                {isPending ? <Loader2 className="animate-spin" /> : "إرسال الطلب"}
               </Button>
             </CardFooter>
           </form>

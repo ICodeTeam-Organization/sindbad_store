@@ -2,14 +2,19 @@ import React from "react";
 
 import Image from "next/image";
 import MainHeader from "@/components/MainHeader/MainHeader";
+import { getServerSession } from "next-auth";
+import { authOption } from "@/lib/authOption";
 
-const Hero = () => {
+const Hero = async () => {
+
+  const session = await getServerSession(authOption);
+
   return (
     <>
       <div className="sticky top-0 z-[50]">
         <div className="relative overflow-visible ">
           {/* <HomeHeader /> */}
-          <MainHeader isHomePage />
+          <MainHeader isHomePage isAuth={!!session} />
         </div>
       </div>
       <div className="relative">

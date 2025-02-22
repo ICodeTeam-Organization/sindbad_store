@@ -11,10 +11,10 @@ import PersonButton from '@/app/(home)/components/person-button'
 import Link from 'next/link'
 import { useNotificationsDataStore } from '@/app/stores/notificationStore'
 
-function TopSectionOfHeader({isHomePage=false}) {
+function TopSectionOfHeader({isHomePage=false,isAuth=false}:{isHomePage?:boolean,isAuth?:boolean}) {
 
-    const { status } = useSession();
-    const isAuth = status === "authenticated";
+    // const { status } = useSession();
+    // const isAuth = status === "authenticated";
     const {items:cartItems} = useCartStore();
     const { notificationCount } = useNotificationsDataStore();
 
@@ -69,7 +69,7 @@ function TopSectionOfHeader({isHomePage=false}) {
                 )}
                 {/* web */}
                 <div className="cursor-pointer ">
-                  <PersonButton  />
+                  <PersonButton isAuth={isAuth}  />
                 </div>
               </div>
             </div>

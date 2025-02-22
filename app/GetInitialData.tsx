@@ -11,7 +11,7 @@ import { authOption } from "@/lib/authOption";
 async function GetInitialData() {
   const AllCategoriesWithSub = await getApi<{
     data: { items: MainCategory[] };
-  }>("Categories/GetAllMainCategoriesWithSubCategories/1/10000");
+  }>("Category/GetAllMainCategoriesWithSubCategories/1/10000");
 
   const session = await getServerSession(authOption);
   let notificationCount;

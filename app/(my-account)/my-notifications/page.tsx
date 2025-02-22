@@ -9,6 +9,7 @@ const Notifications = async () => {
     //يجيب بينات من اول صفحة ونمررها لل جدول ك بينات اولية عشان تحسن تجربة المستخمد 
     const data = await getApi<ApiResponseForNotifications>("Notifications?pageNumber=1&pageSize=15");
 
+    console.log(data?.data);
     
 
   return (

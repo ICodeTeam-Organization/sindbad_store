@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/http";
 import { NotificationType } from "../types";
@@ -27,9 +27,10 @@ const NotificationCard = ({
     if (!response.success) {
       throw new Error(response.message);
     }
-    return response.data;
+    return response.data   ;
   };
 
+  const [isRefeched, setIsRefeched] = useState(false)
   const {
     data,
     isRefetching,
@@ -50,6 +51,7 @@ const NotificationCard = ({
       pages: [initData],
       pageParams: [1],
     },
+    enabled:isRefeched,
   });
 
   const notifications = (data?.pages.flatMap((page) => page?.items) || []).filter(
@@ -77,16 +79,29 @@ const NotificationCard = ({
 
       {!isRefetching && notifications.length > 0 && (
         <>
-          {notifications.map((notification) => (
+          {notifications.map((notification:NotificationType) => (
+            // <div
+            //   key={notification.id}
+            //   className="flex items-start justify-between p-4 rounded-lg"
+            // >
+            //   <div>
+            //     <span className="text-sm text-[#3D7A81] bg-[#ECF2F2] px-2 rounded-sm">
+            //       {notification.title}
+            //     </span>
+            //     <span className="mr-2 text-black">{notification.target}</span>
+            //   </div>
+            // </div>
             <div
               key={notification.id}
-              className="flex items-start justify-between p-4 rounded-lg"
+              className="flex items-start justify-between p-4 rounded-lg bg-gray-100"
             >
               <div>
-                <span className="text-sm text-[#3D7A81] bg-[#ECF2F2] px-2 rounded-sm">
+                {/* <p className="text-sm text-gray-500">{notification.}</p> */}
+                <span className="text-base text-black   px-2 rounded-sm">
                   {notification.title}
                 </span>
-                <span className="mr-2 text-black">{notification.target}</span>
+                {/* <span className="mr-2 text-black">{notification.}</span> */}
+                <p className="text-sm px-2 mt-2 text-gray-600">{notification.body}</p>
               </div>
             </div>
           ))}
@@ -97,7 +112,10 @@ const NotificationCard = ({
         {hasNextPage ? (
           <Button
             className="bg-primary-background hover:bg-[#f5863984]"
-            onClick={() => fetchNextPage()}
+            onClick={() => {
+              setIsRefeched(true)
+              fetchNextPage()
+            }}
             disabled={isFetchingNextPage}
           >
             {isFetchingNextPage ? "جاري التحميل..." : "عرض المزيد"}

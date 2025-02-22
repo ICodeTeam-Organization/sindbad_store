@@ -180,7 +180,7 @@ const HomeHeader = () => {
       </div>
       {/* profile info in mobile show in nav menu */}
       <div className="mdHalf:hidden block ">
-        <PersonButton forMobile  />
+        <PersonButton forMobile isAuth={isAuth}  />
       </div>
       <div className="mdHalf:hidden mb-10 block  relative">
         <OrderFromAndHow isAuth={isAuth} />
@@ -273,7 +273,7 @@ const HomeHeader = () => {
                 </>
               )}
               <div className="cursor-pointer hidden mdHalf:block ">
-                <PersonButton    />
+                <PersonButton  isAuth={isAuth}  />
               </div>
             </div>
           </div>
