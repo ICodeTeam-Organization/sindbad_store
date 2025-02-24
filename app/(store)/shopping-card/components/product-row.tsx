@@ -29,8 +29,18 @@ type Props = {
   refreshItems: () => void;
 };
 
-const ProductRow = ({ cartItemData, refreshItems }: Props) => {
+const calculateBonus = (
+  quantity: number,
+  amountYouBuy: number,
+  amountYouGet: number
+) => {
+  if (amountYouBuy && amountYouGet) {
+    return Math.floor(quantity / amountYouBuy) * amountYouGet;
+  }
+  return 0;
+};
 
+const ProductRow = ({ cartItemData, refreshItems }: Props) => {
   const {
     cartId,
     // productId,
@@ -144,7 +154,7 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
             <span className="text-sm font-bold">{name}</span>
           </div>
         </td>
-        <td className="" >
+        <td className="">
           <span>{thePrice?.toFixed(2)} رس</span>
           {/* <span className="text-[10px] text-gray-400" >{percentageDiscount}%</span> */}
         </td>
@@ -191,7 +201,7 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
           )}
         </td>
       </tr>
-      {(!!amountYouBuy && !!amountYouGet) ? (
+      {!!amountYouBuy && !!amountYouGet && calculateBonus(quantity, amountYouBuy, amountYouGet) > 0 ? (
         <tr className="opacity-90 text-center">
           <td className="">
             {/* <div className="flex items-center ">
@@ -210,7 +220,7 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
 
           <td className="">
             <div className="flex items-center justify-center text-primary-background">
-              {amountYouGet}
+              {calculateBonus(quantity, amountYouBuy, amountYouGet)}
             </div>
           </td>
           <td className=""></td>

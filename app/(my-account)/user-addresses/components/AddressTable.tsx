@@ -75,9 +75,13 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
               return ele;
             })
           );
+          setisEditing({data:undefined,isEdit:false})
         }}
         onAddAddressEnd={(newData)=>{
           setAddresses(prev=>([...prev,newData]))
+        }}
+        onClose={()=>{
+          setisEditing({data:undefined,isEdit:false})
         }}
       />
 

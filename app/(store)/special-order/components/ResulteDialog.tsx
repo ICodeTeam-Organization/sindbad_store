@@ -64,7 +64,7 @@ function ResulteDialog({onOpenChange,open,data}:props) {
                   </DialogDescription>
                   <DialogDescription dir="rtl" className="text-right">
                     {data?.success?.map((ele, inx) => (
-                      <p key={ele.orderIndex + inx} > طلب رقم {inx + 1}</p>
+                      <p key={ele.orderIndex + inx} > طلب رقم {ele.orderIndex  + 1}</p>
                     ))}
                   </DialogDescription>
                 </>
@@ -82,7 +82,7 @@ function ResulteDialog({onOpenChange,open,data}:props) {
                   </DialogDescription>
                   <DialogDescription dir="rtl" className="text-right">
                     {data?.failed?.map((ele, inx) => (
-                      <p key={ele.orderIndex + inx} >طلب رقم {inx + 1}</p>
+                      <p key={ele.orderIndex + inx} >طلب رقم {ele.orderIndex  + 1}</p>
                     ))}
                   </DialogDescription>
                 </>

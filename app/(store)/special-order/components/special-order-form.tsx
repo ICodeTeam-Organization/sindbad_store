@@ -173,6 +173,7 @@ const SpecialOrderForm = ({
       //   throw new Error("Some requests failed. Check console for details.");
       // }
 
+      
       setShowResultesDialog(response);
 
       return response;
