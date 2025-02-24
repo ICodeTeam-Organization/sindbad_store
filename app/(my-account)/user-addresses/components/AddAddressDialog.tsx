@@ -36,6 +36,7 @@ import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { customerAddressType, UpdateAdressResponse } from "../types";
+import { DialogTitle } from "@radix-ui/react-dialog";
 
 // type addAdress = {
 //   directorateId: number;
@@ -51,6 +52,7 @@ const AddAddressDialog = ({
   dataEditing,
   onEditEnd,
   onAddAddressEnd,
+  onClose,
 }: {
   show: boolean;
   setShow: (status: boolean) => void;
@@ -58,7 +60,10 @@ const AddAddressDialog = ({
   dataEditing?:customerAddressType,
   onEditEnd?:(data:customerAddressType)=>void;
   onAddAddressEnd?:(data:customerAddressType)=>void;
+  onClose:()=>void;
 }) => {
+
+  
   const [directorates, setDirectorates] = useState<any[]>([]);
 
   const { data } = useQuery({
@@ -100,11 +105,10 @@ useEffect(() => {
       phoneNumber: dataEditing.phoneNumber  ?? "",
       stateid: dataEditing.directorateId && getGovernorateByDirectorateId(dataEditing.directorateId)?.id ? getGovernorateByDirectorateId(dataEditing.directorateId)?.id +"": "",
       city: dataEditing.directorateId ? String(dataEditing.directorateId) : "",
-    });
-
+    }); 
     setDirectorates(getGovernorateByDirectorateId(dataEditing.directorateId||0)?.directorates);
-    
   }
+  
 }, [isEditing, dataEditing]);
 
   const { mutate, isPending } = useMutation({
@@ -174,7 +178,17 @@ useEffect(() => {
   }
 
   return (
-    <Dialog open={show} onOpenChange={setShow}>
+    <Dialog open={show} onOpenChange={()=>{
+      form.reset({
+        locationDescription: "",
+        customerName: "",
+        phoneNumber: "",
+        stateid: "",
+        city: "",
+      });
+      onClose();
+      setShow(false);}} >
+      <DialogTitle></DialogTitle>
       {  (
         <DialogContent className="m-auto">
           <Form {...form}>
@@ -207,11 +221,12 @@ useEffect(() => {
                                   (dir: any) => +dir.id == +e
                                 );
                                 setDirectorates(der?.directorates || []);
+                                form?.resetField("city");
                               }}
  
                             >
-                              <SelectTrigger className="text-sm" dir="rtl">
-                                <SelectValue placeholder={ getGovernorateByDirectorateId(dataEditing?.directorateId||0)?.name ?? "المحافظة"} />
+                              <SelectTrigger className="text-sm" dir="rtl" value={field.value} >
+                                <SelectValue  placeholder={ getGovernorateByDirectorateId(+field?.value||0)?.name || "المحافظة"} />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectGroup {...field}>
@@ -239,13 +254,16 @@ useEffect(() => {
                         <FormItem className="text-center">
                           <FormControl>
                             <Select onValueChange={field.onChange} >
-                              <SelectTrigger className="text-sm" dir="rtl">
-                                <SelectValue placeholder={dataEditing?.directorateName ?? "المديرية"}  />
+                              <SelectTrigger className="text-sm" dir="rtl" value={field.value} >
+                                <SelectValue 
+                                placeholder="المديرية"
+                                // placeholder={!!(field?.value)? directorates?.find(e=>e?.id==field?.value)?.name : "المديرية"} 
+                                 />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectGroup {...field}>
                                   <SelectLabel>
-                                    {form.getValues().stateid &&
+                                    {!form.getValues().stateid &&
                                       "يجب اختيار المحاظة اولا"}
                                   </SelectLabel>
                                   {form.getValues().stateid &&
@@ -366,7 +384,7 @@ useEffect(() => {
                   )}
                 </Button>
                 <DialogClose>
-                  <Button type="submit">إلغاء</Button>
+                  <Button type="button">إلغاء</Button>
                 </DialogClose>
               </DialogFooter>
             </form>

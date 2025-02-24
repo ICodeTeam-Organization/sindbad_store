@@ -35,6 +35,7 @@ const PriceRange = ({onChangeRange}:{onChangeRange:(s:[number,number])=>void}) =
          type="number"
          value={priecRange[0]}
          onChange={(e)=>{
+          if ( +e.target.value < 0) return;
           if (+e.target.value > priecRange[1]) return;
           setIsUpdated(true)
           setPriecRange(o=>([+e.target.value,o[1]]))
@@ -48,6 +49,7 @@ const PriceRange = ({onChangeRange}:{onChangeRange:(s:[number,number])=>void}) =
          value={priecRange[1]}
          onChange={(e)=>{
           setIsUpdated(true)
+          if ( +e.target.value < 1) return;
           // if (+e.target.value < priecRange.to) return;
           setPriecRange(o=>([o[0],+e.target.value]))
          }}

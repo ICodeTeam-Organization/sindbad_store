@@ -10,7 +10,7 @@ import { CheckoutType } from "@/types/checkout";
 //     image: z
 //       .instanceof(FileList)
 //       .refine((files) => files.length > 0 && files[0].size > 0, {
-//         message: "يجب أختيار صورة",
+//         message: "يجب إختيار صورة",
 //       })
 //       .optional(),
 //   })
@@ -19,7 +19,7 @@ import { CheckoutType } from "@/types/checkout";
 //     if (!bank && !number && !image) {
 //       ctx.addIssue({
 //         path: ["image"],
-//         message: "يجب أختيار صورة، أو إدخال البنك ورقم السند",
+//         message: "يجب إختيار صورة، أو إدخال البنك ورقم السند",
 //         code: z.ZodIssueCode.custom,
 //       });
 //     }
@@ -56,7 +56,7 @@ export const validateCheckoutForm = (data: CheckoutType): string[] => {
 
   if (!bank && !number && (!image || image.length === 0)) {
     // Case 1: No bank, number, or image provided
-    errors.push("يجب أختيار صورة، أو إدخال البنك ورقم السند");
+    errors.push("يجب إختيار صورة، أو إدخال البنك ورقم السند");
   } else if (!image || image.length === 0) {
     // Case 2: Image is not provided
     if (!bank) {

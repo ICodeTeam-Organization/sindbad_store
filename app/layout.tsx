@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientProviders from "@/components/client-providers";
-import { Noto_Kufi_Arabic, Tajawal } from "next/font/google";
+import { Almarai, Tajawal } from "next/font/google";
 import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
@@ -12,7 +12,7 @@ import GetInitialData from "./GetInitialData";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import SpecialOrderDialogsViewer from "@/components/SpecialOrderDialogsViewer";
 
-const Noto_Kufi = Noto_Kufi_Arabic({
+const Noto_Kufi = Almarai({
   weight: ["400", "700"],
   subsets: ["arabic"],
   display: "swap",

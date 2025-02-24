@@ -50,6 +50,7 @@ const InputFile: React.FC<InputFileProps> = ({
           {...inputProps}
           id={"picture" + orderKey}
           type="file"
+          accept="image/*"
           className="hidden"
           multiple
           onChange={handleFileChange}
