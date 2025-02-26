@@ -12,6 +12,7 @@ import Spinner from "@/app/(home)/components/Spinner";
 import { useCartStore } from "@/app/stores/cartStore";
 import SafeImage from "@/components/SafeImage";
 import { CartItem } from "@/types/storeTypes";
+import { calculateBonus } from "@/lib/utils";
 
 // type Props = {
 //   id: number;
@@ -29,16 +30,7 @@ type Props = {
   refreshItems: () => void;
 };
 
-const calculateBonus = (
-  quantity: number,
-  amountYouBuy: number,
-  amountYouGet: number
-) => {
-  if (amountYouBuy && amountYouGet) {
-    return Math.floor(quantity / amountYouBuy) * amountYouGet;
-  }
-  return 0;
-};
+
 
 const ProductRow = ({ cartItemData, refreshItems }: Props) => {
   const {
@@ -139,7 +131,10 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
   };
 
   return (
-    <>
+    <div onClick={()=>{
+      console.log(cartItemData,"dbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbd_db");
+      
+    }}>
       <tr className="text-center ">
         <td className="py-2">
           <div className="flex items-center ">
@@ -230,7 +225,7 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
           </td>
         </tr>
       ) : null}
-    </>
+    </div>
   );
 };
 

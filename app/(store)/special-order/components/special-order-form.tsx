@@ -3,7 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import { useToast } from "@/hooks/use-toast";
 
-import Link from "next/link";
 import { Plus, Send, X } from "lucide-react";
 import { useRef, useState } from "react";
 import SpecialOrderFormCard from "./SpecialOrderFormCard";
@@ -13,6 +12,7 @@ import {
 } from "../utils/zod-schema";
 
 import ResulteDialog from "./ResulteDialog";
+import { useRouter } from "next-nprogress-bar";
 
 type SpecialOrderBody = {
   SpecialCategoryId?: number;
@@ -83,6 +83,7 @@ const SpecialOrderForm = ({
   ]);
   // ORDERS STATE //
 
+  const router = useRouter();
   const [showResultesDialog, setShowResultesDialog] = useState<{
     success: { orderIndex: number; value: any }[];
     failed: { orderIndex: number; reason: any }[];
@@ -90,6 +91,7 @@ const SpecialOrderForm = ({
 
   const { toast } = useToast(); // @todo: find a better way to implement the toast notification
   const onSuccess = (res: any) => {
+     router.push("/my-special-orders");
     // @todo: show a taost notifaction
     // toast({
     //   variant: "default",
@@ -114,7 +116,16 @@ const SpecialOrderForm = ({
           const data: SpecialOrderBody = {
             SpecialCategoryId: "category" in request ? +request.category : 0,
             // SpecialCategoryId: "dd",
-            Name: "orderDetails" in request ? request.orderDetails : "",
+            Name:
+              request.type == 3
+              // طلب من <اسم المتجر>
+                ? `طلب من متجر  ${
+                    "ecommerce" in request &&
+                    (request.ecommerce || "متجر إلكتروني")
+                  }`
+                : "orderDetails" in request
+                ? request.orderDetails
+                : "",
             Description: "orderDetails" in request ? request.orderDetails : "",
             ECommerceName: "ecommerce" in request ? request.ecommerce + "" : "",
             LinkUrl: request.linkUrl,
@@ -131,13 +142,13 @@ const SpecialOrderForm = ({
 
           Object.entries(data).forEach(([key, value]) => {
             if (key === "Images" && Array.isArray(value)) {
-              value.map((v)=>{
-                formData.append("Images",v); 
-              })
+              value.map((v) => {
+                formData.append("Images", v);
+              });
             } else if (key === "FilePDF" && value instanceof File) {
               formData.append("FilePDF", value);
             } else if (value !== null && value !== undefined) {
-              formData.append(key, value.toString());
+              formData.append('FilePDF', value.toString());
             }
           });
           // إرسال الطلب إلى API
@@ -173,7 +184,6 @@ const SpecialOrderForm = ({
       //   throw new Error("Some requests failed. Check console for details.");
       // }
 
-      
       setShowResultesDialog(response);
 
       return response;
@@ -222,9 +232,9 @@ const SpecialOrderForm = ({
           />
           <p>طلب خاص</p>
         </div>
-        <Link href="/" className="text-xs underline">
+        {/* <Link href="/" className="text-xs underline">
           كيف تطلب طلب خاص ؟
-        </Link>
+        </Link> */}
       </div>
 
       <div className="p-5">
@@ -275,7 +285,6 @@ const SpecialOrderForm = ({
                 });
               } else {
                 handleOnSubmit.mutate();
-                
               }
             }}
             className="bg-primary-background mdHalf:px-8 hover:bg-primary-background hover:bg-opacity-[0.7] tajawal "

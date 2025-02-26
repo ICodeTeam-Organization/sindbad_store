@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import {  useToast } from "@/hooks/use-toast";
-import Link from "next/link";
 import { Plus, Send, X } from "lucide-react";
 import { useState } from "react";
 import {
@@ -25,7 +24,7 @@ function SpecialWholesalesOrderDialog({
 }) {
   const initValues = {
     orderKey: Math.random().toString(36).substring(2, 7),
-    category:category || "",
+    category: category || "",
     orderDetails: "",
     orderFrom: 200,
     isValid: false,
@@ -85,8 +84,8 @@ function SpecialWholesalesOrderDialog({
 
           Object.entries(data).forEach(([key, value]) => {
             if (key === "Images" && Array.isArray(value)) {
-              value.forEach((file, index) => {
-                formData.append(`Images[${index}]`, file);
+              value.forEach((file) => {
+                formData.append(`Images`, file);
               });
             } else if (key === "FilePDF" && value instanceof File) {
               formData.append("FilePDF", value);
@@ -128,8 +127,6 @@ function SpecialWholesalesOrderDialog({
       //   throw new Error("Some requests failed. Check console for details.");
       // }
 
-      console.log(response);
-
       setShowResultesDialog(response);
 
       return response;
@@ -167,9 +164,9 @@ function SpecialWholesalesOrderDialog({
         <X  className="cursor-pointer" onClick={closeDialog} />
        <p>طلب بالجملة</p>
        </div>
-            <Link href="/" className="text-xs underline">
+            {/* <Link href="/" className="text-xs underline">
               كيف تطلب طلب خاص ؟
-            </Link>
+            </Link> */}
           </div>
 
           <div className="p-4">
@@ -215,7 +212,6 @@ function SpecialWholesalesOrderDialog({
                     });
                   } else {
                     handleOnSubmit.mutate();
-                    console.log(ordersValues);
                   }
                 }}
                 className="bg-primary-background px-8 hover:bg-primary-background hover:bg-opacity-[0.7] tajawal "

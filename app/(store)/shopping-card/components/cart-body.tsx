@@ -31,7 +31,7 @@ const CartBody = ({
           {isPending ? (
             <Loader2 className="animate-spin text-center mx-auto" />
           ) : items.data.length > 0 ? (
-            <div className=" mdHalf:block hidden">
+            <div className="">
               {/* web table or big screens */}
               <div className="overflow-x-auto">
                 <table className="min-w-full table-auto whitespace-nowrap">

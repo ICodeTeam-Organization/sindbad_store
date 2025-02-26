@@ -15,6 +15,7 @@ const TABLE_HEAD = [
   "التفاصيل",
   "الفئة",
   "الطلب",
+  "نوع الطلب"
   // "الرقم",
 ];
 const OrdersWaitingPricingTable: React.FC<{
@@ -65,7 +66,7 @@ const OrdersWaitingPricingTable: React.FC<{
       <div className="w-full">
       {/* Desktop Table */}
       {orders.length > 0 && (
-        <div className="hidden md:block">
+        <div className="hidden md:block  ">
           <table className="w-full border-collapse">
             {/* Table Header */}
             <thead className="bg-[#FFECE5] text-sm font-medium text-center text-[#000]">
@@ -79,7 +80,7 @@ const OrdersWaitingPricingTable: React.FC<{
             </thead>
             {/* Table Body */}
             <tbody className="text-sm text-center text-[#000]">
-              {orders?.map(({ name, specialCategoryId, note, createdAt, id }, index) => (
+              {orders?.map(({ name, specialCategoryId, note, createdAt, id,typeName }, index) => (
                 <tr
                   key={index}
                   className={`${
@@ -110,6 +111,7 @@ const OrdersWaitingPricingTable: React.FC<{
                     {getCategoryNameById(+specialCategoryId)}
                   </td>
                   <td className="px-4 py-3">{name}</td>
+                  <td className="px-4 py-3">{typeName}</td>
                 </tr>
               ))}
             </tbody>
@@ -120,13 +122,17 @@ const OrdersWaitingPricingTable: React.FC<{
       {/* Mobile Cards */}
       <div className="block md:hidden" dir="rtl">
         {orders.length > 0 &&
-          orders.map(({ name, specialCategoryId, note, createdAt, id }, index) => (
+          orders.map(({ name, specialCategoryId, note, createdAt, id , typeName }, index) => (
             <div
               key={index}
               className={`border rounded-lg p-4 mb-4 ${ 
                 index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
                }`}
             >
+              <div className="mb-2 text-sm flex items-center justify-between">
+                <span className="font-medium">نوع الطلب:  </span>
+                <span className="" >{typeName}</span>
+              </div>
               <div className="mb-2 text-sm flex items-center justify-between">
                 <span className="font-medium">الطلب: </span>
                 <span className="" >{name}</span>

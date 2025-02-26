@@ -15,6 +15,8 @@ const PrintOrderBill = ({ Bill }: {Bill:OrderData}) => {
     reactToPrintFn();
   };
 
+  
+
   return (
      <div>
         { 

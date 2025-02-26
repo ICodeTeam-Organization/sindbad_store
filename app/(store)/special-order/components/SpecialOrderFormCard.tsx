@@ -89,8 +89,6 @@ function SpecialOrderFormCard({
             category={initCategory}
             orderKey={orderKey}
             onChange={(e, isValid) => {
-              console.log(e);
-              
               onChangeValues(e, isValid);
             }}
           />

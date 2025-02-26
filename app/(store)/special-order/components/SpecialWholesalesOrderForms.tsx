@@ -51,7 +51,7 @@ function SpecialWholesalesOrderForms({
       quantity:1,
       isUrgen: false,
       orderKey: orderKey,
-      category:initCategory != undefined ? initCategory+"" : undefined
+      category: !!initCategory  ? initCategory+"" : undefined
     },
   });
 

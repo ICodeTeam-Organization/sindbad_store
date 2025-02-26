@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 import { BiCategoryAlt } from "react-icons/bi";
 import { IoStorefrontOutline } from "react-icons/io5";
 import Spinner from "../Spinner";
-import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
+import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
 
 function OrderFromEshopMegaMenu() {
   const { categories } = useCategoriesDataStore((state) => state);
@@ -31,13 +31,19 @@ function OrderFromEshopMegaMenu() {
           pageNumber: params.pageNumber,
         },
       }),
-      
+      retry:1
   });
   useEffect(() => {
     if (allMainCat.length > 0) {
       setParams((o) => ({ ...o, selectedCategory: allMainCat[0]?.id }));
     }
   }, [categories]);
+
+
+  const {  setSpecialOrderState} = useSpecialOrdersDialogsStore();
+
+
+
   return (
     //
     <div className="transition-all duration-200 right-0 opacity-0 invisible hidden  mdHalf:block  group-hover:block  translate-y-5  group-hover:-translate-y-0  w-full group-hover:opacity-100 group-hover:visible mdHalf:mt-1 -mt-2 rounded top-10 left-0   min-h-[400px] max-h-[540px] mdHalf:overflow-y-hidden overflow-y-scroll z-[99999]  bg-white  mdHalf:shadow-md mdHalf:border-y border-b  mdHalf:absolute   ">
@@ -96,13 +102,16 @@ function OrderFromEshopMegaMenu() {
           ) : data?.data && data?.data?.items?.length != 0 ? (
             <div className="grid grid-cols-1 mdHalf:grid-cols-3 2lg:grid-cols-4 xl:grid-cols-5 gap-x-4 place-content-start overflow-y-auto overflow-x-hidden h-[75%]">
               {data?.data?.items?.map((i) => (
-                <Link
-                  href={
-                    "/special-order?sh=1&tab=3&category=" +
-                    params.selectedCategory +
-                    "&link=" +
-                    i.urlLinkOfStore
-                  }
+                <div
+                  // href={
+                  //   "/special-order?sh=1&tab=3&category=" +
+                  //   params.selectedCategory +
+                  //   "&link=" +
+                  //   i.urlLinkOfStore
+                  // }
+                  onClick={() => {
+                    setSpecialOrderState(true,3,undefined,i.id);
+                  }}
                   key={i.id}
                   className="w-full text-[11px] my-[2px] h-fit hover:bg-gray-200 font-semibold transition-colors duration-200 px-2 p-1 rounded"
                 >
@@ -112,14 +121,14 @@ function OrderFromEshopMegaMenu() {
                         alt={i.name}
                         fill
                         className="bg-gray-100"
-                        src={"/images/alogo.png"}
+                        src={i?.logo || i?.ecommerceStoreImages[0]?.imageUrl || ""}
                       />
                     </div>
                     <p className="line-clamp-1 flex-grow overflow-hidden text-ellipsis">
                       {i.name}
                     </p>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
           ) : (

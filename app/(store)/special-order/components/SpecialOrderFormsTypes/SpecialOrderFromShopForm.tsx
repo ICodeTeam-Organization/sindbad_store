@@ -25,6 +25,7 @@ import {
 import { useForm } from "react-hook-form";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import EcommerceSearchInput from "./EcommerceSearchInput";
+import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
 
 function SpecialOrderFromShopForm({
   onChange,
@@ -40,16 +41,15 @@ function SpecialOrderFromShopForm({
 }) {
 
   const { categories: allCategories } = useCategoriesDataStore();
+  const {ecommerceId} = useSpecialOrdersDialogsStore();
   const categories = allCategories.filter((ele) => ele.categoryTypeNumber == 2);
 
   const form = useForm<SpecialOrderFromEcommerce_FormValue>({
     resolver: zodResolver(SpecialOrderFromEcommerceSchema),
-
     defaultValues: {
       type: 3,
       quantity: 1,
-      isUrgen: false,
-      orderDetails: "",
+      isUrgen: false, 
       orderKey: orderKey,
       category: category && categories?.find(e=> e?.id == category) ? category + "" : undefined,
     },
@@ -72,6 +72,7 @@ function SpecialOrderFromShopForm({
             <FormItem className="w-[100%]">
               <div className="">
                 <EcommerceSearchInput
+                  ecommerceId={ecommerceId ?? 0}
                   onSelected={(shop) => {
                     field.onChange(shop?.name);
                   }}
@@ -134,7 +135,7 @@ function SpecialOrderFromShopForm({
                 <Input
                   {...field}
                   value={field.value}
-                  placeholder="ضع رابط المنتج في المتجر الالكتروني (يفضل تفاصيل المنتج )  (اختياري)                                                                                                                   لصق"
+                  placeholder="ضع رابط المنتج في المتجر الالكتروني "
                   onChange={(e) => {
                     field.onChange(e.target.value);
                     handleFieldChange({ ...form.getValues() });

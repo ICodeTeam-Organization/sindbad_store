@@ -10,8 +10,10 @@ interface specialordersDialogsStoreStateTypes {
   setTab: (tab?: number) => void;
   category?: number;
   setCategory: (category?: number) => void;
+  ecommerceId?: number;
+  setEcommerceId: (ecommerceId?: number) => void;
   reset: () => void;
-  setSpecialOrderState: (status: boolean, tab?: number, category?: number) => void;
+  setSpecialOrderState: (status: boolean, tab?: number, category?: number, ecommerceId?: number) => void;
   setWholeSalesOrderState: (status: boolean, tab?: number, category?: number) => void;
 }
 
@@ -28,19 +30,24 @@ export const useSpecialOrdersDialogsStore = create<specialordersDialogsStoreStat
   category: undefined,
   setCategory: (category) => set({ category }),
 
+  ecommerceId: undefined,
+  setEcommerceId: (ecommerceId) => set({ ecommerceId }),
+
   reset: () => set({
     showSpecialOrderDialog: false,
     showSpecialOrderWholeSalesDialog: false,
     tab: undefined,
     category: undefined,
+    ecommerceId: undefined,
   }),
 
-  setSpecialOrderState: (status, tab, category) => {
+  setSpecialOrderState: (status, tab, category, ecommerceId) => {
     return set({
       showSpecialOrderDialog: status,
       tab,
       category,
-    })
+      ecommerceId,
+    });
   },
 
   setWholeSalesOrderState: (status, tab, category) => set({

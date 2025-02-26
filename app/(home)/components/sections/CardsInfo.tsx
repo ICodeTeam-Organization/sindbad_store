@@ -39,7 +39,7 @@ function CardsInfo() {
           desc: "نوفر لك ما تريد من كل الأصناف والمنتجات",
           image: "/images/track_ic.svg",
           bgc: "#DCEBFF",
-          more: "أدخل عنوانك",
+          more: "أطلب الآن",
           // href:"/special-order?sh=1&tab=3",
           onClick:()=>{
             setWholeSalesOrderState(true)

@@ -23,6 +23,9 @@ const MyAccountPage = async () => {
       ), //
     ]);
 
+    console.log(OrdersWaitingPricingData.data.items);
+    
+
     const tabsData = [
       {
         label: "طلبات تم تسعيرها",

@@ -50,14 +50,14 @@ const ShopProductsGrid = () => {
         pageNumber: pageParam || 1,
         pageSize: filters.pageSize,
         hasOffer: filters.hasOffer == "t",
-        todayOffers: filters.todayOffer == "t",
-        storeId: filters.storeId || "",
-        productName: filters.productName || "",
+        // todayOffers: filters.todayOffer == "t",
+        storeId: filters.storeId || null,
+        productName: filters.productName || null,
         minPrice: filters.price[0],
         maxPrice: filters.price[1],
         mainCategories: [...filters.cats.map((id) => +id)],
         subCategories: [...filters.subCats.map((id) => +id)],
-        brandId: filters.brandId || 0,
+        brandId: filters.brandId || null,
         tags: filters.tagId ? [filters.tagId] : null,
       };
 

@@ -70,3 +70,15 @@ export const goToExtrnalLink = (link: string) => {
       : "https://" + link
     : "";
 };
+
+
+export const calculateBonus = (
+  quantity: number,
+  amountYouBuy: number,
+  amountYouGet: number
+) => {
+  if (amountYouBuy && amountYouGet) {
+    return Math.floor(quantity / amountYouBuy) * amountYouGet;
+  }
+  return 0;
+};

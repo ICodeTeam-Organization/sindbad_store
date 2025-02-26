@@ -16,10 +16,7 @@ const OrderDetail = async ({ params }: Detail) => {
   );
   if (!OrderDetails) return notFound();
   const data = OrderDetails.data;
-
-  console.log(OrderDetails.data.pagedOrderDetails.items);
-  
-  
+ 
   return (
     <div className="xl:container mx-auto">
       {/* <BreadCrumb

@@ -16,6 +16,7 @@ const TABLE_HEAD = [
   "التفاصيل",
   "الفئة",
   "الطلب",
+  "نوع الطلب"
   // "الرقم",
 ];
 
@@ -81,7 +82,7 @@ const OrdersPricedTable: React.FC<{ initData: SpecialOrdersResponseType }> = ({
             </thead>
             {/* Table Body */}
             <tbody className="text-sm text-center text-[#000]">
-              {orders?.map(({ name, specialCategoryId, note, createdAt, id }, index) => (
+              {orders?.map(({ name, specialCategoryId, note, createdAt, id,typeName }, index) => (
                 <tr
                   key={index}
                   className={`${
@@ -112,6 +113,8 @@ const OrdersPricedTable: React.FC<{ initData: SpecialOrdersResponseType }> = ({
                     {getCategoryNameById(+specialCategoryId)}
                   </td>
                   <td className="px-4 py-3">{name}</td>
+                  <td className="px-4 py-3">{typeName}</td>
+
                 </tr>
               ))}
             </tbody>
@@ -122,13 +125,17 @@ const OrdersPricedTable: React.FC<{ initData: SpecialOrdersResponseType }> = ({
       {/* Mobile Cards */}
       <div className="block md:hidden" dir="rtl">
         {orders.length > 0 &&
-          orders.map(({ name, specialCategoryId, note, createdAt, id }, index) => (
+          orders.map(({ name, specialCategoryId, note, createdAt, id,typeName }, index) => (
             <div
               key={index}
               className={`border rounded-lg p-4 mb-4 ${ 
                 index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
                }`}
             >
+              <div className="mb-2 text-sm flex items-center justify-between">
+                <span className="font-medium">نوع الطلب:  </span>
+                <span className="" >{typeName}</span>
+              </div>
               <div className="mb-2 text-sm flex items-center justify-between">
                 <span className="font-medium">الطلب: </span>
                 <span className="" >{name}</span>

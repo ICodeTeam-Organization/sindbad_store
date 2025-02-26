@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import {  Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -11,10 +11,16 @@ import { Input } from "@/components/ui/input";
 import { Shop } from "@/types/storeTypes";
 import Spinner from "@/app/(home)/components/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import {   postApi } from "@/lib/http";
+import { postApi } from "@/lib/http";
 import Link from "next/link";
 
-function EcommerceSearchInput({onSelected}:{onSelected:(e:Shop)=>void}) {
+function EcommerceSearchInput({
+  onSelected,
+  ecommerceId,
+}: {
+  onSelected: (e: Shop) => void;
+  ecommerceId: number;
+}) {
   const [open, setOpen] = React.useState(false);
   const [selectedEcommerce, setSelectedEcommerce] = React.useState<Shop>();
   // const [isInitStore, setisInitStore] = React.useState(false)
@@ -24,7 +30,6 @@ function EcommerceSearchInput({onSelected}:{onSelected:(e:Shop)=>void}) {
     pageNumber: 1,
     pageSize: 30,
   });
-
 
   const { isLoading, data } = useQuery<{ data: { items: Shop[] } }>({
     queryKey: [
@@ -41,6 +46,12 @@ function EcommerceSearchInput({onSelected}:{onSelected:(e:Shop)=>void}) {
         },
       }),
   });
+
+  React.useEffect(() => {
+    if (data) {
+      setSelectedEcommerce(data?.data.items.find((e) => e.id == ecommerceId));
+    }
+  }, [ecommerceId]);
 
   return (
     <div className="w-full flex gap-x-2">
@@ -73,7 +84,7 @@ function EcommerceSearchInput({onSelected}:{onSelected:(e:Shop)=>void}) {
                       key={store.id}
                       onClick={() => {
                         setSelectedEcommerce(store);
-                        onSelected(store)
+                        onSelected(store);
                         setOpen(false);
                       }}
                       className="p-2 cursor-pointer hover:bg-slate-50 z-50 "
@@ -97,15 +108,17 @@ function EcommerceSearchInput({onSelected}:{onSelected:(e:Shop)=>void}) {
           </div>
         </PopoverContent>
       </Popover>
-      {selectedEcommerce?.urlLinkOfStore && <Link href={selectedEcommerce?.urlLinkOfStore??"?"}  target="_blank">
-        <Button className="mdHalf:text-xs text-[9px] text-black flex flex-col bg-[#288B5338] hover:bg-[#288B5339] hover:bg-opacity-[0.7] tajawal">
-          <span className="mx-2 font-bold">الإنتقال الى المتجر</span>
-          <span className="mx-2 mdHalf:text-[9px] text-[7px] text-primary-background">
-            {" "}
-            مع نسخ كوبون الخصم
-          </span>
-        </Button>
-      </Link>}
+      {selectedEcommerce?.urlLinkOfStore && (
+        <Link href={selectedEcommerce?.urlLinkOfStore ?? "?"} target="_blank">
+          <Button className="mdHalf:text-xs text-[9px] text-black flex flex-col bg-[#288B5338] hover:bg-[#288B5339] hover:bg-opacity-[0.7] tajawal">
+            <span className="mx-2 font-bold">الإنتقال الى المتجر</span>
+            <span className="mx-2 mdHalf:text-[9px] text-[7px] text-primary-background">
+              {" "}
+              مع نسخ كوبون الخصم
+            </span>
+          </Button>
+        </Link>
+      )}
     </div>
   );
 }
