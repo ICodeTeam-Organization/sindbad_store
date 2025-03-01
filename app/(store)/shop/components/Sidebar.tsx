@@ -26,8 +26,8 @@ const Sidebar = () => {
     resetFilters,
     setTagId
   } = useShopFiltersStore();
-  const { categories } = useCategoriesDataStore();
-
+  const { categories:all_categories } = useCategoriesDataStore();
+  const categories = all_categories.filter((i) => i.categoryTypeNumber == 1);
 
 
   return (
@@ -94,7 +94,6 @@ const Sidebar = () => {
             return <CategoriesShopFilter 
             key={ele.id} 
             data={ele}
-            
             />;
           })}
         </div>

@@ -169,8 +169,13 @@ const ShopProductsGrid = () => {
 
   return (
     <>
+
+       
       {!isPending && (
         <div>
+          <div>
+             
+          </div>
           <SearchResultsHeader totalResults={totalCount} />
         </div>
       )}

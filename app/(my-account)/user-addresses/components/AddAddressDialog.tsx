@@ -48,7 +48,7 @@ import { DialogTitle } from "@radix-ui/react-dialog";
 const AddAddressDialog = ({
   show = false,
   setShow,
-  isEditing=false,
+  isEditing = false,
   dataEditing,
   onEditEnd,
   onAddAddressEnd,
@@ -56,60 +56,66 @@ const AddAddressDialog = ({
 }: {
   show: boolean;
   setShow: (status: boolean) => void;
-  isEditing?:boolean;
-  dataEditing?:customerAddressType,
-  onEditEnd?:(data:customerAddressType)=>void;
-  onAddAddressEnd?:(data:customerAddressType)=>void;
-  onClose:()=>void;
+  isEditing?: boolean;
+  dataEditing?: customerAddressType;
+  onEditEnd?: (data: customerAddressType) => void;
+  onAddAddressEnd?: (data: customerAddressType) => void;
+  onClose: () => void;
 }) => {
-
-  
   const [directorates, setDirectorates] = useState<any[]>([]);
 
   const { data } = useQuery({
     queryKey: ["city"],
     queryFn: () => getApi<any>(`Locations/GetGovernorateWithChildren`),
   });
-  
 
-
-  function getGovernorateByDirectorateId(directorateId:number) {
-    if(data?.data){
+  function getGovernorateByDirectorateId(directorateId: number) {
+    if (data?.data) {
       for (const governorate of data?.data) {
-        const directorate = governorate.directorates.find((dir:any) => dir.id === directorateId);
+        const directorate = governorate.directorates.find(
+          (dir: any) => dir.id === directorateId
+        );
         if (directorate) {
-            return governorate;
+          return governorate;
         }
+      }
+      return null;
     }
-    return null;
-    }
-}
-
-const form = useForm<z.infer<typeof AddshipingadressSchema>>({
-  resolver: zodResolver(AddshipingadressSchema),
-  defaultValues: {
-    locationDescription: "",
-    customerName: "",
-    phoneNumber: "",
-    stateid: "",
-    city: "",
-  },
-});
-
-// Effect to reset form when isEditing or dataEditing changes
-useEffect(() => {
-  if (isEditing && dataEditing) {
-    form.reset({
-      locationDescription: dataEditing.locationDescription ?? "",
-      customerName: dataEditing.customerName ?? "",
-      phoneNumber: dataEditing.phoneNumber  ?? "",
-      stateid: dataEditing.directorateId && getGovernorateByDirectorateId(dataEditing.directorateId)?.id ? getGovernorateByDirectorateId(dataEditing.directorateId)?.id +"": "",
-      city: dataEditing.directorateId ? String(dataEditing.directorateId) : "",
-    }); 
-    setDirectorates(getGovernorateByDirectorateId(dataEditing.directorateId||0)?.directorates);
   }
-  
-}, [isEditing, dataEditing]);
+
+  const form = useForm<z.infer<typeof AddshipingadressSchema>>({
+    resolver: zodResolver(AddshipingadressSchema),
+    defaultValues: {
+      locationDescription: "",
+      customerName: "",
+      phoneNumber: "",
+      stateid: "",
+      city: "",
+    },
+  });
+
+  // Effect to reset form when isEditing or dataEditing changes
+  useEffect(() => {
+    if (isEditing && dataEditing) {
+      form.reset({
+        locationDescription: dataEditing.locationDescription ?? "",
+        customerName: dataEditing.customerName ?? "",
+        phoneNumber: dataEditing.phoneNumber ?? "",
+        stateid:
+          dataEditing.directorateId &&
+          getGovernorateByDirectorateId(dataEditing.directorateId)?.id
+            ? getGovernorateByDirectorateId(dataEditing.directorateId)?.id + ""
+            : "",
+        city: dataEditing.directorateId
+          ? String(dataEditing.directorateId)
+          : "",
+      });
+      setDirectorates(
+        getGovernorateByDirectorateId(dataEditing.directorateId || 0)
+          ?.directorates
+      );
+    }
+  }, [isEditing, dataEditing]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: async ({
@@ -118,18 +124,21 @@ useEffect(() => {
       phoneNumber,
       locationDescription,
     }: z.infer<typeof AddshipingadressSchema>) =>
-      await postApi<UpdateAdressResponse>(`CustomerAddress/AddCustomerAddress`, {
-        body: {
-          directorateId: +city,
-          customerName: customerName,
-          phoneNumber: phoneNumber,
-          locationDescription: locationDescription,
-        },
-      }),
+      await postApi<UpdateAdressResponse>(
+        `CustomerAddress/AddCustomerAddress`,
+        {
+          body: {
+            directorateId: +city,
+            customerName: customerName,
+            phoneNumber: phoneNumber,
+            locationDescription: locationDescription,
+          },
+        }
+      ),
     onSuccess: (data) => {
       toast.success("تم إضافة العنوان");
-       if(onAddAddressEnd) onAddAddressEnd(data?.data as customerAddressType)
-      form.reset()
+      if (onAddAddressEnd) onAddAddressEnd(data?.data as customerAddressType);
+      form.reset();
       setShow(false);
     },
     onError: (error) => {
@@ -137,59 +146,66 @@ useEffect(() => {
     },
   });
 
-  const { mutate:mutateForEditing, isPending:isPendingForEditing } = useMutation({
-    mutationFn: async ({
-      city,
-      customerName,
-      phoneNumber,
-      locationDescription,
-    }: z.infer<typeof AddshipingadressSchema>) =>
-      await putApi<UpdateAdressResponse>(`CustomerAddress/UpdateCustomerAddress?customerAddressId=${dataEditing?.id}`, {
-         body:{
-          directorateId: +city,
-          customerName: customerName,
-          phoneNumber: phoneNumber,
-          locationDescription: locationDescription,
-        },
-      }),
-    onSuccess: (data) => {
-      console.log(data,"address editable");
-      
-      toast.success("تم تعديل العنوان");
-       if(onEditEnd) onEditEnd(data.data as customerAddressType)
-        form.reset()
-        setShow(false);
-    },
-    onError: (error) => {
-      console.log(error);
-      
-      toast.error(error.message);
-    },
-  });
+  const { mutate: mutateForEditing, isPending: isPendingForEditing } =
+    useMutation({
+      mutationFn: async ({
+        city,
+        customerName,
+        phoneNumber,
+        locationDescription,
+      }: z.infer<typeof AddshipingadressSchema>) =>
+        await putApi<UpdateAdressResponse>(
+          `CustomerAddress/UpdateCustomerAddress?customerAddressId=${dataEditing?.id}`,
+          {
+            body: {
+              directorateId: +city,
+              customerName: customerName,
+              phoneNumber: phoneNumber,
+              locationDescription: locationDescription,
+            },
+          }
+        ),
+      onSuccess: (data) => {
+        console.log(data, "address editable");
 
+        toast.success("تم تعديل العنوان");
+        if (onEditEnd) onEditEnd(data.data as customerAddressType);
+        form.reset();
+        setShow(false);
+      },
+      onError: (error) => {
+        console.log(error);
+
+        toast.error(error.message);
+      },
+    });
 
   function onSubmit(values: z.infer<typeof AddshipingadressSchema>) {
     if (isEditing) {
       console.log(values);
-      mutateForEditing(values)
+      mutateForEditing(values);
     } else {
       mutate(values);
     }
   }
 
   return (
-    <Dialog open={show} onOpenChange={()=>{
-      form.reset({
-        locationDescription: "",
-        customerName: "",
-        phoneNumber: "",
-        stateid: "",
-        city: "",
-      });
-      onClose();
-      setShow(false);}} >
+    <Dialog
+      open={show}
+      onOpenChange={() => {
+        form.reset({
+          locationDescription: "",
+          customerName: "",
+          phoneNumber: "",
+          stateid: "",
+          city: "",
+        });
+        onClose();
+        setShow(false);
+      }}
+    >
       <DialogTitle></DialogTitle>
-      {  (
+      {
         <DialogContent className="m-auto">
           <Form {...form}>
             <form
@@ -204,87 +220,114 @@ useEffect(() => {
                     إضافة عنوان جديد{" "}
                   </h1>
 
-                  <FormLabel className="m-auto text-sm font-bold mb-2">
-                    <p className=" text-right">المنطقة</p>
-                  </FormLabel>
                   <div className="grid grid-cols-2 gap-2 ">
-                    <FormField
-                      control={form.control}
-                      name="stateid"
-                      render={({ field }) => (
-                        <FormItem className="text-center">
-                          <FormControl>
-                            <Select
-                              onValueChange={(e) => {
-                                field.onChange(e);
-                                const der = data?.data?.find(
-                                  (dir: any) => +dir.id == +e
-                                );
-                                setDirectorates(der?.directorates || []);
-                                form?.resetField("city");
-                              }}
- 
-                            >
-                              <SelectTrigger className="text-sm" dir="rtl" value={field.value} >
-                                <SelectValue  placeholder={ getGovernorateByDirectorateId(+field?.value||0)?.name || "المحافظة"} />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup {...field}>
-                                  {data?.data?.map((itm: any) => (
-                                    <SelectItem
-                                      key={itm?.id}
-                                      value={itm?.id + ""}
-                                      dir="rtl"
-                                    >
-                                      {itm?.name}
-                                    </SelectItem>
-                                  ))}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="city"
-                      render={({ field }) => (
-                        <FormItem className="text-center">
-                          <FormControl>
-                            <Select onValueChange={field.onChange} >
-                              <SelectTrigger className="text-sm" dir="rtl" value={field.value} >
-                                <SelectValue 
-                                placeholder="المديرية"
-                                // placeholder={!!(field?.value)? directorates?.find(e=>e?.id==field?.value)?.name : "المديرية"} 
-                                 />
-                              </SelectTrigger>
-                              <SelectContent>
-                                <SelectGroup {...field}>
-                                  <SelectLabel>
-                                    {!form.getValues().stateid &&
-                                      "يجب اختيار المحاظة اولا"}
-                                  </SelectLabel>
-                                  {form.getValues().stateid &&
-                                    directorates?.length > 0 &&
-                                    directorates?.map((city: any) => (
+                    <div>
+                      <FormLabel className="m-auto text-sm font-bold mb-2">
+                        <p className=" text-right">المحافظة</p>
+                      </FormLabel>
+                      <FormField
+                        control={form.control}
+                        name="stateid"
+                        render={({ field }) => (
+                          <FormItem className="text-center">
+                            <FormControl>
+                              <Select
+                                onValueChange={(e) => {
+                                  field.onChange(e);
+                                  const der = data?.data?.find(
+                                    (dir: any) => +dir.id == +e
+                                  );
+                                  setDirectorates(der?.directorates || []);
+                                  form?.resetField("city");
+                                }}
+                              >
+                                <SelectTrigger
+                                  className="text-sm"
+                                  dir="rtl"
+                                  value={field.value}
+                                >
+                                  <SelectValue
+                                    placeholder={
+                                      getGovernorateByDirectorateId(
+                                        +field?.value || 0
+                                      )?.name || "إختر المحافظة"
+                                    }
+                                  />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup {...field}>
+                                    {data?.data?.map((itm: any) => (
                                       <SelectItem
-                                        key={city?.id}
-                                        value={city?.id + ""}
+                                        key={itm?.id}
+                                        value={itm?.id + ""}
                                         dir="rtl"
                                       >
-                                        {city?.name}
+                                        {itm?.name}
                                       </SelectItem>
                                     ))}
-                                </SelectGroup>
-                              </SelectContent>
-                            </Select>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+
+                    <div>
+                      <FormLabel className="m-auto text-sm font-bold ">
+                        <p className=" text-right">المديرية</p>
+                      </FormLabel>
+                      <FormField
+                        control={form.control}
+                        name="city"
+                        render={({ field }) => (
+                          <FormItem className="text-center">
+                            <FormControl>
+                              <Select onValueChange={field.onChange}>
+                                <SelectTrigger
+                                  className="text-sm"
+                                  dir="rtl"
+                                  value={field.value}
+                                >
+                                  <SelectValue
+                                    // placeholder="المديرية"
+                                    placeholder={
+                                      !!field?.value
+                                        ? directorates?.find(
+                                            (e) => e?.id == field?.value
+                                          )?.name
+                                        : "إختر المديرية"
+                                    }
+                                  />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup {...field}>
+                                    <SelectLabel>
+                                      {!form.getValues().stateid &&
+                                        "يجب اختيار المحاظة اولا"}
+                                    </SelectLabel>
+                                    {form.getValues().stateid &&
+                                      directorates?.length > 0 &&
+                                      directorates?.map((city: any) => (
+                                        <SelectItem
+                                          key={city?.id}
+                                          value={city?.id + ""}
+                                          dir="rtl"
+                                        >
+                                          {city?.name}
+                                        </SelectItem>
+                                      ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
                     {/* <FormField
                       control={form.control}
                       name="place"
@@ -377,10 +420,12 @@ useEffect(() => {
                   type="submit"
                   className="bg-primary-background hover:bg-primary-background"
                 >
-                  {isPending || isPendingForEditing? (
+                  {isPending || isPendingForEditing ? (
                     <Loader2 className="animate-spin" />
+                  ) : isEditing ? (
+                    "تعديل"
                   ) : (
-                    isEditing ? "تعديل" :"حفظ العنوان"
+                    "حفظ العنوان"
                   )}
                 </Button>
                 <DialogClose>
@@ -390,7 +435,7 @@ useEffect(() => {
             </form>
           </Form>
         </DialogContent>
-      )}
+      }
     </Dialog>
   );
 };

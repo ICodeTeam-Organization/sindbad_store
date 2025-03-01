@@ -29,6 +29,7 @@ const TABLE_HEAD = [
 ].reverse();
 
 const orderStatuses = [
+  { key: -1, status: "الكل" },
   { key: 0, status: "الطلب قيد انتظار التأكيد على السند التابع له" },
   { key: 1, status: "تم قبول الطلب" },
   { key: 2, status: "تم شحن الطلب" },
@@ -59,7 +60,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
       pageNumber: pageParam,
       pageSize: initData.pageSize,
       orderBy: ordersFilters.orderBy,
-      status: ordersFilters.status,
+      status: ordersFilters.status == -1 ? undefined : ordersFilters.status,
     };
 
     // cleaning

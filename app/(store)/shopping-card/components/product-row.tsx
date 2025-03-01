@@ -30,8 +30,6 @@ type Props = {
   refreshItems: () => void;
 };
 
-
-
 const ProductRow = ({ cartItemData, refreshItems }: Props) => {
   const {
     cartId,
@@ -131,10 +129,7 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
   };
 
   return (
-    <div onClick={()=>{
-      console.log(cartItemData,"dbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbdbd_db");
-      
-    }}>
+    <>
       <tr className="text-center ">
         <td className="py-2">
           <div className="flex items-center ">
@@ -196,7 +191,9 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
           )}
         </td>
       </tr>
-      {!!amountYouBuy && !!amountYouGet && calculateBonus(quantity, amountYouBuy, amountYouGet) > 0 ? (
+      {!!amountYouBuy &&
+      !!amountYouGet &&
+      calculateBonus(quantity, amountYouBuy, amountYouGet) > 0 ? (
         <tr className="opacity-90 text-center">
           <td className="">
             {/* <div className="flex items-center ">
@@ -225,7 +222,7 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
           </td>
         </tr>
       ) : null}
-    </div>
+    </>
   );
 };
 

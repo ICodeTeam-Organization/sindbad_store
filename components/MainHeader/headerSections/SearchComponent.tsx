@@ -18,7 +18,7 @@ function SearchComponent({ isHomePage = false }) {
   const isEcommercePage = pageName?.startsWith("e-commerce");
   const isStorePage = pageName?.startsWith("stores");
 
-  const { setProductName } = useShopFiltersStore();
+  const { setProductName , resetFilters } = useShopFiltersStore();
   const { setStoreName } = useStoreQuerySearch();
   const { setEcommerceName } = useEcommerceQuerySearch();
 
@@ -29,8 +29,10 @@ function SearchComponent({ isHomePage = false }) {
     } else if (isStorePage) {
       setStoreName(searchKeyword);
     } else {
+      resetFilters()
       router.push(`/shop?productName=${searchKeyword}`);
       setProductName(searchKeyword);
+
     }
 
     // في الصفحة الرئيسية، انتقل إلى صفحة البحث عند الضغط على "Enter"

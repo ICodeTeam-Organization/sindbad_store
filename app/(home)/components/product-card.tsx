@@ -11,7 +11,7 @@ function calculateDiscountPercentage(
   return discount;
 }
 
-type props = {
+type propsType = {
   cn?: string;
   id: string;
   image: string;
@@ -27,23 +27,24 @@ type props = {
   fiveStarCount?: number;
   rate?: number;
 };
-const ProductCard = ({
-  cn,
-  id,
-  image,
-  productName,
-  price,
-  oldPrice,
-  ProductDet,
-  offerSentence,
-  oneStarCount = 0,
-  twoStarCount = 0,
-  threeStarCount = 0,
-  fourStarCount = 0,
-  fiveStarCount = 0,
-  rate = 0,
-}: props) => {
+const ProductCard = (props: propsType) => {
 
+  const {
+    cn,
+    id,
+    image,
+    productName,
+    price,
+    oldPrice,
+    ProductDet,
+    offerSentence,
+    oneStarCount = 0,
+    twoStarCount = 0,
+    threeStarCount = 0,
+    fourStarCount = 0,
+    fiveStarCount = 0,
+    rate = 0,
+  } = props;
 
   // return (
   //    <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-sm w-full5">
@@ -128,7 +129,7 @@ const ProductCard = ({
         cn +
         `m-auto rounded-t-[8px] overflow-hidden border hover:border-purple-600 hover:border  transition-all hover:-translate-y-1 hover:shadow  `
       }
-    >
+    > 
       <Link href={`/shop/productDetils/${ProductDet}`} className="">
         {/* <div className="w-full h-[180px] overflow-hidden relative  " >
           {offerSentence ? <span className="OfferSentence px-4 py-[2px] ">{offerSentence}</span>: null}

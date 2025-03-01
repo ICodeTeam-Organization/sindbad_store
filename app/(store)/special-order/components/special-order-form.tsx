@@ -148,7 +148,7 @@ const SpecialOrderForm = ({
             } else if (key === "FilePDF" && value instanceof File) {
               formData.append("FilePDF", value);
             } else if (value !== null && value !== undefined) {
-              formData.append('FilePDF', value.toString());
+              formData.append(key, value.toString());
             }
           });
           // إرسال الطلب إلى API
