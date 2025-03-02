@@ -19,7 +19,7 @@ function StoresSearchSelector({
 }: {
   onSelected: (selectedStore: Store) => void;
 }) {
-  const { filters } = useShopFiltersStore();
+  const { filters , setStoreId} = useShopFiltersStore();
   const [open, setOpen] = React.useState(false);
   const [selectedStore, setSelectedStore] = React.useState<Store>();
   // const [isInitStore, setisInitStore] = React.useState(false)
@@ -27,7 +27,7 @@ function StoresSearchSelector({
   const [params, setParams] = React.useState({
     storeName: "",
     pageNumber: 1,
-    pageSize: 50,
+    pageSize: 20,
   });
 
   const [storeId, setstoreId] = React.useState("")
@@ -106,7 +106,19 @@ function StoresSearchSelector({
           <div className="max-h-[180px] overflow-auto">
             {!isLoading ? (
              data?.data && data?.data?.items?.length > 0 ? (
-                data?.data?.items.map((store) => (
+              <>
+              <div
+              key="hg;g"
+              onClick={() => {
+                setSelectedStore(undefined);
+                setStoreId("")
+                setOpen(false);
+              }}
+              className="p-2 cursor-pointer hover:bg-slate-50"
+            >
+              <p className="text-xs">الكل</p>
+            </div>
+               { data?.data?.items.map((store) => (
                   <div
                     key={store.id}
                     onClick={() => {
@@ -118,7 +130,7 @@ function StoresSearchSelector({
                   >
                     <p className="text-xs">{store.name}</p>
                   </div>
-                ))
+                ))}</>
               ) : (
                 // for length condition
                 <div className="p-5 flex items-center justify-center pt-6">

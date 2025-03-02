@@ -3,14 +3,13 @@ import useStoreQuerySearch from '@/app/(store)/stores/hooks/useStoreQuerySearch'
 import { useShopFiltersStore } from '@/app/stores/shopFiltersStore';
 import { useRouter } from 'next-nprogress-bar';
 import Link from 'next/link';
-import { usePathname, useSearchParams  } from 'next/navigation';
+import { usePathname  } from 'next/navigation';
 import React, { useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
 function SearchComponent({ isHomePage = false }) {
-  const params = useSearchParams();
-  const productName = params.get("productName");
-  const [searchKeyword, setSearchKeyword] = useState(productName || "");
+ 
+  const [searchKeyword, setSearchKeyword] = useState(  "");
   const currentPage = usePathname();
   const pageName = currentPage.split("/").pop();
   const router = useRouter();

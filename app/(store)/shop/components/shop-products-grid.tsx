@@ -9,6 +9,16 @@ import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { useRouter } from "next/navigation";
 import { useInView } from "react-intersection-observer";
 import SearchResultsHeader from "./search-results-header";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { BsSearch } from "react-icons/bs";
 
 type ProductsResponsive = {
   data: {
@@ -27,12 +37,16 @@ const ShopProductsGrid = () => {
     rootMargin: "100px",
   });
 
+ 
+
   const {
     filters,
     resetFilters,
     setFiltersFromObject,
     initState: initialFilters,
+    setProductName,
   } = useShopFiltersStore();
+  const [product_name_for_subinput, setProduct_name_for_subinput] = useState(filters.productName || "")
 
   const [firstRender, setfirstRender] = useState(true);
 
@@ -167,14 +181,45 @@ const ShopProductsGrid = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
+
+  const handleSearch = () => { 
+    setProductName(product_name_for_subinput);
+   }
+
   return (
     <>
-
-       
       {!isPending && (
-        <div>
-          <div>
-             
+        <div className="mdHalf::mx-0 mx-4  ">
+          <div className="mb-4 mdHalf:flex  items-center justify-between gap-x-4 بمث ">
+            <div className="flex justify-between items-center flex-1  border border-gray-300 rounded-md p-2 mdHalf:mb-0 mb-4 "  >
+              <input
+                placeholder="ابحث عن منتج"
+                value={product_name_for_subinput}
+                className="outline-none w-full "
+                onChange={(e) => {
+                  setProduct_name_for_subinput(e.target.value);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleSearch();
+                  }
+                }}
+              />
+              <BsSearch className="mx-2 cursor-pointer" onClick={ handleSearch} />
+            </div>
+            <Select dir="rtl" >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="ترتيب حسب" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>ترتيب حسب</SelectLabel>
+                  <SelectItem value="apple">السعر تصاعدي</SelectItem>
+                  <SelectItem value="banana">السعر تنازلي</SelectItem>
+                  <SelectItem value="blueberry">الأكثر بحثاُ</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
           <SearchResultsHeader totalResults={totalCount} />
         </div>

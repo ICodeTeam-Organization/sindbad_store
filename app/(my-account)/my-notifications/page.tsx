@@ -1,26 +1,37 @@
 import React from "react";
 import NotificationCard from "./components/NotificationCard";
-import FilterButton from "./components/FilterButton";
 import { getApi } from "@/lib/http";
-import { ApiResponseForNotifications } from "./types";
+import { ApiResponseForNotifications, ResTypeForNotifeeCount } from "./types";
  
 const Notifications = async () => {
 
     //يجيب بينات من اول صفحة ونمررها لل جدول ك بينات اولية عشان تحسن تجربة المستخمد 
-    const data = await getApi<ApiResponseForNotifications>("Notifications?pageNumber=1&pageSize=15");
+    const data = await getApi<ApiResponseForNotifications>("Notifications?pageNumber=1&pageSize=30&type=0");
+ 
+    const notifeeCounts = await Promise.allSettled([
+      getApi<ResTypeForNotifeeCount>("Notifications/Count?type=0"),
+      getApi<ResTypeForNotifeeCount>("Notifications/Count?type=1"),
+      getApi<ResTypeForNotifeeCount>("Notifications/Count?type=2"),
+    ]);
+    const notifeeCount:number[] = []
+    notifeeCounts.forEach((result, index) => {
+      if (result.status === "fulfilled") {
+        notifeeCount.push(result.value.data)
+      } else {
+        notifeeCount.push(0)
+        console.error(`Failed to fetch notification count for type ${index}:`, result.reason);
+      }
+    });
 
-    console.log(data?.data);
+
+    
     
 
   return (
       <div className="p-6">
         <h1 className="text-2xl font-semibold text-gray-800">الإشعارات</h1>
-        <div className="flex gap-4 my-6 justify-start flex-wrap sm:flex-nowrap">
-          <FilterButton title="كل الإشعارات" />
-          <FilterButton title="إشعارات التسعير" />
-          <FilterButton title="إشعارات المنتجات" />
-        </div>
-        <NotificationCard initData={data?.data} />
+        
+        <NotificationCard initData={data?.data} notifeeCounts={notifeeCount} />
       </div>
   );
 };

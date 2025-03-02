@@ -11,8 +11,13 @@ export interface NotificationCardProps {
 }
 
 export interface FilterButtonProps {
-  title: string
+  title: string,
+  count:number,
+  onClick:()=>void,
+  isActive:boolean
 }
+
+export type ResTypeForNotifeeCount = { success: boolean, message: string, data: number }
 
 export type ApiResponseForNotifications = {
   success: boolean;
@@ -33,4 +38,7 @@ export type NotificationType = {
   title: string;
   body: string;
   imageUrl: string;
+  createdAt: string;
+  action: number;
+  isRead: boolean;
 };

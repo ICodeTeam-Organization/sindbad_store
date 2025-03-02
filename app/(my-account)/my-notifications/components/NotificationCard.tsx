@@ -1,12 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getApi } from "@/lib/http";
+import { getApi, postApi } from "@/lib/http";
 import { NotificationType } from "../types";
 import { Button } from "@/components/ui/button";
+import FilterButton from "./FilterButton";
+import { cn, convertToArabicDate } from "@/lib/utils";
+import { useRouter } from "next-nprogress-bar";
 
 const NotificationCard = ({
   initData,
+  notifeeCounts
 }: {
   initData: {
     items: NotificationType[];
@@ -15,51 +19,80 @@ const NotificationCard = ({
     currentPage: number;
     pageSize: number;
   };
+  notifeeCounts:number[]
 }) => {
+
+
+  const [notifeeType, setnotifeeType] = useState(0);
+  const router = useRouter();
+
   const fetchNotifications = async ({ pageParam = 1 }) => {
     const response = await getApi<any>(
-      `Notifications/GetAllNotifications`,
-      {
-        pageNumber: pageParam,
-        pageSize: initData.pageSize,
-      }
+      `Notifications?pageNumber=${pageParam}&pageSize=${initData.pageSize}&type=${notifeeType}`,
     );
     if (!response.success) {
       throw new Error(response.message);
     }
-    return response.data   ;
+    return response.data;
   };
 
-  const [isRefeched, setIsRefeched] = useState(false)
-  const {
-    data,
-    isRefetching,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["notifications"],
-    queryFn: fetchNotifications,
-    getNextPageParam: (lastPage) => {
-      if (lastPage?.currentPage < lastPage?.totalPages) {
-        return lastPage?.currentPage + 1;
-      }
-      return undefined;
-    },
-    initialPageParam: 1,
-    initialData: {
-      pages: [initData],
-      pageParams: [1],
-    },
-    enabled:isRefeched,
-  });
+  const [isRefeched, setIsRefeched] = useState(false);
+  const { data, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage , refetch } =
+    useInfiniteQuery({
+      queryKey: ["notifications" + notifeeType],
+      queryFn: fetchNotifications,
+      getNextPageParam: (lastPage) => {
+        if (lastPage?.currentPage < lastPage?.totalPages) {
+          return lastPage?.currentPage + 1;
+        }
+        return undefined;
+      },
+      initialPageParam: 1,
+      initialData: {
+        pages: [initData],
+        pageParams: [1],
+      },
+      enabled: isRefeched,
+    });
 
-  const notifications = (data?.pages.flatMap((page) => page?.items) || []).filter(
-    (ele) => !!ele
-  );
+  const notifications = (
+    data?.pages.flatMap((page) => page?.items) || []
+  ).filter((ele) => !!ele);
+
+  
+
+  const changeNotfieeType = (type:number) => { 
+    setIsRefeched(true);
+    refetch()
+    setnotifeeType(type)
+   }
+
+   const hanleMarkAsRead = async (noti:NotificationType) => { 
+      switch (noti?.action) {
+          case 4:
+          case 9:
+          case 11:
+          case 12:
+          case 13:
+          router.push("OrderTrack/" + noti?.target)
+          break;
+        case 2:
+          router.push("my-special-orders/priceDetails/" + noti?.target)
+          break
+        default:
+          break;
+      }
+
+      await postApi("Notifications/MarkAsRead?NotificationId=" + noti?.id)
+    }
 
   return (
     <div className="space-y-4 mt-4">
+      <div className="flex gap-4 my-6 justify-start flex-wrap sm:flex-nowrap">
+        <FilterButton title="كل الإشعارات" count={notifeeCounts[0]} onClick={()=>{changeNotfieeType(0)}}  isActive={notifeeType == 0}  />
+        <FilterButton title="إشعارات التسعير" count={notifeeCounts[1]} onClick={()=>{changeNotfieeType(1)}} isActive={notifeeType == 1}  />
+        <FilterButton title="إشعارات المنتجات" count={notifeeCounts[2]} onClick={()=>{changeNotfieeType(2)}}  isActive={notifeeType == 2} />
+      </div>
       {isRefetching && (
         <div className="animate-pulse">
           {"123456".split("").map((s) => (
@@ -79,29 +112,27 @@ const NotificationCard = ({
 
       {!isRefetching && notifications.length > 0 && (
         <>
-          {notifications.map((notification:NotificationType) => (
-            // <div
-            //   key={notification.id}
-            //   className="flex items-start justify-between p-4 rounded-lg"
-            // >
-            //   <div>
-            //     <span className="text-sm text-[#3D7A81] bg-[#ECF2F2] px-2 rounded-sm">
-            //       {notification.title}
-            //     </span>
-            //     <span className="mr-2 text-black">{notification.target}</span>
-            //   </div>
-            // </div>
+          {notifications.map((notification: NotificationType) => (
             <div
+              onClick={()=>{
+                hanleMarkAsRead(notification)
+              }}
               key={notification.id}
-              className="flex items-start justify-between p-4 rounded-lg bg-gray-100"
+              className={cn(
+                "flex items-start justify-between p-4 rounded-lg bg-gray-100 relative cursor-pointer",
+                !notification?.isRead && "bg-[#F7E99E34] border"
+              )}
             >
+              <span className="absolute bg-red-500 text-white rounded px-1 top-2 left-2" > جديد </span>
               <div>
-                {/* <p className="text-sm text-gray-500">{notification.}</p> */}
+                <p className="text-xs mb-2 text-gray-500">{convertToArabicDate(notification.createdAt)}</p>
                 <span className="text-base text-black   px-2 rounded-sm">
                   {notification.title}
                 </span>
                 {/* <span className="mr-2 text-black">{notification.}</span> */}
-                <p className="text-sm px-2 mt-2 text-gray-600">{notification.body}</p>
+                <p className="text-sm px-2 mt-2 text-gray-600">
+                  {notification.body}
+                </p>
               </div>
             </div>
           ))}
@@ -113,8 +144,8 @@ const NotificationCard = ({
           <Button
             className="bg-primary-background hover:bg-[#f5863984]"
             onClick={() => {
-              setIsRefeched(true)
-              fetchNextPage()
+              setIsRefeched(true);
+              fetchNextPage();
             }}
             disabled={isFetchingNextPage}
           >
