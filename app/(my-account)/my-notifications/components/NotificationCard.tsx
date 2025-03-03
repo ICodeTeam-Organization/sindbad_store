@@ -123,7 +123,7 @@ const NotificationCard = ({
                 !notification?.isRead && "bg-[#F7E99E34] border"
               )}
             >
-              <span className="absolute bg-red-500 text-white rounded px-1 top-2 left-2" > جديد </span>
+              {!notification?.isRead  && <span className="absolute bg-red-500 text-white rounded px-1 top-2 left-2" > جديد </span>}
               <div>
                 <p className="text-xs mb-2 text-gray-500">{convertToArabicDate(notification.createdAt)}</p>
                 <span className="text-base text-black   px-2 rounded-sm">

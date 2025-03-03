@@ -273,7 +273,8 @@ const CheckoutForm = () => {
                 control={form.control}
                 type="text"
               />
-              <Input type="file" {...form.register("image")} accept="image/*" />
+              <p className="-mb-8 text-sm" >صورة السند</p>
+              <Input type="file"  {...form.register("image")} accept="image/*" />
             <p className="text-[11px] text-gray-500 " > ملاحظة : يجب إضافة صورة السند او ادخال اسم البنك مع رقم السند </p>
 
             </CardContent>

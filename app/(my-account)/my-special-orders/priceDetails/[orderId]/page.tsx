@@ -5,7 +5,7 @@ import { getApi } from "@/lib/http";
 import { OfferDetailsResponseType, SpecialOrderDetailsType } from "../../types";
 import { notFound } from "next/navigation";
 import CategoryName from "../components/CategoryName";
-import Link from "next/link";
+import LinkSection from "../components/LinkSection";
 
 export default async function PriceDetails({
   params,
@@ -41,10 +41,9 @@ export default async function PriceDetails({
   } = specialOrderDetails?.data;
 
   console.log(specialOrderDetails?.data);
-  
 
   return (
-    <div className="m-10 tajawal  ">
+    <div className="mdHalf:m-10 m-4 tajawal  ">
       <div className=" ">
         <h1 className="font-bold">طلب خاص</h1>
         {prices?.success ? (
@@ -63,7 +62,7 @@ export default async function PriceDetails({
       <div className="mdHalf:flex mt-6  ">
         <div className=" flex items-center justify-center mdHalf:block mdHalf:mb-0 mb-10 ">
           <div className=" relative">
-            <ImagesViewr images={images.map(e=>e.imageUrl)} key={10} />
+            <ImagesViewr images={images.map((e) => e?.imageUrl)} key={10} />
           </div>
         </div>
 
@@ -99,19 +98,7 @@ export default async function PriceDetails({
               <p>{description}</p>
             </div>
             <div className="bg-gray-100 p-4">
-              <p className="font-bold ">
-                {" "}
-                رابط   المنتج 
-                <br/>
-                {linkUrl ? (
-                  <Link href={linkUrl} className="font-normal   text-blue-600 underline">
-                    {" "}
-                    {linkUrl}{" "}
-                  </Link>
-                ) : (
-                  <span className="font-normal"> لا يوجد رابط</span>
-                )}{" "}
-              </p>
+              <LinkSection linkUrl={linkUrl ?? ""} />
             </div>
           </div>
         </div>

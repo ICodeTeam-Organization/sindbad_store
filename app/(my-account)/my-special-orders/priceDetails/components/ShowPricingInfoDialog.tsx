@@ -31,7 +31,7 @@ function ShowPricingInfoDialog({
         <div className="flex flex-col space-y-4  w-full">
           <div className="flex justify-center  w-full overflow-hidden">
             <ImagesViewr
-              images={data?.images ?? []}
+              images={data?.images.map((e:any)=>e?.imageUrl) ?? []}
               key={10}
             />
           </div>

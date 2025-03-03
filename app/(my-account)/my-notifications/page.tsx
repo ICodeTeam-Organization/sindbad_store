@@ -30,7 +30,6 @@ const Notifications = async () => {
   return (
       <div className="p-6">
         <h1 className="text-2xl font-semibold text-gray-800">الإشعارات</h1>
-        
         <NotificationCard initData={data?.data} notifeeCounts={notifeeCount} />
       </div>
   );
