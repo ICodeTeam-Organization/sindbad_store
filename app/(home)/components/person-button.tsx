@@ -18,9 +18,10 @@ import { cn } from "@/lib/utils";
 type Props = {
   forMobile?: boolean;
   isAuth?: boolean;
+  closeSheet?:()=>void
 };
 
-const PersonButton = ({ forMobile = false ,isAuth }: Props) => {
+const PersonButton = ({ forMobile = false ,isAuth ,closeSheet}: Props) => {
   const mutation = useSignOut();
   // const { status } = useSession();
   // const isAuth = status === "authenticated";
@@ -29,26 +30,31 @@ const PersonButton = ({ forMobile = false ,isAuth }: Props) => {
       title: "معلومات الحساب",
       icon: <FaUser />,
       href: "/profile",
+      onclickFun:closeSheet,
     },
     {
       title: "طلباتي",
       icon: <FaClipboardList />,
       href: "/my-orders",
+      onclickFun:closeSheet,
     },
     {
       title: "طلباتي الخاصة",
       icon: <FaTasks />,
       href: "/my-special-orders",
+      onclickFun:closeSheet,
     },
     {
       title: "الإشعارات",
       icon: <FaBell />,
       href: "/my-notifications",
+      onclickFun:closeSheet,
     },
     {
       title: "عناويني",
       icon: <FaAddressCard />,
       href: "/user-addresses",
+      onclickFun:closeSheet,
     },
     {
       title: "تسجيل الخروج",

@@ -1,8 +1,8 @@
 "use client"
+import { toast } from '@/hooks/use-toast'
 import Link from 'next/link'
 import React from 'react'
 import { FaCopy } from 'react-icons/fa'
-import { toast } from 'sonner'
 
 function LinkSection({linkUrl}:{linkUrl:string}) {
   return (
@@ -13,7 +13,10 @@ function LinkSection({linkUrl}:{linkUrl:string}) {
                   <span>رابط المنتج</span>
                   {linkUrl && <FaCopy onClick={()=>{
                     navigator.clipboard.writeText(linkUrl)
-                    toast("تم نسخ الرابط")
+                    toast({
+                      variant: "default",
+                      description: "تم نسخ الرابط بنجاح", 
+                    });
                   }} className="text-primary-background cursor-pointer text-lg" />}
                 </div>
                 {linkUrl ? (

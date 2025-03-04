@@ -28,7 +28,7 @@ function AllCategoriesMegaMenu() {
     if (allMainCat.length > 0) {
       setselectedCategory(allMainCat[0]?.id);
       setSubCategories(allMainCat[0]?.subCategories || []);
-      console.log("all categories mega menu");
+      // console.log("all categories mega menu");
     }
   }, [categories]);
 

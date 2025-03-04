@@ -12,7 +12,6 @@ const SideBar = ({
 }) => {
   const pathname = usePathname();
  
-  console.log(user, "user");
   
 
   const sidebarItems = [

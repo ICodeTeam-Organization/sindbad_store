@@ -23,7 +23,7 @@ const MyAccountPage = async () => {
       ), //
     ]);
 
-    console.log(OrdersWaitingPricingData.data.items);
+    // console.log(OrdersWaitingPricingData.data.items);
     
 
     const tabsData = [
@@ -48,7 +48,7 @@ const MyAccountPage = async () => {
     ];
 
     return (
-      <div className="p-6">
+      <div className="mdHalf:p-6 p-1">
         <div className="w-full overflow-hidden rounded-lg mt-4">
           <TabsComponent tabs={tabsData} />
         </div>

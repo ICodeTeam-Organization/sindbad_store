@@ -154,9 +154,8 @@ const OrdersWaitingPricingTable: React.FC<{
                   href={"/my-special-orders/priceDetails/" + id}
                   className="w-full mt-2 text-center text-sm text-white shadow-sm h-[38px] bg-primary-background px-4 py-2 rounded-lg whitespace-nowrap"
                 >
-                  عرض تفاصيل السعر
+                  عرض تفاصيل الطلب
                 </Link>
-               
               </div>
             </div>
           ))}

@@ -40,7 +40,6 @@ export default async function PriceDetails({
     images,
   } = specialOrderDetails?.data;
 
-  console.log(specialOrderDetails?.data);
 
   return (
     <div className="mdHalf:m-10 m-4 tajawal  ">

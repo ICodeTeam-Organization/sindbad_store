@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react'
+import React  from 'react'
 import { IoChevronDownOutline, IoMenu } from 'react-icons/io5';
 
 interface PropsType {
@@ -21,6 +21,14 @@ interface PropsType {
 
 // this component is the down section of header and it is the drawer of in mobile screens
 function MenusSection({onClose,isHomePage,isAuth}:PropsType) {
+
+  const closeSheet = () => { 
+    if (onClose) {
+      onClose(false)
+     }
+   }
+
+ 
   return (
     <div
       onClick={(event) => {
@@ -121,7 +129,7 @@ function MenusSection({onClose,isHomePage,isAuth}:PropsType) {
       )}
       {/* profile info in mobile show in nav menu */}
       <div className="mdHalf:hidden block ">
-        <PersonButton forMobile  isAuth={isAuth}  />
+        <PersonButton forMobile  isAuth={isAuth} closeSheet={closeSheet}  />
       </div>
       <div className="mdHalf:hidden mb-10 block  relative">
         <OrderFromAndHow isAuth={isAuth} />

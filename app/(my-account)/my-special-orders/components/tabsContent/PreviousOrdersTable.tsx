@@ -7,7 +7,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { convertToArabicDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Link } from "lucide-react";
+import Link from "next/link";
 const TABLE_HEAD = [
   "العمليات",
   "التاريخ",
@@ -162,7 +162,7 @@ const PreviousOrdersTable: React.FC<{
                       href={"/my-special-orders/priceDetails/" + id}
                       className="w-full mt-2 text-center text-sm text-white shadow-sm h-[38px] bg-primary-background px-4 py-2 rounded-lg whitespace-nowrap"
                     >
-                      عرض تفاصيل السعر
+                      عرض تفاصيل الطلب  
                     </Link>
                   </div>
                 </div>

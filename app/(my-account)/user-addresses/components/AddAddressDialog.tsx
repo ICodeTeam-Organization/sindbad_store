@@ -166,7 +166,7 @@ const AddAddressDialog = ({
           }
         ),
       onSuccess: (data) => {
-        console.log(data, "address editable");
+        // console.log(data, "address editable");
 
         toast.success("تم تعديل العنوان");
         if (onEditEnd) onEditEnd(data.data as customerAddressType);
