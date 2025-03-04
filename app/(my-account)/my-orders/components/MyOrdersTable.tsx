@@ -259,14 +259,16 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                       </span>
                     </div>
                     <div className="text-right">
-                      <span
-                        onClick={() => {
+                      <Link
+                        href={"/OrderTrack/" + id}
+                        onClick={(e) => {
+                          e.stopPropagation();
                           track(id);
                         }}
                         className="inline-block p-3 mt-2 w-full text-center whitespace-nowrap text-[#2E9E2C] cursor-pointer rounded-lg bg-[#288B5326] text-sm"
                       >
                         تتبع
-                      </span>
+                      </Link>
                     </div>
                   </div>
                 )
