@@ -19,9 +19,9 @@
 //   params: { MyOrderTrack: string };
 // }
 // const page = async ({ params }: OrderTrack) => {
-//   const OrderTrack = await getApi<any>(
-//     `Orders/Market/OrdersPage/TrackOrder?orderId=${params.MyOrderTrack}`
-//   );
+  // const OrderTrack = await getApi<any>(
+  //   `Orders/Market/OrdersPage/TrackOrder?orderId=${params.MyOrderTrack}`
+  // );
 //   if (!OrderTrack) return notFound();
 //   const data = OrderTrack.data;
 
@@ -154,8 +154,9 @@ import date from "@/public/images/date.svg";
 import BreadCrumb from "@/components/BreadCrumb";
 import React from "react";
 import Progresses from "../components/Progresses";
+import { getApi } from "@/lib/http";
 
-const page = () => {
+const page = async ({params}:{params:{MyOrderTrack:string}}) => {
   // بيانات افتراضية
   const data = {
     orderNumber: "12345",
@@ -170,6 +171,14 @@ const page = () => {
     arrivedToCustomerAt: "2025-01-19",
   };
 
+ const orderId = +params?.MyOrderTrack;
+
+  const OrderTrack = await getApi<any>(
+    `Orders/Market/OrdersPage/TrackOrder?orderId=${orderId}`
+  );
+
+  console.log(OrderTrack);
+  
   return (
     <>
       <BreadCrumb

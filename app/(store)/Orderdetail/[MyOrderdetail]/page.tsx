@@ -26,7 +26,7 @@ const OrderDetail = async ({ params }: Detail) => {
         ThirdDir=""
       /> */}
 
-      <div className="m-10">
+      <div className="mdHalf:m-10 m-5">
         <div className="">
           <div>
             <div className="flex items-center gap-x-2" >

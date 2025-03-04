@@ -9,6 +9,7 @@ import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/authOption";
 
 async function GetInitialData() {
+  
   const AllCategoriesWithSub = await getApi<{
     data: { items: MainCategory[] };
   }>("Category/GetAllMainCategoriesWithSubCategories/1/10000");
@@ -16,17 +17,22 @@ async function GetInitialData() {
   const session = await getServerSession(authOption);
   let notificationCount;
 
+  let totalNotificationCount: number = 0;
   if (session && session?.user?.data?.isAuthenticated) {
     notificationCount = await getApi<{
       message: string;
       success: boolean;
-      data: number;
+      data: { all: number; orders: number; specials: number };
     }>("Notifications/Count");
+    totalNotificationCount =
+      notificationCount?.data.all +
+      notificationCount?.data.orders +
+      notificationCount?.data.specials;
   }
 
   return (
     <>
-      <GetNotificationCount data={notificationCount?.data || 0} />
+      <GetNotificationCount data={totalNotificationCount || 0} />
       <SetCategoriesInLocalStorage
         AllCategoriesWihtSubcategories={AllCategoriesWithSub?.data?.items}
       />

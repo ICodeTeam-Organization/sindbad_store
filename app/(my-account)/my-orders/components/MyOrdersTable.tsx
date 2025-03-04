@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import React, { useState } from "react";
 import { Order, ResponsiveOrdersTypes } from "../types";
 import Dropdown from "./Dropdown";
@@ -9,6 +9,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/http";
 import { convertToArabicDate } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
+import Link from "next/link";
 
 interface Props {
   initData: {
@@ -80,7 +81,8 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
     return data;
   };
 
-  const { data, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
       queryKey: ["customerOrders", ordersFilters],
       queryFn: fetchOrders,
       getNextPageParam: (lastPage) => {
@@ -193,21 +195,25 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                       >
                         <td className="px-4 py-3">{orderNumber}</td>
                         <td className="px-4 py-3">{totalPrice}</td>
-                        <td className="px-4 py-3">{convertToArabicDate(orderDate)}</td>
+                        <td className="px-4 py-3">
+                          {convertToArabicDate(orderDate)}
+                        </td>
                         <td className="px-4 py-3">
                           <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm">
                             {orderStatus}
                           </span>
                         </td>
                         <td className="px-4 py-3">
-                          <span
-                            onClick={() => {
+                          <Link
+                            href={"/OrderTrack/" + id}
+                            onClick={(e) => {
+                              e.stopPropagation();
                               track(id);
                             }}
                             className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] cursor-pointer rounded-lg bg-[#288B5326] text-sm"
                           >
                             تتبع
-                          </span>
+                          </Link>
                         </td>
                       </tr>
                     )

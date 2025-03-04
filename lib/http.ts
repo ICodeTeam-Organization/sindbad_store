@@ -57,8 +57,13 @@ async function http<T>(
   if (!response.ok) {
     
     const errorResponse = await response;
-    const faliure = (await response?.json())
-    content = errorResponse?.statusText || (!faliure?.success ? faliure?.message : null) || "حدث خطأ ما!";
+    let failure:any = null;
+    try {
+        failure = await response?.json();
+    } catch (error) {
+        failure = {}; // Default to an empty object if JSON parsing fails
+    }
+    content = errorResponse?.statusText || (!failure?.success ? failure?.message : null) || "حدث خطأ ما!";
     if (errorResponse.status === 404) {
       return notFound();
     }
