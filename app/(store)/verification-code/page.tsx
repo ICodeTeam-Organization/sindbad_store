@@ -1,4 +1,3 @@
-import BreadCrumb from "@/components/BreadCrumb";
 import MobileValidation from "./components/mobile-validation";
 
 const verifiCode = () => {

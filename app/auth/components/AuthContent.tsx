@@ -1,7 +1,6 @@
 "use client";
 
-import { Card, CardFooter, CardHeader } from "@/components/ui/card";
-import SocialAuthButtons from "./SocialAuthButtons";
+import { Card,   CardHeader } from "@/components/ui/card";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import TabButton from "./TabButton";

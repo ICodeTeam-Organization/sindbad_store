@@ -48,7 +48,7 @@ const MobileValidation = () => {
   });
 
   function onSubmit(values: z.infer<typeof VertificationCodeSchema>) {
-    let userData = JSON.parse(sessionStorage.getItem("verficationAuthData") as string) as registerFormField;
+    const userData = JSON.parse(sessionStorage.getItem("verficationAuthData") as string) as registerFormField;
     if(userData) {
       userData.code = values.activation ;
       mutate(userData)
