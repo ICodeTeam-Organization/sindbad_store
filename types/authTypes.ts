@@ -10,4 +10,5 @@ export type registerFormField = {
   password: string;
   confirmPassword: string;
   agreeTerms: boolean;
+  code?:string
 };

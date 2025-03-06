@@ -28,9 +28,8 @@ export async function registerUser(formData: registerFormField) {
         name: formData.name,
         phoneNumber: formData.phone,
         email: formData.email,
-        // roleName: "Customer",
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
+        code: formData?.code,
+        password: formData.password, 
       }
     );
     const user: User = res.data;

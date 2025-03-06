@@ -12,7 +12,7 @@ const AuthContent = () => {
     setShowLoginForm((prev) => !prev);
   };
   return (
-    <Card className=" w-96 pt-0">
+    <Card className=" w-96 pt-0  ">
       <CardHeader className="pt-0 px-0">
         <TabButton
           showLoginForm={showLoginForm}
@@ -20,9 +20,9 @@ const AuthContent = () => {
         />
       </CardHeader>
       {showLoginForm ? <LoginForm /> : <SignUpForm />}
-      <CardFooter className="flex flex-col">
+      {/* <CardFooter className="flex flex-col">
         <SocialAuthButtons />
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 };

@@ -32,11 +32,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getApi, postApi, putApi } from "@/lib/http";
 import { useEffect, useState } from "react";
 import { SelectLabel } from "@radix-ui/react-select";
-import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { customerAddressType, UpdateAdressResponse } from "../types";
 import { DialogTitle } from "@radix-ui/react-dialog";
+import { toast } from "@/hooks/use-toast";
 
 // type addAdress = {
 //   directorateId: number;
@@ -136,13 +136,19 @@ const AddAddressDialog = ({
         }
       ),
     onSuccess: (data) => {
-      toast.success("تم إضافة العنوان");
+      toast({
+        variant:"default",
+        description:"تم إضافة العنوان"
+      });
       if (onAddAddressEnd) onAddAddressEnd(data?.data as customerAddressType);
       form.reset();
       setShow(false);
     },
     onError: (error) => {
-      toast.error(error.message);
+      toast({
+        variant:"destructive",
+        description:error.message
+      });
     },
   });
 
@@ -168,15 +174,20 @@ const AddAddressDialog = ({
       onSuccess: (data) => {
         // console.log(data, "address editable");
 
-        toast.success("تم تعديل العنوان");
+        toast({
+          variant: "default",
+          description: "تم تعديل العنوان",
+        });
         if (onEditEnd) onEditEnd(data.data as customerAddressType);
         form.reset();
         setShow(false);
       },
       onError: (error) => {
         console.log(error);
-
-        toast.error(error.message);
+        toast({
+          variant: "destructive",
+          description: error.message || "حدث خطاء",
+        });
       },
     });
 

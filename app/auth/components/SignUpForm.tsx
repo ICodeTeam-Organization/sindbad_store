@@ -9,17 +9,29 @@ import { registrationSchema } from "../schema";
 import { useForm } from "react-hook-form"; // تم إزالة SubmitHandler
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { registerUser } from "../helpers";
+import { useMutation } from "@tanstack/react-query"; 
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next-nprogress-bar";
+import { postApi } from "@/lib/http";
+import { toast } from "@/hooks/use-toast";
 
 const SignUpForm: React.FC = () => {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const { mutate, isPending } = useMutation({
-    mutationFn: registerUser,
-    onSuccess: () => router.push("/"),
+    mutationFn: async (formData: registerFormField) =>{
+           await postApi("Auth/Register/VerificationCode?number=" + formData.phone);
+           return formData
+        },
+    // mutationFn: registerUser,
+    onSuccess: (formData: registerFormField) => {
+      toast({
+        variant: "default",
+        description: "تم إرسال كود التحقق الى هاتفك",
+      });
+      sessionStorage.setItem("verficationAuthData",JSON.stringify(formData));
+      router.push("/verification-code")
+    },
     onError: (err) => setError(err.message),
   });
 
