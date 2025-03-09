@@ -1,7 +1,8 @@
 import AddToBasket from "./add-to-basket";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
-import { AiFillStar } from "react-icons/ai";
+ 
+import { Rating, RoundedStar } from "@smastrom/react-rating";
 
 function calculateDiscountPercentage(
   oldPrice: number,
@@ -122,7 +123,9 @@ const ProductCard = (props: propsType) => {
   // const filledStars = Math.round(weightedStars);
   const filledStars =
     Math.round(weightedStars) === 0 ? rate : Math.round(weightedStars);
-  const emptyStars = 5 - filledStars;
+  // const emptyStars = 5 - filledStars;
+
+
   return (
     <div
       className={
@@ -130,6 +133,7 @@ const ProductCard = (props: propsType) => {
         `m-auto rounded-t-[8px] overflow-hidden border hover:border-purple-600 hover:border  transition-all hover:-translate-y-1 hover:shadow  `
       }
     > 
+    
       <Link href={`/shop/productDetils/${ProductDet}`} className="">
         {/* <div className="w-full h-[180px] overflow-hidden relative  " >
           {offerSentence ? <span className="OfferSentence px-4 py-[2px] ">{offerSentence}</span>: null}
@@ -186,7 +190,7 @@ const ProductCard = (props: propsType) => {
             )}
           </div>
           <div className="flex items-center mx-3 mt-1 ">
-            {[...Array(filledStars)].map((_, index) => (
+            {/* {[...Array(filledStars)].map((_, index) => (
               <AiFillStar key={index} className="text-[#FFC62A] text-[10px]" />
             ))}
             {[...Array(emptyStars)].map((_, index) => (
@@ -196,6 +200,24 @@ const ProductCard = (props: propsType) => {
               (
               {parseFloat(weightedStars.toFixed(1)) === 0.0
                 ? rate
+                : weightedStars.toFixed(1)}
+              )
+            </p> */}
+            <Rating
+                            style={{ maxWidth: 50 }}
+                            halfFillMode="svg"
+                            itemStyles={{
+                              itemShapes: RoundedStar,
+                              activeFillColor: "#ffb700",
+                              inactiveFillColor: "#eee",
+                            }}
+                            readOnly
+                            value={filledStars}
+                          /> 
+                          <p className="text-[#A5A5A5] text-[9px] mr-3">
+              (
+              {parseFloat(weightedStars.toFixed(1)) === 0.0
+                ? rate.toFixed(1)
                 : weightedStars.toFixed(1)}
               )
             </p>
