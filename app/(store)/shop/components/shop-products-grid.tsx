@@ -60,6 +60,8 @@ const ShopProductsGrid = () => {
   } = useInfiniteQuery<ProductsResponsive>({
     queryKey: ["GetProductsWitheFilter", filters],
     queryFn: async ({ pageParam }) => {
+      
+      
       const body = {
         pageNumber: pageParam || 1,
         pageSize: filters.pageSize,
@@ -69,8 +71,9 @@ const ShopProductsGrid = () => {
         productName: filters.productName || null,
         minPrice: filters.price[0],
         maxPrice: filters.price[1],
-        mainCategories: [...filters.cats.map((id) => +id)],
-        subCategories: [...filters.subCats.map((id) => +id)],
+        categories:[...filters.cats.map((id) => +id),...filters.subCats.map((id) => +id)],
+        // mainCategories: [...filters.cats.map((id) => +id)],
+        // subCategories: [...filters.subCats.map((id) => +id)],
         brandId: filters.brandId || null,
         tags: filters.tagId ? [filters.tagId] : null,
       };
