@@ -2,7 +2,8 @@ import AddToBasket from "./add-to-basket";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
  
-import { Rating, RoundedStar } from "@smastrom/react-rating";
+// import { Rating, RoundedStar } from "@smastrom/react-rating";
+import { AiFillStar } from "react-icons/ai";
 
 function calculateDiscountPercentage(
   oldPrice: number,
@@ -123,7 +124,7 @@ const ProductCard = (props: propsType) => {
   // const filledStars = Math.round(weightedStars);
   const filledStars =
     Math.round(weightedStars) === 0 ? rate : Math.round(weightedStars);
-  // const emptyStars = 5 - filledStars;
+  const emptyStars = 5 - filledStars;
 
 
   return (
@@ -190,22 +191,22 @@ const ProductCard = (props: propsType) => {
             )}
           </div>
           <div className="flex items-center mx-3 mt-1 ">
-            {/* {[...Array(filledStars)].map((_, index) => (
+            {[...Array(Math.round(filledStars  ))].map((_, index) => (
               <AiFillStar key={index} className="text-[#FFC62A] text-[10px]" />
             ))}
-            {[...Array(emptyStars)].map((_, index) => (
+            {[...Array(Math.round(emptyStars ))].map((_, index) => (
               <AiFillStar key={index} className="text-[#D6D6D6] text-[10px]" />
             ))}
             <p className="text-[#A5A5A5] text-[9px] mr-3">
               (
               {parseFloat(weightedStars.toFixed(1)) === 0.0
-                ? rate
+                ? rate.toFixed(1)
                 : weightedStars.toFixed(1)}
               )
-            </p> */}
-            <Rating
+            </p>
+            {/* <Rating
                             style={{ maxWidth: 50 }}
-                            halfFillMode="svg"
+                            halfFillMode="box"
                             itemStyles={{
                               itemShapes: RoundedStar,
                               activeFillColor: "#ffb700",
@@ -220,7 +221,7 @@ const ProductCard = (props: propsType) => {
                 ? rate.toFixed(1)
                 : weightedStars.toFixed(1)}
               )
-            </p>
+            </p> */}
           </div>
         </Link>
         <AddToBasket

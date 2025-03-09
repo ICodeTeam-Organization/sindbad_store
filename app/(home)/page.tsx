@@ -1,7 +1,8 @@
 import dynamic from "next/dynamic";
 import { getApi } from "@/lib/http";
 import { MainCategory, Product, Shop, Store } from "@/types/storeTypes";
-const Hero = dynamic(() => import("./components/sections/Hero"));
+import Hero from "./components/sections/Hero";
+
 const CategoriesSlider = dynamic(() => import("./components/CategoriesSlider"));
 const ServiceCard = dynamic(
   () => import("./components/ServiceCard/ServiceCard")
