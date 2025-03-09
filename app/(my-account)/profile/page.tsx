@@ -10,7 +10,9 @@ import { ProfileResponsiveType } from "./types";
 
 const UserForm = async () => {
  
-  const resulte = await getApi<ProfileResponsiveType>("Customer/profile");
+  const resulte = await getApi<ProfileResponsiveType>("Customer/profile",{},{
+    cache:"no-cache"
+  });
 
   return (
     <div>

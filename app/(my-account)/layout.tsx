@@ -1,8 +1,10 @@
 import React from "react";
 import SideBar from "../(my-account)/components/SideBar";
 import MainHeader from "@/components/MainHeader/MainHeader";
-import { getServerSession } from "next-auth";
-import { authOption } from "@/lib/authOption";
+// import { getServerSession } from "next-auth";
+// import { authOption } from "@/lib/authOption";
+import { ProfileResponsiveType } from "./profile/types";
+import { getApi } from "@/lib/http";
 
 export default async function HomeLayout({
   children,
@@ -10,16 +12,18 @@ export default async function HomeLayout({
   children: React.ReactNode;
 }>) {
 
-  const session = await getServerSession(authOption);
+  const resulte = await getApi<ProfileResponsiveType>("Customer/profile",{},{
+    cache:"no-cache"
+  });
 
   return (
     <>
-      <MainHeader isAuth={Boolean(session)} isHomePage={false} />
+      <MainHeader isAuth={true} isHomePage={false} />
       <div className="mdHalf:flex xl:container mx-auto relative">
         <div className="mdHalf:block hidden border-l py-20 bg-white sticky top-0">
           <SideBar user={{
-            email: session?.user?.data?.email,
-            fullName: session?.user?.data?.fullName
+            email: resulte.data?.email  || "لا يوجد ايميل",
+            fullName: resulte.data?.name || "لا يوجد اسم"
           }} />
         </div>
         <main className=" mdHalf:flex-1 ">

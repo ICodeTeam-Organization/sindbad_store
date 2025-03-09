@@ -16,7 +16,7 @@ import {
   Select,
   SelectTrigger,
   SelectContent,
-  SelectItem, 
+  SelectItem,
 } from "@/components/ui/select";
 import HeadTitle from "./HeadTitle";
 import { ProfileType } from "../types";
@@ -25,6 +25,8 @@ import { getApi, putApi } from "@/lib/http";
 import { SelectGroup } from "@radix-ui/react-select";
 import { toast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next-nprogress-bar";
+import Link from "next/link";
 
 type Region = {
   id: number;
@@ -75,6 +77,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
     queryKey: ["governorate-directorate"],
     queryFn: () => getApi<any>(`Locations/GetGovernorateWithChildren`),
   });
+
   const allGovs = data?.data as Governorate[]; // All governorates
   const allDirects = (allGovs?.flatMap((gov) => gov.directorates) ||
     []) as Directorate[]; // All directorates
@@ -93,6 +96,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
     },
   });
 
+  const router = useRouter();
   const [isEditable, setIsEditable] = useState(false);
 
   const { mutate, isPending } = useMutation({
@@ -126,6 +130,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
     onSuccess: (dataPr) => {
       setIsEditable(false);
       setProfileData(dataPr);
+      router.refresh();
       toast({
         variant: "default",
         description: "تم تحديث معلوماتك",
@@ -153,17 +158,29 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
           بيانات المستخدم
         </h1>
 
-        {!isEditable && (
-          <Button
-            type="button"
-            onClick={() => {
-              setIsEditable(true);
-            }}
-            className="bg-orange-500 hover:bg-orange-600 text-white mb-4 "
-          >
-            تعديل
-          </Button>
-        )}
+        <div className="flex gap-x-4 items-center">
+          {!isEditable && (
+            <>
+            <Button
+              type="button"
+              onClick={() => {
+                setIsEditable(true);
+              }}
+              className="bg-orange-500 hover:bg-orange-600 text-white mb-4 "
+            >
+              تعديل
+            </Button>
+             <Link href="/profile/changePassword">
+             <Button
+               type="button"
+               className="bg-orange-500 hover:bg-orange-600 text-white mb-4 "
+             >
+               تغيير كلمة المرور
+             </Button>
+           </Link></>
+          )}
+         
+        </div>
 
         {/* Personal Information Section */}
         <div className="mdHalf:grid grid-cols-1 flex flex-col mdHalf:grid-cols-2 gap-6 mb-8 bg-white border-2 rounded-lg mdHalf:p-8 p-4">
@@ -316,13 +333,16 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
                       </span>
                     </SelectTrigger>
                     <SelectContent>
-                      {(!form?.getValues()?.governorateId  || form?.getValues()?.governorateId == "") && (
+                      {(!form?.getValues()?.governorateId ||
+                        form?.getValues()?.governorateId == "") && (
                         <span className="text-sm text-center p-2">
                           يجب أن تختار محافظة اولا
                         </span>
                       )}
                       {allGovs
-                        ?.find((e) => +e?.id == +form?.getValues()?.governorateId)
+                        ?.find(
+                          (e) => +e?.id == +form?.getValues()?.governorateId
+                        )
                         ?.directorates?.map((ele: any) => (
                           <SelectItem key={ele?.id} value={ele?.id + ""}>
                             {ele?.name}

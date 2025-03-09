@@ -13,21 +13,27 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import React from "react";
 import PasswordInput from "@/components/PasswordInput";
 import { Input } from "@/components/ui/input";
 import { putApi } from "@/lib/http";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
+ 
+import { Loader2 } from "lucide-react";
+import { useRouter } from "next-nprogress-bar";
+import { useToast } from "@/hooks/use-toast";
 
 type resetfiled = {
   currentPassword: string;
   newPassword: string;
 };
 
-const PasswordValidation = () => {
-  const { mutate } = useMutation({
+const ChangePassForm = () => {
+
+  const router = useRouter();
+  const {toast} = useToast()
+
+  const { mutate , isPending } = useMutation({
     mutationFn: async ({ currentPassword, newPassword }: resetfiled) =>
       await putApi<any>("Auth/ChangePassword", {
         body: {
@@ -35,9 +41,24 @@ const PasswordValidation = () => {
           newPassword,
         },
       }),
-    onSuccess: (value) => toast.success(value.message),
-    onError: () => toast.error("كلمة المرور الحالية غير صحيحة"),
+    onSuccess: (value) => {
+        console.log(value);
+        toast({
+            variant:"default",
+            description:"تم تغيير كلة المرور"
+        })
+        router.replace("/profile")
+    },
+    onError: (err) => {
+        console.log(err.message || "حدث خطاء ");
+        toast({
+            variant: "destructive",
+            description: (err.message || "كلمة المرور الحالية غير صحيحة"),
+            // action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+          });
+    },
   });
+
   const form = useForm<z.infer<typeof ResetPassSchema>>({
     resolver: zodResolver(ResetPassSchema),
     defaultValues: {
@@ -62,7 +83,7 @@ const PasswordValidation = () => {
           name="CurrentPassword"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">كلمة المرور الحالية</FormLabel>
+              <FormLabel className="text-sm">كلمة المرور الحالية</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -75,7 +96,7 @@ const PasswordValidation = () => {
           name="Newpassword"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">كلمة المرور الجديدة</FormLabel>
+              <FormLabel className="text-sm">كلمة المرور الجديدة</FormLabel>
               <FormControl>
                 <PasswordInput {...field} />
               </FormControl>
@@ -88,7 +109,7 @@ const PasswordValidation = () => {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">تأكيد كلمة المرور</FormLabel>
+              <FormLabel className="text-sm">تأكيد كلمة المرور</FormLabel>
               <FormControl>
                 <PasswordInput {...field} />
               </FormControl>
@@ -97,15 +118,14 @@ const PasswordValidation = () => {
           )}
         />
         <Button
-          className="min-w-[150px] w-full h-[48px] mt-10 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-[20px] flex justify-center items-center font-bold"
+          className="min-w-[150px] w-full h-[48px] mt-10 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-base flex justify-center items-center font-bold"
           type="submit"
         >
-          إعادة تعيين كلمة المرور
-          <AiOutlineArrowLeft className="mr-2" />
+          {isPending ? <Loader2 className="animate-spin" />:"إعادة تعيين كلمة المرور"}
         </Button>
       </form>
     </Form>
   );
 };
 
-export default PasswordValidation;
+export default ChangePassForm;
