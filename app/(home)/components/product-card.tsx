@@ -171,15 +171,15 @@ const ProductCard = (props: propsType) => {
             <p className="max-md:pr-3 pr-3 max-md:text-xs text-[16px] text-[#F55157]">
               <strong>{price}</strong> <span className="text-[13px]">رس</span>
             </p>
-            {!!oldPrice ? (
-              <>
+            { oldPrice && +oldPrice > price ? (
+              <div className="flex">
                 <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px] line-through text-[#9C9C9C]">
                   {oldPrice}رس
                 </p>
                 <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px]  text-[#9C9C9C]">
                   خصم {calculateDiscountPercentage(oldPrice, price).toFixed(2)}%
                 </p>
-              </>
+              </div>
             ) : (
               <>
                 <div className="flex">
