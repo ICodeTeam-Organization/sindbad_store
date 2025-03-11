@@ -34,7 +34,7 @@ function SpecialWholesalesOrderFormCard({index, orderFrom = 200,ordersNumber,onD
 
   return (
     <div className="shadow-lg p-4 rounded-md border tajawal my-4">
-      <div className="mb-4 flex justify-between items-center">
+      <div className="mb-4 flex justify-between items-center flex-wrap gap-y-3">
         <div className="flex items-center gap-2">
           {orderFromTabs.map((tab) => (
             <div

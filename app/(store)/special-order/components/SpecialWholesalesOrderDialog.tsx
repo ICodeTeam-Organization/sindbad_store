@@ -143,7 +143,7 @@ function SpecialWholesalesOrderDialog({
 
   return (
     <Dialog open={show} onOpenChange={closeDialog}>
-      <DialogContent className="[&>button]:hidden border-none p-0 mdHalf:m-auto overflow-hidden mdHalf:h-auto mdHalf:w-screen  h-screen w-screen ">
+      <DialogContent className="[&>button]:hidden border-none p-0 mdHalf:m-auto overflow-hidden mdHalf:h-auto mdHalf:w-screen  h-[90vh] w-[98vw]  ">
         <ResulteDialog
           data={showResultesDialog}
           onOpenChange={() => {
@@ -170,7 +170,7 @@ function SpecialWholesalesOrderDialog({
           </div>
 
           <div className="p-4">
-            <div className="flex items-center justify-between mb-4 ">
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-y-4 ">
               <div className="flex items-center justify-between gap-x-6">
                 <Button
                   onClick={() => {
