@@ -5,11 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+// import { Sheet, SheetContent } from "@/components/ui/sheet";
 import MenusSection from "./headerSections/MenusSection";
 import SearchComponent from "./headerSections/SearchComponent";
 import TopSectionOfHeader from "./headerSections/TopSectionOfHeader";
-
+import { Drawer } from "../Drawer/Drawer";
 const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boolean , isAuth : boolean }) => {
 
   const [openNav, setopenNav] = useState<boolean>(false);
@@ -116,14 +116,17 @@ const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boo
 
           {/* this drawer for mobile */}
           <div className="mdHalf:hidden">
-            <Sheet open={openNav} onOpenChange={setopenNav} >
+          <Drawer anchor="right" open={openNav} onClose={()=>setopenNav(false)} >
+              <MenusSection onClose={setopenNav} isHomePage={isHomePage} isAuth={isAuth} />
+          </Drawer>
+            {/* <Sheet open={openNav} onOpenChange={setopenNav} >
               <SheetContent
                 side="right"
                 className="w-[90%] [&>button]:hidden overflow-y-auto p-0 m-0  "
               >
                 <MenusSection onClose={setopenNav} isHomePage={isHomePage} isAuth={isAuth} />
               </SheetContent>
-            </Sheet>
+            </Sheet> */}
           </div>
         </div>
       </div>

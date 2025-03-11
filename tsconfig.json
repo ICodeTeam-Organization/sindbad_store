@@ -27,6 +27,6 @@
     "types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "components/Drawer/Drawer.jsx"  ],
   "exclude": ["node_modules"]
 }

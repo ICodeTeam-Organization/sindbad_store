@@ -154,6 +154,7 @@ const ProductCard = (props: propsType) => {
             src={image}
             width={300}
             height={256}
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             className="w-full  mdHalf:h-60 h-52 object-contain"
           />
           {offerSentence && (
