@@ -42,7 +42,7 @@ import { toast } from "@/hooks/use-toast";
 //   directorateId: number;
 //   locationDescription: string;
 //   phoneNumber: string;
-//   customerName: string;
+//   userName: string;
 // };
 
 const AddAddressDialog = ({
@@ -87,7 +87,7 @@ const AddAddressDialog = ({
     resolver: zodResolver(AddshipingadressSchema),
     defaultValues: {
       locationDescription: "",
-      customerName: "",
+      userName: "",
       phoneNumber: "",
       stateid: "",
       city: "",
@@ -99,7 +99,7 @@ const AddAddressDialog = ({
     if (isEditing && dataEditing) {
       form.reset({
         locationDescription: dataEditing.locationDescription ?? "",
-        customerName: dataEditing.customerName ?? "",
+        userName: dataEditing.userName ?? "",
         phoneNumber: dataEditing.phoneNumber ?? "",
         stateid:
           dataEditing.directorateId &&
@@ -120,7 +120,7 @@ const AddAddressDialog = ({
   const { mutate, isPending } = useMutation({
     mutationFn: async ({
       city,
-      customerName,
+      userName,
       phoneNumber,
       locationDescription,
     }: z.infer<typeof AddshipingadressSchema>) =>
@@ -129,7 +129,7 @@ const AddAddressDialog = ({
         {
           body: {
             directorateId: +city,
-            customerName: customerName,
+            userName: userName,
             phoneNumber: phoneNumber,
             locationDescription: locationDescription,
           },
@@ -156,7 +156,7 @@ const AddAddressDialog = ({
     useMutation({
       mutationFn: async ({
         city,
-        customerName,
+        userName,
         phoneNumber,
         locationDescription,
       }: z.infer<typeof AddshipingadressSchema>) =>
@@ -165,7 +165,7 @@ const AddAddressDialog = ({
           {
             body: {
               directorateId: +city,
-              customerName: customerName,
+              userName: userName,
               phoneNumber: phoneNumber,
               locationDescription: locationDescription,
             },
@@ -206,7 +206,7 @@ const AddAddressDialog = ({
       onOpenChange={() => {
         form.reset({
           locationDescription: "",
-          customerName: "",
+          userName: "",
           phoneNumber: "",
           stateid: "",
           city: "",
@@ -227,8 +227,7 @@ const AddAddressDialog = ({
               <DialogHeader>
                 <div className=" mdHalf:p-8">
                   <h1 className="text-right text-base font-bold my-6">
-                    {" "}
-                    إضافة عنوان جديد{" "}
+                    {isEditing ? "تعديل العنوان":"إضافة عنوان جديد "}
                   </h1>
 
                   <div className="grid grid-cols-2 gap-2 ">
@@ -376,7 +375,7 @@ const AddAddressDialog = ({
                   </div>
                   <FormField
                     control={form.control}
-                    name="customerName"
+                    name="userName"
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
                         <FormLabel className="m-auto text-sm font-bold mb-2">

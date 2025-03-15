@@ -111,7 +111,7 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
                 >
                   <td className="px-4 py-3">{item?.locationDescription}</td>
                   <td className="px-4 py-3">{item?.directorateName}</td>
-                  <td className="px-4 py-3">{item?.customerName}</td>
+                  <td className="px-4 py-3">{item?.userName}</td>
                   <td className="px-4 py-3">{item?.phoneNumber}</td>
 
                   {/* Actions Column */}

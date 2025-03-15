@@ -21,7 +21,7 @@ export type customerAddressType = {
   id: number,
   directorateId: number;
   locationDescription: string;
-  customerName: string;
+  userName: string;
   directorateName: string;
   phoneNumber: string;
 }
@@ -40,7 +40,7 @@ export type UpdateAdressResponse = {
     id: number;
     directorateId: number;
     directorateName: string;
-    customerName: string;
+    userName: string;
     phoneNumber: string;
     locationDescription: string;
   };

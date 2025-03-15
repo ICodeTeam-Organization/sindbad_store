@@ -13,6 +13,8 @@ const MyAccountPage = async () => {
 
   const InitAddresses = await getApi<AddressResponse>(`CustomerAddress/GetCustomerAddress`);
 
+  console.log(InitAddresses?.data);
+  
   
   
   return (
