@@ -16,7 +16,7 @@ import {
 import { registerFormField } from "@/types/authTypes";
 import { registerUser } from "@/app/auth/helpers";
 import { useMutation } from "@tanstack/react-query";
-import {  useToast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 const MobileValidation = () => {
   const form = useForm<z.infer<typeof VertificationCodeSchema>>({
@@ -26,37 +26,39 @@ const MobileValidation = () => {
     },
   });
 
-  const {toast} = useToast()
+  const { toast } = useToast();
 
   const { mutate, isPending } = useMutation({
     mutationFn: registerUser,
-    onSuccess: ( ) => {
+    onSuccess: () => {
       toast({
         variant: "default",
         description: "تم إرسال كود التحقق الى هاتفك",
       });
       sessionStorage.removeItem("verficationAuthData");
-      window.location.replace("/") 
+      window.location.replace("/");
     },
     onError: (err) => {
-      console.log(err.message,"dlldldl");
+      console.log(err.message, "dlldldl");
       toast({
         variant: "destructive",
         description: err.message || "حدث خطاء",
       });
     },
   });
+  
 
   function onSubmit(values: z.infer<typeof VertificationCodeSchema>) {
-    const userData = JSON.parse(sessionStorage.getItem("verficationAuthData") as string) as registerFormField;
-    if(userData) {
-      userData.code = values.activation ;
-      mutate(userData)
-     
-    } else{
+    const userData = JSON.parse(
+      sessionStorage.getItem("verficationAuthData") as string
+    ) as registerFormField;  
+    if (userData) {
+      userData.code = values.activation;
+      mutate(userData);
+    } else {
       toast({
         variant: "destructive",
-        description:"حدث خطاء يرجى إعادة التسجيل مره أخرى ",
+        description: "حدث خطاء يرجى إعادة التسجيل مره أخرى ",
       });
     }
   }
@@ -80,7 +82,7 @@ const MobileValidation = () => {
           className="min-w-[150px] w-full h-[48px] mt-10 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-base flex justify-center items-center font-bold"
           type="submit"
         >
-        {isPending ? <Loader2 className="animate-spin" /> :  "تأكيـــد"}
+          {isPending ? <Loader2 className="animate-spin" /> : "تأكيـــد"}
         </Button>
       </form>
     </Form>

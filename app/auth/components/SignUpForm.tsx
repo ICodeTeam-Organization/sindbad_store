@@ -20,7 +20,7 @@ const SignUpForm: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const { mutate, isPending } = useMutation({
     mutationFn: async (formData: registerFormField) =>{
-           await postApi("Auth/Register/VerificationCode?number=" + formData.phone);
+           await postApi("Auth/Register/VerificationCode?isRgistered=true&number=" + formData.phone);
            return formData
         },
     // mutationFn: registerUser,

@@ -24,7 +24,7 @@ const PhoneValidation = () => {
   const router = useRouter();
   const { mutate, isPending } = useMutation({
     mutationFn: async (phoneNumber:string) =>{
-           await postApi("Auth/Register/VerificationCode?number=" + phoneNumber);
+           await postApi("Auth/Register/VerificationCode?isRigestered=true&number=" + phoneNumber);
            return phoneNumber
         },
     // mutationFn: registerUser,
@@ -33,8 +33,8 @@ const PhoneValidation = () => {
         variant: "default",
         description: "تم إرسال كود التحقق الى هاتفك",
       });
-      sessionStorage.setItem("forgotPasswordData",JSON.stringify(phoneNumber));
-      router.push("/verification-code")
+      sessionStorage.setItem("forgotPasswordData",(phoneNumber));
+      router.push("/reset-password")
     },
     onError: (err) => {
       console.log(err.message);

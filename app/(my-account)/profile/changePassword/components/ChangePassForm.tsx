@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { ResetPassSchema } from "@/app/auth/schema";
+import { changePassSchema } from "@/app/auth/schema";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -59,8 +59,8 @@ const ChangePassForm = () => {
     },
   });
 
-  const form = useForm<z.infer<typeof ResetPassSchema>>({
-    resolver: zodResolver(ResetPassSchema),
+  const form = useForm<z.infer<typeof changePassSchema>>({
+    resolver: zodResolver(changePassSchema),
     defaultValues: {
       CurrentPassword: "",
       Newpassword: "",

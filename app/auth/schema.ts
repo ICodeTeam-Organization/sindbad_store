@@ -38,7 +38,7 @@ export const VertificationCodeSchema = z.object({
   activation: z.string().min(1, "يجب إدخال رمز التفعيل"),
 });
 
-export const ResetPassSchema = z
+export const changePassSchema = z
   .object({
     CurrentPassword: z.string().min(1, "يجب إدخال كلمة المرور الحالية"),
     Newpassword: z.string().min(6, "كلمة المرور يجب أن تكون على الأقل 6 أحرف"),
@@ -47,6 +47,23 @@ export const ResetPassSchema = z
   .refine(
     (data) => {
       return data.Newpassword === data.confirmPassword;
+    },
+    {
+      message: "كلمة المرور غير مطابقة",
+      path: ["confirmPassword"],
+    }
+  );
+
+  export const ResetPassSchema = z
+  .object({
+    // phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
+    newPassword: z.string().min(6, "كلمة المرور يجب أن تكون على الأقل 6 أحرف"),
+    confirmPassword: z.string().min(6, "كلمة المرور غير مطابقة"),
+    code: z.string().min(6, "كود التحقق يجب أن يكون على الأقل 6 أحرف"),
+  })
+  .refine(
+    (data) => {
+      return data.newPassword === data.confirmPassword;
     },
     {
       message: "كلمة المرور غير مطابقة",

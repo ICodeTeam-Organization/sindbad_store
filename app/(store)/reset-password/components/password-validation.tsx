@@ -13,69 +13,94 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { AiOutlineArrowLeft } from "react-icons/ai";
 import React from "react";
 import PasswordInput from "@/components/PasswordInput";
 import { Input } from "@/components/ui/input";
-import { putApi } from "@/lib/http";
+import { postApi } from "@/lib/http";
 import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next-nprogress-bar";
+import { Loader2 } from "lucide-react";
 
-type resetfiled = {
-  currentPassword: string;
-  newPassword: string;
-};
-
+ 
 const PasswordValidation = () => {
-  const { mutate } = useMutation({
-    mutationFn: async ({ currentPassword, newPassword }: resetfiled) =>
-      await putApi<any>("Auth/ChangePassword", {
-        body: {
-          currentPassword,
-          newPassword,
-        },
-      }),
-    onSuccess: (value) => toast.success(value.message),
-    onError: () => toast.error("كلمة المرور الحالية غير صحيحة"),
+
+  const {toast} = useToast();
+  const router = useRouter();
+
+  const {
+    mutate ,
+    isPending 
+  } = useMutation({
+    mutationFn: async (data: {phoneNumber:string,code:string,newPassword:string}) => {
+      return await postApi("Auth/ForgotPassword",{
+        body:{
+          "PhoneNumber": data?.phoneNumber,
+          "code": data?.code,
+          "newPassword": data?.newPassword
+        }
+      });
+    },
+    onSuccess: () => {
+      toast({
+        variant: "default",
+        description: "تم تغيير كلمة المرور يرجى تسجيل الدخول",
+      });
+      sessionStorage.removeItem("forgotPasswordData");
+      router.push("/auth")
+      // window.location.replace("/")
+    },
+    onError: (err) => {
+      console.log(err.message, "dlldldl");
+      toast({
+        variant: "destructive",
+        description: err.message || "حدث خطاء",
+      });
+    },
   });
   const form = useForm<z.infer<typeof ResetPassSchema>>({
     resolver: zodResolver(ResetPassSchema),
     defaultValues: {
-      CurrentPassword: "",
-      Newpassword: "",
-      confirmPassword: "",
+      // phone:  "",
+      newPassword: "",
+      code: "",
+      confirmPassword:""
     },
   });
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit((data) =>
+         {
+          const phonenum = sessionStorage.getItem("forgotPasswordData")?.toString() || "";
           mutate({
-            currentPassword: data.CurrentPassword,
-            newPassword: data.Newpassword,
+            newPassword: data.newPassword,
+            code:data.code,
+            phoneNumber:phonenum,
           })
+         }
         )}
         className="space-y-8"
       >
-        <FormField
+        {/* <FormField
           control={form.control}
-          name="CurrentPassword"
+          name="phone"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">كلمة المرور الحالية</FormLabel>
+              <FormLabel className="text-base">  الحالية</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
         <FormField
           control={form.control}
-          name="Newpassword"
+          name="newPassword"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">كلمة المرور الجديدة</FormLabel>
+              <FormLabel className="text-base">كلمة المرور الجديدة</FormLabel>
               <FormControl>
                 <PasswordInput {...field} />
               </FormControl>
@@ -88,7 +113,7 @@ const PasswordValidation = () => {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem className="m-auto mt-[30px]">
-              <FormLabel className="text-xl">تأكيد كلمة المرور</FormLabel>
+              <FormLabel className="text-base">تأكيد كلمة المرور </FormLabel>
               <FormControl>
                 <PasswordInput {...field} />
               </FormControl>
@@ -96,12 +121,24 @@ const PasswordValidation = () => {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="code"
+          render={({ field }) => (
+            <FormItem className="m-auto mt-[30px]">
+              <FormLabel className="text-base"> كود التحقق</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button
-          className="min-w-[150px] w-full h-[48px] mt-10 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-[20px] flex justify-center items-center font-bold"
+          className="min-w-[150px] w-full h-[48px] mt-10 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-base flex justify-center items-center font-bold"
           type="submit"
         >
-          إعادة تعيين كلمة المرور
-          <AiOutlineArrowLeft className="mr-2" />
+          {isPending ? <Loader2 className="animate-spin" /> :"إعادة تعيين كلمة المرور"}
         </Button>
       </form>
     </Form>
