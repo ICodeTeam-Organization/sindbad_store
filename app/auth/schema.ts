@@ -56,7 +56,7 @@ export const ResetPassSchema = z
 
 export const AddshipingadressSchema = z.object({
   locationDescription: z.string().min(1, "يجب إدخال العنوان"),
-  customerName: z.string().min(1, "يجب إدخال اسم المستلم"),
+  userName: z.string().min(1, "يجب إدخال اسم المستلم"),
   phoneNumber: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
   // state: z.string().min(1, "اختر المحافظة"),
   stateid: z.string().min(1, "اختر المحافظة"),

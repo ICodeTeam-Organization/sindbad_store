@@ -202,7 +202,7 @@ const CheckoutForm = () => {
                           {
                             addressData?.data?.find(
                               (e) => +e.id == +field.value
-                            )?.customerName
+                            )?.userName
                           }{" "}
                         </span>
                         -
