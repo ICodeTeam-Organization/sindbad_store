@@ -30,6 +30,7 @@ function SpecialWholesalesOrderDialog({
     isValid: false,
     isUrgen: false,
     quantity: 0,
+    Name:""
   };
   const [ordersValues, setOrdersValues] = useState<
     SpecialWholesalesOrderFormValues[]
@@ -66,7 +67,7 @@ function SpecialWholesalesOrderDialog({
           const data = {
             SpecialCategoryId: "category" in request ? +request.category : 0,
             // SpecialCategoryId: "dd",
-            Name: "orderDetails" in request ? request.orderDetails : "",
+            Name: "orderDetails" in request ? request.Name : "",
             Description: "orderDetails" in request ? request.orderDetails : "",
             // ECommerceName: "ecommerce" in request ? request.ecommerce + "" : "",
             LinkUrl: request.linkUrl,

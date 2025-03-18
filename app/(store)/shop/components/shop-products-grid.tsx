@@ -45,8 +45,9 @@ const ShopProductsGrid = () => {
     setFiltersFromObject,
     initState: initialFilters,
     setProductName,
+    setOrderBy,
   } = useShopFiltersStore();
-  const [product_name_for_subinput, setProduct_name_for_subinput] = useState(filters.productName || "")
+  const [product_name_for_subinput, setProduct_name_for_subinput] = useState(filters.productName)
 
   const [firstRender, setfirstRender] = useState(true);
 
@@ -76,6 +77,7 @@ const ShopProductsGrid = () => {
         // subCategories: [...filters.subCats.map((id) => +id)],
         brandId: filters.brandId || null,
         tags: filters.tagId ? [filters.tagId] : null,
+        orderBy: filters.orderBy || 0,
       };
 
       // Remove fields that have invalid values (0 or empty string)
@@ -89,7 +91,7 @@ const ShopProductsGrid = () => {
       const response = await postApi(
         `Products/GetProductsWitheFilter?returnDtoName=2`,
         {
-          body: filteredBody,
+          body: {...filteredBody,orderBy:filteredBody.orderBy || 0},
         }
       );
       return response as ProductsResponsive;
@@ -210,19 +212,31 @@ const ShopProductsGrid = () => {
               />
               <BsSearch className="mx-2 cursor-pointer" onClick={ handleSearch} />
             </div>
-            <Select dir="rtl" >
+            <Select
+              dir="rtl"
+              defaultValue={filters.orderBy?.toString()|| "0"} // Ensure it matches the correct value type
+              onValueChange={(e) => {
+                console.log(e);
+                setOrderBy(+e);
+              }}
+            >
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="ترتيب حسب" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   <SelectLabel>ترتيب حسب</SelectLabel>
-                  <SelectItem value="apple">السعر تصاعدي</SelectItem>
-                  <SelectItem value="banana">السعر تنازلي</SelectItem>
-                  <SelectItem value="blueberry">الأكثر بحثاُ</SelectItem>
+                  <SelectItem value="0">الكل</SelectItem>
+                  <SelectItem value="1">التقييم تصاعدي</SelectItem>
+                  <SelectItem value="2">التقييم تنازلي</SelectItem>
+                  <SelectItem value="3">التاريخ تصاعدي</SelectItem>
+                  <SelectItem value="4">التاريخ تنازلي</SelectItem>
+                  <SelectItem value="5">السعر تصاعدي</SelectItem>
+                  <SelectItem value="6">السعر تنازلي</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
+
           </div>
           <SearchResultsHeader totalResults={totalCount} />
         </div>

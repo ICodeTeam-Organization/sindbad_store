@@ -40,6 +40,7 @@ const initialSpecialProduct: SpecialProductAndServiceOrderForm_FormValue = {
   // filePDF: undefined, // Optional field
   // images: undefined, // Optional field
   orderKey: "",
+  Name:""
 };
 
 // Initial values for SpecialOrderFromEcommerce
@@ -53,6 +54,8 @@ const initialSpecialEcommerce: SpecialOrderFromEcommerce_FormValue = {
   // images: undefined, // Optional field
   category: "",
   orderKey: "",
+  Name:""
+
 };
 
 const SpecialOrderForm = ({
@@ -116,16 +119,7 @@ const SpecialOrderForm = ({
           const data: SpecialOrderBody = {
             SpecialCategoryId: "category" in request ? +request.category : 0,
             // SpecialCategoryId: "dd",
-            Name:
-              request.type == 3
-              // طلب من <اسم المتجر>
-                ? `طلب من متجر  ${
-                    "ecommerce" in request &&
-                    (request.ecommerce || "متجر إلكتروني")
-                  }`
-                : "orderDetails" in request
-                ? request.orderDetails
-                : "",
+            Name:request.Name,
             Description: "orderDetails" in request ? request.orderDetails : "",
             ECommerceName: "ecommerce" in request ? request.ecommerce + "" : "",
             LinkUrl: request.linkUrl,

@@ -53,6 +53,7 @@ function SpecialProductOrderForm({
         category && categories?.find((e) => e?.id == category)
           ? category + ""
           : undefined,
+      
     },
   });
 
@@ -104,17 +105,17 @@ function SpecialProductOrderForm({
 
       <div className="space-y-3">
         <div className="w-full mdHalf:flex items-center gap-2 justify-between">
-          <h1 className="w-fit whitespace-nowrap text-sm"> الطلب </h1>
+          <h1 className="w-fit whitespace-nowrap text-sm"> اسم الطلب </h1>
           <FormField
             control={form.control}
-            name="orderDetails"
+            name="Name"
             render={({ field }) => (
               <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value || ""}
-                    placeholder="أكتب تفاصيل المنتج المطلوبة"
+                    placeholder="أكتب اسماً للطلب المطلوب"
                     onChange={(e) => {
                       field.onChange(e.target.value);
                       handleFieldChange({ ...form.getValues() });
@@ -128,6 +129,56 @@ function SpecialProductOrderForm({
         </div>
 
         <div>
+
+
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
+          <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
+          <FormField
+            control={form.control}
+            name="orderDetails"
+            render={({ field }) => (
+              <FormItem className="mdHalf:w-[90%] w-full">
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value}
+                    placeholder="تفاصيل  عن المنتج المطلوب  "
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleFieldChange({ ...form.getValues() });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="w-full mdHalf:flex items-center gap-2 my-2 justify-between">
+          <p className="w-fit text-nowrap text-sm"> الرابط </p>
+          <FormField
+            control={form.control}
+            name="linkUrl"
+            render={({ field }) => (
+              <FormItem className="mdHalf:w-[90%] w-full">
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value}
+                    placeholder="رابط المنتج"
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleFieldChange({ ...form.getValues() });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
           <div className="w-full mdHalf:flex items-center gap-2 justify-between">
             <h1 className="w-fit whitespace-nowrap text-sm"> الكمية </h1>
             <div className="mdHalf:w-[90%] w-full flex justify-between">
@@ -240,53 +291,6 @@ function SpecialProductOrderForm({
           />
         </div>
 
-        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
-          <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
-          <FormField
-            control={form.control}
-            name="note"
-            render={({ field }) => (
-              <FormItem className="mdHalf:w-[90%] w-full">
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value}
-                    placeholder="تفاصيل اضافية عن المنتج المطلوب (اختياري)"
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                      handleFieldChange({ ...form.getValues() });
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
-          <p className="w-fit text-nowrap text-sm"> الرابط </p>
-          <FormField
-            control={form.control}
-            name="linkUrl"
-            render={({ field }) => (
-              <FormItem className="mdHalf:w-[90%] w-full">
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value}
-                    placeholder="رابط المنتج"
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                      handleFieldChange({ ...form.getValues() });
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
       </div>
     </Form>
   );

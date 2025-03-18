@@ -100,17 +100,17 @@ function SpecialServiceOrderForm({
 
       <div className="space-y-3">
         <div className="w-full mdHalf:flex items-center gap-2 justify-between">
-          <h1 className="w-fit whitespace-nowrap text-sm"> الطلب </h1>
+          <h1 className="w-fit whitespace-nowrap text-sm"> اسم الخدمة </h1>
           <FormField
             control={form.control}
-            name="orderDetails"
+            name="Name"
             render={({ field }) => (
               <FormItem className="mdHalf:w-[90%] w-full">
                 <FormControl>
                   <Input
                     {...field}
                     value={field.value}
-                    placeholder="أكتب تفاصيل الخدمة المطلوبة"
+                    placeholder="أكتب اسم للخدمة المطلوبة"
                     onChange={(e) => {
                       field.onChange(e.target.value);
                       handleFieldChange({ ...form.getValues() });
@@ -124,6 +124,57 @@ function SpecialServiceOrderForm({
         </div>
 
         <div>
+
+
+        <div className="w-full mdHalfflex items-center gap-2 justify-between">
+          <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
+          <FormField
+            control={form.control}
+            name="orderDetails"
+            render={({ field }) => (
+              <FormItem className="mdHalfw-[90%] my-2 w-full">
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value}
+                    placeholder="تفاصيل عن الخدمة المطلوبة "
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleFieldChange({ ...form.getValues() });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        <div className="w-full mdHalfflex items-center gap-2 my-2 justify-between">
+          <p className="w-fit text-nowrap text-sm"> الرابط </p>
+          <FormField
+            control={form.control}
+            name="linkUrl"
+            render={({ field }) => (
+              <FormItem className="mdHalfw-[90%] w-full">
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value}
+                    placeholder="ضع رابط (إختياري) "
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleFieldChange({ ...form.getValues() });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+
           <div className="w-full mdHalf:flex items-center gap-2 justify-between">
             <h1 className="w-fit whitespace-nowrap text-sm"> الكمية </h1>
             <div className="mdHalf:w-[90%] w-full flex justify-between">
@@ -236,53 +287,7 @@ function SpecialServiceOrderForm({
           />
         </div>
 
-        <div className="w-full mdHalfflex items-center gap-2 justify-between">
-          <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
-          <FormField
-            control={form.control}
-            name="note"
-            render={({ field }) => (
-              <FormItem className="mdHalfw-[90%] w-full">
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value}
-                    placeholder="تفاصيل اضافية عن الخدمة المطلوبة (اختياري)"
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                      handleFieldChange({ ...form.getValues() });
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="w-full mdHalfflex items-center gap-2 justify-between">
-          <p className="w-fit text-nowrap text-sm"> الرابط </p>
-          <FormField
-            control={form.control}
-            name="linkUrl"
-            render={({ field }) => (
-              <FormItem className="mdHalfw-[90%] w-full">
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value}
-                    placeholder="ضع رابط (إختياري) "
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                      handleFieldChange({ ...form.getValues() });
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        
       </div>
     </Form>
   );

@@ -84,7 +84,7 @@ function SpecialOrderFromShopForm({
         />
       </div>
 
-      <div className="mdHalf:flex items-center gap-x-3 justify-between my-4">
+      <div className="mdHalf:flex items-center gap-x-3 justify-between my-4 mb-2">
         <h1 className="w-fit whitespace-nowrap text-sm">الفئة </h1>
         <FormField
           control={form.control}
@@ -121,6 +121,30 @@ function SpecialOrderFromShopForm({
         />
       </div>
 
+        <div className="w-full mdHalf:flex items-center gap-2 justify-between mb-2">
+                <h1 className="w-fit whitespace-nowrap text-sm"> اسم الطلب </h1>
+                <FormField
+                  control={form.control}
+                  name="Name"
+                  render={({ field }) => (
+                    <FormItem className="mdHalf:w-[90%] w-full">
+                      <FormControl>
+                        <Input
+                          {...field}
+                          value={field.value}
+                          placeholder="أكتب اسم للطلب "
+                          onChange={(e) => {
+                            field.onChange(e.target.value);
+                            handleFieldChange({ ...form.getValues() });
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
       <div className="w-full mdHalf:flex items-center gap-2 justify-between mb-3">
         <p className="w-fit text-wrap mdHalf:mb-6 mb-1 text-sm">
           {" "}
@@ -147,6 +171,30 @@ function SpecialOrderFromShopForm({
           )}
         />
       </div>
+
+      <div className="w-full mdHalf:flex items-center gap-2 justify-between mb-2">
+          <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
+          <FormField
+            control={form.control}
+            name="orderDetails"
+            render={({ field }) => (
+              <FormItem className="mdHalf:w-[90%] w-full">
+                <FormControl>
+                  <Input
+                    {...field}
+                    value={field.value}
+                    placeholder="تفاصيل   عن الطلب   ( اللون - الحجم - النوع )"
+                    onChange={(e) => {
+                      field.onChange(e.target.value);
+                      handleFieldChange({ ...form.getValues() });
+                    }}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
       <div className="space-y-3">
         <div>
@@ -226,29 +274,7 @@ function SpecialOrderFromShopForm({
           />
         </div>
 
-        <div className="w-full mdHalf:flex items-center gap-2 justify-between">
-          <p className="w-fit text-nowrap text-sm"> تفاصيل </p>
-          <FormField
-            control={form.control}
-            name="orderDetails"
-            render={({ field }) => (
-              <FormItem className="mdHalf:w-[90%] w-full">
-                <FormControl>
-                  <Input
-                    {...field}
-                    value={field.value}
-                    placeholder="تفاصيل اضافية عن الخدمة المطلوبة (اختياري)"
-                    onChange={(e) => {
-                      field.onChange(e.target.value);
-                      handleFieldChange({ ...form.getValues() });
-                    }}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
+        
       </div>
     </Form>
   );

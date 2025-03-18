@@ -16,6 +16,7 @@ export const specialOrderSchema = z.object({
 export type SpecialOrderFormValue = z.infer<typeof specialOrderSchema>;
 
 export const SpecialProductAndServiceOrderFormSchema = z.object({
+  Name: z.string({ required_error: "يرجى ادخال الاسم" }),
   category: z.string({ required_error: "يرجى تحديد فئة" }),
   orderDetails: z.string({ required_error: "تفاصيل المنتج مطلوبة" }),
   linkUrl: z.string().optional(),
@@ -34,6 +35,7 @@ export type SpecialProductAndServiceOrderForm_FormValue = z.infer<typeof Special
 
 
 export const SpecialOrderFromEcommerceSchema = z.object({
+  Name: z.string({ required_error: "يرجى ادخال الاسم" }),
   category: z.string({ required_error: "يرجى تحديد فئة" }),
   type: z.number({ required_error: "يرجى تحديد نوع الطلب" }),
   ecommerce: z.string().optional(),
@@ -52,6 +54,7 @@ export type SpecialOrderFromEcommerce_FormValue = z.infer<typeof SpecialOrderFro
 
 
 export const SpecialWholesalesOrderFormSchema = z.object({
+  Name: z.string({ required_error: "يرجى ادخال الاسم" }),
   category: z.string({ required_error: "يرجى تحديد فئة" }),
   orderDetails: z.string({ required_error: "أكتب تفاصيل المنتج مطلوبة" }),
   linkUrl: z.string().optional(),

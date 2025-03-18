@@ -13,7 +13,8 @@ type ShopFiltersStore = {
     pageNumber: number;
     pageSize: number;
     brandId: number | null;
-    tagId: number | null; // Added tagId
+    tagId: number | null;
+    orderBy: number | null; // Added orderBy
   };
   initState: {
     price: [number, number];
@@ -26,8 +27,10 @@ type ShopFiltersStore = {
     pageNumber?: number;
     pageSize?: number;
     brandId: number | null;
-    tagId: number | null; // Added tagId
+    tagId: number | null;
+    orderBy: number;  
   };
+  setOrderBy: (order: number | null) => void;
   setPriceRange: (range: [number, number]) => void;
   setStoreId: (id: string) => void;
   setCats: (cats: string[]) => void;
@@ -39,7 +42,7 @@ type ShopFiltersStore = {
   setPageNumber: (page: number) => void;
   setPageSize: (size: number) => void;
   setBrandId: (id: number | null) => void;
-  setTagId: (id: number | null) => void; // Added setTagId
+  setTagId: (id: number | null) => void;
   resetFilters: () => void;
   setFiltersFromObject: (newFilters: ShopFiltersStore["filters"]) => void;
   toggleCat: (cat: string) => void;
@@ -58,7 +61,8 @@ const initState = {
   pageNumber: 1,
   pageSize: 40,
   brandId: null,
-  tagId: null, // Added tagId to initState
+  tagId: null,
+  orderBy: 0, // Added orderBy to initState
 };
 
 export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
@@ -66,6 +70,14 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
     ...initState,
   },
   initState,
+
+  setOrderBy: (order) =>
+    set((state) => ({
+      filters: {
+        ...state.filters,
+        orderBy: order,
+      },
+    })),
 
   setPriceRange: (range) =>
     set((state) => ({
@@ -114,6 +126,7 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
         hasOffer,
       },
     })),
+
   setTodayOffer: (todayOffer) =>
     set((state) => ({
       filters: {
@@ -154,7 +167,7 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       },
     })),
 
-  setTagId: (id) => // Added setTagId method
+  setTagId: (id) =>
     set((state) => ({
       filters: {
         ...state.filters,
@@ -180,8 +193,8 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       filters: {
         ...state.filters,
         cats: state.filters.cats.includes(cat)
-          ? state.filters.cats.filter((c) => c !== cat) // Remove if exists
-          : [...state.filters.cats, cat], // Add if not exists
+          ? state.filters.cats.filter((c) => c !== cat)
+          : [...state.filters.cats, cat],
       },
     })),
 
@@ -190,8 +203,8 @@ export const useShopFiltersStore = create<ShopFiltersStore>((set) => ({
       filters: {
         ...state.filters,
         subCats: state.filters.subCats.includes(subCat)
-          ? state.filters.subCats.filter((s) => s !== subCat) // Remove if exists
-          : [...state.filters.subCats, subCat], // Add if not exists
+          ? state.filters.subCats.filter((s) => s !== subCat)
+          : [...state.filters.subCats, subCat],
       },
     })),
 }));
