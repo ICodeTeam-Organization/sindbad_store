@@ -158,5 +158,29 @@ type Image = {
   id: number;
   imageUrl: string;
 };
+export type OrderTrackType = {
+  id: number;
+  orderDate: string;  
+  orderStatus: string;
+  orderStatusNumber: number;
+  orderNumber: string;
+  numOfOrderDetails: number;
+  totalPrice: number;
+  customerName: string;
+  customerAdress: string | null;
+  receiveCode: string;
+  approvedAt: string | null;
+  purchasedAt: string | null;
+  shippedAt: string | null;
+  rejectedByStoreAt: string;
+  receivedByDeliveryAt: string;
+  deliveredAt: string | null;
+  arrivedAtDistributionArea: string | null;
+  deliverdToCustomerAt: string | null;
+};
+export type OrderTrackResponseType = {
+  success: boolean;
+  message: string;
+  data: OrderTrackType
+};
 
-// for  /Stores/GetStoresWithFilter endpoint

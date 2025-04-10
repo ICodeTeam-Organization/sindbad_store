@@ -19,15 +19,20 @@ async function GetInitialData() {
 
   let totalNotificationCount: number = 0;
   if (session && session?.user?.data?.isAuthenticated) {
-    notificationCount = await getApi<{
-      message: string;
-      success: boolean;
-      data: { all: number; orders: number; specials: number };
-    }>("Notifications/Count");
-    console.log(notificationCount);
-    
-    totalNotificationCount =
-      notificationCount?.data.all  
+    try {
+      notificationCount = await getApi<{
+        message: string;
+        success: boolean;
+        data: { all: number; orders: number; specials: number };
+      }>("Notifications/Count");
+      console.log(notificationCount);
+      
+      totalNotificationCount = notificationCount?.data.all;
+    } catch (error) {
+      totalNotificationCount =0;
+      console.log(error);
+      
+    }
   }
 
   return (

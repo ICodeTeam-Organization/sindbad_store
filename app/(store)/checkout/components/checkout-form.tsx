@@ -47,7 +47,7 @@ import Link from "next/link";
 import { useRouter } from "next-nprogress-bar";
 
 function extractNumbers(str: string) {
-  const numbers = str.match(/\d+/g);
+  const numbers = str?.match(/\d+/g) || [];
   return numbers ? numbers.map(Number) : [];
 }
 
@@ -117,7 +117,6 @@ const CheckoutForm = () => {
     },
     onError: (err) => {
       console.log(err);
-
       toast({
         variant: "destructive",
         description: err.message || "حدث خطأ أثناء معالجة الطلب",
@@ -127,7 +126,7 @@ const CheckoutForm = () => {
     onSuccess: (data: any) => {
       const code = extractNumbers(data?.data as string)[0];
       setCartItems([]);
-      setRequestNumber(code.toString());
+      setRequestNumber(code?.toString());
       setIsDialogOpen(true);
     },
   });

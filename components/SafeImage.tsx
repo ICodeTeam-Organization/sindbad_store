@@ -47,7 +47,8 @@ const SafeImage: React.FC<SafeImageProps> = ({
 
   const checkImage = (src:string) => { 
     if (!src?.startsWith("https") || !src?.startsWith("http")) {
-      setValidSrc(src?.startsWith("/") ? src : "/" + src)
+      setValidSrc('/images/Image_not_available.png')
+      // setValidSrc(src?.startsWith("/") ? src : "/" + src)
       return;
     }
      setValidSrc(src);

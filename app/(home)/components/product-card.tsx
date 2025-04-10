@@ -123,7 +123,7 @@ const ProductCard = (props: propsType) => {
   // تحديد عدد النجوم المملوءة والفارغة
   // const filledStars = Math.round(weightedStars);
   const filledStars =
-    Math.round(weightedStars) === 0 ? rate : Math.round(weightedStars);
+    Math.ceil(weightedStars) === 0 ? rate : Math.ceil(weightedStars);
   const emptyStars = 5 - filledStars;
 
 
