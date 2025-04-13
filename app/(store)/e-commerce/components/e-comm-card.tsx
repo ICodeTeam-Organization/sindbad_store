@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { deleteApi, postApi } from "@/lib/http";
+import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
 
 const E_commerceCard = ({
     id,
@@ -23,6 +24,7 @@ const E_commerceCard = ({
     // categories,
     // ecommerceStoreImages,
 }: E_commerceCardProps) => {
+
   const {
     favoriteEcommerceIds,
     addEcommerceToFavorite,
@@ -31,6 +33,8 @@ const E_commerceCard = ({
   const isFavorite = favoriteEcommerceIds.find((ele) => ele == +id);
   const { data: session, status } = useSession();
   const { toast } = useToast();
+
+  const {setSpecialOrderState} = useSpecialOrdersDialogsStore()
 
   const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
     mutationFn: async () => {
@@ -128,12 +132,14 @@ const E_commerceCard = ({
           >
             الإنتقال الى المتجر
           </Link>
-          <Link
-            href={"/special-order?sh=1&tab=3&link=" + (LinkOFStore || "")}
+          <div
+             onClick={()=>{
+              setSpecialOrderState(true,3,undefined,id)
+             }}
             className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[13px] rounded-md flex justify-center items-center "
           >
             طلب من المتجر
-          </Link>
+          </div>
           <button
             onClick={(e) => {
               e.stopPropagation();

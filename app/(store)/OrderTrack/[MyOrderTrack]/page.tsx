@@ -94,7 +94,7 @@
 //           <div className="flex mt-4">
 //             <Image src={profile} alt={""} />
 //             <div className="mr-4">
-//               <p className="text-lg">وصول طلبك الى منطقة التوزيع</p>
+//               <p className="text-lg"> وصول طلبك الى منطقة التوزيع< /p>
 //               <p className="text-xs text-gray-500 mt-0.5">
 //                 {data.arrivedAtDistributionArea}
 //               </p>
@@ -145,7 +145,6 @@ import doubletrue from "@/public/images/doubletrue.svg";
 import profile from "@/public/images/profile.svg";
 import location from "@/public/images/location.svg";
 import requestAvailable from "@/public/images/requestAvailable.svg";
-import isTrue from "@/public/images/isTrue.svg";
 import date from "@/public/images/date.svg";
 import React from "react";
 import Progresses from "../components/Progresses";
@@ -156,18 +155,7 @@ import { convertToArabicDate } from "@/lib/utils";
 
 const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
   // بيانات افتراضية
-  const data = {
-    orderNumber: "12345",
-    numOfOrderDetails: 5,
-    orderDate: "2025-01-20",
-    totalPrice: "250.00",
-    orderStatus: 3,
-    approvedAt: "2025-01-15",
-    arrivedAtDistributionArea: "2025-01-16",
-    deliveredAt: "2025-01-17",
-    bondConfirmedAt: "2025-01-18",
-    arrivedToCustomerAt: "2025-01-19",
-  };
+   
 
   const orderId = +params?.MyOrderTrack;
 
@@ -193,10 +181,10 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
        
       <div className="m-auto border-2 w-10/12 p-4 my-6 rounded-sm">
         {/* Order info */}
-        <div className="bg-yellow-50 border-yellow-100 border-2 flex justify-between items-center m-auto p-4">
+        <div className="bg-yellow-50 border-yellow-100 border-2 flex flex-wrap justify-between items-center m-auto p-4">
           <div>
             <h1 className="font-bold">#{orderData?.orderNumber}</h1>
-            <div className="flex justify-end text-gray-500 text-center">
+            <div className="flex flex-wrap  text-gray-500 text-center">
               <p>
                 منتجات <span>{orderData?.numOfOrderDetails}</span>
               </p>
@@ -205,8 +193,17 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
                 تاريخ الطلب : <span>{convertToArabicDate(orderData?.orderDate)}</span>
               </p>
             </div>
+            <div className="flex flex-wrap text-gray-500 text-center">
+              <p>
+                المستلم  : <span>{orderData?.customerName}</span>
+              </p>
+              <span className="mx-2">•</span>
+              <p>
+                 العنوان : <span>{orderData?.customerAdress || "------"}</span>
+              </p>
+            </div>
           </div>
-          <h1 className="text-2xl font-bold text-primary-background max-md:text-lg max-md:mb-14">
+          <h1 className="text-2xl font-bold text-primary-background max-md:text-lg  ">
             {(orderData?.totalPrice).toFixed(2) + " "}ر.س 
           </h1>
         </div>
@@ -230,54 +227,46 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
         {/* مراحل طلبك */}
         {orderData?.orderStatusNumber  !== 6 && <div className="py-4">
           <h1 className="text-xl">مراحل تنفيذ طلبك</h1>
-          <div className="flex mt-4">
+          {orderData?.approvedAt && <div className="flex mt-4">
             <Image src={doubletrue} alt={""} />
             <div className="mr-4">
-              <p className="text-lg">تم تسليم طلبك</p>
-              <p className="text-xs text-gray-500 mt-0.5">{data.approvedAt}</p>
+              <p className="text-lg">تم تأكيد طلبك</p>
+              <p className="text-xs text-gray-500 mt-0.5">{convertToArabicDate(orderData?.approvedAt + "")}</p>
             </div>
-          </div>
-          <div className="flex mt-4">
+          </div>}
+          {orderData?.purchasedAt && <div className="flex mt-4">
             <Image src={profile} alt={""} />
             <div className="mr-4">
-              <p className="text-lg">وصول طلبك الى منطقة التوزيع</p>
+              <p className="text-lg">تم شراء الطلب</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                {data.arrivedAtDistributionArea}
+                {orderData?.purchasedAt && convertToArabicDate(orderData?.purchasedAt + "")}
               </p>
             </div>
-          </div>
-          <div className="flex mt-4">
+          </div>}
+          {orderData?.shippedAt && <div className="flex mt-4">
             <Image src={location} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم شحن طلبك</p>
-              <p className="text-xs text-gray-500 mt-0.5">{data.deliveredAt}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{orderData?.shippedAt && convertToArabicDate(orderData?.shippedAt + "")}</p>
             </div>
-          </div>
-          <div className="flex mt-4">
+          </div>}
+          {orderData?.arrivedAtDistributionArea && <div className="flex mt-4">
             <Image src={requestAvailable} alt={""} />
             <div className="mr-4">
-              <p className="text-lg">تم توفير طلبك للشحن</p>
-              <p className="text-xs text-gray-500 mt-0.5">{data.deliveredAt}</p>
+              <p className="text-lg">تم وصول طلبك الى منطقة التوزيع </p>
+              <p className="text-xs text-gray-500 mt-0.5">{orderData?.arrivedAtDistributionArea && convertToArabicDate(orderData?.arrivedAtDistributionArea + "" )}</p>
             </div>
-          </div>
-          <div className="flex mt-4">
-            <Image src={isTrue} alt={""} />
-            <div className="mr-4">
-              <p className="text-lg">تم تأكيد سند الاستلام</p>
-              <p className="text-xs text-gray-500 mt-0.5">
-                {data.bondConfirmedAt}
-              </p>
-            </div>
-          </div>
-          <div className="flex mt-4">
+          </div>}
+         
+          {orderData?.deliverdToCustomerAt && <div className="flex mt-4">
             <Image src={date} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم استلام طلبك</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                {data.arrivedToCustomerAt}
+                {orderData?.deliverdToCustomerAt && convertToArabicDate(orderData?.deliverdToCustomerAt + "")}
               </p>
             </div>
-          </div>
+          </div>}
         </div>}
       </div>
     </>

@@ -1,6 +1,5 @@
 import TabsComponent from "./components/tabs";
 import OrdersWaitingPricingTable from "./components/tabsContent/OrdersWaitingPricingTable";
-import PreviousOrdersTable from "./components/tabsContent/PreviousOrdersTable";
 import { SpecialOrdersResponseType } from "./types";
 import { getApi } from "@/lib/http";
 import OrdersPricedTable from "./components/tabsContent/OrdersPricedTable";
@@ -10,7 +9,7 @@ const MyAccountPage = async () => {
     const [
       OrdersPricedData,
       OrdersWaitingPricingData,
-      PreviousOrdersData,
+      // PreviousOrdersData,
     ] = await Promise.all([
       getApi<SpecialOrdersResponseType>(
         "SpecialProducts/Market/GetSpecialProductsByCustomerFilter/200/10/1"
@@ -18,9 +17,9 @@ const MyAccountPage = async () => {
       getApi<SpecialOrdersResponseType>(
         "SpecialProducts/Market/GetSpecialProductsByCustomerFilter/100/10/1"
       ), // في انتظار المراجعه من قبل المندوب
-      getApi<SpecialOrdersResponseType>(
-        "SpecialProducts/Market/GetSpecialProductsByCustomerFilter/300/10/1"
-      ), //
+      // getApi<SpecialOrdersResponseType>(
+      //   "SpecialProducts/Market/GetSpecialProductsByCustomerFilter/300/10/1"
+      // ), //
     ]);
 
     // console.log(OrdersWaitingPricingData.data.items);
@@ -39,12 +38,12 @@ const MyAccountPage = async () => {
         initData: null,
         content: <OrdersWaitingPricingTable initData={OrdersWaitingPricingData} />,
       },
-      {
-        label: "طلبات سابقة",
-        value: "reviews",
-        initData: null,
-        content: <PreviousOrdersTable initData={PreviousOrdersData} />,
-      },
+      // {
+      //   label: "طلبات سابقة",
+      //   value: "reviews",
+      //   initData: null,
+      //   content: <PreviousOrdersTable initData={PreviousOrdersData} />,
+      // },
     ];
 
     return (

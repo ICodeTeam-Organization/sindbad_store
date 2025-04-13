@@ -14,9 +14,6 @@ export default function GetCartItems() {
   const { setCartItems } = useCartStore();
   const { status, data: authData } = useSession();
 
-  console.log(authData);
-  
-
   const [trigged, settrigged] = useState<boolean>(false);
 
   const { data } = useQuery<{data:CartItem[]}>({

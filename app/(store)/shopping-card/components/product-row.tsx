@@ -130,7 +130,7 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
 
   return (
     <>
-      <tr className="text-center ">
+      <tr className="text-center "  >
         <td className="py-2">
           <div className="flex items-center ">
             <div className="w-20 h-20 relative  border rounded-lg me-4 overflow-hidden">

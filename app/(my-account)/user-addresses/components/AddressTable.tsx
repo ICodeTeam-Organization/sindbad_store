@@ -26,6 +26,9 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
     data: undefined,
   });
 
+ 
+  
+
   const { mutate, isPending } = useMutation({
     mutationFn: async (id: number) => {
       await deleteApi<any>(`CustomerAddress/DeleteCustomerAddress?id=${id}`);

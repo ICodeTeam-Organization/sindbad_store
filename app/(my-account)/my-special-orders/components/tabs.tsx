@@ -16,6 +16,8 @@ type TabsComponentProps = {
 
 const TabsComponent: React.FC<TabsComponentProps> = ({ tabs }) => {
 
+ 
+
   const {setSpecialOrderState,setWholeSalesOrderState} = useSpecialOrdersDialogsStore()
 
   return (
