@@ -18,17 +18,19 @@ import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next-nprogress-bar";
 import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
+import { canSendCode, remmainingTime, saveRetrySendCode } from "@/lib/utils";
 
 const PhoneValidation = () => {
-
+ 
   const router = useRouter();
   const { mutate, isPending } = useMutation({
     mutationFn: async (phoneNumber:string) =>{
-           await postApi("Auth/Register/VerificationCode?isRigestered=true&number=" + phoneNumber);
+           await postApi("Auth/Register/VerificationCode?isRegisted=false&number=" + phoneNumber);
            return phoneNumber
         },
     // mutationFn: registerUser,
     onSuccess: (phoneNumber:string) => {
+      saveRetrySendCode()
       toast({
         variant: "default",
         description: "تم إرسال كود التحقق الى هاتفك",
@@ -51,6 +53,13 @@ const PhoneValidation = () => {
     },
   });
   function onSubmit(values: z.infer<typeof ForgetPasswordSchema>) {
+    if (!canSendCode()?.canSend) {
+      toast({
+        variant: "destructive",
+        description: "لا يمكنك إرسال كود التحقق الآن، يرجى الانتظار." +    remmainingTime(canSendCode()?.remaining),
+      });
+      return;
+    }
     mutate(values.phone);       
   }
   return (

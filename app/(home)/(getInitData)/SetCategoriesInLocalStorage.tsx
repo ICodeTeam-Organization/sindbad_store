@@ -15,7 +15,8 @@ const setCategories = useCategoriesDataStore((state) => state.setCategories);
   useEffect(() => {
     const cats = JSON.parse(localStorage.getItem("categories") || '[]')
     if (cats && cats?.length > 0) {
-        setCategories(cats)
+        // setCategories(cats)
+        setCategories(AllCategoriesWihtSubcategories || cats || [])
     }else{
         setCategories(AllCategoriesWihtSubcategories || [])
     }

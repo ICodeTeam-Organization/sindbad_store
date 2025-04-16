@@ -14,13 +14,18 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next-nprogress-bar";
 import { postApi } from "@/lib/http";
 import { toast } from "@/hooks/use-toast";
+import { canSendCode, remmainingTime, saveRetrySendCode } from "@/lib/utils";
 
 const SignUpForm: React.FC = () => {
+
+ 
+
+
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const { mutate, isPending } = useMutation({
     mutationFn: async (formData: registerFormField) =>{
-           await postApi("Auth/Register/VerificationCode?isRgistered=true&number=" + formData.phone);
+           await postApi("Auth/Register/VerificationCode?isRegisted=true&number=" + formData.phone);
            return formData
         },
     // mutationFn: registerUser,
@@ -29,10 +34,17 @@ const SignUpForm: React.FC = () => {
         variant: "default",
         description: "تم إرسال كود التحقق الى هاتفك",
       });
+      saveRetrySendCode()
       sessionStorage.setItem("verficationAuthData",JSON.stringify(formData));
       router.push("/verification-code")
     },
-    onError: (err) => setError(err.message),
+    onError: (err) =>{
+      toast({
+        variant: "destructive",
+        description: err.message || "حدث خطأ ما",
+      });
+      setError(err.message)
+    },
   });
 
   // validate form fields
@@ -46,6 +58,14 @@ const SignUpForm: React.FC = () => {
 
   const onSubmit = (formData: registerFormField) => { // تعديل هنا
     setError(null);
+    if (!canSendCode()?.canSend) {
+      toast({
+        variant: "destructive",
+        description: "لا يمكنك  إنشاء حساب الآن، يرجى الانتظار." + remmainingTime(canSendCode()?.remaining),
+      });
+      return;
+      
+    }
     mutate(formData);
   };
 

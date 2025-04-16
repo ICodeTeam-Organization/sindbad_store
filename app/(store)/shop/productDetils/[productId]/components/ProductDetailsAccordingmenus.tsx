@@ -20,7 +20,7 @@ function ProductDetailsAccordingmenus({product,productId}:Props) {
       <AccordionItem value="item-1">
         <AccordionTrigger>تفاصيل ومميزات المنتج </AccordionTrigger>
         <AccordionContent>
-          <ProductFeaturesTable features={product?.attributesWithValues} />
+          {product?.attributesWithValues.length == 0 ? <div> <p> لاتوجد تفاصيل اخرى</p> </div> : <ProductFeaturesTable features={product?.attributesWithValues} />}
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">

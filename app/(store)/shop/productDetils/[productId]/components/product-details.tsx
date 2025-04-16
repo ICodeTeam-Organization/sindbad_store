@@ -101,7 +101,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         /> */}
         <div>
         <div className="mb-4 my-6">
-          <h2 className="text-black text-xl font-bold">{product?.name}</h2>
+          <h2 className="text-black text-2xl font-bold">{product?.name}</h2>
 
           <div className="flex  my-4 mt-6 items-center gap-x-4 ">
             <div className=" border-l-2 pl-4 border-l-gray-200 py-1 flex">
@@ -121,7 +121,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               />
             </div>
             <PriceSection
-              discountedPrice={product.priceAfterOffer}
+              discountedPrice={product.priceAfterOffer < product.priceBeforOffer ? product.priceAfterOffer : 0}
               originalPrice={product.priceBeforOffer}
               discount={product.percentageOfDiscount}
             />
@@ -136,7 +136,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               </div>}
 
               {/* OFFER TIME  */}
-              <div className="flex flex-wrap gap-x-4 text-sm text-primary-background ">
+             {product.priceAfterOffer < product.priceBeforOffer || product.offerSentence !== null && <div className="flex flex-wrap gap-x-4 text-sm text-primary-background ">
                 <div className="flex items-center mb-2">
                   <span className="font-medium ml-1">
                     {product.offerStartDate !== null ? "بداية العرض: " : ""}
@@ -156,26 +156,33 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                     {product.offerEndDate !== null ? convertToArabicDate(product.offerEndDate) : ""}
                   </span>
                 </div>
-              </div>
+              </div>}
             </div>
           )}
-           <hr className="my-4 border-dashed border border-primary-background border-opacity-40" />
+           <hr className="my-4   border border-primary-background border-opacity-15" />
           <p className="text-base text-gray-600 mt-4">{product?.description}</p>
         </div>
 
         <div className="text-sm" >
-          <div className="flex items-center mb-2  ">
-            <span className="font-medium ml-1">
-              {product.categoryName !== null ? "الفئة : " : ""}
-            </span>
-            <span>
+          <div className="  mb-2">
+            <p className="  ml-1 mb-2 font-bold">
+              {product.categoryName !== null ? "الفئات : " : ""}
+            </p>
+           <div className="flex flex-wrap gap-4" >
+           {[...product?.mainCategoriesNames , ...product?.subCategoriesNames].filter((e)=>!!e).map((category:any,x) => (
+                <span className="bg-zinc-100 px-2 py-1 shadow rounded text-xs  " key={category + x} >
+                {category !== null ? category : ""}
+              </span>
+              ))}
+           </div>
+            {/* <span className="bg-zinc-100 px-2 py-1 shadow rounded" >
               {product.categoryName !== null ? product.categoryName : " "}
-            </span>
+            </span> */}
           </div>
 
-          <div className="flex items-center col-span-2 mb-2">
+          <div className="flex items-center col-span-2 mb-2 mt-4">
             <span className="font-medium ml-1 ">رقم المنتج : </span>
-            <span className="text-primary-background mx-1">
+            <span className="bg-primary-background mx-1 text-white px-2  ">
               {product.number}
             </span>
           </div>

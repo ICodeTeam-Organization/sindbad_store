@@ -21,24 +21,65 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next-nprogress-bar";
 import { Loader2 } from "lucide-react";
+import { cn, remmainingTime } from "@/lib/utils";
+import useResendCode from "@/hooks/useResendCode";
+
 
  
-const PasswordValidation = () => {
 
-  const {toast} = useToast();
+
+const PasswordValidation = () => {
+  const { toast } = useToast();
   const router = useRouter();
 
   const {
-    mutate ,
-    isPending 
-  } = useMutation({
-    mutationFn: async (data: {phoneNumber:string,code:string,newPassword:string}) => {
-      return await postApi("Auth/ForgotPassword",{
-        body:{
-          "PhoneNumber": data?.phoneNumber,
-          "code": data?.code,
-          "newPassword": data?.newPassword
-        }
+    timeLeft,
+    handleReSendCode,
+    handleReset,
+} = useResendCode()
+
+ 
+
+  const { mutate: mutateForResendCode, isPending: isPendingForResendCode } =
+    useMutation({
+      mutationFn: async (phoneNumber: string) => {
+        await postApi(
+          "Auth/Register/VerificationCode?isRegisted=false&number=" +
+            phoneNumber
+        );
+        return phoneNumber;
+      },
+      // mutationFn: registerUser,
+      onSuccess: ( ) => {
+        toast({
+          variant: "default",
+          description: "تم إعادة إرسال كود التحقق الى هاتفك",
+        });
+        handleReSendCode()
+        // sessionStorage.setItem("forgo.
+      },
+      onError: (err) => {
+        console.log(err.message);
+        toast({
+          variant: "destructive",
+          description: err.message || "حدث خطأ ما",
+        });
+      },
+    });
+
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (data: {
+      phoneNumber: string;
+      code: string;
+      newPassword: string;
+    }) => {
+      return await postApi("Auth/ForgotPassword", {
+        body: {
+          PhoneNumber: data?.phoneNumber,
+          code: data?.code,
+          newPassword: data?.newPassword,
+        },
       });
     },
     onSuccess: () => {
@@ -46,8 +87,9 @@ const PasswordValidation = () => {
         variant: "default",
         description: "تم تغيير كلمة المرور يرجى تسجيل الدخول",
       });
+      handleReset()
       sessionStorage.removeItem("forgotPasswordData");
-      router.push("/auth")
+      router.push("/auth");
       // window.location.replace("/")
     },
     onError: (err) => {
@@ -58,28 +100,33 @@ const PasswordValidation = () => {
       });
     },
   });
+
   const form = useForm<z.infer<typeof ResetPassSchema>>({
     resolver: zodResolver(ResetPassSchema),
     defaultValues: {
       // phone:  "",
       newPassword: "",
       code: "",
-      confirmPassword:""
+      confirmPassword: "",
     },
   });
+
+ 
+
+  
+
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((data) =>
-         {
-          const phonenum = sessionStorage.getItem("forgotPasswordData")?.toString() || "";
+        onSubmit={form.handleSubmit((data) => {
+          const phonenum =
+            sessionStorage.getItem("forgotPasswordData")?.toString() || "";
           mutate({
             newPassword: data.newPassword,
-            code:data.code,
-            phoneNumber:phonenum,
-          })
-         }
-        )}
+            code: data.code,
+            phoneNumber: phonenum,
+          });
+        })}
         className="space-y-8"
       >
         {/* <FormField
@@ -134,11 +181,40 @@ const PasswordValidation = () => {
             </FormItem>
           )}
         />
+
+        <div className="flex justify-between items-center mt-4">
+          <p className="text-sm text-[#344054] font-normal">
+            لم يصلك كود التحقق؟
+          </p>
+          <Button
+            variant="link"
+            type="button"
+            disabled={timeLeft > 0}
+            onClick={() => {
+              const phonenum = sessionStorage.getItem("forgotPasswordData")?.toString() || "";
+               mutateForResendCode(phonenum);
+            }}
+            className={cn("text-sm text-[#FA8232] font-bold",
+              timeLeft > 0 && '  cursor-not-allowed text-xs' 
+            )}
+          >
+            {isPendingForResendCode ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              timeLeft > 0 ? `إعادة الإرسال بعد ${remmainingTime(timeLeft)}  ` : 'إعادة إرسال كود التحقق'
+            )}
+          </Button>
+        </div>
+
         <Button
           className="min-w-[150px] w-full h-[48px] mt-10 text-white bg-[#FA8232] hover:bg-orange-600 transition-all duration-300 rounded-[2px] text-base flex justify-center items-center font-bold"
           type="submit"
         >
-          {isPending ? <Loader2 className="animate-spin" /> :"إعادة تعيين كلمة المرور"}
+          {isPending ? (
+            <Loader2 className="animate-spin" />
+          ) : (
+            "إعادة تعيين كلمة المرور"
+          )}
         </Button>
       </form>
     </Form>

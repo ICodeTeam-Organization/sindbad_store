@@ -240,7 +240,7 @@ const AddToBasket = ({ id, productInfo }: Props) => {
           disabled={mutationAdd.isPending}
           variant={"outline"}
           onClick={() => handleAddToCart()}
-          className="hover:bg-orange-600 min-w-[200px] bg-orange-500 text-white text-xl rounded-md flex justify-center items-center mb-2 md:mb-0"
+          className="hover:bg-orange-600 min-w-[200px] bg-orange-500 hover:text-white text-white text-xl rounded-md flex justify-center items-center mb-2 md:mb-0"
         >
           {mutationAdd.isPending ? (
             <Loader2 className="animate-spin" />

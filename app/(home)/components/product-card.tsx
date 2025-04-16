@@ -167,7 +167,7 @@ const ProductCard = (props: propsType) => {
       <div className="">
         <Link href={`/shop/productDetils/${ProductDet}`}>
           <p className=" line-clamp-2  h-10 font-[Tajawal] text-[#007580] text-[13px] mt-1 mx-2 tajawal text-right flex items-center">
-            <strong>{productName}</strong>
+            <strong  className="line-clamp-2" >{productName}</strong>
           </p>
           <div className="text-right flex flex-col justify-start items-start ">
             <p className="max-md:pr-3 pr-3 max-md:text-xs text-[16px] text-[#F55157]">

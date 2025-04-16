@@ -3,13 +3,29 @@ import * as z from "zod";
 export const registrationSchema = z
   .object({
     name: z.string().min(1, "الاسم مطلوب"),
+
     phone: z
       .string()
-      .min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام")
-      .regex(/^\d+$/, "المدخل يجب أن يحتوي على أرقام فقط"),
-    email: z.string().email("يرجى إدخال بريد إلكتروني صحيح"),
-    password: z.string().min(6, "كلمة المرور يجب أن تكون على الأقل 6 أحرف"),
-    confirmPassword: z.string().min(6, "كلمة المرور غير مطابقة"),
+      .regex(/^\+?\d{6,20}$/, "يجب أن يكون طول الرقم بين 6 - 20"),
+
+    email: z
+      .string()
+      .regex(
+        /^[\w\d][\w\d\.]+[\w\d]@\w{1,10}\.\w{2,4}$/,
+        "الرجاء إدخال البريد الإلكتروني صالح"
+      ),
+
+    password: z
+      .string()
+      .regex(
+        /^[\w\d]{9,20}(?<=\w.*)(?<=\d.*)$/,
+        "يجب ان تحتوي كلمة المرور على ارقام (0-9) و أحرف (a-Z) و طولها بين 9 - 20"
+      ),
+
+    confirmPassword: z
+      .string()
+      .min(1, "كلمة المرور غير مطابقة"), // نتحقق من المطابقة لاحقاً
+
     agreeTerms: z
       .boolean()
       .refine((val) => val, "يجب الموافقة على الشروط والأحكام"),
@@ -18,6 +34,7 @@ export const registrationSchema = z
     path: ["confirmPassword"],
     message: "كلمة المرور غير مطابقة",
   });
+
 
 export const LoginSchema = z.object({
   phone: z

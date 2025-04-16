@@ -59,9 +59,7 @@ const LoginForm: React.FC = () => {
             <Label className={`font-bold text-lg`} htmlFor="password">  {/* تصحيح هنا من passowrd إلى password */}
               كلمة المرور
             </Label>
-            <Link href={"/forget/"} className="text-sky-500">
-              نسيت كلمة المرور
-            </Link>
+            
           </div>
           <PasswordInput register={register} fieldName="password" />
           {errors.password && (
@@ -69,6 +67,11 @@ const LoginForm: React.FC = () => {
               {errors.password.message}
             </span>
           )}
+        </div>
+        <div className="mt-4" >
+        <Link href={"/forget/"} className="text-sky-500 text-sm hover:text-sky-600 transition-colors duration-200 hover:underline">
+              نسيت كلمة المرور؟
+            </Link>
         </div>
       </CardContent>
       <CardFooter>

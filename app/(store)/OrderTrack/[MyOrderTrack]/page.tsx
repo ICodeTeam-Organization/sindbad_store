@@ -155,7 +155,7 @@ import { convertToArabicDate } from "@/lib/utils";
 
 const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
   // بيانات افتراضية
-   
+    
 
   const orderId = +params?.MyOrderTrack;
 
@@ -171,9 +171,7 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
     return notFound();
   }
 
-  const orderData = OrderTrack.data;
-
-  console.log("orderData", orderData);
+  const orderData = OrderTrack.data; 
   
 
   return (

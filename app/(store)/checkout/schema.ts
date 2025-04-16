@@ -65,6 +65,10 @@ export const validateCheckoutForm = (data: CheckoutType): string[] => {
     if (!number) {
       errors.push("رقم السند مطلوب");
     }
+
+    if (number.length > 9) {
+      errors.push("رقم السند يجب ان يكون أقل من 10 أرقام");
+    }
   }
 
   if (errors.length > 0) {

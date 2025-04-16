@@ -46,7 +46,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   return (
     <div className="xl:container mx-auto">
       <ProductDetails product={product} />
-      <div className="  m-10" >
+      <div className="  m-5" >
       <ProductDetailsAccordingmenus product={product} productId={productId} />
       </div>
       {/* <TabsComponent product={product} productId={productId} /> */}
