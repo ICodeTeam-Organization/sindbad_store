@@ -25,7 +25,6 @@ async function GetInitialData() {
         success: boolean;
         data: { all: number; orders: number; specials: number };
       }>("Notifications/Count");
-      console.log(notificationCount);
       
       totalNotificationCount = notificationCount?.data.all;
     } catch (error) {

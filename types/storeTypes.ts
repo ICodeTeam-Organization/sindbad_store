@@ -44,6 +44,7 @@ export interface Shop {
   logo: string;
   categories: string[];
   ecommerceStoreImages: EcommerceStoreImage[];
+  coupon:string;
 }
 
 export type FavoriteProduct = {

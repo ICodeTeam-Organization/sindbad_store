@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { getApi } from "@/lib/http";
+import { getApi, postApi } from "@/lib/http";
 import { MainCategory, Product, Shop, Store } from "@/types/storeTypes";
 import Hero from "./components/sections/Hero";
 
@@ -38,9 +38,12 @@ export default async function Home() {
       getApi<{ data: Store[] }>(
         "Market/Store/GetAllStoresForViewInSliderInMarketHomePage"
       ),
-      getApi<{ data: { items: Shop[] } }>(
-        "EcommercesStores/GetEcommerceStores?pageNumber=1&pageSize=20"
-      ),
+      postApi<{ data: { items: Shop[] } }>("EcommercesStores/FilterECommerce", {
+        body: {
+          pageSize: 20,
+          pageNumber: 1,
+        },
+      }),
       getApi<{ data: Product[] }>(
         "Products/HomePage/GetNumberOfProductsThatHasOfferTodayForViewInMarketHomePage/20"
       ),

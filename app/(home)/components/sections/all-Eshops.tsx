@@ -20,7 +20,7 @@ const AllEShops = ({
       <div className=" pb-6 px-4"> 
         <div className="xl:container mx-auto relative">
           <div className=" pt-10 mb-5">
-            <h1 className="text-[#333333] text-lg">جميع المحلات</h1>
+            <h1 className="text-[#333333] text-lg">جميع المتاجر</h1>
             <p className="text-base text-[#666666]">
               تسوق احدث المنتجات المميزة المضافة جديد
             </p>
@@ -60,6 +60,7 @@ const AllEShops = ({
                       ecommerceStoreImages={shop.ecommerceStoreImages}
                       key={shop.id}
                       categories={shop.categories}
+                      coupon={shop.coupon}
                     />
                   </CarouselItem>
                 ))}

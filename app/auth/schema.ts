@@ -47,7 +47,18 @@ export const LoginSchema = z.object({
 //
 export const ForgetPasswordSchema = z.object({
   phone: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
-});
+  Newpassword: z.string().min(6, "كلمة المرور يجب أن تكون على الأقل 6 أحرف"),
+  confirmPassword: z.string().min(6, "كلمة المرور غير مطابقة"),
+}).refine(
+  (data) => {
+    return data.Newpassword === data.confirmPassword;
+  },
+  {
+    message: "كلمة المرور غير مطابقة",
+    path: ["confirmPassword"],
+  }
+);
+
 export const MobileVertificationSchema = z.object({
   activation: z.string().min(1, "يجب إدخال رمز التحقق"),
 });

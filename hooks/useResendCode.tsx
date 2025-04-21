@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { set } from 'zod';
 
 function useResendCode() {
+  
     const retryDelays = [60, 300, 3600, 86400];
     const [attempts, setAttempts] = useState<number>(0);
     const [lastSentAt, setLastSentAt] = useState<number | null>(null);
@@ -22,14 +23,12 @@ function useResendCode() {
       if (storedLastSentAt > 0) {
         setLastSentAt(storedLastSentAt);
       } else {
-        // أول مرة يدخل المستخدم → نبدأ من الآن
         const now = Math.floor(Date.now() / 1000);
         localStorage.setItem("otpLastSentAt", now.toString());
         setLastSentAt(now);
       }
     }, []);
   
-    // مؤقت العد التنازلي
     useEffect(() => {
       if (!lastSentAt) return;
   
@@ -55,6 +54,39 @@ function useResendCode() {
       localStorage.setItem("otpAttempts", newAttempts.toString());
       localStorage.setItem("otpLastSentAt", now.toString());
     };
+
+      const saveRetrySendCode = () => {
+      const now = Math.floor(Date.now() / 1000);
+      const attempts =parseInt(
+        localStorage.getItem("otpAttempts") || "0",
+        10
+      );
+      let newAttempts ;
+      if (localStorage.getItem("otpAttempts")) {
+        newAttempts = +attempts + 1;
+      } else {
+        newAttempts = 0;
+      }
+      
+      localStorage.setItem("otpAttempts", newAttempts.toString());
+      localStorage.setItem("otpLastSentAt", now.toString());
+    };
+
+     const canSendCode = (): { canSend: boolean; remaining: number } => {
+      const retryDelays = [60, 300, 3600, 86400]; // دقيقة، 5 دقايق، ساعة، يوم
+      const attempts = parseInt(localStorage.getItem('otpAttempts') || '0', 10);
+      const lastSentAt = parseInt(localStorage.getItem('otpLastSentAt') || '0', 10);
+    
+      const delay = retryDelays[Math.min(attempts, retryDelays.length - 1)];
+      const now = Math.floor(Date.now() / 1000);
+      const secondsPassed = now - lastSentAt;
+      const remaining = Math.max(0, delay - secondsPassed);
+    
+      return {
+        canSend: secondsPassed >= delay,
+        remaining,
+      };
+    };
   
     
     const handleReset = (): void => {
@@ -75,6 +107,8 @@ function useResendCode() {
         setLastSentAt,
         setTimeLeft,
         retryDelays,
+        saveRetrySendCode,
+        canSendCode
     }
 }
 

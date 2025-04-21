@@ -39,7 +39,6 @@ const StoreGrid = () => {
   const stores =( data?.pages?.flatMap((page) => page?.data?.items) || []).filter(e=>e);
   const totalCount = data?.pages[0]?.data?.totalCount || 0;
 
-  console.log(stores,"vmdkvmdkmvkdmvkdmvkdmvkdmvkm");
   
 
   if (!isFetched) {

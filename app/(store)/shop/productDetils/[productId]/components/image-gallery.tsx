@@ -17,17 +17,17 @@ const ImageGallery = ({ images }: { images: string[] }) => {
     <div className="flex flex-col mx-5" style={{ direction: "ltr" }}>
       {images.length > 0 ? (
         <>
-          <div className="flex justify-center overflow-hidden relative mdHalf:w-[400px] h-[360px] rounded-lg">
+          <div className="flex justify-center overflow-hidden relative  h-[360px] rounded-lg border">
             <div
-              className="w-full h-full flex transition-transform duration-500 ease-in-out"
+              className="w-full h-full flex transition-transform duration-500 ease-in-out "
               style={{ transform: `translateX(-${activeIndex * 100}%)` }}
             >
               {images.map((img, index) => (
-                <div key={index} className="w-full flex-shrink-0">
+                <div key={index} className="w-full  flex-shrink-0">
                   <SafeImage
                     src={img}
                     alt="صور للمنتج"
-                    width={400}
+                    width={300}
                     height={360}
                     className="w-full h-full object-contain rounded cursor-pointer"
                   />
@@ -35,11 +35,11 @@ const ImageGallery = ({ images }: { images: string[] }) => {
               ))}
             </div>
           </div>
-          <div dir="rtl" className="flex w-full overflow-x-auto   space-x-2 gap-x-3 mt-4 p-2 scrollbar-hide">
+          <div dir="rtl" className="flex w-full overflow-x-auto    space-x-2 gap-x-3 mt-4 p-2 scrollbar-hide">
             {images.map((ele, ix) => (
               <div
                 key={ix}
-                className={`flex p-2 min-w-[80px] h-[80px] border rounded-lg cursor-pointer transition-all duration-300 ${activeIndex === ix ? 'border-orange-500 scale-105' : ''}`}
+                className={`flex p-2 aspect-square h-[80px] border rounded cursor-pointer transition-all duration-300 ${activeIndex === ix ? 'border-orange-500 scale-105' : ''}`}
                 onClick={() => setActiveIndex(ix % images.length)}
               >
                 <SafeImage

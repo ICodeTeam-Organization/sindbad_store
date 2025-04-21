@@ -7,13 +7,13 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useToast } from "@/hooks/use-toast";
+} from "@/components/ui/dropdown-menu"; 
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 import { GrDown } from "react-icons/gr";
 import { RiArrowLeftLine } from "react-icons/ri";
+import { Alert } from "./Alert";
 
 
 const orderFrom = [
@@ -50,7 +50,6 @@ const orderFrom = [
 ];
 
 export default function DropDownMenuOrderFrom() {
-  const { toast } = useToast();
 
 
   const [
@@ -60,13 +59,15 @@ export default function DropDownMenuOrderFrom() {
     name: "السعودية",
     key: "SA",
   });
+  const [openAlert, setOpenAlert] = useState(false)
 
   const onSelect = (item: { name: string; key: string }) => {
     if (item.key != selectedCountry.key) {
-      toast({
-        variant: "destructive",
-        description: `سيتم إضافة هذي المناطق قريبا`,
-      });
+      // toast({
+      //   variant: "destructive",
+      //   description: `سيتم إضافة هذي المناطق قريبا`,
+      // });
+      setOpenAlert(true)
     }
     // setselectedCountry(item)
   };
@@ -75,6 +76,7 @@ export default function DropDownMenuOrderFrom() {
 
   return (
     <div className="flex items-center gap-x-2 w-full">
+      <Alert open={openAlert} onClose={setOpenAlert} />
       <h3 className="text-[13px]"> أطلب مــن </h3>
       <DropdownMenu dir="rtl">
         <DropdownMenuTrigger asChild className="cursor-pointer">

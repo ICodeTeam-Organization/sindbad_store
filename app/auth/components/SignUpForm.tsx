@@ -11,49 +11,76 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query"; 
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next-nprogress-bar";
-import { postApi } from "@/lib/http";
+import { useRouter } from "next-nprogress-bar"; 
 import { toast } from "@/hooks/use-toast";
-import { canSendCode, remmainingTime, saveRetrySendCode } from "@/lib/utils";
+import {remmainingTime} from "@/lib/utils";
+import useResendCode from "@/hooks/useResendCode";
+import { registerUser } from "../helpers";
 
 const SignUpForm: React.FC = () => {
 
  
 
+  const {saveRetrySendCode,canSendCode} = useResendCode();
 
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (formData: registerFormField) =>{
-           await postApi("Auth/Register/VerificationCode?isRegisted=true&number=" + formData.phone);
-           return formData
-        },
-    // mutationFn: registerUser,
-    onSuccess: (formData: registerFormField) => {
-      toast({
-        variant: "default",
-        description: "تم إرسال كود التحقق الى هاتفك",
-      });
-      saveRetrySendCode()
-      sessionStorage.setItem("verficationAuthData",JSON.stringify(formData));
-      router.push("/verification-code")
-    },
-    onError: (err) =>{
-      toast({
-        variant: "destructive",
-        description: err.message || "حدث خطأ ما",
-      });
-      setError(err.message)
-    },
-  });
+  // const { mutate, isPending } = useMutation({
+  //   mutationFn: async (formData: registerFormField) =>{
+  //          await postApi("Auth/Register/VerificationCode?isRegisted=true&number=" + formData.phone);
+  //          return formData
+  //       },
+  //   // mutationFn: registerUser,
+  //   onSuccess: (formData: registerFormField) => {
+  //     toast({
+  //       variant: "default",
+  //       description: "تم إرسال كود التحقق الى هاتفك",
+  //     });
+      // saveRetrySendCode()
+      // sessionStorage.setItem("verficationAuthData",JSON.stringify(formData));
+      // router.push("/verification-code")
+  //   },
+  //   onError: (err) =>{
+  //     toast({
+  //       variant: "destructive",
+  //       description: err.message || "حدث خطأ ما",
+  //     });
+  //     setError(err.message)
+  //   },
+  // });
+
+ 
 
   // validate form fields
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors ,  },
+    getValues,
   } = useForm<registerFormField>({
     resolver: zodResolver(registrationSchema),
+  });
+
+   const { mutate, isPending } = useMutation({
+    mutationFn: registerUser,
+    onSuccess: () => {
+      toast({
+        variant: "default",
+        description: "تم إرسال كود التحقق الى هاتفك",
+      });
+      saveRetrySendCode()
+      sessionStorage.setItem("verficationNumber",JSON.stringify(getValues("phone")));
+      sessionStorage.setItem("pswrd",JSON.stringify(getValues("password")));
+      sessionStorage.setItem("signupdata",JSON.stringify(getValues()));
+      router.push("/verification-code") 
+    },
+    onError: (err) => {
+      console.log(err.message, "dlldldl");
+      toast({
+        variant: "destructive",
+        description: err.message || "حدث خطاء",
+      });
+    },
   });
 
   const onSubmit = (formData: registerFormField) => { // تعديل هنا
@@ -141,7 +168,7 @@ const SignUpForm: React.FC = () => {
               <Loader2 className="animate-spin" />
             </>
           ) : (
-            "أنشاء حساب"
+            "إنشاء حساب"
           )}
         </Button>
       </CardFooter>

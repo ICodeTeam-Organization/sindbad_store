@@ -23,7 +23,7 @@ const forgetPass = () => {
         <div className="m-auto mt-[30px]">
           <PhoneValidation />
         </div>
-        <div className="text-start my-5 text-sm text-[#5F6C72]">
+        {/* <div className="text-start my-5 text-sm text-[#5F6C72]">
           <p>
             لديك حساب بالفعل؟
             <Link className="mr-1 text-[#2DA5F3]" href={"/auth"}>
@@ -36,11 +36,11 @@ const forgetPass = () => {
               حساب جديد
             </Link>
           </p>
-        </div>
+        </div> */}
         <hr />
-        <p className="text-start text-sms text-[#475156] mt-6">
+        <p className="text-center text-sm text-[#475156] mt-6">
           يمكنك الإتصال
-          <Link className="text-[#F58634] mx-1" href={""}>
+          <Link className="text-[#F58634] mx-1" href={""} target="_blank">
             بخدمة العملاء
           </Link>
           للحصول على المساعدة في استعادة الوصول إلى حسابك

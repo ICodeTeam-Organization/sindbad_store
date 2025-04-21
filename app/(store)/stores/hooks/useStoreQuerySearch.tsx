@@ -7,7 +7,7 @@ export default function useStoreQuerySearch() {
     parse: (value) => {
       return ( value ? parseAsInteger.parse(value) : null)
     },
-    history: "push",
+    history: "replace",
   });
 
   const [storeName, setStoreName] = useQueryState("search", {
@@ -15,7 +15,7 @@ export default function useStoreQuerySearch() {
     parse: (value) => {
       return ( value ? value : '')
     },
-    history: "push",
+    history: "replace",
   });
 
   return {

@@ -108,35 +108,6 @@ export const calculateBonus = (
 };
 
 
- export const canSendCode = (): { canSend: boolean; remaining: number } => {
-    const retryDelays = [60, 300, 3600, 86400]; // دقيقة، 5 دقايق، ساعة، يوم
-    const attempts = parseInt(localStorage.getItem('otpAttempts') || '0', 10);
-    const lastSentAt = parseInt(localStorage.getItem('otpLastSentAt') || '0', 10);
-  
-    const delay = retryDelays[Math.min(attempts, retryDelays.length - 1)];
-    const now = Math.floor(Date.now() / 1000);
-    const secondsPassed = now - lastSentAt;
-    const remaining = Math.max(0, delay - secondsPassed);
-  
-    return {
-      canSend: secondsPassed >= delay,
-      remaining,
-    };
-  };
 
-  export const saveRetrySendCode = () => {
-    const now = Math.floor(Date.now() / 1000);
-    const attempts =parseInt(
-      localStorage.getItem("otpAttempts") || "0",
-      10
-    );
-    let newAttempts ;
-    if (localStorage.getItem("otpAttempts")) {
-      newAttempts = +attempts + 1;
-    } else {
-      newAttempts = 0;
-    }
-    
-    localStorage.setItem("otpAttempts", newAttempts.toString());
-    localStorage.setItem("otpLastSentAt", now.toString());
-  };
+
+  
