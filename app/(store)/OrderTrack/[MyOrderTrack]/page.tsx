@@ -152,9 +152,9 @@ import { getApi } from "@/lib/http";
 import { OrderTrackResponseType } from "@/types/storeTypes";
 import { notFound } from "next/navigation";
 import { convertToArabicDate } from "@/lib/utils";
-
+import Link from "next/link";
 const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
-  // بيانات افتراضية
+ 
     
 
   const orderId = +params?.MyOrderTrack;
@@ -173,13 +173,13 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
 
   const orderData = OrderTrack.data; 
   
-
   return (
     <>
        
-      <div className="m-auto border-2 w-10/12 p-4 my-6 rounded-sm">
+      <div className="m-auto border-2 w-10/12 p-4 my-10 rounded-sm">
         {/* Order info */}
-        <div className="bg-yellow-50 border-yellow-100 border-2 flex flex-wrap justify-between items-center m-auto p-4">
+        <div className="bg-yellow-50 border-yellow-100 border-2   m-auto p-4">
+          <div className=" flex flex-wrap justify-between items-center " >
           <div>
             <h1 className="font-bold">#{orderData?.orderNumber}</h1>
             <div className="flex flex-wrap  text-gray-500 text-center">
@@ -197,13 +197,33 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
               </p>
               <span className="mx-2">•</span>
               <p>
-                 العنوان : <span>{orderData?.customerAdress || "------"}</span>
+                 العنوان : <span>{orderData?.customerAdress || "------------"}</span>
               </p>
             </div>
+
+            <div className="sm:block hidden" >
+              <Link
+                className="flex items-center gap-x-2 bg-primary-background text-white w-fit px-2 rounded text-sm mt-4"
+                href={`/Orderdetail/${orderData?.orderNumber}`}
+              > 
+               معلومات الطلب
+              </Link>
+            </div>
+           
+
           </div>
           <h1 className="text-2xl font-bold text-primary-background max-md:text-lg  ">
             {(orderData?.totalPrice).toFixed(2) + " "}ر.س 
           </h1>
+          </div>
+          <div className="sm:hidden  " >
+              <Link
+                className="flex items-center gap-x-2 bg-primary-background text-white w-fit px-2 rounded text-sm mt-4"
+                href={`/Orderdetail/${orderData?.orderNumber}`}
+              > 
+               معلومات الطلب
+              </Link>
+            </div>
         </div>
 
         {
@@ -223,7 +243,7 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
 
         <hr />
         {/* مراحل طلبك */}
-        {orderData?.orderStatusNumber  !== 6 && <div className="py-4">
+        {orderData?.orderStatusNumber  !== 6 && orderData.orderStatusNumber > 0 && <div className="py-4">
           <h1 className="text-xl">مراحل تنفيذ طلبك</h1>
           {orderData?.approvedAt && <div className="flex mt-4">
             <Image src={doubletrue} alt={""} />

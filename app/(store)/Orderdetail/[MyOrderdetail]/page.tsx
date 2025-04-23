@@ -6,6 +6,7 @@ import OrderDetailProductsTable from "../components/order-details-products-table
 import { convertToArabicDate } from "@/lib/utils";
 import { FcPackage } from "react-icons/fc";
 import { ApiResponseTypeForOrderDetails } from "../type";
+import ReceiptCode from "../components/ReceiptCode";
 
 interface Detail {
   params: { MyOrderdetail: string };
@@ -16,7 +17,7 @@ const OrderDetail = async ({ params }: Detail) => {
   );
   if (!OrderDetails) return notFound();
   const data = OrderDetails.data;
- 
+
   return (
     <div className="xl:container mx-auto">
       {/* <BreadCrumb
@@ -52,6 +53,7 @@ const OrderDetail = async ({ params }: Detail) => {
                   {data.orderStatus}
                 </p>
               </div>
+              <ReceiptCode  receiptCode={data.receiptCode}  />
             </div>
           </div>
         </div>
