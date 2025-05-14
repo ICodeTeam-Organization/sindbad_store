@@ -153,6 +153,8 @@ import { OrderTrackResponseType } from "@/types/storeTypes";
 import { notFound } from "next/navigation";
 import { convertToArabicDate } from "@/lib/utils";
 import Link from "next/link";
+
+
 const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
  
     
@@ -172,6 +174,9 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
   }
 
   const orderData = OrderTrack.data; 
+
+  console.log("orderData", orderData);
+  
   
   return (
     <>

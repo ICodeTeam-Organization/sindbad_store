@@ -12,9 +12,7 @@ function SpecialOrderDialogsViewer() {
     showSpecialOrderWholeSalesDialog,
     category,
     tab,
-  } = useSpecialOrdersDialogsStore();
-
-  
+  } = useSpecialOrdersDialogsStore(); 
 
   return (
     <div>

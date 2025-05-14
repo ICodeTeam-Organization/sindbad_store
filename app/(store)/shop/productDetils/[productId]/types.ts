@@ -61,6 +61,7 @@ export interface ReviewProps {
   customerImage: string | null;
   numOfRate: number;
   isDeleted: boolean;
+  isMe?:boolean
 };
 // interface Review {
 //   customerName: string;     
@@ -71,9 +72,7 @@ export interface ReviewProps {
 //   isDeleted: boolean;        
 // }
 
-export interface ReviewFormProps {
-  productId: number;
-}
+
 
 export interface ProductImage {
   imageUrl: string;

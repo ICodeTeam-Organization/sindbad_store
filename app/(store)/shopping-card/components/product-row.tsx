@@ -1,13 +1,9 @@
 import { BiTrash, BiGift } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
-import { HiMinusSm } from "react-icons/hi";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@/components/ui/toast";
+import { HiMinusSm } from "react-icons/hi"; 
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useDebounce } from "@/hooks/useDebounce";
-import { useMutation } from "@tanstack/react-query";
-import { deleteApi, putApi } from "@/lib/http";
+import { useDebounce } from "@/hooks/useDebounce"; 
 import Spinner from "@/app/(home)/components/Spinner";
 import { useCartStore } from "@/app/stores/cartStore";
 import SafeImage from "@/components/SafeImage";
@@ -27,110 +23,117 @@ import { calculateBonus } from "@/lib/utils";
 
 type Props = {
   cartItemData: CartItem;
-  refreshItems: () => void;
+  // refreshItems: () => void;
+  // onRemove?: () => void;
 };
 
-const ProductRow = ({ cartItemData, refreshItems }: Props) => {
+const ProductRow = ({ cartItemData }: Props) => {
   const {
-    cartId,
-    // productId,
+    // cartId,
     // specialProductId,
     name,
     price,
-    priceAfterDiscount,
-    finalPrice,
+    priceAfterDiscount,  
     // percentageDiscount,
     imageUrl,
     quantity: initialQuantity,
     amountYouBuy,
     amountYouGet,
     shipCost,
+    productId,
   } = cartItemData;
   const thePrice = priceAfterDiscount || price;
-  const { updateQuantity: updateQuantityInStore, removeItem } = useCartStore();
+  const { updateQuantity: updateQuantityInStore } = useCartStore();
 
   const [quantity, setQuantity] = useState<number>(initialQuantity);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
-  const { toast } = useToast();
+  // const { toast } = useToast();
   // const freeProducts = 0;
 
-  const updateQuantity = useMutation({
-    mutationFn: async ({
-      quantity,
-      cartId,
-    }: {
-      quantity: number;
-      cartId: number;
-    }) =>
-      await putApi(
-        "Cart/UpdateCart",
-        {
-          body: {
-            cartId: cartId,
-            quantity: quantity,
-          },
-        },
-        "PATCH"
-      ),
-    onSuccess: () => {
-      refreshItems();
-      updateQuantityInStore(quantity, cartId);
-    },
-    onError: (res) => {
-      toast({
-        variant: "destructive",
-        description: res.message,
-        action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
-      });
-    },
-  });
+  // const updateQuantity = useMutation({
+  //   mutationFn: async ({
+  //     quantity,
+  //     cartId,
+  //   }: {
+  //     quantity: number;
+  //     cartId: number;
+  //   }) =>
+  //     await putApi(
+  //       "Cart/UpdateCart",
+  //       {
+  //         body: {
+  //           cartId: cartId,
+  //           quantity: quantity,
+  //         },
+  //       },
+  //       "PATCH"
+  //     ),
+  //   onSuccess: () => {
+  //     refreshItems();
+  //     updateQuantityInStore(quantity, cartId);
+  //   },
+  //   onError: (res) => {
+  //     toast({
+  //       variant: "destructive",
+  //       description: res.message,
+  //       action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+  //     });
+  //   },
+  // });
 
-  const deleteItem = useMutation({
-    mutationFn: async (id: number) => {
-      await deleteApi("Cart/DeleteCart?cartId=" + id);
-      return id;
-    },
+  // const deleteItem = useMutation({
+  //   mutationFn: async (id: number) => {
+  //     await deleteApi("Cart/DeleteCart?cartId=" + id);
+  //     return id;
+  //   },
 
-    onSuccess: (id) => {
-      refreshItems();
-      removeItem(id);
-    },
-    onError: (res: any) => {
-      toast({
-        variant: "destructive",
-        description: res.response.data.message,
-        action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
-      });
-    },
-  });
+  //   onSuccess: (id) => {
+  //     refreshItems();
+  //     removeItem(id);
+  //   },
+  //   onError: (res: any) => {
+  //     toast({
+  //       variant: "destructive",
+  //       description: res.response.data.message,
+  //       action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+  //     });
+  //   },
+  // });
 
   const handleQuantity = (quantityPar: number) => {
     setIsUpdated(true);
     setQuantity(quantityPar);
   };
 
-  const debounceQuantity = useDebounce(quantity, 500);
+  const debounceQuantity = useDebounce(quantity, 1);
   useEffect(() => {
     if (debounceQuantity >= 0 && isUpdated) {
       setIsUpdated(false);
       if (quantity == 0) {
-        deleteItem.mutate(cartId);
+        // deleteItem.mutate(cartId);
+        console.log("a ===== 00000000");
+
+        updateQuantityInStore(0, productId);
       } else {
-        updateQuantity.mutate({
-          cartId: cartId,
-          quantity: quantity,
-        });
+        // updateQuantity.mutate({
+        //   cartId: cartId,
+        //   quantity: quantity,
+        // });
+        updateQuantityInStore(quantity, productId);
       }
     }
   }, [debounceQuantity]);
 
-  const handleDeleteItem = async (id: number) => {
-    deleteItem.mutate(id);
+  const handleDeleteItem = async () => {
+    console.log(productId);
+    setIsUpdated(true);
+    setQuantity(0);
+    // removeItem(productId);
   };
 
   return (
     <>
-      <tr className="text-center "  >
+      <tr className="text-center ">
         <td className="py-2">
           <div className="flex items-center ">
             <div className="w-20 h-20 relative  border rounded-lg me-4 overflow-hidden">
@@ -155,22 +158,25 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
               onClick={() => handleQuantity(quantity + 1)}
               className="cursor-pointer"
             />
-            {updateQuantity.isPending || deleteItem.isPending ? (
-              <div className="w-14 flex items-center justify-center ">
-                {" "}
-                <Spinner className="w-4 h-4" />{" "}
-              </div>
-            ) : (
-              <input
-                value={quantity}
-                type="number"
-                onChange={(e) => {
-                  setQuantity(+e.target.value);
-                  setIsUpdated(true);
-                }}
-                className="w-14 text-center remove-arrow outline-none"
-              />
-            )}
+            {
+              // updateQuantity.isPending || deleteItem.isPending
+              false ? (
+                <div className="w-14 flex items-center justify-center ">
+                  {" "}
+                  <Spinner className="w-4 h-4" />{" "}
+                </div>
+              ) : (
+                <input
+                  value={quantity}
+                  type="number"
+                  onChange={(e) => {
+                    setQuantity(+e.target.value);
+                    setIsUpdated(true);
+                  }}
+                  className="w-14 text-center remove-arrow outline-none"
+                />
+              )
+            }
 
             <HiMinusSm
               onClick={() => handleQuantity(quantity - 1)}
@@ -179,16 +185,36 @@ const ProductRow = ({ cartItemData, refreshItems }: Props) => {
           </div>
         </td>
         <td className="py-2">{shipCost?.toFixed(2)} رس</td>
-        <td className="py-2">{finalPrice?.toFixed(2)} رس</td>
+        {/* <td className="py-2">{finalPrice?.toFixed(2)} رس</td> */}
         <td className="py-2">
-          {deleteItem.isPending ? (
-            <Loader2 className="animate-spin" />
-          ) : (
-            <BiTrash
-              className="text-2xl cursor-pointer hover:text-red-500 transition-colors duration-100"
-              onClick={() => handleDeleteItem(cartId)}
-            />
-          )}
+          {(
+            thePrice * quantity +
+            shipCost *
+              (quantity +
+                (calculateBonus(
+                  quantity,
+                  amountYouBuy || 0,
+                  amountYouGet || 0
+                ) || 0))
+          )?.toFixed(2)}{" "}
+          رس
+        </td>
+        <td className="py-2">
+          {
+            // deleteItem.isPending
+            false ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              <BiTrash
+                className="text-2xl cursor-pointer hover:text-red-500 transition-colors duration-100"
+                onClick={() => {
+                  console.log(cartItemData);
+
+                  handleDeleteItem();
+                }}
+              />
+            )
+          }
         </td>
       </tr>
       {!!amountYouBuy &&

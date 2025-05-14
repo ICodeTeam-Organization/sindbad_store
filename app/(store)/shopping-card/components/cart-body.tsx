@@ -6,17 +6,20 @@ import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import InvoiceDetails from "./invoice-details";
+import { useEffect } from "react";
+import { useCartStore } from "@/app/stores/cartStore";
 
 const CartBody = ({
   initCartProducts,
 }: {
   initCartProducts: { data: CartItem[] };
 }) => {
+  const { items:cartItems ,setCartItems} = useCartStore();
+
   const {
     data: items,
-    isPending,
-    refetch,
-    isRefetching,
+    isPending, 
+    isRefetching, 
   } = useQuery({
     queryKey: ["cart-data"],
     queryFn: async () =>
@@ -24,13 +27,20 @@ const CartBody = ({
     initialData: initCartProducts,
   });
 
+  
+  useEffect(()=>{
+    if (items) {
+      setCartItems(items?.data) 
+    }
+  },[items])
+
   return (
     <>
       <div className="lg:w-3/4 mdHalf:w-[65%] ">
         <Card className="p-6 mb-4 w-full overflow-x-auto">
           {isPending ? (
             <Loader2 className="animate-spin text-center mx-auto" />
-          ) : items.data.length > 0 ? (
+          ) : items.data.length > 0 && cartItems.some(s=>s.quantity > 0) ? (
             <div className="">
               {/* web table or big screens */}
               <div className="overflow-x-auto">
@@ -46,24 +56,18 @@ const CartBody = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {items.data.map((item: CartItem) => (
-                      <ProductRow
-                        key={item.cartId}
-                        cartItemData={item}
-                        refreshItems={refetch}
-                        // id={item.cartId}
-                        // name={item.name || ""}
-                        // price={item.price || 0}
-                        // quantity={item.quantity}
-                        // image={item.imageUrl}
-                        // refreshItems={refetch}
-                        // shipCost={item.shipCost || 0}
-                        // finalPrice={item.finalPrice || 0}
-                        // percentageDiscount={item.percentageDiscount || 0}
-                        // priceAfterDiscount={item.priceAfterDiscount || 0}
-                        // amountYouBuy={item.amountYouBuy}
-                      />
-                    ))}
+                    {cartItems.map((item: CartItem) => {
+                      const isDeleted = item?.quantity == 0
+                      if (isDeleted) {
+                        return null
+                      }
+                      return (
+                        <ProductRow
+                          key={item.cartId}
+                          cartItemData={item} 
+                        />
+                      )
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -77,7 +81,7 @@ const CartBody = ({
       </div>
 
       <div className="lg:w-1/4 mdHalf:w-[35%] ">
-        <InvoiceDetails cartItems={items.data} isRefetching={isRefetching} />
+        <InvoiceDetails cartItems={cartItems} isRefetching={isRefetching} />
       </div>
     </>
   );

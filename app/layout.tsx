@@ -8,9 +8,11 @@ import ProgressBarProvider from "@/components/progress-bar-providers";
 import { Toaster as SonanerToaster } from "sonner";
 import Footer from "@/components/Footer";
 import About from "@/components/About";
-import GetInitialData from "./GetInitialData";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import SpecialOrderDialogsViewer from "@/components/SpecialOrderDialogsViewer";
+import { ToastContainer } from 'react-toastify';
+import GetInitialData from "./GetInitialData";
+import SendDataInBG from "@/components/DataHandler/SendDataInBG";
 
 const Noto_Kufi = Almarai({
   weight: ["400", "700"],
@@ -24,7 +26,6 @@ const tajawal = Tajawal({
   display: "swap",
   variable: "--font-tajawal",
 });
-
 export const metadata: Metadata = {
   title: "متجر سندباد",
   description:
@@ -67,6 +68,7 @@ export default async function RootLayout({
               <ClientProviders>
                 {/* this to get init data like categories , favorites */}
                 <GetInitialData />
+                <SendDataInBG/>
                 <NuqsAdapter>
                   <SpecialOrderDialogsViewer/>
                   {children}
@@ -81,6 +83,7 @@ export default async function RootLayout({
           {/* to show toaster messages */}
           <Toaster  />
           <SonanerToaster richColors />
+          <ToastContainer position="bottom-right" />
         </ProgressBarProvider>
       </body>
     </html>

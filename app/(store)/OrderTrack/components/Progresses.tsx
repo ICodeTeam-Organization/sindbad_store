@@ -5,6 +5,9 @@ import Notebook from "@/public/images/Notebook.svg";
 import Package from "@/public/images/Package.svg";
 import Handshake from "@/public/images/Handshake.svg";
 import Truck from "@/public/images/Truck.svg";
+import { GiSandsOfTime } from "react-icons/gi";
+import { TbReportMoney } from "react-icons/tb";
+ 
 type props = {
   progress: number;
 };
@@ -91,7 +94,8 @@ const Progresses = ({ progress }: props) => {
 </div>
 <div className="grid grid-cols-6 justify-items-center mt-3">
 <div className="m-auto grid justify-items-center">
-  <Image src={Notebook} alt="Notebook" />
+  {/* <Image src={Notebook} alt="Notebook" /> */}
+  <GiSandsOfTime className="text-3xl text-primary-background " />
   <h1>الطلب قيد الإنتظار</h1>
 </div>
 <div className="m-auto grid justify-items-center">
@@ -99,7 +103,9 @@ const Progresses = ({ progress }: props) => {
   <h1>تم تأكيد الطلب</h1>
 </div>
 <div className="m-auto grid justify-items-center">
-  <Image src={Notebook} alt="Notebook" />
+  {/* <Image src={Notebook} alt="Notebook" /> */}
+  <TbReportMoney   className="text-3xl text-primary-background " />
+
   <h1>تم شراء الطلب</h1>
 </div>
 <div className="m-auto grid justify-items-center">

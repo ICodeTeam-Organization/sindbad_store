@@ -27,6 +27,7 @@ import { toast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next-nprogress-bar";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 type Region = {
   id: number;
@@ -77,6 +78,9 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
     queryKey: ["governorate-directorate"],
     queryFn: () => getApi<any>(`Locations/GetGovernorateWithChildren`),
   });
+
+  const {data:ds} = useSession();
+  console.log(ds);
 
   const allGovs = data?.data as Governorate[]; // All governorates
   const allDirects = (allGovs?.flatMap((gov) => gov.directorates) ||

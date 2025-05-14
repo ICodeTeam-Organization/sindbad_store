@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { useToast } from "@/hooks/use-toast"; 
-import { ReviewFormProps } from "../types";
+import { useToast } from "@/hooks/use-toast";  
 import { useSession } from "next-auth/react";
 import { postApi } from "@/lib/http";
+import { saveToLocalStorage } from "@/lib/utils";
+import { ReviewProps } from "../types"; 
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
+export interface ReviewFormProps {
+  productId: number;
+  onReviewAdded: (review: ReviewProps) => void;  
+}
+
+const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded }) => {
+  
   const [reviewText, setReviewText] = useState("");
   const [rate, setRate] = useState(3);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -81,7 +88,25 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
     }
 
     setValidationError(null);
-    mutation.mutate();
+    const data = {
+      reqType: 2,
+      reqValue: rate,
+      Id: productId,
+      reviewText: reviewText,
+      date: new Date().toISOString(),
+      prevReviewText: null,
+    }
+    saveToLocalStorage(data);
+    onReviewAdded({
+      customerImage:"",
+      customerName: session?.user.data.name || "مستخدم",
+      reviewText,
+      reviewDate: data.date,
+      numOfRate: rate,
+      isDeleted: false,
+      isMe: true,
+    })
+    // mutation.mutate();
   };
 
   return (

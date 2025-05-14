@@ -11,6 +11,7 @@ import React from "react";
 import PriceLabel from "./price-label";
 import Link from "next/link";
 import { CartItem } from "@/types/storeTypes";
+import { calculateBonus } from "@/lib/utils";
 
 // Function to calculate the total price
 const calculateTotalPrice = (cartItems: CartItem[]): number => {
@@ -45,8 +46,17 @@ const calculateTotalDiscount = (cartItems: CartItem[]): number => {
 
 const calculateFinalTotal = (cartItems: CartItem[]): number => {
   const totalPrice = cartItems?.reduce((total, item) => {
-    const price = item.finalPrice || 0;
-    return total + price;
+    const price = item.priceAfterDiscount || item.price || 0;
+    return (
+      total +
+      (price * item.quantity) +
+        ( item.shipCost * (item.quantity +
+          (calculateBonus(
+            item.quantity,
+            item.amountYouBuy || 0,
+            item.amountYouGet || 0
+          ) || 0)))
+    );
   }, 0);
   return totalPrice;
 };
@@ -58,6 +68,8 @@ const Summary = ({
   cartItems: CartItem[];
   isRefetching: boolean;
 }) => {
+  cartItems = cartItems.filter((e) => e.quantity > 0);
+
   return (
     <Card className="mdHalf:sticky mdHalf:top-[100px] mdHalf:z-10 ">
       <CardHeader>

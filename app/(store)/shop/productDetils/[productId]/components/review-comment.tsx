@@ -8,7 +8,7 @@ const ReviewComment = ({
   date,
   rating,
   comment,
-  customerImage,
+  customerImage, 
 }: any) => {
   // const renderStars = () => {
   //   const stars = [];

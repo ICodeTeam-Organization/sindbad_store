@@ -30,10 +30,11 @@ const CategoriesShopFilter: React.FC<ParentChildCheckboxProps> = ({ data }) => {
   
   const isAllSubCatsChecked = data?.subCategories ? data?.subCategories.every((ele)=>{
     return filters.subCats.includes(ele.id+"")
-  }) : false;
+  }) : false; 
  
- 
+  
   const isIndeterminate = Boolean(!isAllSubCatsChecked && data?.subCategories?.some((e)=>filters.subCats.includes(e.id+"")));
+
   return (
     <div className="mb-1">
       <div className="flex items-center space-x-3">
@@ -110,14 +111,36 @@ const CategoriesShopFilter: React.FC<ParentChildCheckboxProps> = ({ data }) => {
                     <Checkbox
                       id={data.id+""}
                       checked={filters.subCats.includes(i.id+"")}
-                      onCheckedChange={()=>{
+                      onCheckedChange={(e)=>{
+                         
                         toggleSubCat(i.id+"")
-                        const isAllChecked = data?.subCategories?.every((ele)=>{
-                           return [...filters.subCats,i.id+""].includes(ele.id+"")
-                        });
-                        if (isAllChecked && !filters.cats.includes(data.id+'')) {
+
+                         if (e) {
+                          const isAllChecked = data?.subCategories?.every((ele)=>{
+                            return [...filters.subCats,i.id+""].includes(ele.id+"")
+                         });
+                         if (isAllChecked && !filters.cats.includes(data.id+'')) {
+                            toggleCat(data.id+'')
+                          }
+                         } else {
+                        //   let subcat = filters.subCats.filter((ele)=>ele !== i.id+"")
+                        //   const isAllChecked = data?.subCategories?.every((ele)=>{
+                        //     return [...subcat].includes(ele.id+"")
+                        //  });
+                        if (filters.cats.includes(data.id+'')) {
                           toggleCat(data.id+'')
                         }
+                        //  if (isAllChecked && !filters.cats.includes(data.id+'')) {
+                        //     toggleCat(data.id+'')
+                        //   }
+                         }
+
+                       
+                        // if (isAllSubCatsChecked && !filters.cats.includes(data.id+'')) {
+                        //   toggleCat(data.id+'')
+                        // } 
+                        
+                        
                       }}
                     />
                     {/* <input
