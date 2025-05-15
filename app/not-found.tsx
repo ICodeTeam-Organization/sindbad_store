@@ -4,11 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineHome } from "react-icons/md";
 import StoreHeader from "./(store)/store-header";
+import { Suspense } from "react";
 
 const NotFoundPage = () => {
   return (
-    <div>
-        <StoreHeader  />
+    <div> 
+     <Suspense>
+      <StoreHeader />
+     </Suspense>
     <div className=" mb-20 text-center flex flex-col items-center justify-center mx-2 md:mx-0">
       <Image src="/images/opps.svg" alt="" width={350} height={350} />
       <h1 className="font-bold text-1xl mb-1 mt-2">404, هذا الرابط غير صحيح</h1>

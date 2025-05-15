@@ -4,6 +4,7 @@ import { SpecialOrdersResponseType } from "./types";
 import { getApi } from "@/lib/http";
 import OrdersPricedTable from "./components/tabsContent/OrdersPricedTable";
 
+export const dynamic = 'force-dynamic';
 const MyAccountPage = async () => {
   try {
     const [
