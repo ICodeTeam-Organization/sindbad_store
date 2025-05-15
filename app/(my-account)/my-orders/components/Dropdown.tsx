@@ -15,8 +15,6 @@ const Dropdown: React.FC<DropdownProps> = ({ placeholder, options,icon, onSelect
  
   const [selectedOption, setSelectedOption] = useState<string>(placeholder);
   const handleSelect = (option:{status:string,key:number}) => {
-    console.log(option);
-    
     setSelectedOption(option.status);
     onSelect(option);
   };

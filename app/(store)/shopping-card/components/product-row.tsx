@@ -111,7 +111,6 @@ const ProductRow = ({ cartItemData }: Props) => {
       setIsUpdated(false);
       if (quantity == 0) {
         // deleteItem.mutate(cartId);
-        console.log("a ===== 00000000");
 
         updateQuantityInStore(0, productId);
       } else {
@@ -125,7 +124,6 @@ const ProductRow = ({ cartItemData }: Props) => {
   }, [debounceQuantity]);
 
   const handleDeleteItem = async () => {
-    console.log(productId);
     setIsUpdated(true);
     setQuantity(0);
     // removeItem(productId);

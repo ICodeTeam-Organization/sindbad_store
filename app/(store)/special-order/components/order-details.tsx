@@ -24,9 +24,7 @@ interface OrderDetailsProps {
   DisplayButton?: string; 
 }
 const OrderDetails: React.FC<OrderDetailsProps> = ({ OrderDetails, DisplayPrice, DisplayButton }) => {
-  // console.log("---------------------------------------")
-  // console.log(OrderDetails.requiredProductName)
-
+  
   return (
     <div className="block lg:flex gap-2  border-2  my-2">
       {<div className={DisplayPrice}>

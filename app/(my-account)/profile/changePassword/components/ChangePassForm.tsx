@@ -41,8 +41,7 @@ const ChangePassForm = () => {
           newPassword,
         },
       }),
-    onSuccess: (value) => {
-        console.log(value);
+    onSuccess: ( ) => {
         toast({
             variant:"default",
             description:"تم تغيير كلة المرور"

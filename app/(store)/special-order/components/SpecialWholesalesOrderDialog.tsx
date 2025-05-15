@@ -42,13 +42,12 @@ function SpecialWholesalesOrderDialog({
   } | null>(null);
 
   const { toast } = useToast(); // @todo: find a better way to implement the toast notification
-  const onSuccess = (res: any) => {
+  const onSuccess = () => {
     // @todo: show a taost notifaction
     // toast({
     //   variant: "default",
     //   description: "تم إرسال الطلبات بنجاح",
     // });
-    console.log("🚀 ~ onSuccess ~ res:", res);
   };
 
   const onError = (error: any) => {

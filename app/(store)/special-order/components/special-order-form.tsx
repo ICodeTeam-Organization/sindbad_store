@@ -93,14 +93,13 @@ const SpecialOrderForm = ({
   } | null>(null);
 
   const { toast } = useToast(); // @todo: find a better way to implement the toast notification
-  const onSuccess = (res: any) => {
+  const onSuccess = () => {
      router.push("/my-special-orders");
     // @todo: show a taost notifaction
     // toast({
     //   variant: "default",
     //   description: "تم إرسال الطلبات بنجاح",
     // });
-    console.log("🚀 ~ onSuccess ~ res:", res);
   };
 
   const onError = (error: any) => {

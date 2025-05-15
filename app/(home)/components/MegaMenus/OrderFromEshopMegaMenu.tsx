@@ -57,9 +57,9 @@ function OrderFromEshopMegaMenu() {
             />
             <h3
               className="mdHalf:text-md text-xs font-bold text-black  "
-              onClick={() => {
-                console.log(data?.data?.items);
-              }}
+              // onClick={() => {
+              //   console.log(data?.data?.items);
+              // }}
             >
               {" "}
               إختر فئة{" "}

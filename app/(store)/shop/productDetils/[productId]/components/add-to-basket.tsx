@@ -2,16 +2,11 @@
 import { MdOutlineLocalGroceryStore } from "react-icons/md";
 import { useRouter } from "next-nprogress-bar";
 import { useSession } from "next-auth/react";
-import { useMutation } from "@tanstack/react-query";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction } from "@radix-ui/react-toast";
 import { Button } from "@/components/ui/button";
 import { Loader2, Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import AddToFavorite from "./add-to-favorite";
 import { useCartStore } from "@/app/stores/cartStore";
-import { deleteApi, postApi, putApi } from "@/lib/http";
-import Spinner from "./Spinner";
 import { useDebounce } from "@/hooks/useDebounce";
 
 type Props = {
@@ -23,10 +18,9 @@ type Props = {
     oldPrice?: number;
   };
 };
-const AddToBasket = ({ id, productInfo }: Props) => {
+const AddToBasket = ({ id,   }: Props) => {
   const redirct = useRouter();
-  const { data: session, status } = useSession();
-  const { toast } = useToast();
+  const {   status } = useSession();
 
   const {
     addItem,
@@ -44,96 +38,96 @@ const AddToBasket = ({ id, productInfo }: Props) => {
     setQuantity(inCart?.quantity || 0);
   }, [inCart]);
 
-  const mutationAdd = useMutation({
-    mutationFn: async () => {
-      return await postApi<{data:any}>(
-        "Cart/AddProductToCart?productId=" +
-          id,
-        {
-          body: {
-            quantity: 1,
-          },
-          headers: {
-            "Accept-Language": "ar",
-            "Content-type": "multipart/form-data",
-            Authorization: `Bearer ${session?.user.data.token}`,
-          },
-        }
-      );
-    },
-    onSuccess: (data) => {
-      const res = data?.data as {
-        id: number;
-        quantity: number;
-        productId: number;
-      };
-      if (res) {
-        const newCart:any = {
-          cartId: res?.id,
-          productId: res?.productId,
-          imageUrl: productInfo.image,
-          price: productInfo.oldPrice,
-          priceAfterDiscount: productInfo.price,
-          quantity: res?.quantity,
-        };
-        setQuantity(1);
-        addItem(newCart);
-      }
+  // const mutationAdd = useMutation({
+  //   mutationFn: async () => {
+  //     return await postApi<{data:any}>(
+  //       "Cart/AddProductToCart?productId=" +
+  //         id,
+  //       {
+  //         body: {
+  //           quantity: 1,
+  //         },
+  //         headers: {
+  //           "Accept-Language": "ar",
+  //           "Content-type": "multipart/form-data",
+  //           Authorization: `Bearer ${session?.user.data.token}`,
+  //         },
+  //       }
+  //     );
+  //   },
+  //   onSuccess: (data) => {
+  //     const res = data?.data as {
+  //       id: number;
+  //       quantity: number;
+  //       productId: number;
+  //     };
+  //     if (res) {
+  //       const newCart:any = {
+  //         cartId: res?.id,
+  //         productId: res?.productId,
+  //         imageUrl: productInfo.image,
+  //         price: productInfo.oldPrice,
+  //         priceAfterDiscount: productInfo.price,
+  //         quantity: res?.quantity,
+  //       };
+  //       setQuantity(1);
+  //       addItem(newCart);
+  //     }
 
-      toast({
-        variant: "default",
-        description: "تمت الاضافة الى السلة بنجاح",
-        style: {
-          backgroundColor: "green",
-          color: "#fff",
-        },
-      });
-    },
-    onError: (res: any) => {
-      toast({
-        variant: "destructive",
-        description: res.response.data.message,
-        action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
-      });
-    },
-  });
+  //     toast({
+  //       variant: "default",
+  //       description: "تمت الاضافة الى السلة بنجاح",
+  //       style: {
+  //         backgroundColor: "green",
+  //         color: "#fff",
+  //       },
+  //     });
+  //   },
+  //   onError: (res: any) => {
+  //     toast({
+  //       variant: "destructive",
+  //       description: res.response.data.message,
+  //       action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+  //     });
+  //   },
+  // });
 
-  const mutationUpdateQ = useMutation({
-    mutationFn: async ({
-      quantity,
-      cartId,
-    }: {
-      quantity: number;
-      cartId: number;
-    }) => {
-      await putApi(
-        "Cart/UpdateCart",
-        {
-          body: {
-            cartId: cartId,
-            quantity: quantity,
-          },
-        },
-        "PATCH"
-      );
-      return { quantity, cartId };
-    },
-    onSuccess: ({ quantity, cartId }) => {
-      console.log(quantity, cartId, "updted w");
-      updateQuantity(quantity, cartId);
-    },
-    onError: (res) => {
-      setQuantity(inCart?.quantity || quantity);
-      toast({
-        variant: "destructive",
-        description: res.message,
-        action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
-      });
-    },
-  });
+  // const mutationUpdateQ = useMutation({
+  //   mutationFn: async ({
+  //     quantity,
+  //     cartId,
+  //   }: {
+  //     quantity: number;
+  //     cartId: number;
+  //   }) => {
+  //     await putApi(
+  //       "Cart/UpdateCart",
+  //       {
+  //         body: {
+  //           cartId: cartId,
+  //           quantity: quantity,
+  //         },
+  //       },
+  //       "PATCH"
+  //     );
+  //     return { quantity, cartId };
+  //   },
+  //   onSuccess: ({ quantity, cartId }) => {
+  //     console.log(quantity, cartId, "updted w");
+  //     updateQuantity(quantity, cartId);
+  //   },
+  //   onError: (res) => {
+  //     setQuantity(inCart?.quantity || quantity);
+  //     toast({
+  //       variant: "destructive",
+  //       description: res.message,
+  //       action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+  //     });
+  //   },
+  // });
 
   const increamentQ = () => {
-    if (inCart && !mutationUpdateQ.isPending) {
+    if (inCart ) {
       setIsUpdated(true);
       setQuantity((q) => q + 1);
       // mutationUpdateQ.mutate({
@@ -144,7 +138,7 @@ const AddToBasket = ({ id, productInfo }: Props) => {
   };
 
   const decreamentQ = () => {
-    if (inCart && !mutationUpdateQ.isPending) {
+    if (inCart ) {
       setIsUpdated(true);
       setQuantity((q) => q - 1);
       // mutationUpdateQ.mutate({
@@ -157,26 +151,31 @@ const AddToBasket = ({ id, productInfo }: Props) => {
   const handleAddToCart = () => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
-      mutationAdd.mutate();
+       const newCart:any = {
+          productId: id,
+          quantity: 1,
+        };
+        setQuantity(1);
+        addItem(newCart);
     }
   };
 
-  const deleteItemFromCart = useMutation({
-    mutationFn: async (id: number) => {
-      await deleteApi("Cart/DeleteCart?cartId=" + id);
-      return id;
-    },
-    onSuccess: (id) => {
-      removeItem(id);
-    },
-    onError: (res: any) => {
-      toast({
-        variant: "destructive",
-        description: res.response.data.message,
-        action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
-      });
-    },
-  });
+  // const deleteItemFromCart = useMutation({
+  //   mutationFn: async (id: number) => {
+  //     await deleteApi("Cart/DeleteCart?cartId=" + id);
+  //     return id;
+  //   },
+  //   onSuccess: (id) => {
+  //     removeItem(id);
+  //   },
+  //   onError: (res: any) => {
+  //     toast({
+  //       variant: "destructive",
+  //       description: res.response.data.message,
+  //       action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+  //     });
+  //   },
+  // });
 
   const [isUpdated, setIsUpdated] = useState(false);
   const debounceQuantity = useDebounce(quantity, 1000);
@@ -185,21 +184,18 @@ const AddToBasket = ({ id, productInfo }: Props) => {
       setIsUpdated(false);
       if (inCart) {
         if (quantity == 0) {
-          deleteItemFromCart.mutate(inCart.cartId);
+            removeItem(+id); 
         } else {
-          mutationUpdateQ.mutate({
-            cartId: inCart.cartId,
-            quantity: quantity,
-          });
+            updateQuantity(quantity, +id); 
         }
       }
     }
   }, [debounceQuantity]);
 
   return (
-    <div className="cursor-pointer  my-1 flex gap-x-2 px-2 mb-2   ">
+    <div className="cursor-pointer  my-1 flex gap-x-2 px-2 mb-2    ">
       {inCart ? (
-        <div className="w-full h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1">
+        <div className="w-[200px]  h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1">
           <div
             className="text-[20px] bg-slate-100 px-2 h-[90%] aspect-square flex items-center justify-center rounded-full "
             onClick={() => {
@@ -208,12 +204,7 @@ const AddToBasket = ({ id, productInfo }: Props) => {
            >
             <Plus size={15} />
           </div>
-          {mutationUpdateQ.isPending || deleteItemFromCart.isPending ? (
-            <div className="w-full flex items-center justify-center">
-              {" "}
-              <Spinner className="h-5 w-5" />{" "}
-            </div>
-          ) : (
+          {  (
             <input
               value={quantity}
               type="number"
@@ -237,12 +228,12 @@ const AddToBasket = ({ id, productInfo }: Props) => {
         </div>
       ) : (
         <Button
-          disabled={mutationAdd.isPending}
+          // disabled={mutationAdd.isPending}
           variant={"outline"}
           onClick={() => handleAddToCart()}
           className="hover:bg-orange-600 min-w-[200px] bg-orange-500 hover:text-white text-white text-xl rounded-md flex justify-center items-center mb-2 md:mb-0"
         >
-          {mutationAdd.isPending ? (
+          {false ? (
             <Loader2 className="animate-spin" />
           ) : (
             <div className="flex items-center justify-center gap-2">

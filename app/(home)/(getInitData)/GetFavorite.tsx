@@ -66,8 +66,6 @@ export default function GetFavorite() {
             ? ecommrcesResponse.value?.data
             : {items:[]},
       };
-      console.log(theData,"this is favorite data");
-
       return theData;
     },
     enabled: trigged,

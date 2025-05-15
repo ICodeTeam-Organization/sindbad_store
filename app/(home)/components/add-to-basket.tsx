@@ -187,8 +187,6 @@ const AddToBasket = ({ id }: Props) => {
         if (quantity == 0) {
             removeItem(+id); 
         } else {
-          console.log(quantity, +id , "skdsljhdkjasfdjsafbbjkgbnbvnmvnmbv");
-          
           updateQuantity(quantity, +id); 
         }
       }
