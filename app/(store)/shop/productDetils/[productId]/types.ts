@@ -55,13 +55,15 @@ export interface ProductFeaturesTableProps {
   features: ProductFeature[];
 }
 export interface ReviewProps {
+  id: string;
   customerName: string;
   reviewText: string;
   reviewDate: string;
   customerImage: string | null;
   numOfRate: number;
   isDeleted: boolean;
-  isMe?:boolean
+  isMe?:boolean,
+  productId?: number;
 };
 // interface Review {
 //   customerName: string;     

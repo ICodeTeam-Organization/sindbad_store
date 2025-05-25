@@ -57,7 +57,7 @@ const CheckoutForm = () => {
     queryFn: async () => await getApi("BankAccountsGetAccountsByCompany"),
   });
 
-  const { data: addressData } = useQuery<AddressResponse>({
+  const { data: addressData , isPending:isPendingForAdresses } = useQuery<AddressResponse>({
     queryKey: ["address-checkout"],
     queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress`),
   });
@@ -176,13 +176,19 @@ const CheckoutForm = () => {
                               <SelectItem
                                 key={address?.id}
                                 value={address?.id.toString()}
+                                
                               >
-                                {address?.directorateName}
+                                <p>
+                                  <p> {address?.directorateName} </p>
+                                  <p className="text-xs text-gray-500">
+                                    {address?.locationDescription}  
+                                    </p>
+                                </p>
                               </SelectItem>
                             )
                           )}
                         </SelectGroup>
-                        {addressData?.data.length == 0 && <div className="text-sm flex flex-col items-center justify-center p-4">
+                        {isPendingForAdresses ? <div className="p-4 flex items-center justify-center" > <Loader2 className="animate-spin" /> </div> : addressData?.data.length == 0 && <div className="text-sm flex flex-col items-center justify-center p-4">
                           <h1 className="mb-2"> لا توجد لديك عناوين </h1>
                           <Link
                             href={"/user-addresses"}

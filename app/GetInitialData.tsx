@@ -9,36 +9,45 @@ import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/authOption";
 
 async function GetInitialData() {
-  
-  const AllCategoriesWithSub = await getApi<{
-    data: { items: MainCategory[] };
-  }>("Category/GetAllMainCategoriesWithSubCategories/1/10000");
+  let allCategoriesWithSub: MainCategory[] = [];
 
-  const session = await getServerSession(authOption);
-  let notificationCount;
+  try {
+    const response = await getApi<{ data: { items: MainCategory[] } }>(
+      "Category/GetAllMainCategoriesWithSubCategories/1/10000"
+    );
+    allCategoriesWithSub = response?.data?.items || [];
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+  }
+
+  let session = null;
+  try {
+    session = await getServerSession(authOption);
+  } catch (error) {
+    console.error("Error fetching session:", error);
+  }
 
   let totalNotificationCount: number = 0;
-  if (session && session?.user?.data?.isAuthenticated) {
+
+  if (session?.user?.data?.isAuthenticated) {
     try {
-      notificationCount = await getApi<{
+      const notificationResponse = await getApi<{
         message: string;
         success: boolean;
         data: { all: number; orders: number; specials: number };
       }>("Notifications/Count");
-      
-      totalNotificationCount = notificationCount?.data.all;
+
+      totalNotificationCount = notificationResponse?.data?.all || 0;
     } catch (error) {
-      totalNotificationCount =0;
-      console.log(error);
-      
+      console.error("Error fetching notifications:", error);
     }
   }
 
   return (
     <>
-      <GetNotificationCount data={totalNotificationCount || 0} />
+      <GetNotificationCount data={totalNotificationCount} />
       <SetCategoriesInLocalStorage
-        AllCategoriesWihtSubcategories={AllCategoriesWithSub?.data?.items}
+        AllCategoriesWihtSubcategories={allCategoriesWithSub}
       />
       <GetCartItems />
       <GetFavorite />

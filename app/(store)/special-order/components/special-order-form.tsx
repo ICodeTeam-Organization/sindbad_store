@@ -12,7 +12,6 @@ import {
 } from "../utils/zod-schema";
 
 import ResulteDialog from "./ResulteDialog";
-import { useRouter } from "next-nprogress-bar";
 
 type SpecialOrderBody = {
   SpecialCategoryId?: number;
@@ -40,7 +39,7 @@ const initialSpecialProduct: SpecialProductAndServiceOrderForm_FormValue = {
   // filePDF: undefined, // Optional field
   // images: undefined, // Optional field
   orderKey: "",
-  Name:""
+  Name: "",
 };
 
 // Initial values for SpecialOrderFromEcommerce
@@ -54,8 +53,7 @@ const initialSpecialEcommerce: SpecialOrderFromEcommerce_FormValue = {
   // images: undefined, // Optional field
   category: "",
   orderKey: "",
-  Name:""
-
+  Name: "",
 };
 
 const SpecialOrderForm = ({
@@ -86,15 +84,16 @@ const SpecialOrderForm = ({
   ]);
   // ORDERS STATE //
 
-  const router = useRouter();
+  // const router = useRouter();
   const [showResultesDialog, setShowResultesDialog] = useState<{
     success: { orderIndex: number; value: any }[];
     failed: { orderIndex: number; reason: any }[];
   } | null>(null);
 
   const { toast } = useToast(); // @todo: find a better way to implement the toast notification
-  const onSuccess = () => {
-     router.push("/my-special-orders");
+  const onSuccess = (res:any) => {
+    setShowResultesDialog(res);
+    //  router.push("/my-special-orders");
     // @todo: show a taost notifaction
     // toast({
     //   variant: "default",
@@ -118,7 +117,7 @@ const SpecialOrderForm = ({
           const data: SpecialOrderBody = {
             SpecialCategoryId: "category" in request ? +request.category : 0,
             // SpecialCategoryId: "dd",
-            Name:request.Name,
+            Name: request.Name,
             Description: "orderDetails" in request ? request.orderDetails : "",
             ECommerceName: "ecommerce" in request ? request.ecommerce + "" : "",
             LinkUrl: request.linkUrl,
@@ -176,8 +175,6 @@ const SpecialOrderForm = ({
       //   console.error("Failed requests:", failedRequests.map(f => f.reason));
       //   throw new Error("Some requests failed. Check console for details.");
       // }
-
-      setShowResultesDialog(response);
 
       return response;
     },

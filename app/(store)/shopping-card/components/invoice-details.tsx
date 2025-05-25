@@ -16,7 +16,7 @@ import { calculateBonus } from "@/lib/utils";
 // Function to calculate the total price
 const calculateTotalPrice = (cartItems: CartItem[]): number => {
   return cartItems?.reduce((total, item) => {
-    const price = item.price || 0;
+    const price = item.priceAfterDiscount || item.price;
     return total + price * item.quantity;
   }, 0);
 };
@@ -25,7 +25,16 @@ const calculateTotalPrice = (cartItems: CartItem[]): number => {
 const calculateTotalShippingCost = (cartItems: CartItem[]): number => {
   return cartItems?.reduce((total, item) => {
     const shipCost = item.shipCost || 0;
-    return total + shipCost * item.quantity;
+    return (
+      total +
+      shipCost *
+        (item.quantity +
+          (calculateBonus(
+            item.quantity,
+            item.amountYouBuy || 0,
+            item.amountYouGet || 0
+          ) || 0))
+    );
   }, 0);
 };
 
@@ -33,15 +42,12 @@ const calculateTotalShippingCost = (cartItems: CartItem[]): number => {
 const calculateTotalDiscount = (cartItems: CartItem[]): number => {
   const totalOldPrice = cartItems?.reduce((total, item) => {
     const oldPrice =
-      (item.priceAfterDiscount !== null
-        ? item.priceAfterDiscount
-        : item.price) || 0;
+      item.priceAfterDiscount !== null && item.priceAfterDiscount < item.price
+        ? item.price - item.priceAfterDiscount
+        : 0;
     return total + oldPrice * item.quantity;
   }, 0);
-
-  const totalNewPrice = calculateTotalPrice(cartItems);
-
-  return totalOldPrice - totalNewPrice;
+  return totalOldPrice;
 };
 
 const calculateFinalTotal = (cartItems: CartItem[]): number => {
@@ -49,13 +55,14 @@ const calculateFinalTotal = (cartItems: CartItem[]): number => {
     const price = item.priceAfterDiscount || item.price || 0;
     return (
       total +
-      (price * item.quantity) +
-        ( item.shipCost * (item.quantity +
+      price * item.quantity +
+      item.shipCost *
+        (item.quantity +
           (calculateBonus(
             item.quantity,
             item.amountYouBuy || 0,
             item.amountYouGet || 0
-          ) || 0)))
+          ) || 0))
     );
   }, 0);
   return totalPrice;
@@ -69,6 +76,8 @@ const Summary = ({
   isRefetching: boolean;
 }) => {
   cartItems = cartItems.filter((e) => e.quantity > 0);
+
+  console.log(cartItems, "cartItems");
 
   return (
     <Card className="mdHalf:sticky mdHalf:top-[100px] mdHalf:z-10 ">

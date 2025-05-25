@@ -146,7 +146,8 @@ const ProductRow = ({ cartItemData }: Props) => {
           </div>
         </td>
         <td className="">
-          <span>{thePrice?.toFixed(2)} رس</span>
+          <p>{thePrice?.toFixed(2)} رس</p>
+          { priceAfterDiscount < price && <p className="text-xs line-through text-red-600" >{price?.toFixed(2)} رس</p>}
           {/* <span className="text-[10px] text-gray-400" >{percentageDiscount}%</span> */}
         </td>
 
@@ -236,7 +237,7 @@ const ProductRow = ({ cartItemData }: Props) => {
 
           <td className="">
             <div className="flex items-center justify-center text-primary-background">
-              {calculateBonus(quantity, amountYouBuy, amountYouGet)}
+              {calculateBonus(quantity, amountYouBuy, amountYouGet)}+
             </div>
           </td>
           <td className=""></td>

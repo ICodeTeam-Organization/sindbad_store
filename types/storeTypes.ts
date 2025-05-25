@@ -82,8 +82,8 @@ export type Product = {
     name: string;
     price: number;
     priceAfterOffer: number;
-    amountYouShouldToBuyForGetOffer: number;
-    amountYouWillGetFromOffer: number;
+    amountYouBuy?:number;
+    amountYouGet?:number;
     offerSentence: string;
     percentageOfDiscount: number;
     offerStartDate: string; // Use `Date` if you want a Date object instead of ISO string
@@ -185,3 +185,15 @@ export type OrderTrackResponseType = {
   data: OrderTrackType
 };
 
+export type BtnAddTobascketProps = {
+  id: string | number;
+  productInfo: {
+    image: string;
+    productName: string;
+    price: number;
+    oldPrice?: number;
+    amountYouBuy?:number;
+    amountYouGet?:number;
+    shipCost?:number;
+  };
+};

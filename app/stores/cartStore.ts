@@ -55,7 +55,7 @@
 
 import { create } from "zustand";
 import { CartItem } from "@/types/storeTypes";
-import { BgHandlerDataItemType, saveToLocalStorage } from "@/lib/utils";
+import { BgHandlerDataItemType, storeInBgcache, SEND_DATA_IN_BG_LOCALSTORAGE_KEY } from "@/lib/utils";
 
 type CartState = {
   items: CartItem[];
@@ -77,7 +77,7 @@ export const useCartStore = create<CartState>((set) => ({
 
       // ✅ إذا المنتج غير موجود، أضفه بكمية 1 وسجّل ذلك في localStorage
       // عشان ارسال ركوست كل عشر ثواني موجود داخل الcomponents in SendDataInBG
-      saveToLocalStorage({
+      storeInBgcache({
         reqType: 3,  
         reqValue: 1,  
         Id: newItem.productId,
@@ -92,7 +92,7 @@ export const useCartStore = create<CartState>((set) => ({
       const item = state.items.find((i) => i.productId == id);
       if (item) {
         // ✅ عند حذف منتج من السلة، احفظ ذلك في localStorage مع reqValue = 0
-        saveToLocalStorage({
+        storeInBgcache({
           reqType: 3,
           reqValue: 0,
           Id: id,
@@ -113,7 +113,7 @@ export const useCartStore = create<CartState>((set) => ({
           const updated = { ...item, quantity: newQuantity };
 
           // ✅ عند تغيير كمية منتج في السلة، خزّن القيمة الجديدة في localStorage
-          saveToLocalStorage({
+          storeInBgcache({
             reqType: 3,
             reqValue:newQuantity, // نعتبره تعديل/إضافة
             Id: item.productId,
@@ -130,7 +130,7 @@ export const useCartStore = create<CartState>((set) => ({
 
     setCartItems: (cartItems) =>
       set(() => {
-              const bgHandlerData = localStorage.getItem("backgroundHandlerData");
+              const bgHandlerData = localStorage.getItem(SEND_DATA_IN_BG_LOCALSTORAGE_KEY);
               const data:BgHandlerDataItemType[] = bgHandlerData ? JSON.parse(bgHandlerData) : null; 
               if (bgHandlerData && data) {
 

@@ -48,12 +48,12 @@ const ProductCarsoule = ({
           className="m-auto cursor-pointer md:mx-5 "
         >
           <CarouselContent dir="rtl" className="py-10    w-full ">
-            {products?.data?.map((product: any) => (
+            {products?.data?.map((product: Product) => (
               <CarouselItem key={product.id} className=" sm:basis-[240px] 1xs:basis-[190px] 2xl:basis-1/6 xl:basis-1/5  pr-[0.8rem]">
                 <div className="sm:w-[220px]  1xs:w-[180px] w-full">
                   <ProductCard
                     key={product.id}
-                    id={product.id}
+                    id={product.id+""}
                     image={product.mainImageUrl}
                     productName={product.name}
                     price={
@@ -69,6 +69,7 @@ const ProductCarsoule = ({
                     threeStarCount={product.threeStarCount}
                     fourStarCount={product.fourStarCount}
                     fiveStarCount={product.fiveStarCount}
+                    // amountYouBuy={product.}
                   />
                 </div>
               </CarouselItem>

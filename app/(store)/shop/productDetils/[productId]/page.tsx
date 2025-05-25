@@ -27,7 +27,7 @@ const fetchProductDetails = async (id: string): Promise<Product | null> => {
   return null;
 };
 
-const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
+  const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   const { productId } = params;
 
   if (!productId) {
@@ -38,9 +38,9 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 
   if (!product) {
     notFound();
-  }
+  }  
 
-  console.log(product);
+  console.log("product", product);
   
 
   return (

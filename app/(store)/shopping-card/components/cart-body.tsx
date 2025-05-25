@@ -3,44 +3,87 @@ import { getApi } from "@/lib/http";
 import ProductRow from "./product-row";
 import { CartItem } from "@/types/storeTypes";
 import { Card } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query"; 
 import InvoiceDetails from "./invoice-details";
-import { useEffect } from "react";
+import {   useEffect, useState } from "react";
 import { useCartStore } from "@/app/stores/cartStore";
+import useSendDataInBg from "@/hooks/useSendDataInBg";
+import { BgHandlerDataItemType } from "@/lib/utils";
+ 
 
-const CartBody = ({
-  initCartProducts,
-}: {
-  initCartProducts: { data: CartItem[] };
+type CartApiResponse = {
+  data: CartItem[];
+};
+const CartBody = ({}: // initCartProducts,
+{
+  // initCartProducts: { data: CartItem[] };
 }) => {
-  const { items:cartItems ,setCartItems} = useCartStore();
+  const { items: cartItems, setCartItems } = useCartStore();
+
+  const {
+    mutate,
+    isPending: isPendingForSendDataInBg,
+    isSuccess,
+  } = useSendDataInBg();
+  const [isReadytogetData, setIsReadytogetData] = useState(false);
+  useEffect(() => {
+    const bgHandlerData = localStorage.getItem("backgroundHandlerData");
+    if (bgHandlerData && !isSuccess) {
+      let bgData: BgHandlerDataItemType[] = JSON.parse(bgHandlerData);
+      bgData = bgData.filter((item) => item.reqType == 3);
+      mutate(bgData);
+    } else {
+      setIsReadytogetData(true);
+    }
+    if (isSuccess) {
+      setIsReadytogetData(true);
+    }
+  }, [isSuccess]);
 
   const {
     data: items,
-    isPending, 
-    isRefetching, 
-  } = useQuery({
+    isPending: isPendingToCartItems,
+    isRefetching,
+  } = useQuery<CartApiResponse>({
     queryKey: ["cart-data"],
     queryFn: async () =>
-      await getApi<any>("Cart/GetAllCustomerProductsInCartForViewInCartPage"),
-    initialData: initCartProducts,
+      await getApi<CartApiResponse>(
+        "Cart/GetAllCustomerProductsInCartForViewInCartPage"
+      ),
+    // initialData: initCartProducts,
+    enabled: isReadytogetData,
   });
 
-  
-  useEffect(()=>{
-    if (items) {
-      setCartItems(items?.data) 
+  useEffect(() => {
+    if (!!items) {
+      setCartItems(items.data);
     }
-  },[items])
+  }, [items]);
+
+  console.log(items);
+  
 
   return (
     <>
       <div className="lg:w-3/4 mdHalf:w-[65%] ">
         <Card className="p-6 mb-4 w-full overflow-x-auto">
-          {isPending ? (
-            <Loader2 className="animate-spin text-center mx-auto" />
-          ) : items.data.length > 0 && cartItems.some(s=>s.quantity > 0) ? (
+          {isPendingToCartItems || isPendingForSendDataInBg ? (
+            <div className="space-y-4 animate-pulse">
+              {Array.from({ length: 8 }).map((_,x) => (
+                <div key={x} className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm">
+                  <div className="w-20 h-20 bg-gray-300 rounded-md mx-2"></div>
+
+                  <div className="flex-1 space-y-3">
+                    <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+                    <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+                    <div className="h-4 bg-gray-300 rounded w-1/4"></div>
+                  </div>
+
+                  <div className="w-10 h-6 bg-gray-300 rounded"></div>
+                </div>
+              ))}
+            </div>
+          ) : cartItems.length != 0 && cartItems.some((s) => s.quantity > 0) ? (
             <div className="">
               {/* web table or big screens */}
               <div className="overflow-x-auto">
@@ -57,16 +100,13 @@ const CartBody = ({
                   </thead>
                   <tbody>
                     {cartItems.map((item: CartItem) => {
-                      const isDeleted = item?.quantity == 0
+                      const isDeleted = item?.quantity == 0;
                       if (isDeleted) {
-                        return null
+                        return null;
                       }
                       return (
-                        <ProductRow
-                          key={item.cartId}
-                          cartItemData={item} 
-                        />
-                      )
+                        <ProductRow key={item.cartId} cartItemData={item} />
+                      );
                     })}
                   </tbody>
                 </table>

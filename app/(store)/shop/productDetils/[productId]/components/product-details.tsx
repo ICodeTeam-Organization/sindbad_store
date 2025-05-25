@@ -5,7 +5,7 @@ import ImageGallery from "./image-gallery";
 import AddToBasket from "./add-to-basket";
 import { Product } from "./../types";
 import { Rating, RoundedStar } from "@smastrom/react-rating";
-import { convertToArabicDate } from "@/lib/utils";
+import { getRemainingTimeForOffer } from "@/lib/timeFuns";
 
 type ProductDetailsProps = {
   product: Product;
@@ -38,7 +38,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
       </div>
       <div className="flex flex-1 flex-col justify-between">
         {/* <ProductTitle name={product.name} description={product.name} rating={5} /> */}
-       
+
         {/* <div className="flex gap-x-2 text-sm text-gray-700">
 
          
@@ -100,96 +100,98 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           }
         /> */}
         <div>
-        <div className="mb-4 my-6">
-          <h2 className="text-black text-2xl font-bold">{product?.name}</h2>
+          <div className="mb-4 my-6">
+            <h2 className="text-black text-2xl font-bold">{product?.name}</h2>
 
-          <div className="flex  my-4 mt-6 items-center gap-x-4 ">
-            <div className=" border-l-2 pl-4 border-l-gray-200 py-1 flex">
-              <span className="text-gray-500 text-xs mx-1">
-                {rating?.toFixed(1)}
-              </span>
-              <Rating
-                style={{ maxWidth: 60 }}
-                halfFillMode="svg"
-                itemStyles={{
-                  itemShapes: RoundedStar,
-                  activeFillColor: "#ffb700",
-                  inactiveFillColor: "#eee",
-                }}
-                readOnly
-                value={rating}
+            <div className="flex  my-4 mt-6 items-center gap-x-4 ">
+              <div className=" border-l-2 pl-4 border-l-gray-200 py-1 flex">
+                <span className="text-gray-500 text-xs mx-1">
+                  {rating?.toFixed(1)}
+                </span>
+                <Rating
+                  style={{ maxWidth: 60 }}
+                  halfFillMode="svg"
+                  itemStyles={{
+                    itemShapes: RoundedStar,
+                    activeFillColor: "#ffb700",
+                    inactiveFillColor: "#eee",
+                  }}
+                  readOnly
+                  value={rating}
+                />
+              </div>
+              <PriceSection
+                discountedPrice={
+                  product.priceAfterOffer < product.priceBeforOffer
+                    ? product.priceAfterOffer
+                    : 0
+                }
+                originalPrice={product.priceBeforOffer}
+                discount={product.percentageOfDiscount}
               />
             </div>
-            <PriceSection
-              discountedPrice={product.priceAfterOffer < product.priceBeforOffer ? product.priceAfterOffer : 0}
-              originalPrice={product.priceBeforOffer}
-              discount={product.percentageOfDiscount}
-            />
+
+            {
+              <div>
+                {product.offerSentence && (
+                  <div className="flex items-center col-span-2 mb-2 text-xs bg-primary-background text-white p-1 w-fit px-2 rounded-md tajawal">
+                    <span>
+                      {product.offerSentence !== null
+                        ? product.offerSentence
+                        : ""}
+                    </span>
+                  </div>
+                )}
+
+                {/* OFFER TIME  */}
+                {product.priceAfterOffer < product.priceBeforOffer ||
+                  (product.offerSentence !== null && (
+                    <div className="flex flex-wrap gap-x-4 text-sm text-primary-background ">
+                      <div className="text-red-600 text-sm mt-2">
+                       الوقت المتبقي لنهاية العرض : {getRemainingTimeForOffer(product.offerEndDate)}
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            }
+            <hr className="my-4   border border-primary-background border-opacity-15" />
+            <p className="text-base text-gray-600 mt-4">
+              {product?.description}
+            </p>
           </div>
 
-          { (
-            <div>
-              {product.offerSentence && <div className="flex items-center col-span-2 mb-2 text-xs bg-primary-background text-white p-1 w-fit px-2 rounded-md tajawal">
-                <span>
-                  {product.offerSentence !== null ? product.offerSentence : ""}
-                </span>
-              </div>}
-
-              {/* OFFER TIME  */}
-             {product.priceAfterOffer < product.priceBeforOffer || product.offerSentence !== null && <div className="flex flex-wrap gap-x-4 text-sm text-primary-background ">
-                <div className="flex items-center mb-2">
-                  <span className="font-medium ml-1">
-                    {product.offerStartDate !== null ? "بداية العرض: " : ""}
-                  </span>
-                  <span>
-                    {product.offerStartDate !== null
-                      ? convertToArabicDate(product.offerStartDate)
-                      : ""}
-                  </span>
-                </div>
-                -
-                <div className="flex items-center mb-2">
-                  <span className="font-medium ml-1">
-                    {product.offerEndDate !== null ? "نهاية العرض: " : ""}
-                  </span>
-                  <span>
-                    {product.offerEndDate !== null ? convertToArabicDate(product.offerEndDate) : ""}
-                  </span>
-                </div>
-              </div>}
-            </div>
-          )}
-           <hr className="my-4   border border-primary-background border-opacity-15" />
-          <p className="text-base text-gray-600 mt-4">{product?.description}</p>
-        </div>
-
-        <div className="text-sm" >
-          <div className="  mb-2">
-            <p className="  ml-1 mb-2 font-bold">
-              {product.categoryName !== null ? "الفئات : " : ""}
-            </p>
-           <div className="flex flex-wrap gap-4" >
-           {[...product?.mainCategoriesNames , ...product?.subCategoriesNames].filter((e)=>!!e).map((category:any,x) => (
-                <span className="bg-zinc-100 px-2 py-1 shadow rounded text-xs  " key={category + x} >
-                {category !== null ? category : ""}
-              </span>
-              ))}
-           </div>
-            {/* <span className="bg-zinc-100 px-2 py-1 shadow rounded" >
+          <div className="text-sm">
+            <div className="  mb-2">
+              <p className="  ml-1 mb-2 font-bold">
+                {product.categoryName !== null ? "الفئات : " : ""}
+              </p>
+              <div className="flex flex-wrap gap-4">
+                {[
+                  ...product?.mainCategoriesNames,
+                  ...product?.subCategoriesNames,
+                ]
+                  .filter((e) => !!e)
+                  .map((category: any, x) => (
+                    <span
+                      className="bg-zinc-100 px-2 py-1 shadow rounded text-xs  "
+                      key={category + x}
+                    >
+                      {category !== null ? category : ""}
+                    </span>
+                  ))}
+              </div>
+              {/* <span className="bg-zinc-100 px-2 py-1 shadow rounded" >
               {product.categoryName !== null ? product.categoryName : " "}
             </span> */}
+            </div>
+
+            <div className="flex items-center col-span-2 mb-2 mt-4">
+              <span className="font-medium ml-1 ">رقم المنتج : </span>
+              <span className="bg-primary-background mx-1 text-white px-2  ">
+                {product.number}
+              </span>
+            </div>
           </div>
-
-          <div className="flex items-center col-span-2 mb-2 mt-4">
-            <span className="font-medium ml-1 ">رقم المنتج : </span>
-            <span className="bg-primary-background mx-1 text-white px-2  ">
-              {product.number}
-            </span>
-          </div>
-
-
-        </div>
-
         </div>
         <div className="flex items-center gap-4 mt-8">
           <AddToBasket
@@ -199,6 +201,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               productName: product.name,
               price: product.priceAfterOffer,
               oldPrice: product.priceBeforOffer,
+              amountYouBuy: product.amountYouShouldToBuyForGetOffer,
+              amountYouGet: product.amountYouWillGetFromOffer,
             }}
           />{" "}
         </div>

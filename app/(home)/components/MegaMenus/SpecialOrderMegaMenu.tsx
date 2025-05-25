@@ -12,7 +12,8 @@ export default function SpecialOrderMegaMenu({isAuth}:{isAuth:boolean}) {
   const { categories } = useCategoriesDataStore((state) => state);
   const [CatType, setCatType] = useState("p");
   const { setSpecialOrderState } = useSpecialOrdersDialogsStore();
-  const {toast} = useToast()
+  const {toast} = useToast();
+  
 
   const openDialog = (type:"product"|"service",id:number) => { 
     if(!isAuth){

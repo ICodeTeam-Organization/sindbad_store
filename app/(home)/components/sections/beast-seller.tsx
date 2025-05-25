@@ -44,7 +44,7 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
     ]}
       className="m-auto cursor-pointer md:w-[88%] sm:w-[85%] w-[100%]">
         <CarouselContent dir="rtl" className="py-10" >
-          {BeastSellerInWeek?.data?.map((product: any) => (
+          {BeastSellerInWeek?.data?.map((product: Product) => (
            
             <CarouselItem
               key={product.id}
@@ -53,7 +53,7 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
               <div className="sm:w-[220px]  1xs:w-[180px] w-full" >
               <ProductCard
                 key={product.id}
-                id={product.id}
+                id={""+product.id}
                 image={product.mainImageUrl}
                 productName={product.name}
                 price={
@@ -69,6 +69,9 @@ const BeastSeller =  ({BeastSellerInWeek={data:[]}}:{BeastSellerInWeek:{data:Pro
                 threeStarCount = {product.threeStarCount}
                 fourStarCount = {product.fourStarCount}
                 fiveStarCount = {product.fiveStarCount}
+                // rate={product.rate}
+                
+
               />
               </div>
               {/* <Link href={`/shop/productDetils/${product.id}`}>

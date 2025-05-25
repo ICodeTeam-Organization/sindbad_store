@@ -1,5 +1,5 @@
 "use client";
-
+//TODO تصليح الركوستات حق جلب التعليقات واضافة تعديل وحذف للتعليق
 import React, { useEffect, useState } from "react";
 import ReviewForm from "./review-form";
 import ReviewComment from "./review-comment";
@@ -9,6 +9,7 @@ import { Product } from "./../types";
 import { Rating, RoundedStar } from "@smastrom/react-rating";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import CommentSkeleton from "./CommentSkeleton";
+import { getCachedDataInBg } from "@/hooks/useSendDataInBg";
 // import { useSession } from "next-auth/react";
 
 type ProductReviewsTapProps = {
@@ -29,35 +30,75 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
   } = useInfiniteQuery({
     queryKey: ["reviews", productId],
     queryFn: async ({ pageParam = 1 }) => {
-      // let myReviews = await getApi<{data:ReviewProps[]}>(`CommentsAndRates/GetCommentsAndRates`);
-      // myReviews.data = myReviews.data.map(((e)=>{
-      //   return {
-      //     ...e,
-      //     isMe: true,
-      //   }
-      // }))
-      const response = await getApi<{ data: ReviewProps[] }>(
-        `CommentsAndRates/GetReviewsOfProduct?productId=${productId}&sort=1&pageNumber=${pageParam}&pageSize=5`
+      const cachedReviews = getCachedDataInBg(2);
+      const response = await getApi<{
+        data: { items: ReviewProps[]; currentPage: number; totalPages: number };
+      }>(
+        `CommentsAndRates/GetReviewsOfProduct?productId=${productId}&sort=1&pageNumber=${pageParam}&pageSize=20`
       );
+      let myReviews;
+      if (pageParam === 1) {
+  myReviews = await getApi<{ data: ReviewProps }>(
+    `CommentsAndRates/GetCommentsAndRates?productId=${productId}`
+  );
+
+  if (cachedReviews.length > 0) {
+    const cachedReview = cachedReviews.find((item) => item.Id == productId);
+
+    if (cachedReview) {
+      if (myReviews?.data) {
+        myReviews.data = {
+          ...myReviews.data,
+          numOfRate: cachedReview.reqValue,
+          reviewText: cachedReview.reviewText || "",
+        };
+      } else {
+       myReviews = {
+        data: {
+          id: "0",
+          numOfRate: cachedReview.reqValue,
+          reviewText: cachedReview.reviewText || "",
+          customerName: "انت",
+          reviewDate: cachedReview.date || new Date().toISOString(),
+          isMe: true,
+          customerImage: "",
+          productId: Number(productId), // ✅ تحويله إلى number
+          isDeleted: false,
+        },
+      } as { data: ReviewProps };
+      }
+    }
+  } else {
+    if (myReviews?.data) {
+      myReviews.data = { ...myReviews.data, isMe: true };
+    }
+  }
+}
+
+
       return {
-        data: response.data,
-        // data:[...myReviews.data,...response.data],
-        nextPage: response.data.length === 5 ? pageParam + 1 : null,
+        data: myReviews?.data
+          ? [myReviews?.data, ...response.data.items]
+          : response.data.items,
+        currentPage: response.data.currentPage,
+        totalPages: response.data.totalPages,
       };
     },
     getNextPageParam: (lastPage) => {
-      // if (lastPage?.currentPage < lastPage?.totalPages) {
-      //     return lastPage?.currentPage + 1;
-      //   }
-      //   return undefined;
-      return lastPage.nextPage;
+      if (lastPage?.currentPage < lastPage?.totalPages) {
+        return lastPage?.currentPage + 1;
+      }
+      return undefined;
     },
     initialPageParam: 1,
+    retry: 0,
   });
 
   useEffect(() => {
     if (data) {
       const allReviews = data.pages.flatMap((page) => page.data);
+      console.log("allReviews", allReviews);
+
       setReviewsList(allReviews);
     }
   }, [data]);
@@ -127,12 +168,21 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
           </div>
         </div>
 
-        <ReviewForm 
-            productId={Number(productId)} 
-            onReviewAdded={() => {
-              
-            }}
-         />
+        <ReviewForm
+          productId={Number(productId)}
+          hasReview={reviewsList.some(
+            (review) => review.isMe && review.numOfRate > 0
+          )}
+          onReviewAdded={(newReview) => {
+            setReviewsList((prevReviews) =>
+              prevReviews.map((review) =>
+                review.isMe && review.numOfRate == 0
+                  ? { ...review, ...newReview, isMe: true }
+                  : newReview
+              )
+            ); 
+          }}
+        />
       </div>
 
       <div className="col-span-2">
@@ -155,7 +205,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
               <CommentSkeleton key={index} />
             ))}
           </div>
-        ) : reviewsList.length === 0 ? (
+        ) : reviewsList.filter((e) => e.numOfRate > 0).length == 0 ? (
           <div className="text-center text-gray-500">لا توجد تعليقات</div>
         ) : (
           <>
@@ -164,9 +214,30 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
                 key={index}
                 reviewer={review.customerName}
                 date={new Date(review.reviewDate).toLocaleDateString()}
-                rating={`⭐`.repeat(review.numOfRate)}
+                rating={review.numOfRate}
                 comment={review.reviewText}
                 isMe={review.isMe}
+                productId={+productId}
+                reviewId={review.id}
+                onEditingEnd={(updatedData) => {
+                  setReviewsList(() =>
+                    reviewsList.map((r) =>
+                      r.isMe
+                        ? {
+                            ...r,
+                            reviewText: updatedData.comment || r.reviewText,
+                            numOfRate: updatedData.rating || r.numOfRate,
+                          }
+                        : r
+                    )
+                  );
+                }}
+                onDeletingEnd={(productId) => {
+                  if (!productId) return;
+                  setReviewsList((prevReviews) =>
+                    prevReviews.map((r) => ({ ...r, numOfRate: 0 }))
+                  );
+                }}
               />
             ))}
 

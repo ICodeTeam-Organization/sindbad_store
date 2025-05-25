@@ -40,7 +40,7 @@ function EcommerceSearchInput({
     queryFn: () =>
       postApi(`EcommercesStores/FilterECommerce`, {
         body: {
-          name: params.ecommerceName,
+          name: params.ecommerceName || null,
           pageSize: params.pageSize,
           pageNumber: params.pageNumber,
         },
@@ -51,7 +51,7 @@ function EcommerceSearchInput({
     if (data) {
       setSelectedEcommerce(data?.data.items.find((e) => e.id == ecommerceId));
     }
-  }, [ecommerceId]);
+  }, [ecommerceId,data]);
 
   return (
     <div className="w-full flex gap-x-2">

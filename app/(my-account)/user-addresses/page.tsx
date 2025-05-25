@@ -12,6 +12,9 @@ const MyAccountPage = async () => {
   
 
   const InitAddresses = await getApi<AddressResponse>(`CustomerAddress/GetCustomerAddress`);
+
+ console.log(InitAddresses);
+ 
   
   return (
       <div className="p-6 h-[500px]">

@@ -55,6 +55,9 @@ export default async function Home() {
       ),
     ]);
 
+    console.log(offersProductsResult.status === "fulfilled" && offersProductsResult.value.data.slice(0, 5));
+    
+
     // Extract only fulfilled results to avoid errors
     categories =
       categoriesResult.status === "fulfilled" ? categoriesResult.value : null;

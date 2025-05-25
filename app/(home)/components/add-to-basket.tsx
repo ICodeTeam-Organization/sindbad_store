@@ -9,17 +9,10 @@ import AddToFavorite from "./add-to-favorite";
 import { useCartStore } from "@/app/stores/cartStore"; 
 import Spinner from "./Spinner";
 import { useDebounce } from "@/hooks/useDebounce";
+import { BtnAddTobascketProps, CartItem } from "@/types/storeTypes";
+ 
 
-type Props = {
-  id: string | number;
-  productInfo: {
-    image: string;
-    productName: string;
-    price: number;
-    oldPrice?: number;
-  };
-};
-const AddToBasket = ({ id }: Props) => {
+const AddToBasket = ({ id , productInfo }: BtnAddTobascketProps) => {
   const redirct = useRouter();
   const { status } = useSession(); 
 
@@ -167,9 +160,27 @@ const AddToBasket = ({ id }: Props) => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
       // mutationAdd.mutate(); 
-        const newCart:any = {
-          productId: id,   
-          quantity: 1, 
+    //     name,
+    // price,
+    // priceAfterDiscount,  
+    // // percentageDiscount,
+    // imageUrl,
+    // quantity: initialQuantity,
+    // amountYouBuy,
+    // amountYouGet,
+    // shipCost,
+    // productId,
+        const newCart:CartItem = {
+          productId: +id,   
+          quantity: 1,
+          amountYouBuy:!!productInfo?.amountYouBuy ? productInfo?.amountYouBuy : undefined, 
+          amountYouGet:!!productInfo?.amountYouGet ? productInfo?.amountYouGet : undefined,
+          imageUrl: productInfo?.image,
+          price: productInfo?.oldPrice || 0,
+          priceAfterDiscount: productInfo?.price,
+          name: productInfo?.productName,
+          shipCost:0,
+          cartId:0,
         }; 
         setQuantity(1);
         addItem(newCart);

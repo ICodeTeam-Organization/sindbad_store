@@ -116,10 +116,12 @@ export type BgHandlerDataItemType = {
   date?: string; 
 };
 
-export const saveToLocalStorage = (item: BgHandlerDataItemType) => {
-  const key = "backgroundHandlerData";
+
+export const SEND_DATA_IN_BG_LOCALSTORAGE_KEY = "backgroundHandlerData";
+export const storeInBgcache = (item: BgHandlerDataItemType) => {
+
   let existing: BgHandlerDataItemType[] = JSON.parse(
-    localStorage.getItem(key) || "[]"
+    localStorage.getItem(SEND_DATA_IN_BG_LOCALSTORAGE_KEY) || "[]"
   );
 
   const index = existing.findIndex(
@@ -138,7 +140,10 @@ export const saveToLocalStorage = (item: BgHandlerDataItemType) => {
         ...existing[index],
         reqValue: item.reqValue,
         reviewText: item.reviewText,
-        prevValue: existing[index].prevValue, // الاحتفاظ بالقيمة السابقة
+        prevValue: existing[index].prevValue,  
+        prevReviewText: existing[index].reviewText || null,  
+        date: new Date().toISOString(), // تحديث التاريخ الحالي
+        // الاحتفاظ بالقيمة السابقة
       };
     }
   } else {
@@ -146,5 +151,5 @@ export const saveToLocalStorage = (item: BgHandlerDataItemType) => {
     existing.push(item);
   }
 
-  localStorage.setItem(key, JSON.stringify(existing));
+  localStorage.setItem(SEND_DATA_IN_BG_LOCALSTORAGE_KEY, JSON.stringify(existing));
 };

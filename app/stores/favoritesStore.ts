@@ -1,4 +1,4 @@
-import { saveToLocalStorage } from "@/lib/utils";
+import { storeInBgcache } from "@/lib/utils";
 import { create } from "zustand";
 
 // // ✅ هذا النوع يمثل البيانات التي سنخزنها في localStorage
@@ -9,7 +9,7 @@ import { create } from "zustand";
 //   reviewText: string | null; // حاليًا null
 // };
 
-// const saveToLocalStorage = (item: BgHandlerDataItemType) => {
+// const storeInBgcache = (item: BgHandlerDataItemType) => {
 //   const key = "backgroundHandlerData";
 //   const existing: BgHandlerDataItemType[] = JSON.parse(localStorage.getItem(key) || "[]");
 
@@ -57,13 +57,13 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الإضافة
   addProductToFavorite: (id) => {
-    saveToLocalStorage({ reqType: 1, reqValue: 1, Id: id, reviewText: null, prevValue:0}); // <-- جديد
+    storeInBgcache({ reqType: 1, reqValue: 1, Id: id, reviewText: null, prevValue:0}); // <-- جديد
     set((state) => ({ ...state, productsIds: [...state.productsIds, id] }));
   },
 
   // ✅ إضافة تخزين البيانات عند الحذف
   delProductFromFavorite: (id) => {
-    saveToLocalStorage({ reqType: 1, reqValue: 0, Id: id, reviewText: null,prevValue:1 }); // <-- جديد
+    storeInBgcache({ reqType: 1, reqValue: 0, Id: id, reviewText: null,prevValue:1 }); // <-- جديد
     set((state) => ({
       ...state,
       productsIds: state.productsIds.filter((item) => item !== id),
@@ -75,7 +75,7 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الإضافة
   addStoreToFavorite: (id) => {
-    // saveToLocalStorage({ reqType: 2, reqValue: 1, Id: id, reviewText: null }); // <-- جديد
+    // storeInBgcache({ reqType: 2, reqValue: 1, Id: id, reviewText: null }); // <-- جديد
     set((state) => ({
       ...state,
       favoriteStoreIds: [...state.favoriteStoreIds, id],
@@ -84,7 +84,7 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الحذف
   delStoreToFavorite: (id) => {
-    // saveToLocalStorage({ reqType: 2, reqValue: 0, Id: id, reviewText: null }); // <-- جديد
+    // storeInBgcache({ reqType: 2, reqValue: 0, Id: id, reviewText: null }); // <-- جديد
     set((state) => ({
       ...state,
       favoriteStoreIds: state.favoriteStoreIds.filter((item) => item !== id),
@@ -99,7 +99,7 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الإضافة
   addEcommerceToFavorite: (id) => {
-    // saveToLocalStorage({ reqType: 3, reqValue: 1, Id: id, reviewText: null }); // <-- جديد
+    // storeInBgcache({ reqType: 3, reqValue: 1, Id: id, reviewText: null }); // <-- جديد
     set((state) => ({
       ...state,
       favoriteEcommerceIds: [...state.favoriteEcommerceIds, id],
@@ -108,7 +108,7 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الحذف
   delEcommerceFromFavorite: (id) => {
-    // saveToLocalStorage({ reqType: 3, reqValue: 0, Id: id, reviewText: null }); // <-- جديد
+    // storeInBgcache({ reqType: 3, reqValue: 0, Id: id, reviewText: null }); // <-- جديد
     set((state) => ({
       ...state,
       favoriteEcommerceIds: state.favoriteEcommerceIds.filter(

@@ -3,15 +3,16 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";  
 import { useSession } from "next-auth/react";
 import { postApi } from "@/lib/http";
-import { saveToLocalStorage } from "@/lib/utils";
+import { storeInBgcache } from "@/lib/utils";
 import { ReviewProps } from "../types"; 
 
 export interface ReviewFormProps {
   productId: number;
   onReviewAdded: (review: ReviewProps) => void;  
+  hasReview?: boolean; // هذا الحقل اختياري، يمكن استخدامه لتحديد ما إذا كان المستخدم قد قام بمراجعة المنتج بالفعل
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , hasReview }) => {
   
   const [reviewText, setReviewText] = useState("");
   const [rate, setRate] = useState(3);
@@ -77,6 +78,8 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded }) =>
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (hasReview) return setValidationError("لقد قمت بالفعل بنشر مراجعة لهذا المنتج.");
+
     if (reviewText.trim() === "") {
       setValidationError("يرجى إضافة تعليق قبل النشر.");
       return;
@@ -96,16 +99,20 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded }) =>
       date: new Date().toISOString(),
       prevReviewText: null,
     }
-    saveToLocalStorage(data);
+    storeInBgcache(data);
     onReviewAdded({
       customerImage:"",
-      customerName: session?.user.data.name || "مستخدم",
+      customerName: session?.user.data.name || "انت",
       reviewText,
       reviewDate: data.date,
       numOfRate: rate,
       isDeleted: false,
       isMe: true,
+      id:'0',
     })
+
+    setReviewText("");
+    setRate(3);
     // mutation.mutate();
   };
 
