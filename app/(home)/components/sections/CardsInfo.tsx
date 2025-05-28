@@ -1,7 +1,6 @@
 "use client"
 
 import { useSpecialOrdersDialogsStore } from '@/app/stores/specialordersDialogsStore';
-import { useRouter } from 'next-nprogress-bar';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
@@ -10,7 +9,6 @@ import { FaAngleLeft } from 'react-icons/fa';
 function CardsInfo() {
 
     const {setWholeSalesOrderState} = useSpecialOrdersDialogsStore();
-    const router = useRouter()
 
     const cards = [
         {
