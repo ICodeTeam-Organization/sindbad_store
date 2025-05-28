@@ -17,7 +17,23 @@ type ProductReviewsTapProps = {
   product: Product;
 };
 
-const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
+const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId , product }) => {
+
+
+  const numOfReviewers =
+    product?.oneStarCount +
+    product?.twoStarCount +
+    product?.threeStarCount +
+    product?.fourStarCount +
+    product?.fiveStarCount;
+  const noOfStars =
+    product?.oneStarCount +
+    product?.twoStarCount * 2 +
+    product?.threeStarCount * 3 +
+    product?.fourStarCount * 4 +
+    product?.fiveStarCount * 5;
+  const rating = noOfStars / numOfReviewers || 0;
+
   const [reviewsList, setReviewsList] = useState<ReviewProps[]>([]);
   // const { data:session } = useSession();
   const {
@@ -103,15 +119,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
     }
   }, [data]);
 
-  const totalRating = reviewsList.reduce(
-    (acc, review) => acc + review.numOfRate,
-    0
-  );
-  const averageRating =
-    reviewsList.length > 0
-      ? (totalRating / reviewsList.length).toFixed(1)
-      : "0";
-
+  
   return (
     <div className="mdHalf:grid grid-cols-3 gap-6" dir="rtl">
       <div className="bg-gray-50 border border-gray-300 rounded-md p-3 mb-4">
@@ -121,7 +129,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
           </h3>
           <div className="flex">
             <div className="flex flex-col w-[35%] py-0 justify-center items-center mb-3">
-              <span className="text-3xl font-bold mb-1">{averageRating}</span>
+              <span className="text-3xl font-bold mb-1">{+((+rating).toFixed(1))}</span>
 
               <Rating
                 style={{ maxWidth: 100 }}
@@ -132,29 +140,38 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({ productId }) => {
                   inactiveFillColor: "#eee",
                 }}
                 readOnly
-                value={Number(averageRating)}
+                value={ +rating }  
               />
               <div className="flex items-center justify-center mt-2">
                 <span className="text-gray-500 text-xs">
-                  {reviewsList.length} تقييم
+                  {numOfReviewers} تقييم
                 </span>
               </div>
             </div>
 
             {/* شريط التقييم */}
             <div className="flex flex-col justify-center w-[65%]">
-              {[5, 4, 3, 2, 1].map((rating) => {
-                const count = reviewsList.filter(
-                  (review: ReviewProps) => review.numOfRate === rating
-                ).length;
-                const percentage =
-                  reviewsList.length > 0
-                    ? (count / reviewsList.length) * 100
+              {[5, 4, 3, 2, 1].map((ratingNum) => {
+
+                 const keys: (keyof Product)[] = [
+                    'oneStarCount',
+                    'twoStarCount',
+                    'threeStarCount',
+                    'fourStarCount',
+                    'fiveStarCount', 
+                  ]; 
+                const count = product[keys[ratingNum-1]] || 0;
+
+                 const percentage =
+                  numOfReviewers > 0 && +count > 0
+                    ? (+count / numOfReviewers) * 100
                     : 0;
 
+                  console.log("ratingNum", ratingNum, "count", count, "percentage", percentage);
+                  
                 return (
-                  <div key={rating} className="flex items-center mb-1">
-                    <span className="w-6 text-center text-xs">{rating}</span>
+                  <div key={ratingNum} className="flex items-center mb-1">
+                    <span className="w-6 text-center text-xs">{ratingNum}</span>
                     <div className="relative w-full h-[6px] bg-gray-200 rounded-full">
                       <div
                         className="absolute h-[6px] bg-black"

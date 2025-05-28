@@ -42,9 +42,6 @@ function CategoriesSlider() {
   };
   
 
-  
- 
-
   return (
     <div className="flex  items-center w-full bg-[#7B746310] mt-2 relative px-10" >
       <div className="h-full cursor-pointer sm:w-20 absolute bg-gradient-to-l from-[#EEEAE9] via-[#EEEAE9] right-0 to-transparent flex items-center justify-center " onClick={() => scroll("right")} >

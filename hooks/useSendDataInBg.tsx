@@ -2,11 +2,12 @@ import { postApi } from '@/lib/http';
 import { BgHandlerDataItemType, SEND_DATA_IN_BG_LOCALSTORAGE_KEY } from '@/lib/utils';
 import { useMutation } from '@tanstack/react-query'; 
 
-export const getCachedDataInBg = (type : number) => { 
-  if (!type) return [];
+export const getCachedDataInBg = (type ?: number) => { 
+  
   const bgHandlerData = localStorage.getItem(SEND_DATA_IN_BG_LOCALSTORAGE_KEY);
   if (bgHandlerData) {
     const bgData: BgHandlerDataItemType[] = JSON.parse(bgHandlerData);
+    if (!type) return bgData;
     return bgData.filter((item) => item.reqType === type);
   }
   return [] ;

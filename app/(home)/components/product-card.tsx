@@ -52,7 +52,7 @@ const ProductCard = (props: propsType) => {
     amountYouGet = 0
   } = props;
 
-  
+  // data back 
   // حساب إجمالي التقييمات
   const totalRatings =
     oneStarCount +

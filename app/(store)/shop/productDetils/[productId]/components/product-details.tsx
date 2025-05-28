@@ -12,6 +12,7 @@ type ProductDetailsProps = {
 };
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
+  
   const numOfReviewers =
     product?.oneStarCount +
     product?.twoStarCount +
@@ -131,7 +132,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               />
             </div>
 
-            {
+            {getRemainingTimeForOffer(product.offerEndDate) != "" && 
               <div>
                 {product.offerSentence && (
                   <div className="flex items-center col-span-2 mb-2 text-xs bg-primary-background text-white p-1 w-fit px-2 rounded-md tajawal">

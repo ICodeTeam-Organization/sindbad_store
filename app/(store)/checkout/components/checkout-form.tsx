@@ -179,10 +179,10 @@ const CheckoutForm = () => {
                                 
                               >
                                 <p>
-                                  <p> {address?.directorateName} </p>
-                                  <p className="text-xs text-gray-500">
+                                  <span> {address?.directorateName} : </span>
+                                  <span className="text-xs text-gray-500">
                                     {address?.locationDescription}  
-                                    </p>
+                                    </span>
                                 </p>
                               </SelectItem>
                             )

@@ -94,10 +94,11 @@ function ServiceCard() {
           key={x}
             onMouseEnter={() => setIsHovered(x)}
             onMouseLeave={() => setIsHovered(-1)}
+            className="group "
           >
             <div
               onClick={ele.onClick}
-              className="group card cursor-pointer education mdHalf:w-[170px] w-[140px] h-[200px] mdHalf:h-[220px] bg-white rounded-tr-lg overflow-hidden flex flex-col  items-center relative  transition-all duration-300 ease-out text-decoration-none hover:translate-y-[-5px] hover:scale-[1.005] "
+              className="card cursor-pointer education mdHalf:w-[170px] w-[140px] h-[200px] mdHalf:h-[220px] bg-white rounded-xl overflow-hidden flex flex-col  items-center relative  transition-all duration-300 ease-out text-decoration-none hover:translate-y-[-5px] hover:scale-[1.005] "
               style={{
                 boxShadow: isHovered
                   ? `0 24px 36px rgba(0, 0, 0, 0.11), 0 24px 46px ${ele.transpColor}`
