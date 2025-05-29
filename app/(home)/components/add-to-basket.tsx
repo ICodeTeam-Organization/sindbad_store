@@ -23,7 +23,7 @@ const AddToBasket = ({ id , productInfo }: BtnAddTobascketProps) => {
     removeItem,
   } = useCartStore();
 
-  const inCart = cartItems.find((ele) => ele.productId == id);
+  const inCart = cartItems.find((ele) => ele.productId == id );
   
   
   const [quantity, setQuantity] = useState<number>(inCart?.quantity || 0);
@@ -159,17 +159,7 @@ const AddToBasket = ({ id , productInfo }: BtnAddTobascketProps) => {
   const handleAddToCart = () => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
-      // mutationAdd.mutate(); 
-    //     name,
-    // price,
-    // priceAfterDiscount,  
-    // // percentageDiscount,
-    // imageUrl,
-    // quantity: initialQuantity,
-    // amountYouBuy,
-    // amountYouGet,
-    // shipCost,
-    // productId,
+      // mutationAdd.mutate();  
         const newCart:CartItem = {
           productId: +id,   
           quantity: 1,

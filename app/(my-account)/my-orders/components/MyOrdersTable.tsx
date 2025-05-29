@@ -32,11 +32,12 @@ const TABLE_HEAD = [
 const orderStatuses = [
   { key: -1, status: "الكل" },
   { key: 0, status: "الطلب قيد انتظار التأكيد على السند التابع له" },
-  { key: 1, status: "تم قبول الطلب" },
-  { key: 2, status: "تم شحن الطلب" },
-  { key: 3, status: "تم تسليم الطلب الى الزبون" },
-  { key: 4, status: "تم الرفض" },
-  { key: 5, status: "تم استلام الطلب لدى مندوب الاستلام" },
+  { key: 1, status: "تم قبول الطلب" }, 
+  { key: 2, status: "تم شراء الطلب" }, 
+  { key: 3, status: "تم شحن الطلب" },
+  { key: 4, status: "تم استلام الطلب لدى مندوب الاستلام" }, 
+  { key: 5, status: "تم تسليم الطلب الى الزبون" },
+  { key: 6, status: "تم الرفض" },
 ];
 
 const sortingOptions = [
@@ -46,9 +47,7 @@ const sortingOptions = [
 
 const MyOrdersTable: React.FC<Props> = ({ initData }) => {
   const router = useRouter();
- 
   
-
   const [ordersFilters, setOrdersFilters] = useState<{
     status?: number;
     orderBy?: number;
@@ -113,6 +112,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
   const goToOrderDetails = (id: number) => {
     router.push("/Orderdetail/" + id);
   };
+ 
 
   return (
     <div>
@@ -282,7 +282,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
 
       {/* Load More Button */}
       <div className="m-4 flex items-center justify-center">
-        {hasNextPage ? (
+        {hasNextPage && !isRefetching ? (
           <Button
             className="bg-primary-background hover:bg-[#f5863984]"
             onClick={() => fetchNextPage()}

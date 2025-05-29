@@ -1,5 +1,5 @@
-import useEcommerceQuerySearch from '@/app/(store)/e-commerce/hooks/useEcommerceQuerySearch';
-import useStoreQuerySearch from '@/app/(store)/stores/hooks/useStoreQuerySearch';
+import useEcommerceQuerySearch from '@/app/(all-pages)/e-commerce/hooks/useEcommerceQuerySearch';
+import useStoreQuerySearch from '@/app/(all-pages)/stores/hooks/useStoreQuerySearch';
 import { useShopFiltersStore } from '@/app/stores/shopFiltersStore';
 import { useRouter } from 'next-nprogress-bar';
 import Link from 'next/link';

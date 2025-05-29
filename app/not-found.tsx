@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { MdOutlineHome } from "react-icons/md";
-import StoreHeader from "./(store)/store-header";
+import StoreHeader from "./(all-pages)/store-header";
 import { Suspense } from "react";
 
 const NotFoundPage = () => {

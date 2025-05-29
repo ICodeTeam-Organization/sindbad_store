@@ -11,7 +11,8 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { BtnAddTobascketProps, CartItem } from "@/types/storeTypes";
 
  
-const AddToBasket = ({ id , productInfo  }: BtnAddTobascketProps) => {
+const AddToBasketBtnForProductDetails = ({ id , productInfo  }: BtnAddTobascketProps) => {
+  
   const redirct = useRouter();
   const { status } = useSession();
 
@@ -30,114 +31,18 @@ const AddToBasket = ({ id , productInfo  }: BtnAddTobascketProps) => {
   useEffect(() => {
     setQuantity(inCart?.quantity || 0);
   }, [inCart]);
-
-  // const mutationAdd = useMutation({
-  //   mutationFn: async () => {
-  //     return await postApi<{data:any}>(
-  //       "Cart/AddProductToCart?productId=" +
-  //         id,
-  //       {
-  //         body: {
-  //           quantity: 1,
-  //         },
-  //         headers: {
-  //           "Accept-Language": "ar",
-  //           "Content-type": "multipart/form-data",
-  //           Authorization: `Bearer ${session?.user.data.token}`,
-  //         },
-  //       }
-  //     );
-  //   },
-  //   onSuccess: (data) => {
-  //     const res = data?.data as {
-  //       id: number;
-  //       quantity: number;
-  //       productId: number;
-  //     };
-  //     if (res) {
-  //       const newCart:any = {
-  //         cartId: res?.id,
-  //         productId: res?.productId,
-  //         imageUrl: productInfo.image,
-  //         price: productInfo.oldPrice,
-  //         priceAfterDiscount: productInfo.price,
-  //         quantity: res?.quantity,
-  //       };
-  //       setQuantity(1);
-  //       addItem(newCart);
-  //     }
-
-  //     toast({
-  //       variant: "default",
-  //       description: "تمت الاضافة الى السلة بنجاح",
-  //       style: {
-  //         backgroundColor: "green",
-  //         color: "#fff",
-  //       },
-  //     });
-  //   },
-  //   onError: (res: any) => {
-  //     toast({
-  //       variant: "destructive",
-  //       description: res.response.data.message,
-  //       action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
-  //     });
-  //   },
-  // });
-
-  // const mutationUpdateQ = useMutation({
-  //   mutationFn: async ({
-  //     quantity,
-  //     cartId,
-  //   }: {
-  //     quantity: number;
-  //     cartId: number;
-  //   }) => {
-  //     await putApi(
-  //       "Cart/UpdateCart",
-  //       {
-  //         body: {
-  //           cartId: cartId,
-  //           quantity: quantity,
-  //         },
-  //       },
-  //       "PATCH"
-  //     );
-  //     return { quantity, cartId };
-  //   },
-  //   onSuccess: ({ quantity, cartId }) => {
-  //     console.log(quantity, cartId, "updted w");
-  //     updateQuantity(quantity, cartId);
-  //   },
-  //   onError: (res) => {
-  //     setQuantity(inCart?.quantity || quantity);
-  //     toast({
-  //       variant: "destructive",
-  //       description: res.message,
-  //       action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
-  //     });
-  //   },
-  // });
-
+ 
   const increamentQ = () => {
     if (inCart ) {
       setIsUpdated(true);
-      setQuantity((q) => q + 1);
-      // mutationUpdateQ.mutate({
-      //   quantity: inCart.quantity + 1,
-      //   cartId: inCart.cartId,
-      // });
+      setQuantity((q) => q + 1); 
     }
   };
 
   const decreamentQ = () => {
     if (inCart ) {
       setIsUpdated(true);
-      setQuantity((q) => q - 1);
-      // mutationUpdateQ.mutate({
-      //   quantity: inCart.quantity - 1,
-      //   cartId: inCart.cartId,
-      // });
+      setQuantity((q) => q - 1); 
     }
   };
 
@@ -158,37 +63,9 @@ const AddToBasket = ({ id , productInfo  }: BtnAddTobascketProps) => {
             };  
         setQuantity(1);
         addItem(newCart);
-        //  name,
-        // price,
-        // priceAfterDiscount,  
-        // // percentageDiscount,
-        // imageUrl,
-        // quantity: initialQuantity,
-        // amountYouBuy,
-        // amountYouGet,
-        // shipCost,
-        // productId,
-         
     }
   };
-
-  // const deleteItemFromCart = useMutation({
-  //   mutationFn: async (id: number) => {
-  //     await deleteApi("Cart/DeleteCart?cartId=" + id);
-  //     return id;
-  //   },
-  //   onSuccess: (id) => {
-  //     removeItem(id);
-  //   },
-  //   onError: (res: any) => {
-  //     toast({
-  //       variant: "destructive",
-  //       description: res.response.data.message,
-  //       action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
-  //     });
-  //   },
-  // });
-
+ 
   const [isUpdated, setIsUpdated] = useState(false);
   const debounceQuantity = useDebounce(quantity, 1000);
   useEffect(() => {
@@ -276,4 +153,4 @@ const AddToBasket = ({ id , productInfo  }: BtnAddTobascketProps) => {
   );
 };
 
-export default AddToBasket;
+export default AddToBasketBtnForProductDetails;

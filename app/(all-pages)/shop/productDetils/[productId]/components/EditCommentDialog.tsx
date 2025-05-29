@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -12,8 +12,7 @@ import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { putApi } from "@/lib/http";
 import { toast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
-import { storeInBgcache } from "@/lib/utils";
+import { Loader2 } from "lucide-react"; 
 
 interface EditCommentDialogProps {
   open: boolean;
@@ -37,16 +36,19 @@ const EditCommentDialog: React.FC<EditCommentDialogProps> = ({
   onClose,
   rating: initRate = 0,
 }) => {
-
-
-  
-
-
-
+ 
   const [text, setText] = useState(initialText);
   const [rating, setRating] = useState(initRate);
 
-   const { isPending} = useMutation({
+  useEffect(() => {
+     if(open){
+       setText(initialText);
+       setRating(initRate); 
+     }
+  }, [open])
+  
+
+   const {isPending} = useMutation({
     mutationFn: async ( ) => {
       await putApi("CommentsAndRates/UpdateReview",{
         body:{
@@ -68,23 +70,17 @@ const EditCommentDialog: React.FC<EditCommentDialogProps> = ({
     onError: ( ) => {
       // Handle error
     },
-   })
+   });
 
   const handleCancel = () => {
     onClose(false);
+    setRating(1);
+    setText("");
   };
 
   const handleSave = () => {
-    if (text.trim()) {
-      storeInBgcache({
-        Id: productId,
-        reqType: 2,
-        reqValue: rating,
-        reviewText: text.trim(), 
-        prevReviewText: initialText,
-        prevValue: initRate,
-      });
-       onEditEnd(productId, text.trim(), rating);
+    if (text.trim()) { 
+        onEditEnd(productId, text.trim(), rating);
         handleCancel();
         toast({
             title: "تم تعديل التعليق بنجاح", 

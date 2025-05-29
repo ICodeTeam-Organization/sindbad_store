@@ -29,8 +29,9 @@ const CartBody = ({}: // initCartProducts,
   useEffect(() => {
     const bgHandlerData = localStorage.getItem("backgroundHandlerData");
     if (bgHandlerData && !isSuccess) {
+      setCartItems([])
       let bgData: BgHandlerDataItemType[] = JSON.parse(bgHandlerData);
-      bgData = bgData.filter((item) => item.reqType == 3);
+      bgData = bgData.filter((item) => item.reqType == 3); 
       mutate(bgData);
     } else {
       setIsReadytogetData(true);
@@ -57,12 +58,9 @@ const CartBody = ({}: // initCartProducts,
   useEffect(() => {
     if (!!items) {
       setCartItems(items.data);
-    }
+    }  
   }, [items]);
-
-  console.log(items);
   
-
   return (
     <>
       <div className="lg:w-3/4 mdHalf:w-[65%] ">
@@ -121,7 +119,11 @@ const CartBody = ({}: // initCartProducts,
       </div>
 
       <div className="lg:w-1/4 mdHalf:w-[35%] ">
-        <InvoiceDetails cartItems={cartItems} isRefetching={isRefetching} />
+        <InvoiceDetails 
+        // عشان اذا فيه عناصر في ال cartItems ما يعرض السعر حقها اذا كان يعمل فتش للداتا المحدثه
+          cartItems={ isPendingForSendDataInBg || isPendingToCartItems ?[]: cartItems}
+         isRefetching={isRefetching}
+          />
       </div>
     </>
   );

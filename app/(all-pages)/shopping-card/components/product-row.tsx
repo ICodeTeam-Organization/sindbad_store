@@ -29,12 +29,9 @@ type Props = {
 
 const ProductRow = ({ cartItemData }: Props) => {
   const {
-    // cartId,
-    // specialProductId,
     name,
     price,
     priceAfterDiscount,  
-    // percentageDiscount,
     imageUrl,
     quantity: initialQuantity,
     amountYouBuy,
@@ -42,8 +39,9 @@ const ProductRow = ({ cartItemData }: Props) => {
     shipCost,
     productId,
   } = cartItemData;
+  
   const thePrice = priceAfterDiscount || price;
-  const { updateQuantity: updateQuantityInStore } = useCartStore();
+  const { updateQuantity: updateQuantityInStore , removeItem} = useCartStore();
 
   const [quantity, setQuantity] = useState<number>(initialQuantity);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
@@ -110,14 +108,9 @@ const ProductRow = ({ cartItemData }: Props) => {
     if (debounceQuantity >= 0 && isUpdated) {
       setIsUpdated(false);
       if (quantity == 0) {
-        // deleteItem.mutate(cartId);
-
-        updateQuantityInStore(0, productId);
+        // updateQuantityInStore(0, productId);
+        removeItem(productId);
       } else {
-        // updateQuantity.mutate({
-        //   cartId: cartId,
-        //   quantity: quantity,
-        // });
         updateQuantityInStore(quantity, productId);
       }
     }
@@ -125,8 +118,8 @@ const ProductRow = ({ cartItemData }: Props) => {
 
   const handleDeleteItem = async () => {
     setIsUpdated(true);
-    setQuantity(0);
-    // removeItem(productId);
+    removeItem(productId);
+    setQuantity(0); 
   };
 
   return (
@@ -207,8 +200,6 @@ const ProductRow = ({ cartItemData }: Props) => {
               <BiTrash
                 className="text-2xl cursor-pointer hover:text-red-500 transition-colors duration-100"
                 onClick={() => {
-                  console.log(cartItemData);
-
                   handleDeleteItem();
                 }}
               />

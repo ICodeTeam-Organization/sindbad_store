@@ -2,7 +2,7 @@
 import React from "react";
 import PriceSection from "./price-section";
 import ImageGallery from "./image-gallery";
-import AddToBasket from "./add-to-basket";
+import AddToBasketBtnForProductDetails from "./add-to-basket-proDetails";
 import { Product } from "./../types";
 import { Rating, RoundedStar } from "@smastrom/react-rating";
 import { getRemainingTimeForOffer } from "@/lib/timeFuns";
@@ -195,7 +195,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           </div>
         </div>
         <div className="flex items-center gap-4 mt-8">
-          <AddToBasket
+          <AddToBasketBtnForProductDetails
             id={product.id}
             productInfo={{
               image: product.mainImageUrl,

@@ -9,10 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { useMutation } from "@tanstack/react-query";
-import { deleteApi } from "@/lib/http";
-import { Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button"; 
 import { toast } from "@/hooks/use-toast";
 
 interface ConfirmDeleteDialogProps {
@@ -31,38 +28,36 @@ const AlertRemoveReview: React.FC<ConfirmDeleteDialogProps> = ({
   onDeletingEnd,
   title = "تأكيد الحذف",
   description = "هل أنت متأكد أنك تريد حذف هذه المراجعة؟ لا يمكن التراجع عن هذا الإجراء.",
-  reviewId,
+ 
 }) => {
 
-const { isPending} = useMutation({
-    mutationFn: async ( ) => {
-      await deleteApi("CommentsAndRates/DeleteReview?reviewId=" + reviewId)
-    },
-    onSuccess: () => {
-      onDeletingEnd()
-      onClose(false);
-      toast({
-        title: "تم الحذف بنجاح",
-        description: "تم حذف المراجعة بنجاح.",
-        variant: "default",
-      });
-    },
-    onError: (error) => {
-      console.log("Error deleting review:", error);
-      toast({
-        title: "خطأ",
-        description: "حدث خطأ أثناء حذف المراجعة. يرجى المحاولة مرة أخرى.",
-        variant: "destructive",
-      });
-      // Handle error
-    },
-   })
+// const { isPending} = useMutation({
+//     mutationFn: async ( ) => {
+//       await deleteApi("CommentsAndRates/DeleteReview?reviewId=" + reviewId)
+//     },
+//     onSuccess: () => {
+//       onDeletingEnd()
+//       onClose(false);
+//       toast({
+//         title: "تم الحذف بنجاح",
+//         description: "تم حذف المراجعة بنجاح.",
+//         variant: "default",
+//       });
+//     },
+//     onError: (error) => {
+//       console.log("Error deleting review:", error);
+//       toast({
+//         title: "خطأ",
+//         description: "حدث خطأ أثناء حذف المراجعة. يرجى المحاولة مرة أخرى.",
+//         variant: "destructive",
+//       });
+//       // Handle error
+//     },
+//    });
 
 
    const handleDelete = () => { 
-    // mutate();
-    
-          onDeletingEnd()
+      onDeletingEnd()
       onClose(false);
       toast({
         title: "تم الحذف بنجاح",
@@ -84,10 +79,10 @@ const { isPending} = useMutation({
         </DialogHeader>
         <DialogFooter className="mt-2 flex justify-start gap-4">
          <div className="w-full flex justify-start gap-x-3" >
-            <Button variant="destructive"  disabled={isPending} onClick={handleDelete}>
-             {isPending ? <Loader2 className="animate-spin" /> :" نعم، احذف"}
+            <Button variant="destructive"  onClick={handleDelete}>
+             { " نعم، احذف"}
             </Button>
-            <Button variant="outline" onClick={() => onClose(false)} disabled={isPending}>
+            <Button variant="outline" onClick={() => onClose(false)}  >
               إلغاء
             </Button>
          </div>
