@@ -31,7 +31,7 @@ const CartBody = ({}: // initCartProducts,
     if (bgHandlerData && !isSuccess) {
       setCartItems([])
       let bgData: BgHandlerDataItemType[] = JSON.parse(bgHandlerData);
-      bgData = bgData.filter((item) => item.reqType == 3); 
+      bgData = bgData.filter((item) => item.reqType == 3 || item.reqType == 4); 
       mutate(bgData);
     } else {
       setIsReadytogetData(true);

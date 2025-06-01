@@ -36,7 +36,7 @@ const orderStatuses = [
   { key: 2, status: "تم شراء الطلب" }, 
   { key: 3, status: "تم شحن الطلب" },
   { key: 4, status: "تم استلام الطلب لدى مندوب الاستلام" }, 
-  { key: 5, status: "تم تسليم الطلب الى الزبون" },
+  { key: 5, status: "تم تسليمه" },
   { key: 6, status: "تم الرفض" },
 ];
 

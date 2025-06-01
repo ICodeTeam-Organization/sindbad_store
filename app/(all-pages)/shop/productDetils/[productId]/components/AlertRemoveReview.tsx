@@ -15,10 +15,10 @@ import { toast } from "@/hooks/use-toast";
 interface ConfirmDeleteDialogProps {
   open: boolean;
   onClose: (open: boolean) => void;
-  onDeletingEnd: () => void;
+  onDeletingEnd: (id:number) => void;
   title?: string;
   description?: string;
-  reviewId?: string;
+  reviewId: number;
   productId?: string;
 }
 
@@ -28,36 +28,12 @@ const AlertRemoveReview: React.FC<ConfirmDeleteDialogProps> = ({
   onDeletingEnd,
   title = "تأكيد الحذف",
   description = "هل أنت متأكد أنك تريد حذف هذه المراجعة؟ لا يمكن التراجع عن هذا الإجراء.",
- 
+  reviewId 
 }) => {
 
-// const { isPending} = useMutation({
-//     mutationFn: async ( ) => {
-//       await deleteApi("CommentsAndRates/DeleteReview?reviewId=" + reviewId)
-//     },
-//     onSuccess: () => {
-//       onDeletingEnd()
-//       onClose(false);
-//       toast({
-//         title: "تم الحذف بنجاح",
-//         description: "تم حذف المراجعة بنجاح.",
-//         variant: "default",
-//       });
-//     },
-//     onError: (error) => {
-//       console.log("Error deleting review:", error);
-//       toast({
-//         title: "خطأ",
-//         description: "حدث خطأ أثناء حذف المراجعة. يرجى المحاولة مرة أخرى.",
-//         variant: "destructive",
-//       });
-//       // Handle error
-//     },
-//    });
-
-
+ 
    const handleDelete = () => { 
-      onDeletingEnd()
+      onDeletingEnd(+reviewId)
       onClose(false);
       toast({
         title: "تم الحذف بنجاح",

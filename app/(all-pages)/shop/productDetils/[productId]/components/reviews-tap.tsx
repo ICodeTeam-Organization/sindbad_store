@@ -25,22 +25,27 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
   product,
 }) => {
   const numOfReviewers =
-    product?.oneStarCount +
-    product?.twoStarCount +
-    product?.threeStarCount +
-    product?.fourStarCount +
-    product?.fiveStarCount;
+    (product?.oneStarCount || 0) +
+    (product?.twoStarCount || 0) +
+    (product?.threeStarCount || 0) +
+    (product?.fourStarCount || 0) +
+    (product?.fiveStarCount || 0);
+
   const noOfStars =
-    product?.oneStarCount +
-    product?.twoStarCount * 2 +
-    product?.threeStarCount * 3 +
-    product?.fourStarCount * 4 +
-    product?.fiveStarCount * 5;
-  const rating = noOfStars / numOfReviewers || 0;
+    (product?.oneStarCount || 0) * 1 +
+    (product?.twoStarCount || 0) * 2 +
+    (product?.threeStarCount || 0) * 3 +
+    (product?.fourStarCount || 0) * 4 +
+    (product?.fiveStarCount || 0) * 5;
+
+  const rating = numOfReviewers > 0 ? noOfStars / numOfReviewers : 0;
 
   const [reviewsList, setReviewsList] = useState<ReviewProps[]>([]);
-  const [edtDialog, setEdtDialog] = useState({isOpen:false,data:{comment:"",productId,rating:0}});
-  const [delDialog, setDelDialog] = useState({isOpen:false,reviewId:0});
+  const [edtDialog, setEdtDialog] = useState({
+    isOpen: false,
+    data: { comment: "", productId, rating: 0 },
+  });
+  const [delDialog, setDelDialog] = useState({ isOpen: false, reviewId: 0 });
   // const { data:session } = useSession();
   const {
     data,
@@ -118,7 +123,6 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
     retry: 0,
   });
 
-  
   useEffect(() => {
     if (data) {
       const allReviews = data.pages.flatMap((page) => page.data);
@@ -174,7 +178,6 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
                     ? (+count / numOfReviewers) * 100
                     : 0;
 
-                 
                 return (
                   <div key={ratingNum} className="flex items-center mb-1">
                     <span className="w-6 text-center text-xs">{ratingNum}</span>
@@ -197,13 +200,30 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
             (review) => review.isMe && review.numOfRate > 0
           )}
           onReviewAdded={(newReview) => {
-            setReviewsList((prevReviews) =>
-              prevReviews.map((review) =>
-                review.isMe && review.numOfRate == 0
-                  ? { ...review, ...newReview, isMe: true }
-                  : newReview
-              )
-            );
+            setReviewsList((prevReviews) => {
+              const hasMyReview = prevReviews.some((review) => review.isMe);
+              if (hasMyReview) {
+                return prevReviews.map((review) =>
+                  review.isMe
+                    ? {
+                        ...review,
+                        numOfRate: newReview?.numOfRate,
+                        reviewText: newReview.reviewText,
+                        reviewDate: newReview?.reviewDate,
+                      }
+                    : review
+                );
+              } else {
+                return [
+                  ...prevReviews,
+                  {
+                    ...newReview,
+                    id: Date.now() + "", 
+                    isMe: true,
+                  },
+                ];
+              }
+            });
           }}
         />
       </div>
@@ -220,6 +240,47 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
           </div>
         </div>
 
+        <AlertRemoveReview
+          open={delDialog.isOpen}
+          onClose={(st) => setDelDialog((prev) => ({ ...prev, isOpen: st }))}
+          onDeletingEnd={(id) => {
+            setReviewsList([...reviewsList.filter((ele) => +ele.id != id)]);
+            storeInBgcache({
+              Id: productId,
+              reqType: 2,
+              reqValue: 0,
+            });
+          }}
+          reviewId={delDialog.reviewId}
+        />
+        <EditCommentDialog
+          initialText={edtDialog.data.comment}
+          rating={edtDialog.data.rating}
+          productId={+edtDialog.data.productId}
+          onEditEnd={(_, newComment, newRate) => {
+            setReviewsList(
+              reviewsList.map((r) =>
+                r.isMe
+                  ? {
+                      ...r,
+                      reviewText: newComment || r.reviewText,
+                      numOfRate: newRate || r.numOfRate,
+                    }
+                  : r
+              )
+            );
+            storeInBgcache({
+              Id: productId,
+              reqType: 2,
+              reqValue: newRate,
+              reviewText: newComment,
+              prevReviewText: edtDialog.data.comment,
+              prevValue: edtDialog.data.rating,
+            });
+          }}
+          open={edtDialog.isOpen}
+          onClose={(st) => setEdtDialog((prev) => ({ ...prev, isOpen: st }))}
+        />
         {error ? (
           <div>{error.message || "حدث خطاء أثناء جلب التعليقات"}</div>
         ) : isPending ? (
@@ -232,58 +293,26 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
           <div className="text-center text-gray-500">لا توجد تعليقات</div>
         ) : (
           <>
-            <AlertRemoveReview
-              open={delDialog.isOpen}
-              onClose={(st)=>setDelDialog(prev=>({...prev,isOpen:st}))}
-              onDeletingEnd={() => {
-                storeInBgcache({
-                  Id: productId,
-                  reqType: 2,
-                  reqValue: 0,
-                }); 
-                setReviewsList(reviewsList.filter((ele)=>!ele.isMe || ele.numOfRate > 0))
-              }}
-              reviewId={delDialog.reviewId + ""}
-            />
-            <EditCommentDialog
-              initialText={edtDialog.data.comment}
-              rating={edtDialog.data.rating}
-              productId={+edtDialog.data.productId}
-              onEditEnd={(_,newComment, newRate) => { 
-                setReviewsList(reviewsList.map((r) =>
-                      r.isMe
-                        ? {
-                            ...r,
-                            reviewText: newComment || r.reviewText,
-                            numOfRate: newRate || r.numOfRate,
-                          }
-                        : r
-                    ))
-                storeInBgcache({
-                  Id: productId,
-                  reqType: 2,
-                  reqValue: newRate,
-                  reviewText: newComment , 
-                  prevReviewText: edtDialog.data.comment,
-                  prevValue: edtDialog.data.rating,
-                }); 
-              }}
-              open={edtDialog.isOpen}
-              onClose={(st)=>setEdtDialog(prev=>({...prev,isOpen:st}))}
-            />
-            {reviewsList.filter(e=>e.numOfRate > 0 ).map((review, index) => (
+            {reviewsList.map((review, index) => (
               <ReviewComment
-                key={index + review.customerName}
+                key={index + review.id}
                 reviewer={review.customerName}
                 date={new Date(review.reviewDate).toLocaleDateString()}
                 rating={review.numOfRate}
                 comment={review.reviewText}
                 isMe={review.isMe}
                 onEditing={() => {
-                  setEdtDialog({isOpen:true,data:{comment:review.reviewText,productId,rating:review.numOfRate}});
+                  setEdtDialog({
+                    isOpen: true,
+                    data: {
+                      comment: review.reviewText,
+                      productId,
+                      rating: review.numOfRate,
+                    },
+                  });
                 }}
                 onDeleting={() => {
-                  setDelDialog({isOpen:true,reviewId:+review.id}) 
+                  setDelDialog({ isOpen: true, reviewId: +review.id });
                 }}
               />
             ))}

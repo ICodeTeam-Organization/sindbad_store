@@ -1,67 +1,21 @@
-
-// import { CartItem } from "@/types/storeTypes";
-// import { create } from "zustand";
-
-// type CartState = {
-//   items: CartItem[];
-//   addItem: (product: CartItem) => void;
-//   removeItem: (id: number) => void; // تغيير id إلى number
-//   // increaseQuantity: (id: number) => void; // تغيير id إلى number
-//   // decreaseQuantity: (id: number) => void; // تغيير id إلى number
-//   updateQuantity: (newQuantity:number,id: number) => void; // تغيير id إلى number
-//   setCartItems: (products:CartItem[]) => void; // تغيير id إلى number
-// };
-
-// export const useCartStore = create<CartState>((set) => ({
-//   items: [],
-//   addItem: (newitem) =>
-//     set((state) => {
-//       const existingItem = state.items.find(ele=>ele.cartId == newitem.cartId);
-//       return existingItem
-//         ? { items: [...state.items] } // لا تضيف العنصر إذا كان موجودًا
-//         : { items: [...state.items, newitem] }; // أضف العنصر الجديد
-//     }),
-//   removeItem: (id) =>
-//     set((state) => ({
-//       items: state.items.filter((i) => i.cartId !== id), // استخدم cartId هنا
-//     })),
-//     updateQuantity: (newQuantity,id)=> {
-//       return set((state => ({
-//         items: state.items.map((i) =>
-//           i.cartId == id ? { ...i, quantity: newQuantity } : i // استخدم cartId هنا
-//         ),
-//       })))
-//     },
-//   // increaseQuantity: (id) =>
-//   //   set((state) => ({
-//       // items: state.items.map((i) =>
-//       //   i.productId === id ? { ...i, quantity: i.quantity + 1 } : i // استخدم cartId هنا
-//       // ),
-//   //   })),
-//   // decreaseQuantity: (id) =>
-//   //   set((state) => ({
-//   //     items: state.items.map((i) =>
-//   //       i.cartId === id && i.quantity > 1
-//   //         ? { ...i, quantity: i.quantity - 1 }
-//   //         : i // استخدم cartId هنا
-//   //     ),
-//   //   })),
-    // setCartItems: (cartItems) =>
-    //   set(() => {
-    //     return {items:cartItems}
-    //   }),
-// }));
-
-
-import { create } from "zustand";
+ import { create } from "zustand";
 import { CartItem } from "@/types/storeTypes";
-import { BgHandlerDataItemType, storeInBgcache, SEND_DATA_IN_BG_LOCALSTORAGE_KEY } from "@/lib/utils";
+import {
+  BgHandlerDataItemType,
+  storeInBgcache,
+  SEND_DATA_IN_BG_LOCALSTORAGE_KEY,
+} from "@/lib/utils";
 
 type CartState = {
   items: CartItem[];
   addItem: (product: CartItem) => void;
-  removeItem: (id: number) => void;
-  updateQuantity: (newQuantity: number, id: number) => void;
+  addSpecialItem: (product: CartItem) => void;
+  removeItem: (id: number, isSpecialProduct?: boolean) => void;
+  updateQuantity: (
+    newQuantity: number,
+    id: number,
+    isSpecialProduct?: boolean
+  ) => void;
   setCartItems: (products: CartItem[]) => void;
 };
 
@@ -78,74 +32,143 @@ export const useCartStore = create<CartState>((set) => ({
       // ✅ إذا المنتج غير موجود، أضفه بكمية 1 وسجّل ذلك في localStorage
       // عشان ارسال ركوست كل عشر ثواني موجود داخل الcomponents in SendDataInBG
       storeInBgcache({
-        reqType: 3,  
-        reqValue: 1,  
+        reqType: 3,
+        reqValue: 1,
         Id: newItem.productId,
-        prevValue:0, // القيمة السابقة غير معروفة، لذا نستخدم 0
+        prevValue: 0, // القيمة السابقة غير معروفة، لذا نستخدم 0
+      });
+
+      return { items: [...state.items, newWithQty] };
+    }),
+  addSpecialItem: (newItem) =>
+    set((state) => {
+      const exists = state.items.find(
+        (i) => i.specialProductId == newItem.specialProductId
+      );
+      if (exists || !newItem.specialProductId) return { items: [...state.items] };
+
+      const newWithQty = { ...newItem, quantity: 1 };
+
+      // ✅ إذا المنتج غير موجود، أضفه بكمية 1 وسجّل ذلك في localStorage
+      // عشان ارسال ركوست كل عشر ثواني موجود داخل الcomponents in SendDataInBG
+      storeInBgcache({
+        reqType: 4,
+        reqValue: 1,
+        Id: newItem.specialProductId ,
+        prevValue: 0, // القيمة السابقة غير معروفة، لذا نستخدم 0
       });
 
       return { items: [...state.items, newWithQty] };
     }),
 
-  removeItem: (id) =>
+  removeItem: (id, isSpecialProduct) =>
     set((state) => {
-      const item = state.items.find((i) => i.productId == id);
-      if (item) {
-        // ✅ عند حذف منتج من السلة، احفظ ذلك في localStorage مع reqValue = 0
-        storeInBgcache({
-          reqType: 3,
-          reqValue: 0,
-          Id: id,
-          reviewText: null,
-          prevValue: item.quantity,  
-        });
-      }
-
-      return {
-        items: state.items.filter((i) => i.productId !== id),
-      };
-    }),
-
-  updateQuantity: (newQuantity, id) =>
-    set((state) => {
-      const updatedItems = state.items.map((item) => {
-        if (item.productId == id) {
-          const updated = { ...item, quantity: newQuantity };
-
-          // ✅ عند تغيير كمية منتج في السلة، خزّن القيمة الجديدة في localStorage
+      if (isSpecialProduct) {
+        const item = state.items.find((i) => i.specialProductId == id);
+        if (item) {
+          storeInBgcache({
+            reqType: 4,
+            reqValue: 0,
+            Id: id,
+            reviewText: null,
+            prevValue: item.quantity,
+          });
+        }
+        return {
+          items: state.items.filter((i) => i.specialProductId !== id),
+        };
+      } else {
+        const item = state.items.find((i) => i.productId == id);
+        if (item) {
+          // ✅ عند حذف منتج من السلة، احفظ ذلك في localStorage مع reqValue = 0
           storeInBgcache({
             reqType: 3,
-            reqValue:newQuantity, // نعتبره تعديل/إضافة
-            Id: item.productId,
-            prevValue: item.quantity, // القيمة السابقة
+            reqValue: 0,
+            Id: id,
+            reviewText: null,
+            prevValue: item.quantity,
           });
-
-          return updated;
         }
+
+        return {
+          items: state.items.filter((i) => i.productId !== id),
+        };
+      }
+    }),
+
+  updateQuantity: (newQuantity, id, isSpecialProduct) =>
+    set((state) => {
+      const updatedItems = state.items.map((item) => {
+        if (isSpecialProduct) {
+          if (item.specialProductId == id) {
+            const updated = { ...item, quantity: newQuantity };
+            storeInBgcache({
+              reqType: 4, // 4 يعني منتج خاص في السلة
+              reqValue: newQuantity, // نعتبره تعديل/إضافة
+              Id: +id,
+              prevValue: item.quantity, // القيمة السابقة
+            });
+            return updated;
+          }
+        } else {
+          if (item.productId == id) {
+            const updated = { ...item, quantity: newQuantity };
+            storeInBgcache({
+              reqType: 3, //  3 يعني منتج عادي في السلة
+              reqValue: newQuantity, // نعتبره تعديل/إضافة
+              Id: +id,
+              prevValue: item.quantity, // القيمة السابقة
+            });
+            return updated;
+          }
+        }
+
         return item;
       });
 
       return { items: updatedItems };
     }),
 
-    setCartItems: (cartItems) =>
-      set(() => {
-              const bgHandlerData = localStorage.getItem(SEND_DATA_IN_BG_LOCALSTORAGE_KEY);
-              const data:BgHandlerDataItemType[] = bgHandlerData ? JSON.parse(bgHandlerData) : null; 
-              if (bgHandlerData && data) {
+  setCartItems: (cartItems) =>
+  set(() => {
+    const bgHandlerData = localStorage.getItem(SEND_DATA_IN_BG_LOCALSTORAGE_KEY);
+    const data: BgHandlerDataItemType[] = bgHandlerData ? JSON.parse(bgHandlerData) : [];
 
-                let itemsCart = [...cartItems];
+    if (!data) return { items: cartItems };
 
-                 itemsCart = cartItems.map((item) => {
+    // انسخ العناصر الحالية
+    const updatedCartItems = [...cartItems];
 
-                  const foundItem = data.find((i) => i.Id == item.productId);
-                  if (foundItem) {
-                    return { ...item, quantity: foundItem.reqValue };
-                  }
-                  return item;  
-                });
-                return {items:itemsCart};
-              }
-        return {items:cartItems}
-      }),
+    data.forEach((item) => {
+      const { reqType, Id, reqValue } = item;
+
+      if (reqType === 3) {
+        // منتجات عادية
+        const existingItem = updatedCartItems.find(ci => ci.productId == Id);
+        if (existingItem) {
+          // عدل الكمية
+          existingItem.quantity = reqValue;
+        } else {
+          // أضف منتج جديد
+          updatedCartItems.push({
+            productId: +Id,
+            quantity: reqValue, 
+          } as any);
+        }
+      } else if (reqType === 4) {
+        // منتجات خاصة
+        const existingItem = updatedCartItems.find(ci => ci.specialProductId == Id);
+        if (existingItem) {
+          existingItem.quantity = reqValue;
+        } else {
+          updatedCartItems.push({
+            specialProductId: Id,
+            quantity: reqValue, 
+          } as any);
+        }
+      }
+    });
+
+    return { items: updatedCartItems };
+  }), 
 }));

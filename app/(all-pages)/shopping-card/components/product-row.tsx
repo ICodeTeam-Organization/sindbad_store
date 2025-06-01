@@ -1,9 +1,9 @@
 import { BiTrash, BiGift } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
-import { HiMinusSm } from "react-icons/hi"; 
+import { HiMinusSm } from "react-icons/hi";
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useDebounce } from "@/hooks/useDebounce"; 
+import { useDebounce } from "@/hooks/useDebounce";
 import Spinner from "@/app/(home)/components/Spinner";
 import { useCartStore } from "@/app/stores/cartStore";
 import SafeImage from "@/components/SafeImage";
@@ -31,17 +31,18 @@ const ProductRow = ({ cartItemData }: Props) => {
   const {
     name,
     price,
-    priceAfterDiscount,  
+    priceAfterDiscount,
     imageUrl,
     quantity: initialQuantity,
     amountYouBuy,
     amountYouGet,
     shipCost,
     productId,
+    specialProductId,
   } = cartItemData;
-  
+
   const thePrice = priceAfterDiscount || price;
-  const { updateQuantity: updateQuantityInStore , removeItem} = useCartStore();
+  const { updateQuantity: updateQuantityInStore, removeItem } = useCartStore();
 
   const [quantity, setQuantity] = useState<number>(initialQuantity);
   const [isUpdated, setIsUpdated] = useState<boolean>(false);
@@ -104,22 +105,35 @@ const ProductRow = ({ cartItemData }: Props) => {
   };
 
   const debounceQuantity = useDebounce(quantity, 1);
-  useEffect(() => {
+  useEffect(() => { 
+
     if (debounceQuantity >= 0 && isUpdated) {
       setIsUpdated(false);
       if (quantity == 0) {
         // updateQuantityInStore(0, productId);
-        removeItem(productId);
+        if (specialProductId) {
+          removeItem(specialProductId, true);
+        } else {
+          removeItem(productId);
+        }
       } else {
-        updateQuantityInStore(quantity, productId);
+        if (specialProductId) {
+          updateQuantityInStore(quantity, specialProductId, true);
+        } else {
+          updateQuantityInStore(quantity, productId);
+        }
       }
     }
   }, [debounceQuantity]);
 
   const handleDeleteItem = async () => {
     setIsUpdated(true);
-    removeItem(productId);
-    setQuantity(0); 
+    if (specialProductId) {
+      removeItem(specialProductId, true);
+    } else {
+      removeItem(productId);
+    }
+    setQuantity(0);
   };
 
   return (
@@ -140,7 +154,11 @@ const ProductRow = ({ cartItemData }: Props) => {
         </td>
         <td className="">
           <p>{thePrice?.toFixed(2)} رس</p>
-          { priceAfterDiscount < price && <p className="text-xs line-through text-red-600" >{price?.toFixed(2)} رس</p>}
+          {priceAfterDiscount < price && (
+            <p className="text-xs line-through text-red-600">
+              {price?.toFixed(2)} رس
+            </p>
+          )}
           {/* <span className="text-[10px] text-gray-400" >{percentageDiscount}%</span> */}
         </td>
 

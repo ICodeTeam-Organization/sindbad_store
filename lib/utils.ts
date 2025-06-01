@@ -89,8 +89,7 @@ export function convertToArabicDate(dateString: string) {
 
 export const goToExtrnalLink = (link: string) => {
   return link != "" && link != null && !!link
-    ? !link?.startsWith("http://") || !link?.startsWith("http://")
-      ? link
+    ? link?.startsWith("https://")  ? link
       : "https://" + link
     : "";
 };

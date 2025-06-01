@@ -18,7 +18,7 @@ const SendDataInBG = () => {
           mutate(dataToSend);
         }
       }
-    }, 20000 );  
+    }, 2000000 );  
     console.log("interval set"); 
     return () => clearInterval(interval);
   }, []);  

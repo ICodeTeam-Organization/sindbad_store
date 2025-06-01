@@ -11,9 +11,10 @@ function OfferPricesTable({
   initData,
 }: {
   initData: OfferDetailsResponseType;
+  
 }) {
-  const [SelectedPricing, setSelectedPricing] = useState<Pricing>();
-
+  const [SelectedPricing, setSelectedPricing] = useState<Pricing>(initData?.data[0]);
+ 
   const [showPricingInfo, setshowPricingInfo] = useState<{
     isOpen: boolean;
     data: Pricing | null;
@@ -67,8 +68,8 @@ function OfferPricesTable({
                     />
                   </td>
 
-                  <td className="px-4 py-3">{ele?.price}</td>
-                  <td className="px-4 py-3">{ele?.shippingCost}</td>
+                  <td className="px-4 py-3">{ele?.price} رس</td>
+                  <td className="px-4 py-3">{ele?.shippingCost} رس</td>
                   <td className="px-4 py-3">{ele?.quantity}</td>
                   <td className="px-4 py-3">{ele?.note ?? "لا توجد ملاحظة"}</td>
                   <td className=" py-3 mx-0 px-0">
@@ -161,6 +162,7 @@ function OfferPricesTable({
               </div>
 
               <AddSpecialOrderToCartButton
+                
                 pricingId={ele?.id}
                 totalPrice={
                   ((ele?.price ?? 1) + (ele?.shippingCost ?? 0)) *

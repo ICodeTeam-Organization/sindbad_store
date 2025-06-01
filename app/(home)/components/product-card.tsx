@@ -1,7 +1,7 @@
 import AddToBasket from "./add-to-basket";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
- 
+
 // import { Rating, RoundedStar } from "@smastrom/react-rating";
 import { AiFillStar } from "react-icons/ai";
 
@@ -32,7 +32,6 @@ type propsType = {
   amountYouGet?: number;
 };
 const ProductCard = (props: propsType) => {
-
   const {
     cn,
     id,
@@ -49,28 +48,30 @@ const ProductCard = (props: propsType) => {
     fiveStarCount = 0,
     rate = 0,
     amountYouBuy = 0,
-    amountYouGet = 0
+    amountYouGet = 0,
   } = props;
 
-  // data back 
+  // data back
   // حساب إجمالي التقييمات
-  const totalRatings =
-    oneStarCount +
-    twoStarCount +
-    threeStarCount +
-    fourStarCount +
-    fiveStarCount;
 
-  // حساب التقييم المتوسط
+  const totalRatings =
+    (oneStarCount || 0) +
+    (twoStarCount || 0) +
+    (threeStarCount || 0) +
+    (fourStarCount || 0) +
+    (fiveStarCount || 0);
+
   const weightedStars =
     totalRatings > 0
-      ? (oneStarCount * 1 +
-          twoStarCount * 2 +
-          threeStarCount * 3 +
-          fourStarCount * 4 +
-          fiveStarCount * 5) /
+      ? ((oneStarCount || 0) * 1 +
+          (twoStarCount || 0) * 2 +
+          (threeStarCount || 0) * 3 +
+          (fourStarCount || 0) * 4 +
+          (fiveStarCount || 0) * 5) /
         totalRatings
       : 0;
+
+  console.log("Rating:", weightedStars.toFixed(2));
 
   // تحديد عدد النجوم المملوءة والفارغة
   // const filledStars = Math.round(weightedStars);
@@ -78,15 +79,13 @@ const ProductCard = (props: propsType) => {
     Math.ceil(weightedStars) === 0 ? rate : Math.ceil(weightedStars);
   const emptyStars = 5 - filledStars;
 
-
   return (
     <div
       className={
         cn +
         `m-auto rounded-t-[8px] overflow-hidden border hover:border-purple-600 hover:border  transition-all hover:-translate-y-1 hover:shadow  `
       }
-    > 
-    
+    >
       <Link href={`/shop/productDetils/${ProductDet}`} className="">
         {/* <div className="w-full h-[180px] overflow-hidden relative  " >
           {offerSentence ? <span className="OfferSentence px-4 py-[2px] ">{offerSentence}</span>: null}
@@ -119,13 +118,13 @@ const ProductCard = (props: propsType) => {
       <div className="">
         <Link href={`/shop/productDetils/${ProductDet}`}>
           <p className=" line-clamp-2  h-10 font-[Tajawal] text-[#007580] text-[13px] mt-1 mx-2 tajawal text-right flex items-center">
-            <strong  className="line-clamp-2" >{productName}</strong>
+            <strong className="line-clamp-2">{productName}</strong>
           </p>
           <div className="text-right flex flex-col justify-start items-start ">
             <p className="max-md:pr-3 pr-3 max-md:text-xs text-[16px] text-[#F55157]">
               <strong>{price}</strong> <span className="text-[13px]">رس</span>
             </p>
-            { oldPrice && +oldPrice > price ? (
+            {oldPrice && +oldPrice > price ? (
               <div className="flex">
                 <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px] line-through text-[#9C9C9C]">
                   {oldPrice}رس
@@ -144,10 +143,10 @@ const ProductCard = (props: propsType) => {
             )}
           </div>
           <div className="flex items-center mx-3 mt-1 ">
-            {[...Array(Math.round(filledStars  ))].map((_, index) => (
+            {[...Array(Math.round(filledStars))].map((_, index) => (
               <AiFillStar key={index} className="text-[#FFC62A] text-[10px]" />
             ))}
-            {[...Array(Math.round(emptyStars ))].map((_, index) => (
+            {[...Array(Math.round(emptyStars))].map((_, index) => (
               <AiFillStar key={index} className="text-[#D6D6D6] text-[10px]" />
             ))}
             <p className="text-[#A5A5A5] text-[9px] mr-3">
@@ -177,10 +176,17 @@ const ProductCard = (props: propsType) => {
             </p> */}
           </div>
         </Link>
-        
+
         <AddToBasket
           id={id}
-          productInfo={{ image, productName, price, oldPrice , amountYouBuy , amountYouGet }}
+          productInfo={{
+            image,
+            productName,
+            price,
+            oldPrice,
+            amountYouBuy,
+            amountYouGet,
+          }}
         />
       </div>
     </div>

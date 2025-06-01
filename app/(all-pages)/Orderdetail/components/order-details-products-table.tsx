@@ -76,7 +76,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                   </td>
                   <td className="py-2">{details?.shipCost.toFixed(2)} رس</td>
                   <td className="py-2">
-                    {(details?.quantity * details?.price).toFixed(2)} رس
+                    {((details?.quantity * details?.price) + (details?.quantity * details?.shipCost)).toFixed(2)} رس
                   </td>
                 </tr>
               ))}

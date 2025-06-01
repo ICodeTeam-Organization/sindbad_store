@@ -123,11 +123,11 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
             عرض المنتجات
           </Link>
           {
-            websiteLink != null?           <Link href={goToExtrnalLink(websiteLink)} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
+            websiteLink != null && websiteLink != "" ?           <Link href={goToExtrnalLink(websiteLink)} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
             الموقع الإلكتروني
           </Link> :
                     <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
-                    لايوجد رابط
+                    لايوجد موقع الكتروني
                   </button>
           }
 
@@ -153,46 +153,7 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
         </div>
       </div>
     </div>
-  );
-
-  //   return (
-
-  // <div dir="rtl" className="bg-white border h-[430px] border-gray-200 overflow-hidden rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-  //     <a href="#">
-  //         {/* <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" /> */}
-  //         <Image
-  //         src={imagesUrl}
-  //         alt={name}
-  //         className="w-full h-[250px] object-cover "
-  //         width={200}
-  //         height={250}
-  //       />
-  //     </a>
-  //     <div className="p-5  h-full flex flex-col justify-between ">
-  //         <div>
-  //         <a href="#">
-  //             <h5 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{name}</h5>
-  //         </a>
-  //         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{description}</p>
-  //         </div>
-  //         <div className="flex flex-wrap justify-evenly items-center w-full mt-6  ">
-  //           <button className="flex-1 min-w-[70px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-  //             المتجر
-  //           </button>
-  //           <button className="flex-1 min-w-[70px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-  //             الصور
-  //           </button>
-  //           <button className="flex-1 min-w-[80px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-  //             متجر المحل
-  //           </button>
-  //           <button className="flex-1 min-w-[40px] h-[30px] border border-gray text-black text-base rounded-md flex justify-center items-center mx-1">
-  //             <IoMdHeartEmpty className="w-4 h-4" />
-  //           </button>
-  //         </div>
-  //     </div>
-  // </div>
-
-  //   )
+  ); 
 };
 
 export default StoreCard;
