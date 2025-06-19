@@ -11,7 +11,8 @@ type Detail = {
     price: number;
     quantity: number;
     imageUrl: string;
-    shipCost:number
+    shipCost:number;
+    extraQuantity: number;
   }[];
 };
 
@@ -76,7 +77,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                   </td>
                   <td className="py-2">{details?.shipCost.toFixed(2)} رس</td>
                   <td className="py-2">
-                    {((details?.quantity * details?.price) + (details?.quantity * details?.shipCost)).toFixed(2)} رس
+                    {((details?.quantity * details?.price) + ((details?.quantity + details.extraQuantity) * details?.shipCost)).toFixed(2)} رس
                   </td>
                 </tr>
               ))}
@@ -108,7 +109,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                   </p>
                   <p className="text-xs mt-1 text-primary-background font-bold" >
                   <span className="font-bold text-black">تكلفة الشحن: </span>
-                  {details?.shipCost.toFixed(2)} رس
+                  {details?.shipCost * (details?.extraQuantity + details.quantity)} رس
                 </p>
                 </div>
               </div>

@@ -1,8 +1,8 @@
 "use client";
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+import { NormalizedCategoryType } from "@/Data/normalizTypes";
 // import { getApi } from "@/lib/http";
-import { cn } from "@/lib/utils";
-import { MainCategory } from "@/types/storeTypes";
+import { cn } from "@/lib/utils"; 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -13,11 +13,11 @@ function AllCategoriesMegaMenu() {
 
   const allMainCat = categories?.filter((i) => i.categoryTypeNumber == 1);
 
-  const [subCategories, setSubCategories] = useState<MainCategory[]>([]);
+  const [subCategories, setSubCategories] = useState<NormalizedCategoryType[]>([]);
 
   const handleSubCategory = (id: number) => {
-    const subCategories: MainCategory[] =
-      allMainCat?.find((main: MainCategory) => main.id === id)?.subCategories ||
+    const subCategories: NormalizedCategoryType[] =
+      allMainCat?.find((main: NormalizedCategoryType) => main.id === id)?.subCategories ||
       [];
     setSubCategories(() => [...subCategories]);
   };
@@ -57,7 +57,7 @@ function AllCategoriesMegaMenu() {
                 dir="ltr"
                 className="mdHalf:grid grid-cols-1 flex direction-  mdHalf:place-content-start  mdHalf:overflow-y-scroll mdHalf:overflow-x-hidden overflow-x-scroll   gap-x-4  mdHalf:mb-5 mb-2  mdHalf:h-[75%]"
               >
-                {allMainCat?.map((i: MainCategory) => (
+                {allMainCat?.map((i: NormalizedCategoryType) => (
                   <div key={i.id}>
                     <Link
                       href={`/shop?cats=${i.id}`}
@@ -105,7 +105,7 @@ function AllCategoriesMegaMenu() {
               </div>
               {subCategories.length != 0 ? (
                 <div className="mdHalf:grid  grid-cols-1 place-content-start  gap-x-4   overflow-y-scrol overflow-x-hidden h-[75%]">
-                  {subCategories?.map((i: MainCategory) => (
+                  {subCategories?.map((i: NormalizedCategoryType) => (
                     <div key={i.id}>
                       <Link
                         href={`/shop?subCats=${i.id}`}

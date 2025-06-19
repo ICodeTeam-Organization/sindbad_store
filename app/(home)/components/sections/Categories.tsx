@@ -1,7 +1,6 @@
 "use client";
 import CategoryCard from "../category-card";
-import styles from "../SectionTitle.module.css";
-import { Category } from "@/types/storeTypes";
+import styles from "../SectionTitle.module.css"; 
 import {
   Carousel,
   CarouselContent,
@@ -11,9 +10,10 @@ import {
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { useState } from "react";
+import { NormalizedCategoryType } from "@/Data/normalizTypes";
 
 interface categoriesPropsInterface {
-  categories: Category[];
+  categories: NormalizedCategoryType[];
 }
 
 const Categories = ({ categories }: categoriesPropsInterface) => {
@@ -56,14 +56,14 @@ const Categories = ({ categories }: categoriesPropsInterface) => {
         >
           <CarouselContent dir="rtl">
             {categories && categories?.map(
-              (category: Category, index: number) =>
+              (category: NormalizedCategoryType, index: number) =>
                 index < 20 && (
                   <CarouselItem key={category.id} className="basis-1/8 group">
                     <CategoryCard
                       key={category.id}
                       id={category.id}
                       name={category.name}
-                      imageUrl={category.imageUrl || ""}
+                      imageUrl={category.image || ""}
                     />
                   </CarouselItem>
                 )

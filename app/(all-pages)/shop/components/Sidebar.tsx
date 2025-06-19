@@ -11,9 +11,9 @@ import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import CategoriesShopFilter from "./CategoriesShopFilter";
 import StoresSearchSelector from "./StoresSearchSelector";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
-import { MainCategory } from "@/types/storeTypes";
 import { Checkbox } from "@/components/ui/checkbox";
 import { GrPowerReset } from "react-icons/gr";
+import { NormalizedCategoryType } from "@/Data/normalizTypes";
 
 const Sidebar = () => {
   const {
@@ -90,7 +90,7 @@ const Sidebar = () => {
       <div className="border-b mb-4">
         <h3 className="mb-2">الفئات</h3>
         <div className="max-h-[50vh] overflow-auto ">
-          {categories.map((ele: MainCategory) => {
+          {categories.map((ele: NormalizedCategoryType) => {
             return <CategoriesShopFilter 
             key={ele.id} 
             data={ele}

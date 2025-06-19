@@ -13,7 +13,7 @@ export const getCachedDataInBg = (type ?: number) => {
   return [] ;
  }
 
-function useSendDataInBg() {
+ function useSendDataInBg() {
      const mutation = useMutation({
     mutationFn: async (data: BgHandlerDataItemType[]) => {
       const body = data.map((ele) => ({

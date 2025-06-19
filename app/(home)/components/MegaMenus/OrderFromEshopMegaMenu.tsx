@@ -2,7 +2,7 @@
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
-import { MainCategory, Shop } from "@/types/storeTypes";
+import { Shop } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { BiCategoryAlt } from "react-icons/bi";
@@ -10,10 +10,11 @@ import { IoStorefrontOutline } from "react-icons/io5";
 import Spinner from "../Spinner";
 import SafeImage from "@/components/SafeImage";
 import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
+import { NormalizedCategoryType } from "@/Data/normalizTypes";
 
 function OrderFromEshopMegaMenu() {
   const { categories } = useCategoriesDataStore((state) => state);
-  const allMainCat: MainCategory[] =
+  const allMainCat: NormalizedCategoryType[] =
     categories?.filter((i) => i.categoryTypeNumber == 1) || [];
 
   const [params, setParams] = useState({

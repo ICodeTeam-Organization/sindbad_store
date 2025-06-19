@@ -1,14 +1,14 @@
 "use client"
 import Image from 'next/image'
 import React, { useRef } from 'react'
-import Link from 'next/link'
-import { MainCategory } from '@/types/storeTypes';
+import Link from 'next/link' 
 import { useCategoriesDataStore } from '@/app/stores/categoriesStore';
+import { NormalizedCategoryType } from '@/Data/normalizTypes';
 
-function getAllSubcategories(categories: MainCategory[]): MainCategory[] {
-  let subcategories: MainCategory[] = [];
-  categories.forEach((category:MainCategory) => {
-    subcategories = subcategories.concat(category.subCategories as MainCategory[]);
+function getAllSubcategories(categories: NormalizedCategoryType[]): NormalizedCategoryType[] {
+  let subcategories: NormalizedCategoryType[] = [];
+  categories.forEach((category:NormalizedCategoryType) => {
+    subcategories = subcategories.concat(category.subCategories as NormalizedCategoryType[]);
   });
   return subcategories;
 }
@@ -19,7 +19,7 @@ const CategoryItemSkeleton = () => (
   </div>
 )
 
-const CategoryItem = ({item}:{item:MainCategory}) => (
+const CategoryItem = ({item}:{item:NormalizedCategoryType}) => (
   <Link href={"/shop?subCats="+item?.id} className="bg-[#FFFDF4] p-1 px-2 rounded shadow-sm  " >
      <p className="whitespace-nowrap tajawal min-w-[105px] text-center mdHalf:text-[11px] text-[10px] font-bold "> {item?.name} </p>
     </Link>

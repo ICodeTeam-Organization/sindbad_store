@@ -5,12 +5,12 @@ import {
     AccordionItem,
     AccordionTrigger,
   } from "@/components/ui/accordion"
-import { Product } from '@/types/pruductDetails';
 import ProductFeaturesTable from './features-table';
 import ProductReviewsTap from './reviews-tap';
+import { NormalizedProductType } from '@/Data/normalizTypes';
 
 type  Props = {
-  product: Product;
+  product: NormalizedProductType;
   productId: string | number;
 };
 

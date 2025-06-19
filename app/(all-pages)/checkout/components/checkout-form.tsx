@@ -35,7 +35,7 @@ import { Input } from "@/components/ui/input";
 import { useSession } from "next-auth/react";
 import { useCartStore } from "@/app/stores/cartStore";
 import SuccessDialog from "./SuccessModal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { z } from "zod";
 import { validateCheckoutForm } from "../schema";
 import { Label } from "@/components/ui/label";
@@ -45,6 +45,11 @@ import {
 } from "@/app/(my-account)/user-addresses/types";
 import Link from "next/link";
 import { useRouter } from "next-nprogress-bar";
+import useSendDataInBg from "@/hooks/useSendDataInBg";
+import {
+  BgHandlerDataItemType,
+  SEND_DATA_IN_BG_LOCALSTORAGE_KEY,
+} from "@/lib/utils";
 
 function extractNumbers(str: string) {
   const numbers = str?.match(/\d+/g) || [];
@@ -57,10 +62,11 @@ const CheckoutForm = () => {
     queryFn: async () => await getApi("BankAccountsGetAccountsByCompany"),
   });
 
-  const { data: addressData , isPending:isPendingForAdresses } = useQuery<AddressResponse>({
-    queryKey: ["address-checkout"],
-    queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress`),
-  });
+  const { data: addressData, isPending: isPendingForAdresses } =
+    useQuery<AddressResponse>({
+      queryKey: ["address-checkout"],
+      queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress`),
+    });
 
   const form = useForm<CheckoutType>({
     // resolver: zodResolver(checkoutSchema),
@@ -80,6 +86,16 @@ const CheckoutForm = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [requestNumber, setRequestNumber] = useState("");
+  const [formsValues, setFormsValues] = useState<CheckoutType>();
+  const [loadingData, setloadingData] = useState(false)
+  // this is to force send data that saved in cache
+  const {
+    mutate: mutateBgData,
+    isPending: isPendingForSendDataInBg,
+    isSuccess,
+    error:errorSendDataInBg
+  } = useSendDataInBg();
+  
 
   const { mutate, isPending } = useMutation({
     mutationKey: ["upload-bound"],
@@ -98,7 +114,7 @@ const CheckoutForm = () => {
         formData.append("BondDate", data.date);
       }
       if (data.customerAdressId) {
-        formData.append("customerAdressId", ""+data.customerAdressId );
+        formData.append("customerAdressId", "" + data.customerAdressId);
       }
       if (data.image && data.image.length > 0) {
         formData.append("BondImageFile", data.image[0]);
@@ -116,6 +132,7 @@ const CheckoutForm = () => {
       });
     },
     onError: (err) => {
+      setloadingData(false)
       console.log(err);
       toast({
         variant: "destructive",
@@ -128,17 +145,45 @@ const CheckoutForm = () => {
       setCartItems([]);
       setRequestNumber(code?.toString());
       setIsDialogOpen(true);
+      setloadingData(false)
     },
   });
+
+  useEffect(() => {
+    if (isSuccess && !isPendingForSendDataInBg && !isPending && formsValues) {
+      mutate(formsValues);
+    } else if (!isSuccess && !isPendingForSendDataInBg && errorSendDataInBg) {
+      console.log(errorSendDataInBg);
+      toast({
+        variant: "destructive",
+        description: errorSendDataInBg.message || "حدث خطأ أثناء معالجة الطلب",
+        // action: <ToastAction altText="Try again">حاول مرة اخرى</ToastAction>,
+      });
+      setloadingData(false)
+    }
+  }, [isSuccess]);
 
   async function onSubmit(values: CheckoutType) {
     const vald = validateCheckoutForm(values);
     if (vald.length == 0) {
-       mutate(values);
+      setloadingData(true)
+      const bgHandlerData = localStorage.getItem(
+        SEND_DATA_IN_BG_LOCALSTORAGE_KEY
+      );
+      if (bgHandlerData) {
+        let bgData: BgHandlerDataItemType[] = JSON.parse(bgHandlerData);
+        bgData = bgData.filter(
+          (item) => item.reqType == 3 || item.reqType == 4
+        );
+        mutateBgData(bgData);
+        setFormsValues(values);
+      } else {
+        mutate(values)
+      }
     } else {
       toast({
         variant: "destructive",
-        description: vald[0], 
+        description: vald[0],
       });
     }
   }
@@ -176,27 +221,35 @@ const CheckoutForm = () => {
                               <SelectItem
                                 key={address?.id}
                                 value={address?.id.toString()}
-                                
                               >
                                 <p>
                                   <span> {address?.directorateName} : </span>
                                   <span className="text-xs text-gray-500">
-                                    {address?.locationDescription}  
-                                    </span>
+                                    {address?.locationDescription}
+                                  </span>
                                 </p>
                               </SelectItem>
                             )
                           )}
                         </SelectGroup>
-                        {isPendingForAdresses ? <div className="p-4 flex items-center justify-center" > <Loader2 className="animate-spin" /> </div> : addressData?.data.length == 0 && <div className="text-sm flex flex-col items-center justify-center p-4">
-                          <h1 className="mb-2"> لا توجد لديك عناوين </h1>
-                          <Link
-                            href={"/user-addresses"}
-                            className="text-primary-background"
-                          >
-                            إضافة عنوان
-                          </Link>
-                        </div>}
+                        {isPendingForAdresses ? (
+                          <div className="p-4 flex items-center justify-center">
+                            {" "}
+                            <Loader2 className="animate-spin" />{" "}
+                          </div>
+                        ) : (
+                          addressData?.data.length == 0 && (
+                            <div className="text-sm flex flex-col items-center justify-center p-4">
+                              <h1 className="mb-2"> لا توجد لديك عناوين </h1>
+                              <Link
+                                href={"/user-addresses"}
+                                className="text-primary-background"
+                              >
+                                إضافة عنوان
+                              </Link>
+                            </div>
+                          )
+                        )}
                       </SelectContent>
                     </Select>
                     {field?.value && (
@@ -278,18 +331,24 @@ const CheckoutForm = () => {
                 control={form.control}
                 type="text"
               />
-              <p className="-mb-8 text-sm" >صورة السند</p>
-              <Input type="file"  {...form.register("image")} accept="image/*" />
-            <p className="text-[11px] text-gray-500 " > ملاحظة : يجب إضافة صورة السند او ادخال اسم البنك مع رقم السند </p>
-
+              <p className="-mb-8 text-sm">صورة السند</p>
+              <Input type="file" {...form.register("image")} accept="image/*" />
+              <p className="text-[11px] text-gray-500 ">
+                {" "}
+                ملاحظة : يجب إضافة صورة السند او ادخال اسم البنك مع رقم السند{" "}
+              </p>
             </CardContent>
             <CardFooter>
               <Button
                 type="submit"
-                disabled={isPending}
+                disabled={loadingData}
                 className="w-full hover:bg-orange-600 bg-primary-background transition-colors"
               >
-                {isPending ? <Loader2 className="animate-spin" /> : "إرسال الطلب"}
+                {loadingData ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  "إرسال الطلب"
+                )}
               </Button>
             </CardFooter>
           </form>
@@ -298,9 +357,9 @@ const CheckoutForm = () => {
       <SuccessDialog
         open={isDialogOpen}
         requestNumber={requestNumber}
-        onOpenChange={(e)=>{
+        onOpenChange={(e) => {
           setIsDialogOpen(e);
-          router.push("/")
+          router.push("/");
         }}
       />
     </>

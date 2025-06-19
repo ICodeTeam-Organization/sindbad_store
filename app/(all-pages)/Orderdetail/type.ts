@@ -9,6 +9,7 @@
     price: number;
     discount: number;
     quantity: number;
+    extraQuantity: number;
     imageUrl: string;
     shipCost: number;
   };

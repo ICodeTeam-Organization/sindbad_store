@@ -3,39 +3,19 @@ import React from "react";
 import PriceSection from "./price-section";
 import ImageGallery from "./image-gallery";
 import AddToBasketBtnForProductDetails from "./add-to-basket-proDetails";
-import { Product } from "./../types";
 import { Rating, RoundedStar } from "@smastrom/react-rating";
 import { getRemainingTimeForOffer } from "@/lib/timeFuns";
+import { NormalizedProductType } from "@/Data/normalizTypes";
 
 type ProductDetailsProps = {
-  product: Product;
+  product: NormalizedProductType;
 };
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
-  
-  const numOfReviewers =
-    product?.oneStarCount +
-    product?.twoStarCount +
-    product?.threeStarCount +
-    product?.fourStarCount +
-    product?.fiveStarCount;
-  const noOfStars =
-    product?.oneStarCount +
-    product?.twoStarCount * 2 +
-    product?.threeStarCount * 3 +
-    product?.fourStarCount * 4 +
-    product?.fiveStarCount * 5;
-  const rating = noOfStars / numOfReviewers || 0;
-
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-12 mdHalf:px-12 px-4">
       <div className=" ml-8 mdHalf:w-[400px] w-full">
-        <ImageGallery
-          images={[
-            product.mainImageUrl,
-            ...product.productImages.map((img: any) => img.imageUrl),
-          ]}
-        />
+        <ImageGallery images={[product.image, ...(product.images ?? [])]} />
       </div>
       <div className="flex flex-1 flex-col justify-between">
         {/* <ProductTitle name={product.name} description={product.name} rating={5} /> */}
@@ -107,7 +87,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             <div className="flex  my-4 mt-6 items-center gap-x-4 ">
               <div className=" border-l-2 pl-4 border-l-gray-200 py-1 flex">
                 <span className="text-gray-500 text-xs mx-1">
-                  {rating?.toFixed(1)}
+                  {product?.rate?.toFixed(1)}
                 </span>
                 <Rating
                   style={{ maxWidth: 60 }}
@@ -118,43 +98,39 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                     inactiveFillColor: "#eee",
                   }}
                   readOnly
-                  value={rating}
+                  value={product?.rate}
                 />
               </div>
               <PriceSection
-                discountedPrice={
-                  product.priceAfterOffer < product.priceBeforOffer
-                    ? product.priceAfterOffer
-                    : 0
-                }
-                originalPrice={product.priceBeforOffer}
-                discount={product.percentageOfDiscount}
+                discountedPrice={product?.price} // product?.price هذا اذا فيه خصم يكون فيه السعر بعد الخصم واذا مافيه خصم يكون فيه السعر الاصلي
+                originalPrice={product.priceBeforeDiscount ?? product?.price}
+                discount={product.percentageOfDiscount ?? 0}
               />
             </div>
 
-            {getRemainingTimeForOffer(product.offerEndDate) != "" && 
+            {getRemainingTimeForOffer(product.offerEndDate ?? "") != "" && (
               <div>
                 {product.offerSentence && (
                   <div className="flex items-center col-span-2 mb-2 text-xs bg-primary-background text-white p-1 w-fit px-2 rounded-md tajawal">
                     <span>
-                      {product.offerSentence !== null
-                        ? product.offerSentence
-                        : ""}
+                      {product.offerSentence ? product.offerSentence : ""}
                     </span>
                   </div>
                 )}
 
                 {/* OFFER TIME  */}
-                {product.priceAfterOffer < product.priceBeforOffer ||
+                {product.hasOffer ||
+                  product.hasDiscount ||
                   (product.offerSentence !== null && (
                     <div className="flex flex-wrap gap-x-4 text-sm text-primary-background ">
                       <div className="text-red-600 text-sm mt-2">
-                       الوقت المتبقي لنهاية العرض : {getRemainingTimeForOffer(product.offerEndDate)}
+                        الوقت المتبقي لنهاية العرض :{" "}
+                        {getRemainingTimeForOffer(product.offerEndDate ?? "")}
                       </div>
                     </div>
                   ))}
               </div>
-            }
+            )}
             <hr className="my-4   border border-primary-background border-opacity-15" />
             <p className="text-base text-gray-600 mt-4">
               {product?.description}
@@ -168,8 +144,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               </p>
               <div className="flex flex-wrap gap-4">
                 {[
-                  ...product?.mainCategoriesNames,
-                  ...product?.subCategoriesNames,
+                  ...(product?.mainCategoriesNames ?? []),
+                  ...(product?.subCategoriesNames ?? []),
                 ]
                   .filter((e) => !!e)
                   .map((category: any, x) => (
@@ -189,7 +165,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             <div className="flex items-center col-span-2 mb-2 mt-4">
               <span className="font-medium ml-1 ">رقم المنتج : </span>
               <span className="bg-primary-background mx-1 text-white px-2  ">
-                {product.number}
+                {product.productNumber}
               </span>
             </div>
           </div>
@@ -198,12 +174,12 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           <AddToBasketBtnForProductDetails
             id={product.id}
             productInfo={{
-              image: product.mainImageUrl,
+              image: product.image,
               productName: product.name,
-              price: product.priceAfterOffer,
-              oldPrice: product.priceBeforOffer,
-              amountYouBuy: product.amountYouShouldToBuyForGetOffer,
-              amountYouGet: product.amountYouWillGetFromOffer,
+              price: product.price,
+              oldPrice: product.priceBeforeDiscount,
+              amountYouBuy: product.amountYouBuy,
+              amountYouGet: product.amountYouGet,
             }}
           />{" "}
         </div>

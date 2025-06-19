@@ -1,15 +1,16 @@
-import { MainCategory } from '@/types/storeTypes';
+import { NormalizedCategoryType } from '@/Data/normalizTypes'; 
 import { create } from 'zustand';
 
+// TODO ممكن احذفها اذا تم حفظ الفئات في ال local db
+
+
 interface CategoriesDataState {
-  categories: MainCategory[];
-  setCategories: (categories: MainCategory[]) => void;
+  categories: NormalizedCategoryType[];
+  setCategories: (categories: NormalizedCategoryType[]) => void;
 }
 
-export const useCategoriesDataStore = create<CategoriesDataState>((set) => {
-
-  const isClient = typeof window !== 'undefined';
-
+export const useCategoriesDataStore = create<CategoriesDataState>((set) => { 
+  const isClient = typeof window !== 'undefined'; 
   return {
     categories: [],
     setCategories: (categories) => {

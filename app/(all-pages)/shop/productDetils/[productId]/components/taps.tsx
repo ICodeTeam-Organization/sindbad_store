@@ -1,11 +1,11 @@
 import * as Tabs from "@radix-ui/react-tabs";
 import SafeImage from "@/components/SafeImage";
 import ProductReviewsTap from "./reviews-tap";
-import { Product } from "./../types";
 import ProductFeaturesTable from "./features-table";
+import { NormalizedProductType } from "@/Data/normalizTypes";
 
 type TabsComponentProps = {
-  product: Product;
+  product: NormalizedProductType;
   productId: string | number;
   // tabLabels: {
   //   details: string;
@@ -78,7 +78,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
             </div>
             <div className="hidden lg:mt-0 md:col-span-5 md:flex  items-start">
               <SafeImage
-                src={product.mainImageUrl}
+                src={product.image}
                 alt="صور للمنتج"
                 width={400}
                 height={400}
@@ -105,7 +105,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
             <p className="text-center">لا يوجد معلومات اضافية</p>
           )
 } */}
-        <ProductFeaturesTable features={product?.attributesWithValues} />
+        <ProductFeaturesTable features={product?.attributesWithValues || []} />
       </Tabs.Content>
 
       <Tabs.Content

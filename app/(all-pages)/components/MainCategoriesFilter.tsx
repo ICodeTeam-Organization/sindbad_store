@@ -1,10 +1,10 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MainCategory } from "@/types/storeTypes";
+import { NormalizedCategoryType } from "@/Data/normalizTypes";
 import React from "react";
 
 interface ParentChildCheckboxProps {
-  data: MainCategory[]; 
+  data: NormalizedCategoryType[]; 
   checkedId:number;
   onCheckedChange:(id:number) => void
 }

@@ -1,7 +1,7 @@
 "use client";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 import { Checkbox } from "@/components/ui/checkbox";
-import { MainCategory } from "@/types/storeTypes";
+import { NormalizedCategoryType } from "@/Data/normalizTypes";
 import { Dot } from "lucide-react";
 import React, { useState } from "react";
 import { MdOutlineChevronLeft } from "react-icons/md";
@@ -19,7 +19,7 @@ import { MdOutlineChevronLeft } from "react-icons/md";
 // }
 
 interface ParentChildCheckboxProps {
-  data: MainCategory; // Represents the parent and its children
+  data: NormalizedCategoryType; // Represents the parent and its children
 }
 
 const CategoriesShopFilter: React.FC<ParentChildCheckboxProps> = ({ data }) => {

@@ -9,18 +9,7 @@ export type CategoryWithSub = {
   name: string;
   imageUrl?: string;
   subCategoriesForVeiw:[]
-};
-
-export interface MainCategory {
-  id: number;
-  name: string;
-  imageUrl: string;
-  categoryTypeName: string;
-  categoryTypeNumber: number;
-  subCategories?:MainCategory[]
-  parentCategoryId?:number
-}
-
+}; 
 // for e shops
 export interface Store {
   id: string;

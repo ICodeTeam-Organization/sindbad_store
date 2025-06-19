@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ProductCard from "@/app/(home)/components/product-card";
-import { Product } from "@/types/storeTypes";
 import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
@@ -19,10 +18,12 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BsSearch } from "react-icons/bs";
+import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
+import { NormalizedProductType } from "@/Data/normalizTypes";
 
 type ProductsResponsive = {
   data: {
-    items: Product[];
+    items: NormalizedProductType[];
     currentPage: number;
     totalPages: number;
     totalCount: number;
@@ -37,8 +38,6 @@ const ShopProductsGrid = () => {
     rootMargin: "100px",
   });
 
- 
-
   const {
     filters,
     resetFilters,
@@ -47,7 +46,9 @@ const ShopProductsGrid = () => {
     setProductName,
     setOrderBy,
   } = useShopFiltersStore();
-  const [product_name_for_subinput, setProduct_name_for_subinput] = useState(filters.productName)
+  const [product_name_for_subinput, setProduct_name_for_subinput] = useState(
+    filters.productName
+  );
 
   const [firstRender, setfirstRender] = useState(true);
 
@@ -61,8 +62,6 @@ const ShopProductsGrid = () => {
   } = useInfiniteQuery<ProductsResponsive>({
     queryKey: ["GetProductsWitheFilter", filters],
     queryFn: async ({ pageParam }) => {
-      
-      
       const body = {
         pageNumber: pageParam || 1,
         pageSize: filters.pageSize,
@@ -72,7 +71,10 @@ const ShopProductsGrid = () => {
         productName: filters.productName || null,
         minPrice: filters.price[0],
         maxPrice: filters.price[1],
-        categories:[...filters.cats.map((id) => +id),...filters.subCats.map((id) => +id)],
+        categories: [
+          ...filters.cats.map((id) => +id),
+          ...filters.subCats.map((id) => +id),
+        ],
         // mainCategories: [...filters.cats.map((id) => +id)],
         // subCategories: [...filters.subCats.map((id) => +id)],
         brandId: filters.brandId || null,
@@ -88,13 +90,19 @@ const ShopProductsGrid = () => {
         })
       );
 
-      const response = await postApi(
+      const response: ProductsResponsive = await postApi(
         `Products/GetProductsWitheFilter?returnDtoName=2`,
         {
-          body: {...filteredBody,orderBy:filteredBody.orderBy || 0},
+          body: { ...filteredBody, orderBy: filteredBody.orderBy || 0 },
         }
       );
-      return response as ProductsResponsive;
+      return {
+        ...response,
+        data: {
+          ...response.data,
+          items: response.data.items.map(normalizeProduct),
+        },
+      };
     },
     getNextPageParam: (lastPage) => {
       if (lastPage?.data.currentPage < lastPage?.data.totalPages) {
@@ -186,17 +194,16 @@ const ShopProductsGrid = () => {
     }
   }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-
-  const handleSearch = () => { 
+  const handleSearch = () => {
     setProductName(product_name_for_subinput);
-   }
+  };
 
   return (
     <>
       {!isPending && (
         <div className="mdHalf::mx-0 mx-4  ">
           <div className="mb-4 mdHalf:flex  items-center justify-between gap-x-4 بمث ">
-            <div className="flex justify-between items-center flex-1  border border-gray-300 rounded-md p-2 mdHalf:mb-0 mb-4 "  >
+            <div className="flex justify-between items-center flex-1  border border-gray-300 rounded-md p-2 mdHalf:mb-0 mb-4 ">
               <input
                 placeholder="ابحث عن منتج"
                 value={product_name_for_subinput}
@@ -210,11 +217,14 @@ const ShopProductsGrid = () => {
                   }
                 }}
               />
-              <BsSearch className="mx-2 cursor-pointer" onClick={ handleSearch} />
+              <BsSearch
+                className="mx-2 cursor-pointer"
+                onClick={handleSearch}
+              />
             </div>
             <Select
               dir="rtl"
-              defaultValue={filters.orderBy?.toString()|| "0"} // Ensure it matches the correct value type
+              defaultValue={filters.orderBy?.toString() || "0"} // Ensure it matches the correct value type
               onValueChange={(e) => {
                 console.log(e);
                 setOrderBy(+e);
@@ -236,7 +246,6 @@ const ShopProductsGrid = () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
-
           </div>
           <SearchResultsHeader totalResults={totalCount} />
         </div>
@@ -258,25 +267,10 @@ const ShopProductsGrid = () => {
                 );
               }
 
-              return page.data.items.map((product: any) => (
+              return page.data.items.map((product: NormalizedProductType) => (
                 <div key={product.id} className="sm:w-[220px]  w-[180px] ">
                   <ProductCard
-                    id={product.id + ""}
-                    ProductDet={+product.id}
-                    image={product.mainImageUrl}
-                    price={
-                      !!product.priceAfterDiscount
-                        ? product.priceAfterDiscount
-                        : product.priceBeforeDiscount
-                    }
-                    oldPrice={
-                      product.priceAfterDiscount
-                        ? product.priceBeforeDiscount
-                        : null
-                    }
-                    productName={product.name}
-                    offerSentence={product.buyAndGet}
-                    rate={product.rate}
+                     data={product}
                   />
                 </div>
               ));

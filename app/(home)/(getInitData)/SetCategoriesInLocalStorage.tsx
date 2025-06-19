@@ -1,13 +1,13 @@
 "use client";
 
 import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import { MainCategory } from "@/types/storeTypes";
+import { NormalizedCategoryType } from "@/Data/normalizTypes"; 
 import { useEffect } from "react";
 
 export default function SetCategoriesInLocalStorage({
   AllCategoriesWihtSubcategories,
 }: {
-    AllCategoriesWihtSubcategories: MainCategory[];
+    AllCategoriesWihtSubcategories: NormalizedCategoryType[];
 }) {
 
 const setCategories = useCategoriesDataStore((state) => state.setCategories);

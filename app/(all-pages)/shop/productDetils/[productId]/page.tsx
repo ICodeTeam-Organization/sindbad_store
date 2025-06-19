@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import ProductDetails from "./components/product-details";
 import { Product } from "./types";
 import ProductDetailsAccordingmenus from "./components/ProductDetailsAccordingmenus";
+import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 
 type ProductPageProps = {
   params: {
@@ -34,13 +35,16 @@ const fetchProductDetails = async (id: string): Promise<Product | null> => {
     notFound();
   }
 
-  const product = await fetchProductDetails(productId);
+  const productData = await fetchProductDetails(productId);
 
-  if (!product) {
+  if (!productData) {
     notFound();
   }  
 
-  console.log("product", product);
+  const product = normalizeProduct(productData); // تحول شكل البينات الى الشكل الموحد NormlizedProductType
+   
+ 
+  
   
 
   return (

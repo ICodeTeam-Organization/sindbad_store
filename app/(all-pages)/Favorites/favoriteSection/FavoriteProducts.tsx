@@ -1,8 +1,9 @@
 "use client";
 import ProductCard from "@/app/(home)/components/product-card";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
+import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
+import { NormalizedProductType } from "@/Data/normalizTypes";
 import { getApi } from "@/lib/http";
-import { FavoriteProduct } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import React from "react";
@@ -10,10 +11,11 @@ import React from "react";
 function FavoriteProducts() {
   const { data: session, status } = useSession();
 
-  const { data, isLoading } = useQuery<{ data: FavoriteProduct[] }>({
+  const { data, isLoading } = useQuery<NormalizedProductType[]>({
     queryKey: ["get-favorite-products-all"],
-    queryFn: () =>
-      getApi(
+    queryFn: async () =>
+     {
+      const dt = await  getApi<{data:any[]}>(
           "Favorites/GetAllCustomerFavoritesWithPagination",
           {
             pageNumber:1,
@@ -24,7 +26,11 @@ function FavoriteProducts() {
             Authorization: `Bearer ${session?.user.data.token}`,
           },
         }
-      ),
+      ); 
+       
+      return ( dt.data.map(normalizeProduct))
+      
+     },
     enabled: status == "authenticated",
   });
 
@@ -41,16 +47,12 @@ function FavoriteProducts() {
             <ProductCardSkeleton />
           </div>
         ))
-      ) : data?.data&& data?.data.length > 0 ? (
-        data.data.map((product: FavoriteProduct) => (
-          <div key={product.productId} className="sm:w-[220px]  w-[180px] ">
+      ) : data && data.length > 0 ? (
+         data.map((product: NormalizedProductType) => (
+          <div key={product.id} className="sm:w-[220px]  w-[180px] ">
             <ProductCard
-              id={product.productId + ""}
-              ProductDet={product.productId}
-              image={product.mainImageUrl}
-              price={product.price}
-              // oldPrice={product.priceBeforeDiscount}
-              productName={product.productName}
+             key={product.id}
+             data={product}
             />
           </div>
         ))

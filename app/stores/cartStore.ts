@@ -5,6 +5,7 @@ import {
   storeInBgcache,
   SEND_DATA_IN_BG_LOCALSTORAGE_KEY,
 } from "@/lib/utils";
+// import { savebackgroundDataInCache } from "@/Data/cachingAndBgData/backgroundData";
 
 type CartState = {
   items: CartItem[];
@@ -31,6 +32,12 @@ export const useCartStore = create<CartState>((set) => ({
 
       // ✅ إذا المنتج غير موجود، أضفه بكمية 1 وسجّل ذلك في localStorage
       // عشان ارسال ركوست كل عشر ثواني موجود داخل الcomponents in SendDataInBG
+      // savebackgroundDataInCache({
+      //   reqType: 3,
+      //   reqValue: 1,
+      //   Id: newItem.productId,
+      //   prevValue: 0, // القيمة السابقة غير معروفة، لذا نستخدم 0
+      // })
       storeInBgcache({
         reqType: 3,
         reqValue: 1,

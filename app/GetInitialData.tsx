@@ -3,19 +3,20 @@ import GetFavorite from "./(home)/(getInitData)/GetFavorite";
 import GetCartItems from "./(home)/(getInitData)/GetCartItems";
 import SetCategoriesInLocalStorage from "./(home)/(getInitData)/SetCategoriesInLocalStorage";
 import { getApi } from "@/lib/http";
-import { MainCategory } from "@/types/storeTypes";
 import GetNotificationCount from "./(home)/(getInitData)/GetNotificationCount";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/authOption";
+import { NormalizedCategoryType } from "@/Data/normalizTypes";
+import { normalizeCategory } from "@/Data/mappers/categoryNormlizeMapper";
 
 async function GetInitialData() {
-  let allCategoriesWithSub: MainCategory[] = [];
+  let allCategoriesWithSub: NormalizedCategoryType[] = [];
 
   try {
-    const response = await getApi<{ data: { items: MainCategory[] } }>(
+    const response = await getApi<{ data: { items: any[] } }>(
       "Category/GetAllMainCategoriesWithSubCategories/1/10000"
     );
-    allCategoriesWithSub = response?.data?.items || [];
+    allCategoriesWithSub = (response?.data?.items || []).map(normalizeCategory);
   } catch (error) {
     console.error("Error fetching categories:", error);
   }

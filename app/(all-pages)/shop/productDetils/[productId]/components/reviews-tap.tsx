@@ -5,7 +5,6 @@ import ReviewForm from "./review-form";
 import ReviewComment from "./review-comment";
 import { ReviewProps } from "../types";
 import { getApi } from "@/lib/http";
-import { Product } from "./../types";
 import { Rating, RoundedStar } from "@smastrom/react-rating";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import CommentSkeleton from "./CommentSkeleton";
@@ -13,32 +12,19 @@ import { getCachedDataInBg } from "@/hooks/useSendDataInBg";
 import AlertRemoveReview from "./AlertRemoveReview";
 import EditCommentDialog from "./EditCommentDialog";
 import { storeInBgcache } from "@/lib/utils";
+import { NormalizedProductType } from "@/Data/normalizTypes";
 // import { useSession } from "next-auth/react";
 
 type ProductReviewsTapProps = {
   productId: string | number;
-  product: Product;
+  product: NormalizedProductType;
 };
 
 const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
   productId,
   product,
 }) => {
-  const numOfReviewers =
-    (product?.oneStarCount || 0) +
-    (product?.twoStarCount || 0) +
-    (product?.threeStarCount || 0) +
-    (product?.fourStarCount || 0) +
-    (product?.fiveStarCount || 0);
-
-  const noOfStars =
-    (product?.oneStarCount || 0) * 1 +
-    (product?.twoStarCount || 0) * 2 +
-    (product?.threeStarCount || 0) * 3 +
-    (product?.fourStarCount || 0) * 4 +
-    (product?.fiveStarCount || 0) * 5;
-
-  const rating = numOfReviewers > 0 ? noOfStars / numOfReviewers : 0;
+   
 
   const [reviewsList, setReviewsList] = useState<ReviewProps[]>([]);
   const [edtDialog, setEdtDialog] = useState({
@@ -140,7 +126,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
           <div className="flex">
             <div className="flex flex-col w-[35%] py-0 justify-center items-center mb-3">
               <span className="text-3xl font-bold mb-1">
-                {+(+rating).toFixed(1)}
+                {product.rate.toFixed(1)}
               </span>
 
               <Rating
@@ -152,11 +138,11 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
                   inactiveFillColor: "#eee",
                 }}
                 readOnly
-                value={+rating}
+                value={product.rate}
               />
               <div className="flex items-center justify-center mt-2">
                 <span className="text-gray-500 text-xs">
-                  {numOfReviewers} تقييم
+                  {product.numOfReviewers} تقييم
                 </span>
               </div>
             </div>
@@ -164,7 +150,9 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
             {/* شريط التقييم */}
             <div className="flex flex-col justify-center w-[65%]">
               {[5, 4, 3, 2, 1].map((ratingNum) => {
-                const keys: (keyof Product)[] = [
+                const keys: Array<
+                  "oneStarCount" | "twoStarCount" | "threeStarCount" | "fourStarCount" | "fiveStarCount"
+                > = [
                   "oneStarCount",
                   "twoStarCount",
                   "threeStarCount",
@@ -174,8 +162,8 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
                 const count = product[keys[ratingNum - 1]] || 0;
 
                 const percentage =
-                  numOfReviewers > 0 && +count > 0
-                    ? (+count / numOfReviewers) * 100
+                product.numOfReviewers && product.numOfReviewers > 0 && +count > 0
+                    ? (+count / product.numOfReviewers) * 100
                     : 0;
 
                 return (

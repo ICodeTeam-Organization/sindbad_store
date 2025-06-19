@@ -1,7 +1,9 @@
 import dynamic from "next/dynamic";
 import { getApi, postApi } from "@/lib/http";
-import { MainCategory, Product, Shop, Store } from "@/types/storeTypes";
+import { Product, Shop, Store } from "@/types/storeTypes";
 import Hero from "./components/sections/Hero";
+import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper"; 
+import { normalizeCategory } from "@/Data/mappers/categoryNormlizeMapper";
 
 const CategoriesSlider = dynamic(() => import("./components/CategoriesSlider"));
 const ServiceCard = dynamic(
@@ -23,6 +25,9 @@ export default async function Home() {
   let offersProducts = null;
   let bestSellerInWeek = null;
   let recentlyProducts = null;
+
+  // Fetching data concurrently using Promise.allSettled
+  // This allows us to handle each request independently and avoid blocking the UI. by ali bawazir
   try {
     const [
       categoriesResult,
@@ -32,7 +37,7 @@ export default async function Home() {
       bestSellerInWeekResult,
       recentlyProductsResult,
     ] = await Promise.allSettled([
-      getApi<{ data: MainCategory[] }>(
+      getApi<{ data: any[] }>(
         "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/100000"
       ),
       getApi<{ data: Store[] }>(
@@ -54,29 +59,31 @@ export default async function Home() {
         "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/20"
       ),
     ]);
-
-    console.log(offersProductsResult.status === "fulfilled" && offersProductsResult.value.data.slice(0, 5));
-    
-
-    // Extract only fulfilled results to avoid errors
+ 
     categories =
-      categoriesResult.status === "fulfilled" ? categoriesResult.value : null;
+      categoriesResult.status === "fulfilled" ? categoriesResult.value.data.map(normalizeCategory) : null;
+
     allStores =
       allStoresResult.status === "fulfilled" ? allStoresResult.value : null;
+
     allEcommrce =
       allEcommrceResult.status === "fulfilled" ? allEcommrceResult.value : null;
+
     offersProducts =
       offersProductsResult.status === "fulfilled"
-        ? offersProductsResult.value
+        ? offersProductsResult.value.data.map(normalizeProduct)
         : null;
+
     bestSellerInWeek =
       bestSellerInWeekResult.status === "fulfilled"
-        ? bestSellerInWeekResult.value
+        ? bestSellerInWeekResult.value.data.map(normalizeProduct)
         : null;
+
     recentlyProducts =
       recentlyProductsResult.status === "fulfilled"
-        ? recentlyProductsResult.value
+        ? recentlyProductsResult.value.data.map(normalizeProduct)
         : null;
+
   } catch (error) {
     console.log(error);
   }
@@ -90,22 +97,17 @@ export default async function Home() {
           <ServiceCard />
         </div>
         <CardsInfo />
-        {categories && categories?.data?.length > 0 && (
-          <Categories categories={categories.data} />
+        {categories && categories?.length > 0 && (
+          <Categories categories={categories} />
         )}
 
-        {/* <div>
-          <h1>hello</h1>
-          <ProductCarsoule products={BeastSellerInWeek} />
-        </div> */}
         <div className="mb-10" />
-        {offersProducts && offersProducts?.data?.length > 0 && (
+        {offersProducts && offersProducts?.length > 0 && (
           <ProductCarsoule
             products={offersProducts}
             sectionHref="/shop?todayOffer=t"
             sectionTitle="عروض اليوم"
           />
-          // <TodayOffers Offersproducts={Offersproducts} />
         )}
         <ShoppingNow />
       </div>
@@ -115,8 +117,7 @@ export default async function Home() {
         )}
       </div>
       <div className="w-full xl:container mx-auto">
-        {bestSellerInWeek && bestSellerInWeek?.data?.length > 0 && (
-          // <BeastSeller BeastSellerInWeek={bestSellerInWeek} />
+        {bestSellerInWeek && bestSellerInWeek?.length > 0 && (
           <ProductCarsoule
             products={bestSellerInWeek}
             sectionHref="/shop?bestseller=true"
@@ -128,8 +129,7 @@ export default async function Home() {
         <Ads />
       </div>
       <div className="w-full xl:container mx-auto mb-10">
-        {recentlyProducts && recentlyProducts?.data?.length > 0 && (
-          // <RecentlyAdded RecentlyProducts={RecentlyProducts} />
+        {recentlyProducts && recentlyProducts?.length > 0 && (
           <ProductCarsoule
             products={recentlyProducts}
             sectionHref="/shop?newProduct=t"
