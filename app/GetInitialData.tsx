@@ -1,26 +1,13 @@
 import React from "react";
 import GetFavorite from "./(home)/(getInitData)/GetFavorite";
 import GetCartItems from "./(home)/(getInitData)/GetCartItems";
-import SetCategoriesInLocalStorage from "./(home)/(getInitData)/SetCategoriesInLocalStorage";
+import GetAllCategories from "./(home)/(getInitData)/GetAllCategories";
 import { getApi } from "@/lib/http";
 import GetNotificationCount from "./(home)/(getInitData)/GetNotificationCount";
 import { getServerSession } from "next-auth";
-import { authOption } from "@/lib/authOption";
-import { NormalizedCategoryType } from "@/Data/normalizTypes";
-import { normalizeCategory } from "@/Data/mappers/categoryNormlizeMapper";
+import { authOption } from "@/lib/authOption"; 
 
-async function GetInitialData() {
-  let allCategoriesWithSub: NormalizedCategoryType[] = [];
-
-  try {
-    const response = await getApi<{ data: { items: any[] } }>(
-      "Category/GetAllMainCategoriesWithSubCategories/1/10000"
-    );
-    allCategoriesWithSub = (response?.data?.items || []).map(normalizeCategory);
-  } catch (error) {
-    console.error("Error fetching categories:", error);
-  }
-
+async function GetInitialData() { 
   let session = null;
   try {
     session = await getServerSession(authOption);
@@ -47,9 +34,7 @@ async function GetInitialData() {
   return (
     <>
       <GetNotificationCount data={totalNotificationCount} />
-      <SetCategoriesInLocalStorage
-        AllCategoriesWihtSubcategories={allCategoriesWithSub}
-      />
+      <GetAllCategories />
       <GetCartItems />
       <GetFavorite />
     </>

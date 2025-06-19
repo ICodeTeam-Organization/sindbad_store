@@ -8,10 +8,7 @@ export function normalizeCategory(input: any): NormalizedCategoryType {
     categoryTypeName: input.categoryTypeName,
     categoryTypeNumber: input.categoryTypeNumber,
     parentCategoryId: input.parentCategoryId,
-    subCategories:
-      input.subCategories ??
-      input.subCategoriesForVeiw ??
-      (Array.isArray(input.subCategories) ? input.subCategories.map(normalizeCategory) : undefined),
+    subCategories:(Array.isArray(input.subCategories) ? input.subCategories.map(normalizeCategory) : []),
       code:"",
       path:""
   };

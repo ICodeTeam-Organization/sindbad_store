@@ -28,7 +28,7 @@ const CategoryItem = ({item}:{item:NormalizedCategoryType}) => (
 function CategoriesSlider() {
 
   const scrollRef = useRef<any>(null);
-  const {categories} = useCategoriesDataStore();
+  const {categories,isFechingCategories} = useCategoriesDataStore();
   const allSubCategories = getAllSubcategories(categories)
 
   const scroll = (direction:string) => {
@@ -54,14 +54,14 @@ function CategoriesSlider() {
          </div>
          <div className='flex flex-col gap-y-2 hide-scrollbar  overflow-x-auto h-30 p-4 ' ref={scrollRef} >
             <div className="flex  items-center   gap-3   " >
-                { allSubCategories.length > 0 ? allSubCategories?.filter((_,x)=>x%2==0).sort(() => Math.random() - 0.5).map((item:any)=>
+                {!isFechingCategories ? allSubCategories?.filter((_,x)=>x%2==0).sort(() => Math.random() - 0.5).map((item:any)=>
                   <CategoryItem item={item}  key={item?.id} />
                 )
                 :[... Array(20)].map((_,x)=>(<CategoryItemSkeleton key={x} />))
                }
             </div>
             <div className="flex mr-14 items-center  gap-3  " >
-            { allSubCategories.length > 0 ? allSubCategories?.filter((_,x)=>x%2!==0).sort(() => Math.random() - 0.5).map((item:any)=>
+            {!isFechingCategories ? allSubCategories?.filter((_,x)=>x%2!==0).sort(() => Math.random() - 0.5).map((item:any)=>
                   <CategoryItem item={item}  key={item?.id} />
                 )
                 :[... Array(20)].map((_,x)=>(<CategoryItemSkeleton key={x} />))
