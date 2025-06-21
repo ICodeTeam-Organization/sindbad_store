@@ -1,6 +1,7 @@
 "use client";
-import useSendDataInBg from "@/hooks/useSendDataInBg";
-import { BgHandlerDataItemType, SEND_DATA_IN_BG_LOCALSTORAGE_KEY } from "@/lib/utils";
+import { BgHandlerDataItemType } from "@/Data/cachingAndBgData/type";
+import { db } from "@/Data/database/db";
+import useSendDataInBg from "@/hooks/useSendDataInBg"; 
 import { useEffect } from "react";
 
 const SendDataInBG = () => {
@@ -8,18 +9,12 @@ const SendDataInBG = () => {
   const {mutate} = useSendDataInBg();
    
   useEffect(() => { 
-    const interval = setInterval(() => {
-      const bgHandlerData = localStorage.getItem(SEND_DATA_IN_BG_LOCALSTORAGE_KEY);
-      if (bgHandlerData) {
-        const dataToSend: BgHandlerDataItemType[] = bgHandlerData
-          ? JSON.parse(bgHandlerData)
-          : null; 
+    const interval = setInterval( async () => {  
+        const dataToSend: BgHandlerDataItemType[] = await db.bgData.toArray()
         if (dataToSend && dataToSend.length != 0) {
           mutate(dataToSend);
         }
-      }
-    }, 2000000 );  
-    console.log("interval set"); 
+    }, 1000 * 60 * 10 );   
     return () => clearInterval(interval);
   }, []);  
 

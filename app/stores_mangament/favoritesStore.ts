@@ -1,29 +1,6 @@
-import { storeInBgcache } from "@/lib/utils";
+import { savebackgroundDataInCache } from "@/Data/cachingAndBgData/backgroundData";
 import { create } from "zustand";
-
-// // ✅ هذا النوع يمثل البيانات التي سنخزنها في localStorage
-// type BgHandlerDataItemType = {
-//   reqType: number;      // 1 = منتج، 2 = متجر، 3 = eCommerce
-//   reqValue: number;     // 1 = إضافة، 0 = حذف
-//   Id: number | string;  // معرف العنصر
-//   reviewText: string | null; // حاليًا null
-// };
-
-// const storeInBgcache = (item: BgHandlerDataItemType) => {
-//   const key = "backgroundHandlerData";
-//   const existing: BgHandlerDataItemType[] = JSON.parse(localStorage.getItem(key) || "[]");
-
-//   // ✅ حذف أي عنصر بنفس reqType و Id
-//   // عشان مايكرر ارسال الركوست
-//   const filtered = existing.filter(
-//     (entry) => !(entry.reqType === item.reqType && entry.Id === item.Id)
-//   );
-
-//   // ✅ إضافة العنصر الجديد
-//   const updated = [...filtered, item];
-//   localStorage.setItem(key, JSON.stringify(updated));
-// };
-
+ 
 
 type FavoriteState = {
   productsIds: number[];
@@ -54,16 +31,14 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   setFavoriteProducts: (ids) =>
     set((state) => ({ ...state, productsIds: [...ids] })),
-
-  // ✅ إضافة تخزين البيانات عند الإضافة
+ 
   addProductToFavorite: (id) => {
-    storeInBgcache({ reqType: 1, reqValue: 1, Id: id, reviewText: null, prevValue:0}); // <-- جديد
+    savebackgroundDataInCache({ reqType: 1, reqValue: 1, Id: id, reviewText: null, primaryValue:0})
     set((state) => ({ ...state, productsIds: [...state.productsIds, id] }));
   },
-
-  // ✅ إضافة تخزين البيانات عند الحذف
+ 
   delProductFromFavorite: (id) => {
-    storeInBgcache({ reqType: 1, reqValue: 0, Id: id, reviewText: null,prevValue:1 }); // <-- جديد
+    savebackgroundDataInCache({ reqType: 1, reqValue: 0, Id: id, reviewText: null,primaryValue:1 })
     set((state) => ({
       ...state,
       productsIds: state.productsIds.filter((item) => item !== id),
@@ -75,7 +50,6 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الإضافة
   addStoreToFavorite: (id) => {
-    // storeInBgcache({ reqType: 2, reqValue: 1, Id: id, reviewText: null }); // <-- جديد
     set((state) => ({
       ...state,
       favoriteStoreIds: [...state.favoriteStoreIds, id],
@@ -84,7 +58,6 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الحذف
   delStoreToFavorite: (id) => {
-    // storeInBgcache({ reqType: 2, reqValue: 0, Id: id, reviewText: null }); // <-- جديد
     set((state) => ({
       ...state,
       favoriteStoreIds: state.favoriteStoreIds.filter((item) => item !== id),
@@ -99,7 +72,6 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الإضافة
   addEcommerceToFavorite: (id) => {
-    // storeInBgcache({ reqType: 3, reqValue: 1, Id: id, reviewText: null }); // <-- جديد
     set((state) => ({
       ...state,
       favoriteEcommerceIds: [...state.favoriteEcommerceIds, id],
@@ -108,7 +80,6 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الحذف
   delEcommerceFromFavorite: (id) => {
-    // storeInBgcache({ reqType: 3, reqValue: 0, Id: id, reviewText: null }); // <-- جديد
     set((state) => ({
       ...state,
       favoriteEcommerceIds: state.favoriteEcommerceIds.filter(

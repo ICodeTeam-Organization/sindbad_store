@@ -3,12 +3,12 @@ import React from 'react'
 import SearchComponent from './SearchComponent'
 import { IoMdNotificationsOutline } from 'react-icons/io'
 import { GoHeart } from 'react-icons/go'
-import { cn } from '@/lib/utils'
-import { useCartStore } from '@/app/stores/cartStore'
+import { cn } from '@/lib/utils' 
 import { BsCart } from 'react-icons/bs'
 import PersonButton from '@/app/(home)/components/person-button'
-import Link from 'next/link'
-import { useNotificationsDataStore } from '@/app/stores/notificationStore'
+import Link from 'next/link' 
+import { useCartStore } from '@/app/stores_mangament/cartStore'
+import { useNotificationsDataStore } from '@/app/stores_mangament/notificationStore'
 
 function TopSectionOfHeader({isHomePage=false,isAuth=false}:{isHomePage?:boolean,isAuth?:boolean}) {
 

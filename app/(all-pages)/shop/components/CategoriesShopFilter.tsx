@@ -1,5 +1,5 @@
-"use client";
-import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
+"use client"; 
+import { useShopFiltersStore } from "@/app/stores_mangament/shopFiltersStore";
 import { Checkbox } from "@/components/ui/checkbox";
 import { NormalizedCategoryType } from "@/Data/normalizTypes";
 import { Dot } from "lucide-react";

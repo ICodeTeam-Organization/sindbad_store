@@ -32,8 +32,7 @@ import {
 } from "@/components/ui/select";
 import InputField from "./input-field";
 import { Input } from "@/components/ui/input";
-import { useSession } from "next-auth/react";
-import { useCartStore } from "@/app/stores/cartStore";
+import { useSession } from "next-auth/react"; 
 import SuccessDialog from "./SuccessModal";
 import { useEffect, useState } from "react";
 // import { z } from "zod";
@@ -46,10 +45,10 @@ import {
 import Link from "next/link";
 import { useRouter } from "next-nprogress-bar";
 import useSendDataInBg from "@/hooks/useSendDataInBg";
-import {
-  BgHandlerDataItemType,
-  SEND_DATA_IN_BG_LOCALSTORAGE_KEY,
-} from "@/lib/utils";
+ 
+import { db } from "@/Data/database/db";
+import { useCartStore } from "@/app/stores_mangament/cartStore";
+import { BgHandlerDataItemType } from "@/Data/cachingAndBgData/type";
 
 function extractNumbers(str: string) {
   const numbers = str?.match(/\d+/g) || [];
@@ -167,11 +166,8 @@ const CheckoutForm = () => {
     const vald = validateCheckoutForm(values);
     if (vald.length == 0) {
       setloadingData(true)
-      const bgHandlerData = localStorage.getItem(
-        SEND_DATA_IN_BG_LOCALSTORAGE_KEY
-      );
-      if (bgHandlerData) {
-        let bgData: BgHandlerDataItemType[] = JSON.parse(bgHandlerData);
+       let bgData: BgHandlerDataItemType[] = await db.bgData.toArray() 
+      if (bgData && bgData.length > 0) { 
         bgData = bgData.filter(
           (item) => item.reqType == 3 || item.reqType == 4
         );

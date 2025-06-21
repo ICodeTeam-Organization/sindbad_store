@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ProductCard from "@/app/(home)/components/product-card";
-import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
+import ProductCard from "@/app/(home)/components/product-card"; 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
@@ -20,6 +19,7 @@ import {
 import { BsSearch } from "react-icons/bs";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import { NormalizedProductType } from "@/Data/normalizTypes";
+import { useShopFiltersStore } from "@/app/stores_mangament/shopFiltersStore";
 
 type ProductsResponsive = {
   data: {

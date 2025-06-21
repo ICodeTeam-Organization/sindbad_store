@@ -3,8 +3,7 @@ import React from "react";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { E_commerceCardProps } from "../types";
 import SafeImage from "@/components/SafeImage";
-import { cn, goToExtrnalLink } from "@/lib/utils";
-import { useFavorite } from "@/app/stores/favoritesStore";
+import { cn, goToExtrnalLink } from "@/lib/utils"; 
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
 import { useMutation } from "@tanstack/react-query";
@@ -12,8 +11,9 @@ import { ToastAction } from "@/components/ui/toast";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { deleteApi, postApi } from "@/lib/http";
-import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
+import { deleteApi, postApi } from "@/lib/http"; 
+import { useFavorite } from "@/app/stores_mangament/favoritesStore";
+import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 
 const E_commerceCard = ({
     id,

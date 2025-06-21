@@ -1,5 +1,5 @@
 "use clinet";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+ 
 import { postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { ApiResponse } from "@/types/storeTypes";
@@ -11,6 +11,7 @@ import Spinner from "../Spinner";
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 import { NormalizedCategoryType } from "@/Data/normalizTypes";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 
 function StoresMegaMenu() {
   const { categories } = useCategoriesDataStore((state) => state);

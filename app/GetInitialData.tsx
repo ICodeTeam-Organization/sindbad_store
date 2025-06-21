@@ -5,9 +5,10 @@ import GetAllCategories from "./(home)/(getInitData)/GetAllCategories";
 import { getApi } from "@/lib/http";
 import GetNotificationCount from "./(home)/(getInitData)/GetNotificationCount";
 import { getServerSession } from "next-auth";
-import { authOption } from "@/lib/authOption"; 
+import { authOption } from "@/lib/authOption";
+import GetUserData from "./(home)/(getInitData)/GetUserData";
 
-async function GetInitialData() { 
+async function GetInitialData() {
   let session = null;
   try {
     session = await getServerSession(authOption);
@@ -31,8 +32,21 @@ async function GetInitialData() {
     }
   }
 
+  console.log(session?.user?.data  ,'is logged ing');
+  
+
   return (
     <>
+    
+      <GetUserData
+        data={{
+          email: session?.user?.data?.email ?? "",
+          name: session?.user?.data?.fullName ?? "",
+          phoneNumber: session?.user?.data?.phoneNumber ?? "",
+          token: session?.user?.data?.token ?? "",
+          isLogin: session?.user?.data?.isAuthenticated ?? false
+        }}
+      />
       <GetNotificationCount data={totalNotificationCount} />
       <GetAllCategories />
       <GetCartItems />

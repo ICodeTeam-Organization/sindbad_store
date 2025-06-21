@@ -1,7 +1,5 @@
-"use client";
-
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-
+"use client"; 
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore"; 
 function CategoryName({ id }: { id: number }) {
   const { categories } = useCategoriesDataStore();
   const name = categories.find((ele) => ele.id == id)?.name;

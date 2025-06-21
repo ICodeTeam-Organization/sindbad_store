@@ -1,5 +1,5 @@
-"use client";
-import { useCartStore } from "@/app/stores/cartStore";
+"use client"; 
+import { useCartStore } from "@/app/stores_mangament/cartStore";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";

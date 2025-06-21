@@ -1,5 +1,5 @@
 "use client";
-import { useFavorite } from "@/app/stores/favoritesStore";
+import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 import { getApi } from "@/lib/http";
 import {
   FavoriteEcommerces,

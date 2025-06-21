@@ -23,8 +23,8 @@ import {
   SpecialProductAndServiceOrderFormSchema,
 } from "../../utils/zod-schema";
 import { useForm } from "react-hook-form";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { Plus } from "lucide-react";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 
 function SpecialServiceOrderForm({
   onChange,

@@ -1,5 +1,4 @@
 "use clinet";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { Shop } from "@/types/storeTypes";
@@ -9,8 +8,9 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { IoStorefrontOutline } from "react-icons/io5";
 import Spinner from "../Spinner";
 import SafeImage from "@/components/SafeImage";
-import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
 import { NormalizedCategoryType } from "@/Data/normalizTypes";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
+import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 
 function OrderFromEshopMegaMenu() {
   const { categories } = useCategoriesDataStore((state) => state);

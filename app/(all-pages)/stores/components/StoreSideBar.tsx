@@ -1,8 +1,8 @@
 "use client";
 
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 import MainCategoriesFilter from "../../components/MainCategoriesFilter";
-import useStoreQuerySearch from "../hooks/useStoreQuerySearch";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+import useStoreQuerySearch from "../hooks/useStoreQuerySearch"; 
 
 function StoreSideBar() {
 

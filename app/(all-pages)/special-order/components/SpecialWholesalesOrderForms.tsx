@@ -20,12 +20,12 @@ import InputFile from "@/components/InputFile";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useForm } from "react-hook-form";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
 import { Plus } from "lucide-react";
 import {
   SpecialWholesalesOrderFormValues,
   SpecialWholesalesOrderFormSchema,
 } from "../utils/zod-schema";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 
 function SpecialWholesalesOrderForms({
   orderKey,

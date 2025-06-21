@@ -6,8 +6,7 @@ import { IoMdHeart } from "react-icons/io";
 import SafeImage from "@/components/SafeImage";
 import Link from "next/link";
 import { useToast } from "@/hooks/use-toast";
-import { useSession } from "next-auth/react";
-import { useFavorite } from "@/app/stores/favoritesStore";
+import { useSession } from "next-auth/react"; 
 import { useMutation } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
 import { cn, goToExtrnalLink } from "@/lib/utils";
@@ -21,6 +20,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { deleteApi, postApi } from "@/lib/http";
+import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 const StoreDetailsCard = ({
   id,
   name,

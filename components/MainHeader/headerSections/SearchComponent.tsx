@@ -1,6 +1,7 @@
 import useEcommerceQuerySearch from '@/app/(all-pages)/e-commerce/hooks/useEcommerceQuerySearch';
 import useStoreQuerySearch from '@/app/(all-pages)/stores/hooks/useStoreQuerySearch';
-import { useShopFiltersStore } from '@/app/stores/shopFiltersStore';
+import { useShopFiltersStore } from '@/app/stores_mangament/shopFiltersStore';
+ 
 import { useRouter } from 'next-nprogress-bar';
 import Link from 'next/link';
 import { usePathname  } from 'next/navigation';

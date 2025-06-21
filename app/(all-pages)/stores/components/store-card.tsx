@@ -3,8 +3,7 @@ import React from "react";
 import { StoreCardProps } from "../typest";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useToast } from "@/hooks/use-toast";
-import { useSession } from "next-auth/react";
-import { useFavorite } from "@/app/stores/favoritesStore";
+import { useSession } from "next-auth/react"; 
 import { useMutation } from "@tanstack/react-query";
 import { ToastAction } from "@/components/ui/toast";
 import { cn, goToExtrnalLink } from "@/lib/utils";
@@ -13,6 +12,7 @@ import Link from "next/link";
 import { deleteApi, postApi } from "@/lib/http";
 import SafeImage from "@/components/SafeImage";
 import { useRouter } from "next/navigation";
+import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCardProps) => {
   
   const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =

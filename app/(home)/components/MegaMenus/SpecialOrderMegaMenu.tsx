@@ -1,5 +1,6 @@
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
+ 
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
+import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { ToastAction } from "@radix-ui/react-toast";

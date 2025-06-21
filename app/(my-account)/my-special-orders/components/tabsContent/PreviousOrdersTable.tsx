@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { SpecialOrdersResponseType } from "../../types";
 import { getApi } from "@/lib/http";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+import { useInfiniteQuery } from "@tanstack/react-query"; 
 import { convertToArabicDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 const TABLE_HEAD = [
   "العمليات",
   "التاريخ",

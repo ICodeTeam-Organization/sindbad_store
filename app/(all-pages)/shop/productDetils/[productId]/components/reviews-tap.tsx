@@ -1,5 +1,4 @@
 "use client";
-//TODO تصليح الركوستات حق جلب التعليقات واضافة تعديل وحذف للتعليق
 import React, { useEffect, useState } from "react";
 import ReviewForm from "./review-form";
 import ReviewComment from "./review-comment";
@@ -7,12 +6,11 @@ import { ReviewProps } from "../types";
 import { getApi } from "@/lib/http";
 import { Rating, RoundedStar } from "@smastrom/react-rating";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import CommentSkeleton from "./CommentSkeleton";
-import { getCachedDataInBg } from "@/hooks/useSendDataInBg";
+import CommentSkeleton from "./CommentSkeleton"; 
 import AlertRemoveReview from "./AlertRemoveReview";
-import EditCommentDialog from "./EditCommentDialog";
-import { storeInBgcache } from "@/lib/utils";
+import EditCommentDialog from "./EditCommentDialog"; 
 import { NormalizedProductType } from "@/Data/normalizTypes";
+import { getbackgroundData, savebackgroundDataInCache } from "@/Data/cachingAndBgData/backgroundData";
 // import { useSession } from "next-auth/react";
 
 type ProductReviewsTapProps = {
@@ -24,8 +22,6 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
   productId,
   product,
 }) => {
-   
-
   const [reviewsList, setReviewsList] = useState<ReviewProps[]>([]);
   const [edtDialog, setEdtDialog] = useState({
     isOpen: false,
@@ -43,7 +39,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
   } = useInfiniteQuery({
     queryKey: ["reviews", productId],
     queryFn: async ({ pageParam = 1 }) => {
-      const cachedReviews = getCachedDataInBg(2);
+      const cachedReviews = await getbackgroundData(2);
       const response = await getApi<{
         data: { items: ReviewProps[]; currentPage: number; totalPages: number };
       }>(
@@ -151,7 +147,11 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
             <div className="flex flex-col justify-center w-[65%]">
               {[5, 4, 3, 2, 1].map((ratingNum) => {
                 const keys: Array<
-                  "oneStarCount" | "twoStarCount" | "threeStarCount" | "fourStarCount" | "fiveStarCount"
+                  | "oneStarCount"
+                  | "twoStarCount"
+                  | "threeStarCount"
+                  | "fourStarCount"
+                  | "fiveStarCount"
                 > = [
                   "oneStarCount",
                   "twoStarCount",
@@ -162,7 +162,9 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
                 const count = product[keys[ratingNum - 1]] || 0;
 
                 const percentage =
-                product.numOfReviewers && product.numOfReviewers > 0 && +count > 0
+                  product.numOfReviewers &&
+                  product.numOfReviewers > 0 &&
+                  +count > 0
                     ? (+count / product.numOfReviewers) * 100
                     : 0;
 
@@ -206,7 +208,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
                   ...prevReviews,
                   {
                     ...newReview,
-                    id: Date.now() + "", 
+                    id: Date.now() + "",
                     isMe: true,
                   },
                 ];
@@ -233,11 +235,12 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
           onClose={(st) => setDelDialog((prev) => ({ ...prev, isOpen: st }))}
           onDeletingEnd={(id) => {
             setReviewsList([...reviewsList.filter((ele) => +ele.id != id)]);
-            storeInBgcache({
-              Id: productId,
+            savebackgroundDataInCache({
+              Id: +productId,
               reqType: 2,
               reqValue: 0,
-            });
+              reviewText:""
+            }); 
           }}
           reviewId={delDialog.reviewId}
         />
@@ -245,26 +248,24 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
           initialText={edtDialog.data.comment}
           rating={edtDialog.data.rating}
           productId={+edtDialog.data.productId}
-          onEditEnd={(_, newComment, newRate) => {
+          onEditEnd={async (_, newComment, newRate) => {
             setReviewsList(
               reviewsList.map((r) =>
                 r.isMe
                   ? {
                       ...r,
                       reviewText: newComment || r.reviewText,
-                      numOfRate: newRate || r.numOfRate,
+                      numOfRate: newRate || r.numOfRate, 
                     }
                   : r
               )
             );
-            storeInBgcache({
-              Id: productId,
+            await savebackgroundDataInCache({
+              Id: +productId,
               reqType: 2,
               reqValue: newRate,
-              reviewText: newComment,
-              prevReviewText: edtDialog.data.comment,
-              prevValue: edtDialog.data.rating,
-            });
+              reviewText: newComment,  
+            }); 
           }}
           open={edtDialog.isOpen}
           onClose={(st) => setEdtDialog((prev) => ({ ...prev, isOpen: st }))}

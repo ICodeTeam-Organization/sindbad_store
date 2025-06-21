@@ -56,8 +56,7 @@ export function normalizeProduct(input: any): NormalizedProductType {
     priceAfterDiscount: discountedPrice,
     priceBeforeDiscount:
       input.priceBeforeDiscount ?? input.priceBeforOffer ?? originalPrice,
-    percentageOfDiscount: percentageOfDiscount,
-
+    percentageOfDiscount: percentageOfDiscount, 
     amountYouBuy:
       input.amountYouBuy ?? input.amountYouShouldToBuyForGetOffer ?? undefined,
 

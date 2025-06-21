@@ -4,11 +4,11 @@ import { HiMinusSm } from "react-icons/hi";
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
-import Spinner from "@/app/(home)/components/Spinner";
-import { useCartStore } from "@/app/stores/cartStore";
+import Spinner from "@/app/(home)/components/Spinner"; 
 import SafeImage from "@/components/SafeImage";
 import { CartItem } from "@/types/storeTypes";
 import { calculateBonus } from "@/lib/utils";
+import { useCartStore } from "@/app/stores_mangament/cartStore";
 
 // type Props = {
 //   id: number;

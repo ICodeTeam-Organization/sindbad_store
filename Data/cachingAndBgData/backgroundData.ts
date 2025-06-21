@@ -1,17 +1,19 @@
-import { BgHandlerDataItemType } from '@/lib/utils';
-import { db } from '../database/db';
+import { db } from "../database/db";
+import { BgHandlerDataItemType } from "./type";
 
-export const savebackgroundDataInCache = async (item: BgHandlerDataItemType) => { 
+export const savebackgroundDataInCache = async (
+  item: BgHandlerDataItemType
+) => {
   const existingItem = await db.bgData
-    .where('[reqType+Id]') 
+    .where("[reqType+Id]")
     .equals([item.reqType, item.Id])
     .first();
 
   if (existingItem) {
     // إذا القيمة السابقة = القيمة الجديدة، نحذف العنصر (زي الكود القديم)
-    if (existingItem.prevValue === item.reqValue) {
+    if (existingItem.primaryValue == item.reqValue) {
       await db.bgData
-        .where('[reqType+Id]')
+        .where("[reqType+Id]")
         .equals([item.reqType, item.Id])
         .delete();
     } else {
@@ -20,8 +22,8 @@ export const savebackgroundDataInCache = async (item: BgHandlerDataItemType) => 
         ...existingItem,
         reqValue: item.reqValue,
         reviewText: item.reviewText,
-        prevValue: existingItem.prevValue,
-        prevReviewText: existingItem.reviewText || null,
+        primaryValue: existingItem.primaryValue,
+        primaryReviewText: existingItem.primaryReviewText,
         date: new Date().toISOString(),
       });
     }
@@ -31,5 +33,19 @@ export const savebackgroundDataInCache = async (item: BgHandlerDataItemType) => 
       ...item,
       date: new Date().toISOString(),
     });
+  }
+};
+
+export const getbackgroundData = async (type?: number) => {
+  try {
+    if (type) {
+      const data = await db.bgData.where("reqType").equals(type).toArray();
+      return data;
+    } else {
+      const data = await db.bgData.toArray();
+      return data;
+    }
+  } catch (error) { 
+    throw error;
   }
 };

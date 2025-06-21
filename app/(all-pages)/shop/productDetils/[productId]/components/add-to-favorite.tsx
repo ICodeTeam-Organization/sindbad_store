@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";  
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import React from "react";
-import { useFavorite } from "@/app/stores/favoritesStore";
+import React from "react"; 
 import { cn } from "@/lib/utils"; 
+import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 
 type Props = {
     id: string | number;

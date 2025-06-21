@@ -1,9 +1,9 @@
 "use client"
 import Image from 'next/image'
 import React, { useRef } from 'react'
-import Link from 'next/link' 
-import { useCategoriesDataStore } from '@/app/stores/categoriesStore';
+import Link from 'next/link'  
 import { NormalizedCategoryType } from '@/Data/normalizTypes';
+import { useCategoriesDataStore } from '@/app/stores_mangament/categoriesStore';
 
 function getAllSubcategories(categories: NormalizedCategoryType[]): NormalizedCategoryType[] {
   let subcategories: NormalizedCategoryType[] = [];

@@ -4,8 +4,7 @@ import { AiFillHeart } from "react-icons/ai";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { useFavorite } from "@/app/stores/favoritesStore";
+import { cn } from "@/lib/utils"; 
 import { useMutation } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useToast } from "@/hooks/use-toast";
@@ -14,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { Shop } from "@/types/storeTypes";
 import { deleteApi, postApi } from "@/lib/http";
+import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 
 const EshopsCardCarsoul: React.FC<Shop> = ({
   description,

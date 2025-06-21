@@ -5,9 +5,9 @@ import { postApi } from "@/lib/http";
 import useStoreQuerySearch from "../hooks/useStoreQuerySearch";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
-import SreachStoresResultsHeader from "./search-stores-results-header";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+import SreachStoresResultsHeader from "./search-stores-results-header"; 
 import { Button } from "@/components/ui/button";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 
 const StoreGrid = () => {
   const { categoryId, storeName } = useStoreQuerySearch();

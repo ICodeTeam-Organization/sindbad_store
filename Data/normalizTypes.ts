@@ -70,7 +70,7 @@ export type NormalizedbgDataItemType = {
   reqValue: number;  
   Id: number | string;
   reviewText?: string | null;
-  prevValue?: number;
-  prevReviewText?: string | null;
+  primaryValue?: number;
+  primaryReviewText?: string | null;
   date?: string; 
 };

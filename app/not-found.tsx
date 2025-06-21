@@ -2,15 +2,14 @@ import BackButton from "@/components/BackButton";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { MdOutlineHome } from "react-icons/md";
-import StoreHeader from "./(all-pages)/store-header";
+import { MdOutlineHome } from "react-icons/md"; 
 import { Suspense } from "react";
 
 const NotFoundPage = () => {
   return (
     <div> 
      <Suspense>
-      <StoreHeader />
+      {/* <StoreHeader /> */}
      </Suspense>
     <div className=" mb-20 text-center flex flex-col items-center justify-center mx-2 md:mx-0">
       <Image src="/images/opps.svg" alt="" width={350} height={350} />

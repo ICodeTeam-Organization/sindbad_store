@@ -1,6 +1,6 @@
 "use client";
 
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 import { db } from "@/Data/database/db";
 import { normalizeCategory } from "@/Data/mappers/categoryNormlizeMapper";
 import { NormalizedCategoryType } from "@/Data/normalizTypes";

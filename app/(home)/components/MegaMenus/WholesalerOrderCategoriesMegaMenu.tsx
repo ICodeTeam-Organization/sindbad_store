@@ -1,6 +1,7 @@
 "use client";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
+ 
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
+import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 import { ToastAction } from "@/components/ui/toast";
 import { NormalizedCategoryType } from "@/Data/normalizTypes";
 import { toast } from "@/hooks/use-toast";

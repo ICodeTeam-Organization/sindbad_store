@@ -140,6 +140,8 @@ const AddAddressDialog = ({
         variant:"default",
         description:"تم إضافة العنوان"
       });
+      console.log(data,"new addddddddress");
+      
       if (onAddAddressEnd) onAddAddressEnd(data?.data as customerAddressType);
       form.reset();
       setShow(false);

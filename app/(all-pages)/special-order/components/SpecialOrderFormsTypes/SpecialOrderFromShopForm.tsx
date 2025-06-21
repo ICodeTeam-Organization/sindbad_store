@@ -22,10 +22,10 @@ import {
   SpecialOrderFromEcommerce_FormValue,
   SpecialOrderFromEcommerceSchema,
 } from "../../utils/zod-schema";
-import { useForm } from "react-hook-form";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
-import EcommerceSearchInput from "./EcommerceSearchInput";
-import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
+import { useForm } from "react-hook-form"; 
+import EcommerceSearchInput from "./EcommerceSearchInput"; 
+import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 
 function SpecialOrderFromShopForm({
   onChange,

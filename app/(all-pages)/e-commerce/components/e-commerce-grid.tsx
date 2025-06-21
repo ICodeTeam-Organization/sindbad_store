@@ -5,12 +5,12 @@ import React from "react";
 import E_commerceCard from "./e-comm-card";
 import { postApi } from "@/lib/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import ProductCardSkeleton from "@/components/ProductCardSkeleton";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+import ProductCardSkeleton from "@/components/ProductCardSkeleton"; 
 import { Button } from "@/components/ui/button";
 import useEcommerceQuerySearch from "../hooks/useEcommerceQuerySearch";
 import SreachEcommercesResultsHeader from "./search-ecommrce-results-header";
 import { Shop } from "@/types/storeTypes";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 
 interface EcommercesResponsive {
   data: {

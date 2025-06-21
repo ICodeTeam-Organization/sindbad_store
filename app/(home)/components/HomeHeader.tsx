@@ -17,10 +17,10 @@ import AllCategoriesMegaMenu from "./MegaMenus/AllCategoriesMegaMenu";
 import SpecialOrderMegaMenu from "./MegaMenus/SpecialOrderMegaMenu";
 import OrderFromEshopMegaMenu from "./MegaMenus/OrderFromEshopMegaMenu";
 import WholesalerOrderCategoriesMegaMenu from "./MegaMenus/WholesalerOrderCategoriesMegaMenu";
-import { IoMdNotificationsOutline } from "react-icons/io";
-import { useCartStore } from "@/app/stores/cartStore";
+import { IoMdNotificationsOutline } from "react-icons/io"; 
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import OrderFromAndHow from "./OrderFromAndHow";
+import { useCartStore } from "@/app/stores_mangament/cartStore";
 // import {useRouter} from "next/navigation";
 
 const SearchComponent = ({

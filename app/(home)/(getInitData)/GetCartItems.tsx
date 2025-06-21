@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/app/stores/cartStore";
+import { useCartStore } from "@/app/stores_mangament/cartStore";
 import { getApi } from "@/lib/http";
 import { CartItem } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";

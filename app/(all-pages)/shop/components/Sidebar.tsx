@@ -6,14 +6,14 @@ import PriceRange from "./price-range";
 
 import PopularTags from "./popular-tags";
 import Brands from "./Brands";
-
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+ 
 import CategoriesShopFilter from "./CategoriesShopFilter";
-import StoresSearchSelector from "./StoresSearchSelector";
-import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
+import StoresSearchSelector from "./StoresSearchSelector"; 
 import { Checkbox } from "@/components/ui/checkbox";
 import { GrPowerReset } from "react-icons/gr";
 import { NormalizedCategoryType } from "@/Data/normalizTypes";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
+import { useShopFiltersStore } from "@/app/stores_mangament/shopFiltersStore";
 
 const Sidebar = () => {
   const {

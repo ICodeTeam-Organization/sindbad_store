@@ -1,6 +1,6 @@
 "use client";
 
-import { useNotificationsDataStore } from "@/app/stores/notificationStore";
+import { useNotificationsDataStore } from "@/app/stores_mangament/notificationStore";
 import { useEffect } from "react";
 
 function GetNotificationCount({ data }: { data: number }) {

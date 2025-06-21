@@ -3,8 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";  
 import { useSession } from "next-auth/react";
 import { postApi } from "@/lib/http";
-import { storeInBgcache } from "@/lib/utils";
 import { ReviewProps } from "../types"; 
+import { savebackgroundDataInCache } from "@/Data/cachingAndBgData/backgroundData";
 
 export interface ReviewFormProps {
   productId: number;
@@ -91,15 +91,16 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , has
     }
 
     setValidationError(null);
-    const data = {
+    const data  = {
       reqType: 2,
       reqValue: rate,
       Id: productId,
       reviewText: reviewText,
-      date: new Date().toISOString(),
-      prevReviewText: null,
+      date: new Date().toISOString(), 
+      primaryReviewText: "",
+      primaryValue : 0
     }
-    storeInBgcache(data);
+    savebackgroundDataInCache(data)
     onReviewAdded({
       customerImage:"",
       customerName: session?.user.data.name || "انت",

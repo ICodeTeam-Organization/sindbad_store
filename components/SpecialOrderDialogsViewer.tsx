@@ -1,8 +1,8 @@
 "use client";
 import SpecialWholesalesOrderDialog from "@/app/(all-pages)/special-order/components/SpecialWholesalesOrderDialog";
 import SpecialOrderDialog from "@/app/(all-pages)/special-order/components/SpecialOrderDialog";
-import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
 import React from "react";
+import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 
 function SpecialOrderDialogsViewer() {
   const {

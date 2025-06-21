@@ -1,15 +1,18 @@
-import { SEND_DATA_IN_BG_LOCALSTORAGE_KEY } from "@/lib/utils";
+import { db } from "@/Data/database/db"; 
 import { useMutation } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
+import useSendDataInBg from "./useSendDataInBg";
 
-const useSignOut = () => {
+const useSignOut = () => { 
+  const {mutateAsync} = useSendDataInBg()
   return useMutation({
     mutationFn: async () => {
-      localStorage.removeItem(SEND_DATA_IN_BG_LOCALSTORAGE_KEY);
+      const data = await db.bgData.toArray();
+      await mutateAsync(data)
       return await signOut({
         callbackUrl: "/",
       });
-    },
+    }, 
   });
 };
 

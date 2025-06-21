@@ -4,7 +4,7 @@ import { NormalizedbgDataItemType, NormalizedCategoryType } from '../normalizTyp
 
 interface SindbadDBSchema {
   categories: Table<NormalizedCategoryType, number>;
-  bgData: Table<NormalizedbgDataItemType, string>;
+  bgData: Table<NormalizedbgDataItemType, [number, number]>;
 }
 
 export const createDB = () => {
@@ -12,7 +12,7 @@ export const createDB = () => {
 
   db.version(1).stores({
     categories: 'id, name, categoryTypeName, categoryTypeNumber, parentCategoryId, code, path',
-    bgData: 'Id, reqtype , date , [reqType+Id]',
+    bgData: '[reqType+Id] , reqtype , date ',
   });
 
   return db;

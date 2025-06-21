@@ -5,11 +5,11 @@ import Counter from '@/components/Counter';
 import { calculateBonus, cn } from '@/lib/utils';
 import { useDebounce } from '@/hooks/useDebounce';
 import { useMutation } from '@tanstack/react-query';
-import { putApi, deleteApi } from '@/lib/http';
-import { useCartStore } from '@/app/stores/cartStore';
+import { putApi, deleteApi } from '@/lib/http'; 
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 import {   Loader2 } from 'lucide-react';
+import { useCartStore } from '@/app/stores_mangament/cartStore';
 
 interface ProductCartCardProps {
   item: {

@@ -1,6 +1,6 @@
 "use client"
-
-import { useSpecialOrdersDialogsStore } from '@/app/stores/specialordersDialogsStore';
+ 
+import { useSpecialOrdersDialogsStore } from '@/app/stores_mangament/specialordersDialogsStore';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'

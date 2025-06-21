@@ -1,5 +1,5 @@
-"use client";
-import { useSpecialOrdersDialogsStore } from "@/app/stores/specialordersDialogsStore";
+"use client"; 
+import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 import { Button } from "@/components/ui/button";
 import * as Tabs from "@radix-ui/react-tabs";
 import { IoMdAddCircleOutline } from "react-icons/io";

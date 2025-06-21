@@ -5,11 +5,11 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Loader2, Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import AddToFavorite from "./add-to-favorite";
-import { useCartStore } from "@/app/stores/cartStore"; 
+import AddToFavorite from "./add-to-favorite"; 
 import Spinner from "./Spinner";
 import { useDebounce } from "@/hooks/useDebounce";
 import { BtnAddTobascketProps, CartItem } from "@/types/storeTypes";
+import { useCartStore } from "@/app/stores_mangament/cartStore";
  
 
 const AddToBasket = ({ id , productInfo }: BtnAddTobascketProps) => {

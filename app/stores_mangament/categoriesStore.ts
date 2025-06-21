@@ -1,9 +1,6 @@
 import { NormalizedCategoryType } from '@/Data/normalizTypes'; 
 import { create } from 'zustand';
 
-// TODO ممكن احذفها اذا تم حفظ الفئات في ال local db
-
-
 interface CategoriesDataState {
   categories: NormalizedCategoryType[];
   isFechingCategories:boolean;

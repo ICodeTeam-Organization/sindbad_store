@@ -3,13 +3,13 @@ import { getApi } from "@/lib/http";
 import ProductRow from "./product-row";
 import { CartItem } from "@/types/storeTypes";
 import { Card } from "@/components/ui/card";
-import { useQuery } from "@tanstack/react-query"; 
+import { useQuery } from "@tanstack/react-query";
 import InvoiceDetails from "./invoice-details";
-import {   useEffect, useState } from "react";
-import { useCartStore } from "@/app/stores/cartStore";
-import useSendDataInBg from "@/hooks/useSendDataInBg";
-import { BgHandlerDataItemType } from "@/lib/utils";
- 
+import { useEffect, useState } from "react";
+import useSendDataInBg from "@/hooks/useSendDataInBg"; 
+import { useCartStore } from "@/app/stores_mangament/cartStore";
+import { db } from "@/Data/database/db";
+import { BgHandlerDataItemType } from "@/Data/cachingAndBgData/type";
 
 type CartApiResponse = {
   data: CartItem[];
@@ -27,18 +27,21 @@ const CartBody = ({}: // initCartProducts,
   } = useSendDataInBg();
   const [isReadytogetData, setIsReadytogetData] = useState(false);
   useEffect(() => {
-    const bgHandlerData = localStorage.getItem("backgroundHandlerData");
-    if (bgHandlerData && !isSuccess) {
-      setCartItems([])
-      let bgData: BgHandlerDataItemType[] = JSON.parse(bgHandlerData);
-      bgData = bgData.filter((item) => item.reqType == 3 || item.reqType == 4); 
-      mutate(bgData);
-    } else {
-      setIsReadytogetData(true);
-    }
-    if (isSuccess) {
-      setIsReadytogetData(true);
-    }
+    (async () => {
+      if (!isSuccess) {
+        setCartItems([]);
+        const bgData: BgHandlerDataItemType[] = await db.bgData
+          .where("rqType")
+          .anyOf(3, 4)
+          .toArray(); 
+        mutate(bgData);
+      } else {
+        setIsReadytogetData(true);
+      }
+      if (isSuccess) {
+        setIsReadytogetData(true);
+      }
+    })();
   }, [isSuccess]);
 
   const {
@@ -58,17 +61,20 @@ const CartBody = ({}: // initCartProducts,
   useEffect(() => {
     if (!!items) {
       setCartItems(items.data);
-    }  
+    }
   }, [items]);
-  
+
   return (
     <>
       <div className="lg:w-3/4 mdHalf:w-[65%] ">
         <Card className="p-6 mb-4 w-full overflow-x-auto">
           {isPendingToCartItems || isPendingForSendDataInBg ? (
             <div className="space-y-4 animate-pulse">
-              {Array.from({ length: 8 }).map((_,x) => (
-                <div key={x} className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm">
+              {Array.from({ length: 8 }).map((_, x) => (
+                <div
+                  key={x}
+                  className="flex items-center space-x-4 p-4 border rounded-lg shadow-sm"
+                >
                   <div className="w-20 h-20 bg-gray-300 rounded-md mx-2"></div>
 
                   <div className="flex-1 space-y-3">
@@ -119,11 +125,13 @@ const CartBody = ({}: // initCartProducts,
       </div>
 
       <div className="lg:w-1/4 mdHalf:w-[35%] ">
-        <InvoiceDetails 
-        // عشان اذا فيه عناصر في ال cartItems ما يعرض السعر حقها اذا كان يعمل فتش للداتا المحدثه
-          cartItems={ isPendingForSendDataInBg || isPendingToCartItems ?[]: cartItems}
-         isRefetching={isRefetching}
-          />
+        <InvoiceDetails
+          // عشان اذا فيه عناصر في ال cartItems ما يعرض السعر حقها اذا كان يعمل فتش للداتا المحدثه
+          cartItems={
+            isPendingForSendDataInBg || isPendingToCartItems ? [] : cartItems
+          }
+          isRefetching={isRefetching}
+        />
       </div>
     </>
   );

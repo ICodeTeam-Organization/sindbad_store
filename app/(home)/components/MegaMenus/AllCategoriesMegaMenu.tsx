@@ -1,5 +1,5 @@
 "use client";
-import { useCategoriesDataStore } from "@/app/stores/categoriesStore";
+import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 import { NormalizedCategoryType } from "@/Data/normalizTypes";
 // import { getApi } from "@/lib/http";
 import { cn } from "@/lib/utils"; 

@@ -1,5 +1,5 @@
-"use client";
-import { useShopFiltersStore } from "@/app/stores/shopFiltersStore";
+"use client"; 
+import { useShopFiltersStore } from "@/app/stores_mangament/shopFiltersStore";
 import { Input } from "@/components/ui/input";
 import { useDebounce } from "@/hooks/useDebounce";
 import React, { useEffect, useState } from "react";
