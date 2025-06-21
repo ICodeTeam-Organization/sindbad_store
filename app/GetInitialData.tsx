@@ -32,9 +32,7 @@ async function GetInitialData() {
     }
   }
 
-  console.log(session?.user?.data  ,'is logged ing');
-  
-
+ 
   return (
     <>
     

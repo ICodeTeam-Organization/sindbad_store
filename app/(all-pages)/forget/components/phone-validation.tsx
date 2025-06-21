@@ -17,10 +17,10 @@ import { postApi } from "@/lib/http";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next-nprogress-bar";
 import { useMutation } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
-import { remmainingTime } from "@/lib/utils";
+import { Loader2 } from "lucide-react"; 
 import useResendCode from "@/hooks/useResendCode";
 import PasswordInput from "@/components/PasswordInput";
+import { remmainingTime } from "@/lib/timeFuns";
 
 const PhoneValidation = () => {
   const router = useRouter();

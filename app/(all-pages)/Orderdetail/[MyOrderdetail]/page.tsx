@@ -2,11 +2,11 @@ import React from "react";
 import PrintOrderBill from "../components/print-order-bill"; 
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
-import OrderDetailProductsTable from "../components/order-details-products-table";
-import { convertToArabicDate } from "@/lib/utils";
+import OrderDetailProductsTable from "../components/order-details-products-table"; 
 import { FcPackage } from "react-icons/fc";
 import { ApiResponseTypeForOrderDetails } from "../type";
-import ReceiptCode from "../components/ReceiptCode";
+import ReceiptCode from "../components/ReceiptCode"; 
+import { convertToArabicDate } from "@/lib/timeFuns";
 
 interface Detail {
   params: { MyOrderdetail: string };

@@ -21,8 +21,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next-nprogress-bar";
 import { Loader2 } from "lucide-react";
-import { cn, remmainingTime } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import useResendCode from "@/hooks/useResendCode";
+import { remmainingTime } from "@/lib/timeFuns";
 
 
  

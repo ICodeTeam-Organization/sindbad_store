@@ -5,8 +5,9 @@ import { getApi, postApi } from "@/lib/http";
 import { NotificationType } from "../types";
 import { Button } from "@/components/ui/button";
 import FilterButton from "./FilterButton";
-import { cn, convertToArabicDate } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
+import { convertToArabicDate } from "@/lib/timeFuns";
 
 const NotificationCard = ({
   initData,

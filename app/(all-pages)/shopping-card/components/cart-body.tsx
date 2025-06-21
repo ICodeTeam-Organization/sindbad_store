@@ -31,7 +31,7 @@ const CartBody = ({}: // initCartProducts,
       if (!isSuccess) {
         setCartItems([]);
         const bgData: BgHandlerDataItemType[] = await db.bgData
-          .where("rqType")
+          .where("reqType")
           .anyOf(3, 4)
           .toArray(); 
         mutate(bgData);

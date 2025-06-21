@@ -2,13 +2,13 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { SpecialOrdersResponseType } from "../../types";
-import { convertToArabicDate } from "@/lib/utils";
+import { SpecialOrdersResponseType } from "../../types"; 
 import { Button } from "@/components/ui/button"; 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/http";
 import Link from "next/link";
 import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
+import { convertToArabicDate } from "@/lib/timeFuns";
 const TABLE_HEAD = [
   "العمليات",
   "التاريخ",

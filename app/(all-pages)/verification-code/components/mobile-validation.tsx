@@ -20,8 +20,9 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import useResendCode from "@/hooks/useResendCode";
 import { postApi } from "@/lib/http";
-import { cn, remmainingTime } from "@/lib/utils"; 
+import { cn } from "@/lib/utils"; 
 import { useRouter } from "next-nprogress-bar";
+import { remmainingTime } from "@/lib/timeFuns";
 const MobileValidation = () => {
   const form = useForm<z.infer<typeof VertificationCodeSchema>>({
     resolver: zodResolver(VertificationCodeSchema),

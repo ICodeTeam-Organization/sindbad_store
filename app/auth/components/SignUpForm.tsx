@@ -12,10 +12,10 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query"; 
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next-nprogress-bar"; 
-import { toast } from "@/hooks/use-toast";
-import {remmainingTime} from "@/lib/utils";
+import { toast } from "@/hooks/use-toast"; 
 import useResendCode from "@/hooks/useResendCode";
 import { registerUser } from "../helpers";
+import { remmainingTime } from "@/lib/timeFuns";
 
 const SignUpForm: React.FC = () => {
 

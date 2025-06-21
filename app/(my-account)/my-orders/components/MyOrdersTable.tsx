@@ -6,10 +6,10 @@ import { BsSortDown } from "react-icons/bs";
 import { CgSortAz } from "react-icons/cg";
 import { Button } from "@/components/ui/button";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getApi } from "@/lib/http";
-import { convertToArabicDate } from "@/lib/utils";
+import { getApi } from "@/lib/http"; 
 import { useRouter } from "next-nprogress-bar";
 import Link from "next/link"; 
+import { convertToArabicDate } from "@/lib/timeFuns";
 
 interface Props {
   initData: {
