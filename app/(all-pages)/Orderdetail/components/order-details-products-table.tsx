@@ -1,19 +1,12 @@
 "use client"
 import SafeImage from "@/components/SafeImage";
+import { NormalizedProductType } from "@/Data/normalizTypes";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
 import React from "react";
 
 type Detail = {
-  detail: {
-    productId: number;
-    productName: string;
-    price: number;
-    quantity: number;
-    imageUrl: string;
-    shipCost:number;
-    extraQuantity: number;
-  }[];
+  detail: NormalizedProductType[];
 };
 
 const OrderDetailProductsTable = ({ detail }: Detail) => {
@@ -43,7 +36,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
               {detail.map((details, ix) => (
                 <tr  
                   key={ix}
-                  onClick={()=>{goToProductdetails(details?.productId)}}
+                  onClick={()=>{goToProductdetails(+details?.id)}}
                   className={cn(
                     "text-center cursor-pointer border-gray-300",
                     ix % 2 === 0 && "bg-slate-100"
@@ -55,12 +48,12 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                         <SafeImage
                           fill
                           className="ml-3"
-                          src={details?.imageUrl || ""}
+                          src={details?.image || ""}
                           alt="Product"
                         />
                       </div>
                       <span className="text-sm font-bold">
-                        {details?.productName}
+                        {details?.name}
                       </span>
                     </div>
                   </td>
@@ -75,9 +68,9 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                       />
                     </div>
                   </td>
-                  <td className="py-2">{details?.shipCost.toFixed(2)} رس</td>
+                  <td className="py-2">{(details?.shipCost ?? 0).toFixed(2)} رس</td>
                   <td className="py-2">
-                    {((details?.quantity * details?.price) + ((details?.quantity + details.extraQuantity) * details?.shipCost)).toFixed(2)} رس
+                    {(((details?.quantity ?? 0) * (details?.price ?? 0)) + (((details?.quantity ?? 0) + (details?.extraQuantity ?? 0)) * (details?.shipCost ?? 0))).toFixed(2)} رس
                   </td>
                 </tr>
               ))}
@@ -89,7 +82,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
         <div className="block mdHalf:hidden">
           {detail.map((details, ix) => (
             <div
-            onClick={()=>{goToProductdetails(details?.productId)}}
+            onClick={()=>{goToProductdetails(+details?.id)}}
               key={ix}
               className={cn(
                 "border cursor-pointer rounded-lg p-4 mb-4",
@@ -98,18 +91,20 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
             >
               <div className="flex  mb-2">
                 <div className="w-20 h-20 relative bg-slate-100 rounded-lg overflow-hidden ">
-                  <SafeImage fill src={details?.imageUrl || ""} alt="Product" />
+                  <SafeImage fill src={details?.image || ""} alt="Product" />
                 </div>
                 <div className="px-3 my-2" >
                   <span className="text-sm font-bold block ">
-                    {details?.productName}
+                    {details?.name}
                   </span>
                   <p className="text-xs mt-1 text-primary-background font-bold" >
+                  <span className="font-bold text-black">  السعر: </span>
+
                     {details?.price.toFixed(2)} رس
                   </p>
                   <p className="text-xs mt-1 text-primary-background font-bold" >
                   <span className="font-bold text-black">تكلفة الشحن: </span>
-                  {details?.shipCost * (details?.extraQuantity + details.quantity)} رس
+                  {(details?.shipCost ?? 0) * ((details?.extraQuantity ?? 0) + (details?.quantity ?? 0))} رس
                 </p>
                 </div>
               </div>
@@ -122,7 +117,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                 
                 <p className="text-primary-background flex justify-between items-center my-2 -mb-1" >
                   <span className="font-bold text-black"> إجمالي السعر والشحن </span>
-                  <span className="text-base  font-bold" >{(details?.quantity * details?.price).toFixed(2)} رس</span>
+                  <span className="text-base  font-bold" >{(((details?.quantity ?? 0) * (details?.price ?? 0)) + (((details?.quantity ?? 0) + (details?.extraQuantity ?? 0)) * (details?.shipCost ?? 0))).toFixed(2)} رس</span>
                 </p>
               </div>
             </div>

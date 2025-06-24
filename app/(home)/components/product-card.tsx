@@ -18,35 +18,7 @@ type propsType = {
   data:NormalizedProductType 
 };
 const ProductCard = ({data}:propsType) => {
-  
-  // data back
-  // حساب إجمالي التقييمات
-
-  // const totalRatings =
-  //   (oneStarCount || 0) +
-  //   (twoStarCount || 0) +
-  //   (threeStarCount || 0) +
-  //   (fourStarCount || 0) +
-  //   (fiveStarCount || 0);
-
-  // const weightedStars =
-  //   totalRatings > 0
-  //     ? ((oneStarCount || 0) * 1 +
-  //         (twoStarCount || 0) * 2 +
-  //         (threeStarCount || 0) * 3 +
-  //         (fourStarCount || 0) * 4 +
-  //         (fiveStarCount || 0) * 5) /
-  //       totalRatings
-  //     : 0;
-
-  // console.log("Rating:", weightedStars.toFixed(2));
-
-  // // تحديد عدد النجوم المملوءة والفارغة
-  // // const filledStars = Math.round(weightedStars);
-  // const filledStars =
-  //   Math.ceil(weightedStars) === 0 ? rate : Math.ceil(weightedStars);
-  // const emptyStars = 5 - filledStars;
-
+   
   return (
     <div
       className={ 
@@ -89,7 +61,7 @@ const ProductCard = ({data}:propsType) => {
           </p>
           <div className="text-right flex flex-col justify-start items-start ">
             <p className="max-md:pr-3 pr-3 max-md:text-xs text-[16px] text-[#F55157]">
-              <strong>{data.price}</strong> <span className="text-[13px]">رس</span>
+              <strong>{data.price}</strong> <span className="text-[13px]">رس</span> <span className="text-[10px] bg-zinc-100 p-1 rounded-sm" > + مصاريف الشحن </span>
             </p>
             { data.hasDiscount ? (
               <div className="flex">

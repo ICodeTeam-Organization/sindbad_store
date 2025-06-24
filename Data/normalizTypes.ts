@@ -4,17 +4,17 @@ export type NormalizedProductType = {
   description?: string;
 
   price: number;                     // السعر الأساسي
-  priceAfterDiscount?: number;      // السعر بعد العرض أو الخصم
-  priceBeforeDiscount?: number;      // السعر قبل العرض أو الخصم
+  priceAfterDiscount: number;      // السعر بعد العرض أو الخصم
+  priceBeforeDiscount: number;      // السعر قبل العرض أو الخصم
   hasDiscount: boolean;                // هل يوجد خصم
   hasOffer: boolean;                // هل يوجد خصم
-  percentageOfDiscount?: number;
+  percentageOfDiscount: number;
 
-  amountYouBuy?: number;            // كم تشتري لتحصل عرض
-  amountYouGet?: number;            // كم تحصل مجانًا من العرض
-  offerSentence?: string;          // جملة العرض
-  offerStartDate?: string;
-  offerEndDate?: string;
+  amountYouBuy: number;            // كم تشتري لتحصل عرض
+  amountYouGet: number;            // كم تحصل مجانًا من العرض
+  offerSentence: string;          // جملة العرض
+  offerStartDate: string;
+  offerEndDate: string;
 
   oneStarCount?:number;
   twoStarCount?:number; 
@@ -29,8 +29,9 @@ export type NormalizedProductType = {
 
   rate: number;             
   
-  quantity?: number;
-  shipCost?: number;
+  quantity: number;
+  extraQuantity:number;
+  shipCost: number;
 
   favoriteId?: number;
   customerId?: string;
@@ -40,12 +41,12 @@ export type NormalizedProductType = {
   brandName?: string;
   categoryName?: string;
 
-  mainCategoriesIds?: number[];
-  subCategoriesIds?: number[];
+  mainCategoriesIds: number[];
+  subCategoriesIds: number[];
 
-  mainCategoriesNames?: string[];
-  subCategoriesNames?: string[];
-  numOfReviewers?:number;
+  mainCategoriesNames: string[];
+  subCategoriesNames: string[];
+  numOfReviewers:number;
 
   attributesWithValues?: {
     attributeName: string;

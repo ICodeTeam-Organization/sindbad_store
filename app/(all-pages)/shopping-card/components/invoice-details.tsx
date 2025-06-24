@@ -7,11 +7,11 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { ArrowLeft } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import PriceLabel from "./price-label";
-import Link from "next/link";
 import { CartItem } from "@/types/storeTypes";
 import { calculateBonus } from "@/lib/utils";
+import { useRouter } from "next-nprogress-bar";
 
 // Function to calculate the total price
 const calculateTotalPrice = (cartItems: CartItem[]): number => {
@@ -76,8 +76,17 @@ const Summary = ({
   isRefetching: boolean;
 }) => {
   cartItems = cartItems.filter((e) => e.quantity > 0);
-
-  console.log(cartItems, "cartItems");
+  const router = useRouter()
+  const [addressError, setaddressError] = useState(false)
+  const handleCheckout =()=>{
+    const address = sessionStorage.getItem("cartAddress");
+    if (address && address.length > 0) {
+      router.push("/checkout")
+    } else {
+      setaddressError(true)
+    }
+   }
+ 
 
   return (
     <Card className="mdHalf:sticky mdHalf:top-[100px] mdHalf:z-10 ">
@@ -115,14 +124,17 @@ const Summary = ({
         </CardFooter>
       ) : (
         cartItems.length > 0 && (
-          <CardFooter>
-            <Link href={"/checkout"} className=" w-full">
+          <CardFooter className="flex-col">
+            <div onClick={handleCheckout}  className=" w-full">
               <Button className="bg-primary-background hover:bg-orange-600 text-white text-lg  w-full">
                 ادخال سند السداد
                 <ArrowLeft className="mr-3 " />
               </Button>
-            </Link>
+            </div>
+            
+            { addressError &&  <p className="mt-2 text-sm text-red-600 ">    يجب ان تحدد عنوانا للإستلام    </p>}
           </CardFooter>
+
         )
       )}
     </Card>

@@ -23,26 +23,30 @@ async function GetInitialData() {
       const notificationResponse = await getApi<{
         message: string;
         success: boolean;
-        data: { all: number; orders: number; specials: number };
+        data: {
+          count: number;
+          action: number;
+        }[];
       }>("Notifications/Count");
-
-      totalNotificationCount = notificationResponse?.data?.all || 0;
+ 
+      totalNotificationCount =
+        notificationResponse?.data?.reduce((total, current) => {
+          return total + current.count;
+        }, 0) || 0;
     } catch (error) {
       console.error("Error fetching notifications:", error);
     }
   }
 
- 
   return (
     <>
-    
       <GetUserData
         data={{
           email: session?.user?.data?.email ?? "",
           name: session?.user?.data?.fullName ?? "",
           phoneNumber: session?.user?.data?.phoneNumber ?? "",
           token: session?.user?.data?.token ?? "",
-          isLogin: session?.user?.data?.isAuthenticated ?? false
+          isLogin: session?.user?.data?.isAuthenticated ?? false,
         }}
       />
       <GetNotificationCount data={totalNotificationCount} />

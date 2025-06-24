@@ -7,6 +7,7 @@ import { FcPackage } from "react-icons/fc";
 import { ApiResponseTypeForOrderDetails } from "../type";
 import ReceiptCode from "../components/ReceiptCode"; 
 import { convertToArabicDate } from "@/lib/timeFuns";
+import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 
 interface Detail {
   params: { MyOrderdetail: string };
@@ -17,9 +18,7 @@ const OrderDetail = async ({ params }: Detail) => {
   );
   if (!OrderDetails) return notFound();
   const data = OrderDetails.data;
-
-  console.log("OrderDetails", OrderDetails.data.pagedOrderDetails.items);
-  
+ 
  
   return (
     <div className="xl:container mx-auto">
@@ -62,7 +61,7 @@ const OrderDetail = async ({ params }: Detail) => {
         </div>
         <div className="flex mdHalf:flex-row flex-col-reverse gap-4 w-full" >
           <div className="lg:w-3/4 mdHalf:w-[65%]" >
-            <OrderDetailProductsTable detail={data.pagedOrderDetails.items} />
+            <OrderDetailProductsTable detail={data.pagedOrderDetails.items.map(normalizeProduct)} />
           </div>
           <div className="lg:w-1/4 mdHalf:w-[35%] " >
             <PrintOrderBill Bill={data} />

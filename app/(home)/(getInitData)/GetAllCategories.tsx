@@ -19,7 +19,7 @@ export default function GetAllCategories() {
       ); // ✅ API endpoint
       return response.data.items.map(normalizeCategory);
     },
-    staleTime: 1000 * 60 * 60 * 24, // 24h
+    staleTime: 1000 * 60 * 60 * 24, // 24h 
   });
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ProductCard from "@/app/(home)/components/product-card"; 
+import ProductCard from "@/app/(home)/components/product-card";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
@@ -20,6 +20,8 @@ import { BsSearch } from "react-icons/bs";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import { NormalizedProductType } from "@/Data/normalizTypes";
 import { useShopFiltersStore } from "@/app/stores_mangament/shopFiltersStore";
+import { Button } from "@/components/ui/button";
+import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 
 type ProductsResponsive = {
   data: {
@@ -31,7 +33,9 @@ type ProductsResponsive = {
 };
 
 const ShopProductsGrid = () => {
+
   const router = useRouter();
+  const {setSpecialOrderState} = useSpecialOrdersDialogsStore()
 
   const { ref: footerRef, inView } = useInView({
     threshold: 0.5,
@@ -258,20 +262,31 @@ const ShopProductsGrid = () => {
                 return (
                   <div
                     key={x}
-                    className="h-[65vh] flex items-center justify-center"
+                    className="h-[65vh] flex items-center justify-center mdHalf:px-16"
                   >
-                    <p className="text-center text-lg tajawal font-bold py-12">
-                      لايتوفر أي منتج في الوقت الحالي
-                    </p>
+                    <div>
+                      <p className="text-center text-lg  font-bold pb-5 text-primary-background">
+                        لايتوفر أي منتج في الوقت الحالي
+                      </p>
+                      <p className="text-center text-sm  font-bold px-10">لم تجد ما تبحث عنه؟ اطلبه عبر خدمة الطلب الخاص وسنوفّره لك بأسرع وقت ونوصله حتى باب منزلك. تسوّق براحتك، ونحن نهتم بالباقي!
+                      </p>
+                      <div className=" mt-4 flex items-center justify-center" >
+                        <Button
+                        variant={"outline"}
+                        className="font-bold hover:bg-primary-background hover:text-white w-[200px]"
+                        onClick={()=>{setSpecialOrderState(true)}}
+                      >
+                        اطلب الآن
+                      </Button>
+                        </div>
+                    </div>
                   </div>
                 );
               }
 
               return page.data.items.map((product: NormalizedProductType) => (
                 <div key={product.id} className="sm:w-[220px]  w-[180px] ">
-                  <ProductCard
-                     data={product}
-                  />
+                  <ProductCard data={product} />
                 </div>
               ));
             })

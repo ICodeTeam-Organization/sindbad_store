@@ -40,9 +40,7 @@ import { validateCheckoutForm } from "../schema";
 import { Label } from "@/components/ui/label";
 import {
   AddressResponse,
-  customerAddressType,
 } from "@/app/(my-account)/user-addresses/types";
-import Link from "next/link";
 import { useRouter } from "next-nprogress-bar";
 import useSendDataInBg from "@/hooks/useSendDataInBg";
  
@@ -67,6 +65,7 @@ const CheckoutForm = () => {
       queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress`),
     });
 
+  const addressId = sessionStorage.getItem("cartAddress");
   const form = useForm<CheckoutType>({
     // resolver: zodResolver(checkoutSchema),
     defaultValues: {
@@ -75,8 +74,11 @@ const CheckoutForm = () => {
       image: undefined,
       note: "",
       number: "",
+      customerAdressId:addressId ? +addressId : undefined  ,
     },
   });
+
+
 
   const { data: authData } = useSession();
   const { setCartItems } = useCartStore();
@@ -202,12 +204,12 @@ const CheckoutForm = () => {
                 control={form.control}
                 name="customerAdressId"
                 render={({ field }) => (
-                  <FormItem className="w-full">
+                  <FormItem className="w-full" >
                     <Label>عنوان الإستلام</Label>
-                    <Select dir="rtl" onValueChange={field.onChange}>
+                    {/* <Select dir="rtl" onValueChange={field.onChange} disabled={true}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="حدد عنوان الإستلام" />
+                          <SelectValue placeholder={addressId && !isPendingForAdresses ?addressData?.data?.find(e=>e?.id == +addressId)?.directorateName : "حدد عنوان الإستلام"} />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -247,22 +249,28 @@ const CheckoutForm = () => {
                           )
                         )}
                       </SelectContent>
-                    </Select>
-                    {field?.value && (
-                      <p className="text-[10px] text-gray-500 mx-1">
+                    </Select> */}
+                     { !isPendingForAdresses ?  field?.value && (
+                      <p className="text-sm text-black  mx-1">
                         <span>
-                          {" "}
+                          <span className="text-primary-background">
+                            {" "}
                           المستلم :{" "}
+                          </span>
                           {
                             addressData?.data?.find(
                               (e) => +e.id == +field.value
                             )?.userName
                           }{" "}
                         </span>
-                        -
+                        <p/>
                         <span>
-                          {" "}
-                          العنوان :{" "}
+                          <span className="text-primary-background" >
+                            {" "}
+                          العنوان :
+                          </span>
+                          {addressData?.data?.find(e=>e?.id == +field.value)?.directorateName }
+                          {" - "}
                           {
                             addressData?.data?.find(
                               (e) => +e.id == +field.value
@@ -270,7 +278,7 @@ const CheckoutForm = () => {
                           }{" "}
                         </span>
                       </p>
-                    )}
+                    ) : <><Loader2 className="animate-spin" /></>}
                     <FormMessage />
                   </FormItem>
                 )}

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { MdOutlineHome } from "react-icons/md"; 
 import { Suspense } from "react";
 
-const Error = () => {
+const Error = ( ) => { 
   return (
     <div> 
      <Suspense>

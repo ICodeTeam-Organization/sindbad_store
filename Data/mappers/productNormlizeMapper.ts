@@ -42,7 +42,9 @@ export function normalizeProduct(input: any): NormalizedProductType {
       (input.amountYouBuy &&
         input.amountYouGet &&
         `اشتري ${input.amountYouBuy} واحصل على ${input.amountYouGet}`) ?? undefined
-    : undefined;
+    : "";
+
+   
 
   return {
     id: input.id ?? input.productId ?? input._id,
@@ -56,20 +58,20 @@ export function normalizeProduct(input: any): NormalizedProductType {
     priceAfterDiscount: discountedPrice,
     priceBeforeDiscount:
       input.priceBeforeDiscount ?? input.priceBeforOffer ?? originalPrice,
-    percentageOfDiscount: percentageOfDiscount, 
+    percentageOfDiscount: percentageOfDiscount , 
     amountYouBuy:
-      input.amountYouBuy ?? input.amountYouShouldToBuyForGetOffer ?? undefined,
+      input.amountYouBuy ?? input.amountYouShouldToBuyForGetOffer ?? 0,
 
     amountYouGet:
-      input.amountYouGet ?? input.amountYouWillGetFromOffer ?? undefined, 
-
+      input.amountYouGet ?? input.amountYouWillGetFromOffer ?? 0, 
+     extraQuantity:input.extraQuantity ?? 0,
     offerSentence: offerSentence,
 
-    offerStartDate: input.offerStartDate ?? undefined,
+    offerStartDate: input.offerStartDate ?? "",
 
-    offerEndDate: input.offerEndDate ?? undefined,
+    offerEndDate: input.offerEndDate ?? "",
 
-    image: input.image ?? input.mainImageUrl ?? undefined,
+    image: input.image ?? input.mainImageUrl ?? "",
 
     images:
       (input.images || input.productImages)?.map((img: any) => img?.imageUrl || img) ??
@@ -77,17 +79,17 @@ export function normalizeProduct(input: any): NormalizedProductType {
 
     rate: rating,
 
-    quantity: input.quantity,
+    quantity: input.quantity || 0,
 
-    shipCost: input.shipCost,
+    shipCost: input.shipCost || 0,
 
     favoriteId: input.favoriteId,
 
     customerId: input.customerId,
 
-    isDisabled: input.isDisable ?? input.isDisabled,
+    isDisabled: input.isDisable ?? input.isDisabled ?? false,
 
-    productNumber: input.number,
+    productNumber: input.number ?? input.productNumber ?? 0,
 
     brandId: input.brandId, 
 
@@ -95,11 +97,11 @@ export function normalizeProduct(input: any): NormalizedProductType {
 
     categoryName: input.categoryName,
     
-    mainCategoriesIds: input.mainCategoriesIds,
-    subCategoriesIds: input.subCategoriesIds,
-    mainCategoriesNames: input.mainCategoriesNames,
-    subCategoriesNames: input.subCategoriesNames,
-    attributesWithValues: input.attributesWithValues,
+    mainCategoriesIds: input.mainCategoriesIds ?? [],
+    subCategoriesIds: input.subCategoriesIds ?? [],
+    mainCategoriesNames: input.mainCategoriesNames ?? [],
+    subCategoriesNames: input.subCategoriesNames ?? [],
+    attributesWithValues: input.attributesWithValues ?? [],
     hasDiscount: hasDiscount,
     hasOffer: hasOffer,
     numOfReviewers: numOfReviewers,

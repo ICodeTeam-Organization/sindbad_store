@@ -18,6 +18,7 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
 }) => {
   const [addresses, setAddresses] = useState<customerAddressType[]>(address);
   const [openAddAddressDialog, setOpenAddAddressDialog] = useState(false);
+  const [selectedIdToDelete, setselectedIdToDelete] = useState<number|null>(null)
   const [isEditing, setisEditing] = useState<{
     isEdit: boolean;
     data?: customerAddressType;
@@ -32,7 +33,7 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
       return id;
     },
     onSuccess: (id) => {
-      
+      setselectedIdToDelete(null)
       toast({
         variant: "default",
         description: "تم حذف العنوان",
@@ -116,7 +117,7 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
 
                   {/* Actions Column */}
                   <td className="px-4 py-3">
-                    {isPending ? (
+                    {isPending && selectedIdToDelete == item.id ? (
                       <div className="text-red-500 hover:text-red-700">
                         <Loader2 className="animate-spin" />
                       </div>
@@ -134,6 +135,7 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
                         <button
                           className="text-red-500 hover:text-red-700"
                           onClick={() => {
+                            setselectedIdToDelete(item.id)
                             mutate(item?.id);
                           }}
                         >

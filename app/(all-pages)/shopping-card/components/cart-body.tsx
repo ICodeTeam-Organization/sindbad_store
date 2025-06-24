@@ -6,10 +6,11 @@ import { Card } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import InvoiceDetails from "./invoice-details";
 import { useEffect, useState } from "react";
-import useSendDataInBg from "@/hooks/useSendDataInBg"; 
+import useSendDataInBg from "@/hooks/useSendDataInBg";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
 import { db } from "@/Data/database/db";
 import { BgHandlerDataItemType } from "@/Data/cachingAndBgData/type";
+import AddressSelector from "./AddressSelector";
 
 type CartApiResponse = {
   data: CartItem[];
@@ -18,7 +19,7 @@ const CartBody = ({}: // initCartProducts,
 {
   // initCartProducts: { data: CartItem[] };
 }) => {
-  const { items: cartItems, setCartItems } = useCartStore();
+  const { items: cartItems, setCartItems } = useCartStore(); 
 
   const {
     mutate,
@@ -33,7 +34,7 @@ const CartBody = ({}: // initCartProducts,
         const bgData: BgHandlerDataItemType[] = await db.bgData
           .where("reqType")
           .anyOf(3, 4)
-          .toArray(); 
+          .toArray();
         mutate(bgData);
       } else {
         setIsReadytogetData(true);
@@ -56,6 +57,9 @@ const CartBody = ({}: // initCartProducts,
       ),
     // initialData: initCartProducts,
     enabled: isReadytogetData,
+    gcTime:0, // يمنع تخزين البيانات في الكاش
+    staleTime: 0, // البيانات تعتبر دائمًا قديمة
+    
   });
 
   useEffect(() => {
@@ -67,6 +71,9 @@ const CartBody = ({}: // initCartProducts,
   return (
     <>
       <div className="lg:w-3/4 mdHalf:w-[65%] ">
+        <div className="mb-2">
+          <AddressSelector onSelect={(id) => {sessionStorage.setItem("cartAddress",id)}}  />
+        </div>
         <Card className="p-6 mb-4 w-full overflow-x-auto">
           {isPendingToCartItems || isPendingForSendDataInBg ? (
             <div className="space-y-4 animate-pulse">

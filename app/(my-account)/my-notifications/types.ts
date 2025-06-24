@@ -17,7 +17,10 @@ export interface FilterButtonProps {
   isActive:boolean
 }
 
-export type ResTypeForNotifeeCount = { success: boolean, message: string, data: {all: number, orders: number, specials: number } }
+export type ResTypeForNotifeeCount = { success: boolean, message: string, data:  {
+          count: number;
+          action: number;
+        }[] }
 
 export type ApiResponseForNotifications = {
   success: boolean;
