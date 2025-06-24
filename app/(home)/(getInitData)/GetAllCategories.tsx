@@ -10,7 +10,8 @@ import { useEffect } from "react";
 
 export default function GetAllCategories() {
   const { setCategories } = useCategoriesDataStore();
- const lastupdateOfCategories = localStorage.getItem("CATS_LAST_UPDATE");
+  const lastupdateOfCategories =
+  typeof window !== "undefined" ? localStorage.getItem("CATS_LAST_UPDATE") : null;
 
   const { data, isSuccess } = useQuery<NormalizedCategoryType[]>({
     queryKey: ["categories",lastupdateOfCategories],
