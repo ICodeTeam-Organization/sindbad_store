@@ -8,13 +8,12 @@ import { getApi } from "@/lib/http";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
-export default function GetAllCategories() {
+export default function GetAllCategories({date}:{date:Date}) {
   const { setCategories } = useCategoriesDataStore();
-  const lastupdateOfCategories =
-  typeof window !== "undefined" ? localStorage.getItem("CATS_LAST_UPDATE") : null;
+  const lastupdateOfCategories = typeof window !== "undefined" ? localStorage.getItem("CATS_LAST_UPDATE") : null;
 
   const { data, isSuccess } = useQuery<NormalizedCategoryType[]>({
-    queryKey: ["categories",lastupdateOfCategories],
+    queryKey: ["categories"],
     queryFn: async () => { 
       const response = await getApi<{ data: { items: any[] } }>(
         "Category/GetAllMainCategoriesWithSubCategories/1/10000?updatedAt=" + (lastupdateOfCategories || "2001-8-20")
@@ -51,7 +50,9 @@ export default function GetAllCategories() {
 
       // تحديث آخر تاريخ
       if (newCategories.length > 0 || updatedCategories.length > 0) {
-        localStorage.setItem("CATS_LAST_UPDATE", new Date().toISOString());
+        const now = date || new Date();
+        now.setHours(now.getHours() + 2);
+        localStorage.setItem("CATS_LAST_UPDATE", now.toISOString());
       }
 
       // تحديث الستيت

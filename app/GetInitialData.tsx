@@ -9,6 +9,11 @@ import { authOption } from "@/lib/authOption";
 import GetUserData from "./(home)/(getInitData)/GetUserData";
 
 async function GetInitialData() {
+
+  const date = new Date();
+  console.log("THIS IS DATE FROM SERVER : ",date);
+  
+
   let session = null;
   try {
     session = await getServerSession(authOption);
@@ -50,7 +55,7 @@ async function GetInitialData() {
         }}
       />
       <GetNotificationCount data={totalNotificationCount} />
-      <GetAllCategories />
+      <GetAllCategories date={date} />
       <GetCartItems />
       <GetFavorite />
     </>
