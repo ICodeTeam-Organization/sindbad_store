@@ -12,7 +12,7 @@ export const createDB = () => {
 
   db.version(1).stores({
     categories: 'id, name, categoryTypeName, categoryTypeNumber, parentCategoryId, code, path',
-    bgData: '[reqType+Id] , reqtype , date ',
+    bgData: '&[reqType+Id] , reqtype , date ',
   });
 
   return db;
