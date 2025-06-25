@@ -10,7 +10,7 @@ interface SindbadDBSchema {
 export const createDB = () => {
   const db = new Dexie('sindbadDB') as Dexie & SindbadDBSchema;
 
-  db.version(1).stores({
+  db.version(2).stores({
     categories: 'id, name, categoryTypeName, categoryTypeNumber, parentCategoryId, code, path',
     bgData: '&[reqType+Id] , reqtype , date ',
   });
