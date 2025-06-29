@@ -346,7 +346,7 @@ const CheckoutForm = () => {
               <Button
                 type="submit"
                 disabled={loadingData}
-                className="w-full hover:bg-orange-600 bg-primary-background transition-colors"
+                className="w-full hover:bg-orange-600 bg-primary transition-colors"
               >
                 {loadingData ? (
                   <Loader2 className="animate-spin" />

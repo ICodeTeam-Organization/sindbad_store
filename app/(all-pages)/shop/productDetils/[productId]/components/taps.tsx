@@ -30,19 +30,19 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
     >
       <Tabs.Trigger
         value="details"
-        className="px-6 rounded-t-lg data-[state=active]:bg-primary-background   p-2  font-medium text-gray-700 focus:outline-none  data-[state=active]:border-orange-500 data-[state=active]:text-white"
+        className="px-6 rounded-t-lg data-[state=active]:bg-primary   p-2  font-medium text-gray-700 focus:outline-none  data-[state=active]:border-orange-500 data-[state=active]:text-white"
       >
         لمحة
       </Tabs.Trigger>
       <Tabs.Trigger
         value="features"
-        className="px-6 rounded-t-lg data-[state=active]:bg-primary-background   p-2  font-medium text-gray-700 focus:outline-none  data-[state=active]:border-orange-500 data-[state=active]:text-white"
+        className="px-6 rounded-t-lg data-[state=active]:bg-primary   p-2  font-medium text-gray-700 focus:outline-none  data-[state=active]:border-orange-500 data-[state=active]:text-white"
       >
         التفاصيل
       </Tabs.Trigger>
       <Tabs.Trigger
         value="reviews"
-        className="px-6 rounded-t-lg data-[state=active]:bg-primary-background   p-2  font-medium text-gray-700 focus:outline-none  data-[state=active]:border-orange-500 data-[state=active]:text-white"
+        className="px-6 rounded-t-lg data-[state=active]:bg-primary   p-2  font-medium text-gray-700 focus:outline-none  data-[state=active]:border-orange-500 data-[state=active]:text-white"
       >
         التقييمات
       </Tabs.Trigger>

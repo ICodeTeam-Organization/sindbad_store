@@ -78,7 +78,7 @@ const AddSpecialOrderToCartButton: React.FC<
         <Button
           {...props}
           className={cn(
-            `bg-primary-background font-bold w-full hover:bg-primary-background hover:bg-opacity-60 text-sm`,
+            `bg-primary font-bold w-full hover:bg-primary hover:bg-opacity-60 text-sm`,
             !pricingId && "bg-gray-400 hover:bg-gray-400 hover:bg-opacity-100",
             className
           )}
@@ -100,7 +100,7 @@ const AddSpecialOrderToCartButton: React.FC<
         <Button
           {...props}
           className={cn(
-            `bg-primary-background font-bold w-full hover:bg-primary-background hover:bg-opacity-60 text-sm`,
+            `bg-primary font-bold w-full hover:bg-primary hover:bg-opacity-60 text-sm`,
             !pricingId && "bg-gray-400 hover:bg-gray-400 hover:bg-opacity-100",
             isInCart && "bg-zinc-200 hover:bg-zinc-200 hover:bg-opacity-100",
             className

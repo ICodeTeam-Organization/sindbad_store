@@ -57,11 +57,14 @@ export default function AddressSelector({onSelect}:{onSelect:(id:string)=>void})
       </Select>
 
       {selectedAddressId && selectedAddress && (
-        <p className="text-sm mt-1 text-gray-500 mx-1">
+        <p className="text-xs mt-2 text-gray-500 mx-1">
           <span>المستلم: {selectedAddress?.userName}</span> -{" "}
           <span>العنوان: {selectedAddress?.locationDescription}</span>
         </p>
       )}
+      { selectedAddress && !selectedAddress.isLiberated && <div className="mb-4">
+                      <p className="text-xs text-red-500 mt-1 text-right" > تنبيه: قد يتم فرض رسوم إضافية للتوصيل إلى هذه المنطقة.   </p>
+                  </div> }
     </div>
   );
 }

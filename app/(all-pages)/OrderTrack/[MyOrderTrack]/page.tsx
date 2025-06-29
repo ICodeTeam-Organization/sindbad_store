@@ -208,7 +208,7 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
 
             <div className="sm:block hidden" >
               <Link
-                className="flex items-center gap-x-2 bg-primary-background text-white w-fit px-2 rounded text-sm mt-4"
+                className="flex items-center gap-x-2 bg-primary text-white w-fit px-2 rounded text-sm mt-4"
                 href={`/Orderdetail/${orderData?.orderNumber}`}
               > 
                معلومات الطلب
@@ -223,7 +223,7 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
           </div>
           <div className="sm:hidden  " >
               <Link
-                className="flex items-center gap-x-2 bg-primary-background text-white w-fit px-2 rounded text-sm mt-4"
+                className="flex items-center gap-x-2 bg-primary text-white w-fit px-2 rounded text-sm mt-4"
                 href={`/Orderdetail/${orderData?.orderNumber}`}
               > 
                معلومات الطلب

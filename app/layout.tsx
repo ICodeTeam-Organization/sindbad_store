@@ -6,13 +6,13 @@ import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
 import { Toaster as SonanerToaster } from "sonner";
-import Footer from "@/components/Footer";
-import About from "@/components/About";
+// import Footer from "@/components/Footer";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import SpecialOrderDialogsViewer from "@/components/SpecialOrderDialogsViewer";
 import { ToastContainer } from 'react-toastify';
 import GetInitialData from "./GetInitialData";
 import SendDataInBG from "@/components/DataHandler/SendDataInBG";
+import Footer from "@/components/footer/Footer";
 
 const Noto_Kufi = Almarai({
   weight: ["400", "700"],
@@ -72,8 +72,9 @@ export default async function RootLayout({
                 <NuqsAdapter>
                   <SpecialOrderDialogsViewer/>
                   {children}
-                  <About />
-                  <Footer />
+                  <Footer/>
+                   {/* <About />
+                  <Footer /> */}
                 </NuqsAdapter>
               </ClientProviders>
             </main>

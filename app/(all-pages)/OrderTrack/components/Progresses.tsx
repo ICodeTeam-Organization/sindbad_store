@@ -39,7 +39,7 @@ const Progresses = ({ progress }: props) => {
     <div
       className={
         data <= 100
-          ? `bg-primary-background border-white w-7 h-7 rounded-full border-2 flex items-center`
+          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
           : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
       }
     >
@@ -48,7 +48,7 @@ const Progresses = ({ progress }: props) => {
     <div
       className={
         data <= 80
-          ? `bg-primary-background border-white w-7 h-7 rounded-full border-2 flex items-center`
+          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
           : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
       }
     >
@@ -57,7 +57,7 @@ const Progresses = ({ progress }: props) => {
     <div
       className={
         data <= 60
-          ? `bg-primary-background border-white w-7 h-7 rounded-full border-2 flex items-center`
+          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
           : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
       }
     >
@@ -66,7 +66,7 @@ const Progresses = ({ progress }: props) => {
     <div
       className={
         data <= 40
-          ? `bg-primary-background border-white w-7 h-7 rounded-full border-2 flex items-center`
+          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
           : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
       }
     >
@@ -75,7 +75,7 @@ const Progresses = ({ progress }: props) => {
     <div
       className={
         data <= 20
-          ? `bg-primary-background border-white w-7 h-7 rounded-full border-2 flex items-center`
+          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
           : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
       }
     >
@@ -84,7 +84,7 @@ const Progresses = ({ progress }: props) => {
     <div
       className={
         data === 0
-          ? `bg-primary-background border-white w-7 h-7 rounded-full border-2 flex items-center`
+          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
           : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
       }
     >
@@ -134,7 +134,7 @@ const Progresses = ({ progress }: props) => {
           key={index}
           className={`z-10 mb-6 flex items-center justify-center w-7 h-7 rounded-full border-2 ${
             data <= threshold
-              ? "bg-primary-background border-white"
+              ? "bg-primary border-white"
               : "bg-white border-primary-background"
           }`}
         >

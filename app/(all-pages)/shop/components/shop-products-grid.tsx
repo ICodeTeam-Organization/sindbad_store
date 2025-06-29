@@ -273,7 +273,7 @@ const ShopProductsGrid = () => {
                       <div className=" mt-4 flex items-center justify-center" >
                         <Button
                         variant={"outline"}
-                        className="font-bold hover:bg-primary-background hover:text-white w-[200px]"
+                        className="font-bold hover:bg-primary hover:text-white w-[200px]"
                         onClick={()=>{setSpecialOrderState(true)}}
                       >
                         اطلب الآن

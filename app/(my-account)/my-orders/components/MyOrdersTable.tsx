@@ -284,7 +284,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
       <div className="m-4 flex items-center justify-center">
         {hasNextPage && !isRefetching ? (
           <Button
-            className="bg-primary-background hover:bg-[#f5863984]"
+            className="bg-primary hover:bg-[#f5863984]"
             onClick={() => fetchNextPage()}
             disabled={isFetchingNextPage}
           >

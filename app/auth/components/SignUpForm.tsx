@@ -161,7 +161,7 @@ const SignUpForm: React.FC = () => {
         )}
       </CardContent>
       <CardFooter>
-        <Button className="w-full hover:bg-orange-600 bg-primary-background transition-colors">
+        <Button className="w-full hover:bg-orange-600 bg-primary transition-colors">
           {isPending ? (
             <>
               يرجى الانتظار

@@ -64,7 +64,7 @@ function OfferPricesTable({
                       onCheckedChange={() => {
                         setSelectedPricing(ele);
                       }}
-                      className="data-[state=checked]:bg-primary-background  border-primary-background"
+                      className="data-[state=checked]:bg-primary  border-primary-background"
                     />
                   </td>
 

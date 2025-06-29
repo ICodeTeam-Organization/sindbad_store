@@ -36,7 +36,7 @@ import {
               <span className="text-sm lg:text-base block">
                 في حال وجود أي ملاحظات لديكم نرجو التواصل مع خدمة العملاء على رقم الواتس (777777777)
               </span>
-              <button className="mt-10 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2 w-full hover:bg-orange-600 bg-primary-background transition-colors" onClick={() => onOpenChange(false)}>
+              <button className="mt-10 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-primary-foreground h-10 px-4 py-2 w-full hover:bg-orange-600 bg-primary transition-colors" onClick={() => onOpenChange(false)}>
                 إغلاق
               </button>
             </DialogDescription>

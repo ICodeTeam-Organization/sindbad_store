@@ -24,6 +24,7 @@ export type customerAddressType = {
   userName: string;
   directorateName: string;
   phoneNumber: string;
+  isLiberated:boolean
 }
 
 export type AddressResponse = {
@@ -44,4 +45,23 @@ export type UpdateAdressResponse = {
     phoneNumber: string;
     locationDescription: string;
   };
+};
+
+export type ApiResponseOfGovernorateWithChildren = {
+  success: boolean;
+  message: string;
+  data: GovernorateType[];
+};
+
+export type GovernorateType = {
+  id: number;
+  name: string;
+  directorates: DirectorateType[];
+};
+
+export type DirectorateType = {
+  id: number;
+  name: string;
+  isLiberated: boolean | null;
+  governorateId: number;
 };

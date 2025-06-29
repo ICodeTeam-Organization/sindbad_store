@@ -25,10 +25,10 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ tabs }) => {
       <div className="flex flex-row justify-between flex-wrap gap-y-4 items-center mb-4">
         <h2 className="text-base">طلباتي الخاصة</h2>
         <div className="flex items-center justify-center gap-x-2">
-        <Button onClick={()=>{setSpecialOrderState(true)}} className="bg-primary-background hover:bg-primary-background hover:bg-opacity-60 text-xs">
+        <Button onClick={()=>{setSpecialOrderState(true)}} className="bg-primary hover:bg-primary hover:bg-opacity-60 text-xs">
           <IoMdAddCircleOutline className="ml-4 " size={20} />  طلب خاص جديد
         </Button>
-        <Button onClick={()=>{setWholeSalesOrderState(true)}} className="bg-primary-background hover:bg-primary-background hover:bg-opacity-60 text-xs">
+        <Button onClick={()=>{setWholeSalesOrderState(true)}} className="bg-primary hover:bg-primary hover:bg-opacity-60 text-xs">
           <IoMdAddCircleOutline className="ml-4 " size={20} />  طلب جملة جديد
         </Button>
         </div>
@@ -44,7 +44,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ tabs }) => {
             <Tabs.Trigger
               key={tab.value}
               value={tab.value}
-              className="px-4 py-2 whitespace-nowrap font-medium text-sm text-gray-700 focus:outline-none data-[state=active]:bg-primary-background data-[state=active]:text-white rounded-tr-lg rounded-tl-lg"
+              className="px-4 py-2 whitespace-nowrap font-medium text-sm text-gray-700 focus:outline-none data-[state=active]:bg-primary data-[state=active]:text-white rounded-tr-lg rounded-tl-lg"
             >
               {tab.label}
             </Tabs.Trigger>

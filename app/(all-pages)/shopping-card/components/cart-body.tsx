@@ -1,4 +1,5 @@
 "use client";
+
 import { getApi } from "@/lib/http";
 import ProductRow from "./product-row";
 import { CartItem } from "@/types/storeTypes";
@@ -20,7 +21,7 @@ const CartBody = ({}: // initCartProducts,
   // initCartProducts: { data: CartItem[] };
 }) => {
   const { items: cartItems, setCartItems } = useCartStore(); 
-
+ 
   const {
     mutate,
     isPending: isPendingForSendDataInBg,

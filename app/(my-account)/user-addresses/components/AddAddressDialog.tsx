@@ -34,7 +34,12 @@ import { useEffect, useState } from "react";
 import { SelectLabel } from "@radix-ui/react-select";
 import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
-import { customerAddressType, UpdateAdressResponse } from "../types";
+import {
+  ApiResponseOfGovernorateWithChildren,
+  customerAddressType,
+  DirectorateType,
+  UpdateAdressResponse,
+} from "../types";
 import { DialogTitle } from "@radix-ui/react-dialog";
 import { toast } from "@/hooks/use-toast";
 
@@ -62,11 +67,17 @@ const AddAddressDialog = ({
   onAddAddressEnd?: (data: customerAddressType) => void;
   onClose: () => void;
 }) => {
-  const [directorates, setDirectorates] = useState<any[]>([]);
+  const [directorates, setDirectorates] = useState<DirectorateType[] | null>(
+    []
+  );
+  const [selectedDirectorate, setSelectedDirectorate] = useState<DirectorateType>();
 
   const { data } = useQuery({
     queryKey: ["city"],
-    queryFn: () => getApi<any>(`Locations/GetGovernorateWithChildren`),
+    queryFn: () =>
+      getApi<ApiResponseOfGovernorateWithChildren>(
+        `Locations/GetGovernorateWithChildren`
+      ),
   });
 
   function getGovernorateByDirectorateId(directorateId: number) {
@@ -112,7 +123,7 @@ const AddAddressDialog = ({
       });
       setDirectorates(
         getGovernorateByDirectorateId(dataEditing.directorateId || 0)
-          ?.directorates
+          ?.directorates ?? null
       );
     }
   }, [isEditing, dataEditing]);
@@ -137,19 +148,19 @@ const AddAddressDialog = ({
       ),
     onSuccess: (data) => {
       toast({
-        variant:"default",
-        description:"تم إضافة العنوان"
+        variant: "default",
+        description: "تم إضافة العنوان",
       });
-      console.log(data,"new addddddddress");
-      
+      console.log(data, "new addddddddress");
+
       if (onAddAddressEnd) onAddAddressEnd(data?.data as customerAddressType);
       form.reset();
       setShow(false);
     },
     onError: (error) => {
       toast({
-        variant:"destructive",
-        description:error.message
+        variant: "destructive",
+        description: error.message,
       });
     },
   });
@@ -194,8 +205,7 @@ const AddAddressDialog = ({
     });
 
   function onSubmit(values: z.infer<typeof AddshipingadressSchema>) {
-    if (isEditing) {
-      console.log(values);
+    if (isEditing) { 
       mutateForEditing(values);
     } else {
       mutate(values);
@@ -229,7 +239,7 @@ const AddAddressDialog = ({
               <DialogHeader>
                 <div className=" mdHalf:p-8">
                   <h1 className="text-right text-base font-bold my-6">
-                    {isEditing ? "تعديل العنوان":"إضافة عنوان جديد "}
+                    {isEditing ? "تعديل العنوان" : "إضافة عنوان جديد "}
                   </h1>
 
                   <div className="grid grid-cols-2 gap-2 ">
@@ -246,9 +256,8 @@ const AddAddressDialog = ({
                               <Select
                                 onValueChange={(e) => {
                                   field.onChange(e);
-                                  const der = data?.data?.find(
-                                    (dir: any) => +dir.id == +e
-                                  );
+                                  const der = data?.data?.find((dir: any) => +dir.id == +e);
+                                  setSelectedDirectorate(undefined)
                                   setDirectorates(der?.directorates || []);
                                   form?.resetField("city");
                                 }}
@@ -297,7 +306,15 @@ const AddAddressDialog = ({
                         render={({ field }) => (
                           <FormItem className="text-center">
                             <FormControl>
-                              <Select onValueChange={field.onChange}>
+                              <Select onValueChange={(e)=>{
+                                field.onChange(e); 
+                                const dire = directorates?.find(d=> +d.id == +e);
+                                console.log(dire);
+                                
+                                if (dire) {
+                                  setSelectedDirectorate(dire)
+                                }
+                                }}>
                                 <SelectTrigger
                                   className="text-sm"
                                   dir="rtl"
@@ -308,7 +325,7 @@ const AddAddressDialog = ({
                                     placeholder={
                                       !!field?.value
                                         ? directorates?.find(
-                                            (e) => e?.id == field?.value
+                                            (e) => +e?.id == +field?.value
                                           )?.name
                                         : "إختر المديرية"
                                     }
@@ -321,6 +338,7 @@ const AddAddressDialog = ({
                                         "يجب اختيار المحاظة اولا"}
                                     </SelectLabel>
                                     {form.getValues().stateid &&
+                                      directorates &&
                                       directorates?.length > 0 &&
                                       directorates?.map((city: any) => (
                                         <SelectItem
@@ -375,6 +393,9 @@ const AddAddressDialog = ({
                       )}
                     /> */}
                   </div>
+                 { selectedDirectorate && !selectedDirectorate.isLiberated && <div>
+                      <p className="text-xs text-red-500 mt-2 text-right" > تنبيه: قد يتم فرض رسوم إضافية للتوصيل إلى هذه المنطقة. </p>
+                  </div> }
                   <FormField
                     control={form.control}
                     name="userName"
@@ -430,7 +451,7 @@ const AddAddressDialog = ({
               >
                 <Button
                   type="submit"
-                  className="bg-primary-background hover:bg-primary-background"
+                  className="bg-primary hover:bg-primary"
                 >
                   {isPending || isPendingForEditing ? (
                     <Loader2 className="animate-spin" />

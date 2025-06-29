@@ -214,7 +214,7 @@ function SpecialWholesalesOrderDialog({
                     handleOnSubmit.mutate();
                   }
                 }}
-                className="bg-primary-background px-8 hover:bg-primary-background hover:bg-opacity-[0.7] tajawal "
+                className="bg-primary px-8 hover:bg-primary hover:bg-opacity-[0.7] tajawal "
               >
                 {handleOnSubmit.isPending ? (
                   <div className="">

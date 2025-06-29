@@ -198,7 +198,7 @@ const NotificationCard = ({
       <div className="m-4 flex items-center justify-center">
         {hasNextPage ? (
           <Button
-            className="bg-primary-background hover:bg-[#f5863984]"
+            className="bg-primary hover:bg-[#f5863984]"
             onClick={() => {
               setIsRefeched(true);
               fetchNextPage();

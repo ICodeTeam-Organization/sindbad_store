@@ -77,7 +77,7 @@ const LoginForm: React.FC = () => {
       <CardFooter>
         <Button
           disabled={isPending}
-          className="w-full hover:bg-orange-600 bg-primary-background transition-colors"
+          className="w-full hover:bg-orange-600 bg-primary transition-colors"
         >
           {isPending ? (
             <>

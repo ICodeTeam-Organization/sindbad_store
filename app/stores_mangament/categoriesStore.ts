@@ -8,13 +8,12 @@ interface CategoriesDataState {
 }
 
 export const useCategoriesDataStore = create<CategoriesDataState>((set) => { 
-  const isClient = typeof window !== 'undefined'; 
+  // const isClient = typeof window !== 'undefined'; 
 
   return {
     categories: [],
     isFechingCategories:true,
-    setCategories: (categories) => {
-      if (isClient) localStorage.setItem('categories', JSON.stringify(categories));
+    setCategories: (categories) => { 
       set({ categories , isFechingCategories: false });
     },
 

@@ -111,7 +111,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             {getRemainingTimeForOffer(product.offerEndDate ?? "") != "" && (
               <div>
                 {product.offerSentence && (
-                  <div className="flex items-center col-span-2 mb-2 text-xs bg-primary-background text-white p-1 w-fit px-2 rounded-md tajawal">
+                  <div className="flex items-center col-span-2 mb-2 text-xs bg-primary text-white p-1 w-fit px-2 rounded-md tajawal">
                     <span>
                       {product.offerSentence ? product.offerSentence : ""}
                     </span>
@@ -164,7 +164,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
 
             <div className="flex items-center col-span-2 mb-2 mt-4">
               <span className="font-medium ml-1 ">رقم المنتج : </span>
-              <span className="bg-primary-background mx-1 text-white px-2  ">
+              <span className="bg-primary mx-1 text-white px-2  ">
                 {product.productNumber}
               </span>
             </div>

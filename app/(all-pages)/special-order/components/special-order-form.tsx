@@ -277,7 +277,7 @@ const SpecialOrderForm = ({
                 handleOnSubmit.mutate();
               }
             }}
-            className="bg-primary-background mdHalf:px-8 hover:bg-primary-background hover:bg-opacity-[0.7] tajawal "
+            className="bg-primary mdHalf:px-8 hover:bg-primary hover:bg-opacity-[0.7] tajawal "
           >
             {handleOnSubmit.isPending ? (
               <div className="">

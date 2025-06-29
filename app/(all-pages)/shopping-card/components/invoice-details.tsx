@@ -126,7 +126,7 @@ const Summary = ({
         cartItems.length > 0 && (
           <CardFooter className="flex-col">
             <div onClick={handleCheckout}  className=" w-full">
-              <Button className="bg-primary-background hover:bg-orange-600 text-white text-lg  w-full">
+              <Button className="bg-primary hover:bg-orange-600 text-white text-lg  w-full">
                 ادخال سند السداد
                 <ArrowLeft className="mr-3 " />
               </Button>
@@ -171,7 +171,7 @@ export default Summary;
 //         </div>
 //       </CardContent>
 //       <CardFooter>
-//         <Button className="w-full bg-primary-background hover:bg-orange-600 text-lg font-bold">
+//         <Button className="w-full bg-primary hover:bg-orange-600 text-lg font-bold">
 //           أدخال سند السداد
 //           <ArrowLeft className="mr-4" />
 //         </Button>

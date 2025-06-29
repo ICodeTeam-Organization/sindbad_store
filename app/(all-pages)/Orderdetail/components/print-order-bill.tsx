@@ -106,7 +106,7 @@ const PrintOrderBill = ({ Bill }: { Bill: OrderData }) => {
             <div className="w-full">
               <Button
                 onClick={handlePrint}
-                className="bg-primary-background hover:bg-orange-600 text-white text-base  w-full"
+                className="bg-primary hover:bg-orange-600 text-white text-base  w-full"
               >
                 تصدير PDF
               </Button>

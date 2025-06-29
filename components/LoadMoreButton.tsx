@@ -13,7 +13,7 @@ const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({ onClick, isLoading }) =
             onClick={onClick}
             disabled={isLoading}
             variant="outline"
-            className="mx-auto my-2 py-2 px-6 flex justify-between items-center bg-primary-background hover:bg-orange-600 hover:text-white text-white rounded-sm"
+            className="mx-auto my-2 py-2 px-6 flex justify-between items-center bg-primary hover:bg-orange-600 hover:text-white text-white rounded-sm"
         >
             عرض المزيد
             {isLoading ? <Loader2 className="animate-spin" /> : <BiArrowFromTop className="mr-1" size={20} />}

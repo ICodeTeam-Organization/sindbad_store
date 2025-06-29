@@ -74,7 +74,7 @@ function ShowPricingInfoDialog({
               إغلاق
             </Button>
           </DialogClose>
-          {/* <Button type="button" className="bg-primary-background hover:bg-primary-background" >أضف إلى السلة</Button> */}
+          {/* <Button type="button" className="bg-primary hover:bg-primary" >أضف إلى السلة</Button> */}
         </DialogFooter>
       </DialogContent>
     </Dialog>

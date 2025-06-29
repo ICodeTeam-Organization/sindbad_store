@@ -152,7 +152,7 @@ const OrdersWaitingPricingTable: React.FC<{
               <div className="flex items-center justify-between">
                 <Link
                   href={"/my-special-orders/priceDetails/" + id}
-                  className="w-full mt-2 text-center text-sm text-white shadow-sm h-[38px] bg-primary-background px-4 py-2 rounded-lg whitespace-nowrap"
+                  className="w-full mt-2 text-center text-sm text-white shadow-sm h-[38px] bg-primary px-4 py-2 rounded-lg whitespace-nowrap"
                 >
                   عرض تفاصيل الطلب
                 </Link>
@@ -165,7 +165,7 @@ const OrdersWaitingPricingTable: React.FC<{
       <div className="flex items-center justify-center p-10">
         {hasNextPage ? (
           <Button
-            className="bg-primary-background hover:bg-[#f5863984]"
+            className="bg-primary hover:bg-[#f5863984]"
             onClick={() => {
               setIsRefeched(true);
               fetchNextPage();

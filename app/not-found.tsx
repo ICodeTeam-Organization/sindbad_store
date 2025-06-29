@@ -22,7 +22,7 @@ const NotFoundPage = () => {
         <Link href={"/"}>
           <Button
             variant={"outline"}
-            className="font-bold hover:bg-primary-background hover:text-white"
+            className="font-bold hover:bg-primary hover:text-white"
           >
             <span className="ml-2">الرئيسية</span> <MdOutlineHome size={20} />
           </Button>

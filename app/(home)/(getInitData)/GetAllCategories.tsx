@@ -55,7 +55,7 @@ export default function GetAllCategories({date}:{date:Date}) {
         localStorage.setItem("CATS_LAST_UPDATE", now.toISOString());
       }
 
-      // تحديث الستيت
+      // تحديث الستيتlocalStorage.setItem("C
       const finalCats = await db.categories.toArray();
       setCategories(finalCats);
     };

@@ -56,7 +56,7 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
           onClick={() => {
             setOpenAddAddressDialog(true);
           }}
-          className="bg-primary-background hover:bg-primary-background hover:bg-opacity-60 text-sm"
+          className="bg-primary hover:bg-primary hover:bg-opacity-60 text-sm"
         >
           <IoMdAddCircleOutline className="ml-4 " size={20} /> إضافة عنوان جديد
         </Button>

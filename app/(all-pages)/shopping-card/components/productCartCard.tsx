@@ -141,7 +141,7 @@ const ProductCartCard: React.FC<ProductCartCardProps> = ({ item, ix, refreshItem
             />}
           </div>
           {item.amountYouBuy && item.amountYouGet && (
-            <span className="font-bold bg-primary-background text-white px-2 py-1 rounded-sm">
+            <span className="font-bold bg-primary text-white px-2 py-1 rounded-sm">
               <span>
                 {" "}
                 +{calculateBonus(
