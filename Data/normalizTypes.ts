@@ -24,7 +24,8 @@ export type NormalizedProductType = {
 
 
   image: string;                   // صورة رئيسية
-  images?: string[];                // صور إضافية
+  images?: string[]; 
+  blurHash?:string;               // صور إضافية
   productNumber?: string;
 
   rate: number;             

@@ -1,45 +1,48 @@
-import { FaRetweet, FaShippingFast } from "react-icons/fa";
-import { MdPayments } from "react-icons/md";
+import Image from "next/image";
+ 
 
 const Feature = () => {
   return (
-    <div className="py-10 container mx-auto sm:px-4 md:px-8 lg:px-16 xl:px-32 p-4 ">
-      <ul className="p-5 px-2 lg:p-8 flex flex-wrap lg:flex-nowrap justify-center gap-5  border ">
-        <li>
-          <div className="flex flex-col lg:flex-row items-center text-center lg:text-start ">
-            <FaShippingFast className="text-orange-400 text-5xl ml-5" />
-            <div>
-              <span className="font-bold text-lg block ">منتجات مضمونة</span>
-              <span className="text-gray-500">
-                منتجات أمنة اقساط تصل الى 12 شهرا
-              </span>
+    <>
+     {/* Fetures */}
+      <div className="bg-white mb-10">
+        <div className="container mx-auto flex  mdHalf:justify-evenly justify-center items-center  flex-wrap gap-x-10 gap-y-8 py-10">
+          <div className="flex items-center justify-center gap-x-5">
+            <div className="bg-primary p-4  rounded-full w-fit">
+              <Image
+                alt="fav_cart_ic"
+                src="/images/footer_images/fav_cart_ic.svg"
+                width={35}
+                height={35}
+              />
             </div>
+            <h2 className="text-[20px]"> تسوق اسهل </h2>
           </div>
-        </li>
-        <li className="lg:mx-8  lg:border-x-2  lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center text-center lg:text-start   ">
-            <FaRetweet className="text-orange-400 text-5xl ml-5" />
-            <div>
-              <span className="font-bold text-lg block ">شحن مجاني</span>
-              <span className="text-gray-500">
-                منتجات أمنة اقساط تصل الى 12 شهرا
-              </span>
+          <div className="flex items-center justify-center gap-x-5">
+            <div className="bg-primary p-4  rounded-full w-fit">
+              <Image
+                alt="cur_ic"
+                src="/images/footer_images/cur_ic.svg"
+                width={35}
+                height={35}
+              />
             </div>
+            <h2 className="text-[20px]"> بدون بطاقة ائتمان </h2>
           </div>
-        </li>
-        <li>
-          <div className="flex flex-col lg:flex-row items-center text-center lg:text-start  ">
-            <MdPayments className="text-orange-400 text-5xl ml-5" />
-            <div>
-              <span className="font-bold text-lg block ">مدفوعات امنة</span>
-              <span className="text-gray-500">
-                منتجات أمنة اقساط تصل الى 12 شهرا
-              </span>
+          <div className="flex items-center justify-center gap-x-5">
+            <div className="bg-primary p-4  rounded-full w-fit">
+              <Image
+                alt="fav_cart_ic"
+                src="/images/footer_images/flight_ic.svg"
+                width={35}
+                height={35}
+              />
             </div>
+            <h2 className="text-[20px]"> شحن أسرع و أمن الى اليمن </h2>
           </div>
-        </li>
-      </ul>
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 

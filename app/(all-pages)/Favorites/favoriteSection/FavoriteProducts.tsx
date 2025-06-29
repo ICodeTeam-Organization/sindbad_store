@@ -1,15 +1,14 @@
 "use client";
 import ProductCard from "@/app/(home)/components/product-card";
+import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
-import { NormalizedProductType } from "@/Data/normalizTypes";
+import { NormalizedProductType } from "@/Data/normalizTypes"; 
 import { getApi } from "@/lib/http";
-import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query"; 
 import React from "react";
 
-function FavoriteProducts() {
-  const { data: session, status } = useSession();
+function FavoriteProducts() { 
 
   const { data, isLoading } = useQuery<NormalizedProductType[]>({
     queryKey: ["get-favorite-products-all"],
@@ -20,22 +19,17 @@ function FavoriteProducts() {
           {
             pageNumber:1,
             PageSize:100
-          },
-        {
-          headers: {
-            Authorization: `Bearer ${session?.user.data.token}`,
-          },
-        }
+          }, 
       ); 
        
       return ( dt.data.map(normalizeProduct))
       
      },
-    enabled: status == "authenticated",
+    // enabled: status == "authenticated",
   });
 
-  
-
+  const {productsIds} = useFavorite()
+ 
   return (
     <div
       dir="rtl"
@@ -47,8 +41,8 @@ function FavoriteProducts() {
             <ProductCardSkeleton />
           </div>
         ))
-      ) : data && data.length > 0 ? (
-         data.map((product: NormalizedProductType) => (
+      ) : data && data.filter(e=>productsIds.includes(+e.id)).length > 0 ? (
+         data.filter(e=>productsIds.includes(+e.id)).map((product: NormalizedProductType) => (
           <div key={product.id} className="sm:w-[220px]  w-[180px] ">
             <ProductCard
              key={product.id}

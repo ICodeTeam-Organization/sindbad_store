@@ -26,24 +26,16 @@ const ProductCard = ({data}:propsType) => {
       }
     >
       <Link href={`/shop/productDetils/${data?.id}`} className="">
-        {/* <div className="w-full h-[180px] overflow-hidden relative  " >
-          {offerSentence ? <span className="OfferSentence px-4 py-[2px] ">{offerSentence}</span>: null}
-          
-        <SafeImage
-            src={image} // رابط الصورة
-            alt="صورة منتج"
-            className="max-sm:h-28 rounded-t-[8px] object-cover "
-            fill
-            
-          />
-        </div> */}
+         
         <div className="relative border-b">
           <SafeImage
             alt={data?.name}
             loading="lazy"
             src={data?.image}
+            blurHash={data?.blurHash}
             width={300}
             height={256}
+            objectFit="contain"
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             className="w-full  mdHalf:h-60 h-52 object-contain"
           />

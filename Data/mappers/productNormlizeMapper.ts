@@ -80,6 +80,7 @@ export function normalizeProduct(input: any): NormalizedProductType {
     rate: rating,
 
     quantity: input.quantity || 0,
+    blurHash:input.blurHash ?? "",
 
     shipCost: input.shipCost || 0,
 
