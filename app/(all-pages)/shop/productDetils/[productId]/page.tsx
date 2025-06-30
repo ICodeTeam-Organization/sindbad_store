@@ -4,7 +4,6 @@ import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
 import ProductDetails from "./components/product-details";
 import { Product } from "./types";
-import ProductDetailsAccordingmenus from "./components/ProductDetailsAccordingmenus";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import TabsComponent from "./components/taps";
 

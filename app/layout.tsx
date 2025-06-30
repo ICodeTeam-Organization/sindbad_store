@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientProviders from "@/components/client-providers";
-import { Almarai, Cairo, Tajawal } from "next/font/google";
+import {  Cairo,   } from "next/font/google";
 import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";

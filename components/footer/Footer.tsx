@@ -18,12 +18,12 @@ function Footer() {
     // { title: "المفضلة", href: "/Favorites" },
   ] as const;
 
-  const servicesLinks = [
-    { title: "طلب خاص", href: "/about" },
-    { title: "العروض", href: "/orders" },
-    { title: "المحلات التجارية", href: "/shopping-card" },
-    { title: "متاجر الكترونية", href: "/Favorites" },
-  ] as const;
+  // const servicesLinks = [
+  //   { title: "طلب خاص", href: "/about" },
+  //   { title: "العروض", href: "/orders" },
+  //   { title: "المحلات التجارية", href: "/shopping-card" },
+  //   { title: "متاجر الكترونية", href: "/Favorites" },
+  // ] as const;
 
   const sindbadPrivcy = [
     { title: "الشروط والأحكام", href: "/privacy#terms" },
