@@ -15,7 +15,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-12 mdHalf:px-12 px-4">
       <div className=" ml-8 mdHalf:w-[500px] w-full">
-        <ImageGalleryProductDetails productId={+product.id} images={[product.image, ...(product.images ?? [])]} />
+        <ImageGalleryProductDetails blurHash={product.blurHash} productId={+product.id} images={[product.image, ...(product.images ?? [])]} />
       </div>
       <div className="flex flex-1 flex-col justify-between">
         {/* <ProductTitle name={product.name} description={product.name} rating={5} /> */}
@@ -110,20 +110,18 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               />
             </div>
 
-            {getRemainingTimeForOffer(product.offerEndDate ?? "") != "" && (
+           
               <div>
-                {product.offerSentence && (
+                {(product.offerSentence && product.hasOffer ) && (
                   <div className="flex items-center col-span-2 mb-2 text-xs bg-primary text-white p-1 w-fit px-2 rounded-md tajawal">
                     <span>
                       {product.offerSentence ? product.offerSentence : ""}
                     </span>
                   </div>
                 )}
-
+{}
                 {/* OFFER TIME  */}
-                {product.hasOffer ||
-                  product.hasDiscount ||
-                  (product.offerSentence !== null && (
+                {((product.hasOffer || product.hasDiscount && product.isOfferStillOn ) && (
                     <div className="flex flex-wrap gap-x-4 text-sm text-primary-background ">
                       <div className="text-red-600 text-sm mt-2">
                         الوقت المتبقي لنهاية العرض :{" "}
@@ -132,10 +130,10 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                     </div>
                   ))}
               </div>
-            )}
+             
             <hr className="my-4   border border-primary-background border-opacity-15" />
             <p className="text-base text-gray-600 mt-4">
-              {product?.description}
+              {product?.shortDecription}
             </p>
           </div>
 
@@ -163,6 +161,23 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               {product.categoryName !== null ? product.categoryName : " "}
             </span> */}
             </div>
+
+            {product.tags.length > 0 && <div className="  mb-2">
+              <p className="  ml-1 mb-2 font-bold mt-2">
+                التاقات
+              </p>
+              <div className="flex flex-wrap gap-4">
+                {product.tags.filter((e) => !!e)
+                  .map((tag, x) => (
+                    <span
+                      className="bg-zinc-100 px-2 py-1 shadow rounded text-xs  "
+                      key={tag.id + x}
+                    >
+                      {tag.name.split(" ").join("_")}#
+                    </span>
+                  ))}
+              </div> 
+            </div>}
 
             <div className="flex items-center col-span-2 mb-2 mt-4">
               <span className="font-medium ml-1 ">رقم المنتج : </span>

@@ -15,9 +15,11 @@ import ShareButton from "./ShareButton";
 const ImageGalleryProductDetails = ({
   images,
   productId,
+  blurHash
 }: {
   images: string[];
   productId: number;
+  blurHash?:string
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -47,13 +49,14 @@ const ImageGalleryProductDetails = ({
             {images.map((image) => (
               <CarouselItem
                 key={image}
-                className="relative w-full aspect-square rounded-lg border shadow-sm"
+                className="relative w-full aspect-square rounded-lg overflow-hidden border shadow-sm"
               >
                 <SafeImage
                   src={image}
                   alt={image}
                   className="object-contain rounded-lg border shadow-sm"
                   fill
+                  blurHash={blurHash}
                 />
               </CarouselItem>
             ))}

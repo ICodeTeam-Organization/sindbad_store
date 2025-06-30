@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Image, { ImageProps } from 'next/image';
-import { BlurhashCanvas } from 'react-blurhash'; // 👈 استيراد مكون Blurhash
-import { cn } from '@/lib/utils';
+import { useEffect, useState } from "react";
+import Image, { ImageProps } from "next/image";
+import { BlurhashCanvas } from "react-blurhash"; // 👈 استيراد مكون Blurhash
+import { cn } from "@/lib/utils";
 
-interface SafeImageProps extends Omit<ImageProps, 'src' | 'width' | 'height'> {
+interface SafeImageProps extends Omit<ImageProps, "src" | "width" | "height"> {
   src: string;
   fallbackSrc?: string;
   alt: string;
@@ -17,24 +17,24 @@ interface SafeImageProps extends Omit<ImageProps, 'src' | 'width' | 'height'> {
 
 const SafeImage: React.FC<SafeImageProps> = ({
   src,
-  fallbackSrc = '/images/sedebadLogo.svg',
-  alt = 'صورة',
+  fallbackSrc = "/images/sedebadLogo.svg",
+  alt = "صورة",
   width,
   height,
   objectFit,
   blurHash, // 👈 التقاط blurHash من props
   ...rest
 }) => {
-  const pathOfNoImg = '/images/Image_not_available.png'
+  const pathOfNoImg = "/images/Image_not_available.png";
   const [validSrc, setValidSrc] = useState<string>(fallbackSrc);
   const [isImageLoaded, setIsImageLoaded] = useState(false); // 👈 حالة لتتبع تحميل الصورة
- 
+
   useEffect(() => {
     checkImage(src);
   }, [src]);
 
   const checkImage = (src: string) => {
-    if (!src?.startsWith('https') && !src?.startsWith('http')) {
+    if (!src?.startsWith("https") && !src?.startsWith("http")) {
       // 👆 تم تعديل الشرط ليعمل بشكل صحيح
       setValidSrc(pathOfNoImg);
       return;
@@ -48,13 +48,15 @@ const SafeImage: React.FC<SafeImageProps> = ({
       {blurHash && !isImageLoaded && (
         <BlurhashCanvas
           hash={blurHash}
-          width={width || 400}
-          height={height || 300}
-          punch={1}  
+          width={width || undefined}
+          height={height || undefined}
+          punch={1}
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             left: 0,
+            width: width ? `${width}px` : "100%",
+            height: height ? `${height}px` : "100%",
             zIndex: 1,
           }}
         />
@@ -67,18 +69,25 @@ const SafeImage: React.FC<SafeImageProps> = ({
         blurDataURL=""
         objectFit={objectFit}
         alt={alt}
-        onError={() =>{ setValidSrc(pathOfNoImg);setIsImageLoaded(true)}}
-        onLoadingComplete={() => {setIsImageLoaded(true)}} // 👈 عند إكمال تحميل الصورة، نخفي الـ BlurHash
+        onError={() => {
+          setValidSrc(pathOfNoImg);
+          setTimeout(() => {
+            setIsImageLoaded(true);
+          }, 500);
+        }}
+        onLoadingComplete={() => {
+            setTimeout(() => {
+             setIsImageLoaded(true);
+          }, 500);
+        }} // 👈 عند إكمال تحميل الصورة، نخفي الـ BlurHash
         width={width}
-        height={height} 
+        height={height}
         {...rest}
-        className={
-          cn(
-            rest.className,
-            "transition duration-1000",
-            isImageLoaded ? "opacity-100" : "opacity-0"
-          )
-        }
+        className={cn(
+          rest.className,
+          "transition duration-1000",
+          isImageLoaded ? "opacity-100" : "opacity-0"
+        )}
       />
     </>
   );

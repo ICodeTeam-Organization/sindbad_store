@@ -1,8 +1,8 @@
+import { getRemainingTimeForOffer } from "@/lib/timeFuns";
 import { NormalizedProductType } from "../normalizTypes";
 
 export function normalizeProduct(input: any): NormalizedProductType {
-  
-    const numOfReviewers =
+  const numOfReviewers =
     (input?.oneStarCount || 0) +
     (input?.twoStarCount || 0) +
     (input?.threeStarCount || 0) +
@@ -34,22 +34,25 @@ export function normalizeProduct(input: any): NormalizedProductType {
     input.amountYouBuy ||
     input.amountYouGet ||
     input.offerSentence ||
-    input.buyAndGet || false;
+    input.buyAndGet ||
+    false;
 
   const offerSentence = hasOffer
     ? input.offerSentence ??
       input.buyAndGet ??
       (input.amountYouBuy &&
         input.amountYouGet &&
-        `اشتري ${input.amountYouBuy} واحصل على ${input.amountYouGet}`) ?? undefined
+        `اشتري ${input.amountYouBuy} واحصل على ${input.amountYouGet}`) ??
+      undefined
     : "";
 
-   
+  const isOfferStillOn =
+    getRemainingTimeForOffer(input?.offerEndDate ?? "") != "";
 
   return {
     id: input.id ?? input.productId ?? input._id,
 
-    name: input.name ?? input.productName ,
+    name: input.name ?? input.productName,
 
     description: input.description ?? input.productDescription ?? "",
 
@@ -58,13 +61,12 @@ export function normalizeProduct(input: any): NormalizedProductType {
     priceAfterDiscount: discountedPrice,
     priceBeforeDiscount:
       input.priceBeforeDiscount ?? input.priceBeforOffer ?? originalPrice,
-    percentageOfDiscount: percentageOfDiscount , 
+    percentageOfDiscount: percentageOfDiscount,
     amountYouBuy:
       input.amountYouBuy ?? input.amountYouShouldToBuyForGetOffer ?? 0,
 
-    amountYouGet:
-      input.amountYouGet ?? input.amountYouWillGetFromOffer ?? 0, 
-     extraQuantity:input.extraQuantity ?? 0,
+    amountYouGet: input.amountYouGet ?? input.amountYouWillGetFromOffer ?? 0,
+    extraQuantity: input.extraQuantity ?? 0,
     offerSentence: offerSentence,
 
     offerStartDate: input.offerStartDate ?? "",
@@ -74,30 +76,32 @@ export function normalizeProduct(input: any): NormalizedProductType {
     image: input.image ?? input.mainImageUrl ?? "",
 
     images:
-      (input.images || input.productImages)?.map((img: any) => img?.imageUrl || img) ??
-      [],
+      (input.images || input.productImages)?.map(
+        (img: any) => img?.imageUrl || img
+      ) ?? [],
 
     rate: rating,
 
     quantity: input.quantity || 0,
-    blurHash:input.blurHash ?? "",
+    blurHash: input.blurHash ?? "",
 
     shipCost: input.shipCost || 0,
 
     favoriteId: input.favoriteId,
 
     customerId: input.customerId,
+    tags: input?.tags ?? [],
 
     isDisabled: input.isDisable ?? input.isDisabled ?? false,
 
     productNumber: input.number ?? input.productNumber ?? 0,
 
-    brandId: input.brandId, 
+    brandId: input.brandId,
 
     brandName: input.brandName,
 
     categoryName: input.categoryName,
-    
+
     mainCategoriesIds: input.mainCategoriesIds ?? [],
     subCategoriesIds: input.subCategoriesIds ?? [],
     mainCategoriesNames: input.mainCategoriesNames ?? [],
@@ -110,6 +114,8 @@ export function normalizeProduct(input: any): NormalizedProductType {
     twoStarCount: input.twoStarCount ?? 0,
     threeStarCount: input.threeStarCount ?? 0,
     fourStarCount: input.fourStarCount ?? 0,
-    fiveStarCount: input.fiveStarCount ?? 0
+    fiveStarCount: input.fiveStarCount ?? 0,
+    shortDecription: input?.productDetails ?? "",
+    isOfferStillOn,
   };
 }

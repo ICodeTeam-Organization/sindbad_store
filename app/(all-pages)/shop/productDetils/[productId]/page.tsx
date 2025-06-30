@@ -44,6 +44,7 @@ const fetchProductDetails = async (id: string): Promise<Product | null> => {
   const product = normalizeProduct(productData); // تحول شكل البينات الى الشكل الموحد NormlizedProductType
    
  
+  console.log(product);
   
   
 
