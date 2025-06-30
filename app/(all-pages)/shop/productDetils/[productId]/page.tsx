@@ -6,6 +6,7 @@ import ProductDetails from "./components/product-details";
 import { Product } from "./types";
 import ProductDetailsAccordingmenus from "./components/ProductDetailsAccordingmenus";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
+import TabsComponent from "./components/taps";
 
 type ProductPageProps = {
   params: {
@@ -51,9 +52,9 @@ const fetchProductDetails = async (id: string): Promise<Product | null> => {
     <div className="xl:container mx-auto">
       <ProductDetails product={product} />
       <div className="mdHalf:px-12 px-4 my-10" >
-      <ProductDetailsAccordingmenus product={product} productId={productId} />
+      {/* <ProductDetailsAccordingmenus product={product} productId={productId} /> */}
       </div>
-      {/* <TabsComponent product={product} productId={productId} /> */}
+      <TabsComponent product={product} productId={productId} />
     </div>
   );
 };

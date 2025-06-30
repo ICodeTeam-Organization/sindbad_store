@@ -105,7 +105,8 @@ body {
 
 html,
 body {
-  font-family: var(--font-noto) !important;
+  font-family: var(--font-main) !important;
+    scroll-behavior: smooth;
 }
 
 .tajawal {

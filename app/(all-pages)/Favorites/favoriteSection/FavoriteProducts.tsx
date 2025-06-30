@@ -13,7 +13,7 @@ import React from "react";
 function FavoriteProducts() { 
 
 
-  const {mutateAsync} = useSendDataInBg()
+  const {mutateAsync} = useSendDataInBg();
 
   const { data, isLoading } = useQuery<NormalizedProductType[]>({
     queryKey: ["get-favorite-products-all"],
@@ -38,7 +38,7 @@ function FavoriteProducts() {
     // enabled: status == "authenticated",
   });
 
-  const {productsIds} = useFavorite()
+  const {productsIds} = useFavorite();
  
   return (
     <div

@@ -8,6 +8,7 @@ import {
   BsTwitterX,
 } from "react-icons/bs";
 import { FaChevronLeft, FaPhone } from "react-icons/fa";
+import FooterServicesSection from "./FooterServicesSection";
  
 function Footer() {
   const aboutSindbad = [
@@ -25,10 +26,10 @@ function Footer() {
   ] as const;
 
   const sindbadPrivcy = [
-    { title: "الشروط والأحكام", href: "/about" },
-    { title: "سياسات والخصوصية", href: "/orders" },
-    { title: "سياسات الستبدال والاستراجاع", href: "/shopping-card" },
-    { title: "سياسات اتفاقية المستخدم", href: "/Favorites" },
+    { title: "الشروط والأحكام", href: "/privacy#terms" },
+    { title: "سياسات والخصوصية", href: "/privacy#privacy" },
+    { title: "سياسات الستبدال والاستراجاع", href: "privacy#return-policy" },
+    { title: "سياسات اتفاقية المستخدم", href: "/privacy#user-agreement" },
   ] as const;
 
   const socialIcons = [
@@ -46,7 +47,7 @@ function Footer() {
   ];
 
   return (
-    <div>
+    <div className=" bg-white z-10 relative">
      
 
       {/* about */}
@@ -88,24 +89,9 @@ function Footer() {
                 ))}
               </ul>
             </div>
-            <div className="lg:text-start lg:mx-16">
-              <h3 className="font-bold text-lg text-black mb-3">خدمات</h3>
-              <ul>
-                {servicesLinks.map((ele, ix) => (
-                  <Link
-                    href={ele.href}
-                    key={ix}
-                    className="w-fit flex items-center gap-x-2  lg:justify-start mb-2 text-gray-500 hover:text-orange-400 cursor-pointer "
-                  >
-                    <FaChevronLeft
-                      className="hidden lg:block text-primary-background"
-                      size={12}
-                    />
-                    <span>{ele.title}</span>
-                  </Link>
-                ))}
-              </ul>
-            </div>
+            
+            <FooterServicesSection/>
+
             <div className="lg:text-start">
               <h3 className="font-bold text-lg text-black mb-3">
                 سياسات سندباد

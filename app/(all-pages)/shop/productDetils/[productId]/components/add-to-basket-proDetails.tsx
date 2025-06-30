@@ -4,8 +4,7 @@ import { useRouter } from "next-nprogress-bar";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Loader2, Minus, Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
-import AddToFavorite from "./add-to-favorite"; 
+import React, { useEffect, useState } from "react"; 
 import { useDebounce } from "@/hooks/useDebounce";
 import { BtnAddTobascketProps, CartItem } from "@/types/storeTypes";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
@@ -82,9 +81,9 @@ const AddToBasketBtnForProductDetails = ({ id , productInfo  }: BtnAddTobascketP
   }, [debounceQuantity]);
 
   return (
-    <div className="cursor-pointer  my-1 flex gap-x-2 px-2 mb-2    ">
+    <div className="cursor-pointer  my-1 flex gap-x-2   mb-2    ">
       {inCart ? (
-        <div className="w-[200px]  h-[40px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1">
+        <div className="min-w-[300px] min-h-[50px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1">
           <div
             className="text-[20px] bg-slate-100 px-2 h-[90%] aspect-square flex items-center justify-center rounded-full "
             onClick={() => {
@@ -120,35 +119,21 @@ const AddToBasketBtnForProductDetails = ({ id , productInfo  }: BtnAddTobascketP
           // disabled={mutationAdd.isPending}
           variant={"outline"}
           onClick={() => handleAddToCart()}
-          className="hover:bg-orange-600 min-w-[200px] bg-orange-500 hover:text-white text-white text-xl rounded-md flex justify-center items-center mb-2 md:mb-0"
+          className="hover:bg-primary min-w-[300px] min-h-[50px] bg-primary hover:text-white text-white text-2xl  flex justify-center items-center mb-2 md:mb-0"
         >
           {false ? (
             <Loader2 className="animate-spin" />
           ) : (
             <div className="flex items-center justify-center gap-2">
               <MdOutlineLocalGroceryStore />
-              <p className="text-sm font-bold ">اضف للسلة</p>
+              <p className="text-lg font-bold ">اضف للسلة</p>
             </div>
           )}
         </Button>
       )}
 
-      <AddToFavorite id={id} />
-
-      {/* <Button
-        disabled={mutationFav.isPending}
-        variant={"outline"}
-        onClick={() => handleAddToFav()}
-        className="cursor-pointer hover:bg-[#F55157] hover:text-white transition-all duration-300 max-md:ml-[2px] max-md:w-[30px] max-md:h-[30px] mr-[4px] w-[41px] h-[40px] rounded-[5px] border-[1px] flex justify-center items-center p-1"
-      >
-        {
-          mutationFav.isPending? (
-            <Loader2 className="animate-spin" />
-          ) : (
-            <AiOutlineHeart className="w-[20px] h-[20px]" color="#D5D5D5"/>
-          )
-        }
-      </Button> */}
+ 
+ 
     </div>
   );
 };

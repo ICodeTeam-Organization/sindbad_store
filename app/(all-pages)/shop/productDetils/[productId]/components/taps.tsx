@@ -6,17 +6,7 @@ import { NormalizedProductType } from "@/Data/normalizTypes";
 
 type TabsComponentProps = {
   product: NormalizedProductType;
-  productId: string | number;
-  // tabLabels: {
-  //   details: string;
-  //   features: string;
-  //   reviews: string;
-  // };
-  // tabContent: {
-  //   tap1: React.ReactNode;
-  //   tap2: React.ReactNode;
-  //   tap3: React.ReactNode;
-  // };
+  productId: string | number; 
 };
 
 const TabsComponent: React.FC<TabsComponentProps> = ({
@@ -55,9 +45,19 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
         className="text-gray-700  border-gray-300 mdHalf:p-4 mb-4"
       >
         {<section className="bg-white">
-          <div className="grid max-w-screen-xl px-4 py-8 mx-auto md:gap-5 xl:gap-0 md:py-16 md:grid-cols-12">
-            <div className="md:col-span-7 text-right">
-              <h3 className="max-w-2xl mb-4 text-2xl font-extrabold tracking-tight leading-none">
+          <div className="mdHalf:flex mdHalf:p-10 p-2 gap-x-4 ">
+            <div className="  rounded-md border">
+              <SafeImage
+                src={product.image}
+                alt="صور للمنتج"
+                width={400}
+                height={400}
+                className={`w-full h-full rounded cursor-pointer aspect-square object-contain`}
+                style={{ objectFit: "contain" }}
+              />
+            </div>
+            <div className="max-mdHalf:mt-10">
+              <h3 className="max-w-2xl mb-4 text-xl font-extrabold  ">
                 {product.name}
               </h3>
               <p className="max-w-2xl mb-4 font-light text-gray-500 lg:mb-8">
@@ -76,16 +76,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
                 }
               </p>
             </div>
-            <div className="hidden lg:mt-0 md:col-span-5 md:flex  items-start">
-              <SafeImage
-                src={product.image}
-                alt="صور للمنتج"
-                width={400}
-                height={400}
-                className={`w-full h-full rounded cursor-pointer`}
-                style={{ objectFit: "fill" }}
-              />
-            </div>
+            
           </div>
         </section>
         }

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import PriceSection from "./price-section";
-import ImageGallery from "./image-gallery";
+import ImageGalleryProductDetails from "./image-gallery";
 import AddToBasketBtnForProductDetails from "./add-to-basket-proDetails";
 import { Rating, RoundedStar } from "@smastrom/react-rating";
 import { getRemainingTimeForOffer } from "@/lib/timeFuns";
@@ -14,8 +14,8 @@ type ProductDetailsProps = {
 const ProductDetails = ({ product }: ProductDetailsProps) => {
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-12 mdHalf:px-12 px-4">
-      <div className=" ml-8 mdHalf:w-[400px] w-full">
-        <ImageGallery images={[product.image, ...(product.images ?? [])]} />
+      <div className=" ml-8 mdHalf:w-[500px] w-full">
+        <ImageGalleryProductDetails productId={+product.id} images={[product.image, ...(product.images ?? [])]} />
       </div>
       <div className="flex flex-1 flex-col justify-between">
         {/* <ProductTitle name={product.name} description={product.name} rating={5} /> */}
@@ -82,15 +82,13 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         /> */}
         <div>
           <div className="mb-4 my-6">
-            <h2 className="text-black text-2xl font-bold">{product?.name}</h2>
-
-            <div className="flex  my-4 mt-6 items-center gap-x-4 ">
-              <div className=" border-l-2 pl-4 border-l-gray-200 py-1 flex">
-                <span className="text-gray-500 text-xs mx-1">
+        <div>
+ <div className=" border-l-2 pl-4 border-l-gray-200 py-1 flex mb-4">
+                <span className="text-gray-500 text-base mx-1">
                   {product?.rate?.toFixed(1)}
                 </span>
                 <Rating
-                  style={{ maxWidth: 60 }}
+                  style={{ maxWidth: 100 }}
                   halfFillMode="svg"
                   itemStyles={{
                     itemShapes: RoundedStar,
@@ -101,6 +99,10 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                   value={product?.rate}
                 />
               </div>
+              <h2 className="text-black text-2xl font-semibold">{product?.name}</h2>
+
+        </div>
+            <div className="flex  my-4 mt-6 items-center gap-x-4 "> 
               <PriceSection
                 discountedPrice={product?.price} // product?.price هذا اذا فيه خصم يكون فيه السعر بعد الخصم واذا مافيه خصم يكون فيه السعر الاصلي
                 originalPrice={product.priceBeforeDiscount ?? product?.price}

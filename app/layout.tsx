@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import ClientProviders from "@/components/client-providers";
-import { Almarai, Tajawal } from "next/font/google";
+import { Almarai, Cairo, Tajawal } from "next/font/google";
 import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
@@ -14,17 +14,23 @@ import GetInitialData from "./GetInitialData";
 import SendDataInBG from "@/components/DataHandler/SendDataInBG";
 import Footer from "@/components/footer/Footer";
 
-const Noto_Kufi = Almarai({
-  weight: ["400", "700"],
+// const Noto_Kufi = Almarai({
+//   weight: ["400", "700"],
+//   subsets: ["arabic"],
+//   display: "swap",
+//   variable: "--font-noto",
+// });
+// const tajawal = Tajawal({
+//   weight: ["400", "700"],
+//   subsets: ["arabic"],
+//   display: "swap",
+//   variable: "--font-tajawal",
+// });
+const cairo = Cairo({
+  weight: ["400", "700", "500","600","800","300"],
   subsets: ["arabic"],
   display: "swap",
-  variable: "--font-noto",
-});
-const tajawal = Tajawal({
-  weight: ["400", "700"],
-  subsets: ["arabic"],
-  display: "swap",
-  variable: "--font-tajawal",
+  variable: "--font-main",
 });
 export const metadata: Metadata = {
   title: "متجر سندباد",
@@ -61,7 +67,7 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${Noto_Kufi.variable} ${tajawal.variable}`} dir="rtl">
+      <body className={`${cairo.variable} `} dir="rtl">
         <ProgressBarProvider>
           <NextAuthProvider>
             <main>
