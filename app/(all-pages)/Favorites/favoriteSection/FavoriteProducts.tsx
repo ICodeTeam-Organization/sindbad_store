@@ -2,18 +2,27 @@
 import ProductCard from "@/app/(home)/components/product-card";
 import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
+import { db } from "@/Data/database/db";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import { NormalizedProductType } from "@/Data/normalizTypes"; 
+import useSendDataInBg from "@/hooks/useSendDataInBg";
 import { getApi } from "@/lib/http";
 import { useQuery } from "@tanstack/react-query"; 
 import React from "react";
 
 function FavoriteProducts() { 
 
+
+  const {mutateAsync} = useSendDataInBg()
+
   const { data, isLoading } = useQuery<NormalizedProductType[]>({
     queryKey: ["get-favorite-products-all"],
     queryFn: async () =>
      {
+      const data = await db.bgData.where('reqType').equals(1).toArray();
+      if (data.length > 0) {
+        await mutateAsync(data)
+      }
       const dt = await  getApi<{data:any[]}>(
           "Favorites/GetAllCustomerFavoritesWithPagination",
           {
@@ -22,9 +31,10 @@ function FavoriteProducts() {
           }, 
       ); 
        
-      return ( dt.data.map(normalizeProduct))
+      return (dt.data.map(normalizeProduct))
       
      },
+     staleTime:1000*60*60*24
     // enabled: status == "authenticated",
   });
 
