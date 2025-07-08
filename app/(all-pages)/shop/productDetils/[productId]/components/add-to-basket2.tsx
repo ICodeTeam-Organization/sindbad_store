@@ -27,7 +27,7 @@ const AddToBasket = ({ productId }: AddToBasketProps) => {
           headers: {
             "Accept-Language": "ar",
             "Content-type": "multipart/form-data",
-            Authorization: `Bearer ${session?.user.data.token}`,
+            Authorization: `Bearer ${session?.user?.data?.token}`,
           },
           body:{
             quantity: 1,

@@ -137,7 +137,7 @@ function Footer() {
           <div className="text-center ">
             <h2 className="font-bold"> تواصل معنا </h2>
             <p className="text-xs mt-1 mb-3"> خط دولي اتصال - واتساب </p>
-            <div className="bg-black rounded-full text-white flex items-center justify-around">
+            <div className="bg-secondary rounded-full text-white flex items-center justify-around">
               <div className="bg-primary w-[40px] h-[40px] mr-[-1px] p-1 border-4 border-[#fff] items-center justify-center flex rounded-full">
                 <Image
                   alt="paper_plane"
@@ -186,7 +186,7 @@ function Footer() {
 
 
         </div>
-         <div className="bg-black mb-10 " >
+         <div className="bg-secondary mb-10 " >
        <div className="container mx-auto" >
        <div className="p-4 mt-16 flex justify-between items-center mdHalf:flex-row flex-col-reverse gap-y-5">
         <p className="text-white text-sm" >الحقوق محفوظة لمنصة سندباد © 2024</p>

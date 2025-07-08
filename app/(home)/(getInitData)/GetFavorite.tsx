@@ -1,10 +1,8 @@
 "use client";
 import { useFavorite } from "@/app/stores_mangament/favoritesStore";
+import { db } from "@/Data/database/db"; 
 import { getApi } from "@/lib/http";
-import {
-  FavoriteEcommerces,
-  FavoriteStores,
-} from "@/types/storeTypes";
+import { FavoriteEcommerces, FavoriteStores } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -19,35 +17,37 @@ export default function GetFavorite() {
   const { data } = useQuery({
     queryKey: ["favorites"],
     queryFn: async () => {
-      
       const [productsResponse, storesResponse, ecommrcesResponse] =
         await Promise.allSettled([
-          getApi<{data:{ productId: number }[]}>(
-              `Favorites/GetFavoriteProductIds`,{
-                pageNumber:1,
-                pageSize:10000,
-              },
-               {
-                headers: {
-                  Authorization: `Bearer ${authData?.user.data.token}`,
-                },
-              }
-          ),
-          getApi<{data:{items:FavoriteStores[]}}>(
-            `FavoriteShop/GetFavoriteStores`,{},
+          getApi<{ data: { productId: number }[] }>(
+            `Favorites/GetFavoriteProductIds`,
             {
-             headers: {
-               Authorization: `Bearer ${authData?.user.data.token}`,
-             },
-           }
+              pageNumber: 1,
+              pageSize: 10000,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${authData?.user?.data?.token}`,
+              },
+            }
           ),
-          getApi<{data:{items:FavoriteEcommerces[]}}>(
-              `FavoriteShop/GetFavoriteEcommerceStores`,{},
-              {
-               headers: {
-                 Authorization: `Bearer ${authData?.user.data.token}`,
-               },
-             }
+          getApi<{ data: { items: FavoriteStores[] } }>(
+            `FavoriteShop/GetFavoriteStores`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${authData?.user?.data?.token}`,
+              },
+            }
+          ),
+          getApi<{ data: { items: FavoriteEcommerces[] } }>(
+            `FavoriteShop/GetFavoriteEcommerceStores`,
+            {},
+            {
+              headers: {
+                Authorization: `Bearer ${authData?.user?.data?.token}`,
+              },
+            }
           ),
         ]);
 
@@ -60,34 +60,83 @@ export default function GetFavorite() {
         stores:
           storesResponse.status == "fulfilled" && storesResponse.value
             ? storesResponse.value?.data
-            : {items:[]},
+            : { items: [] },
         ecommrces:
           ecommrcesResponse.status == "fulfilled" && ecommrcesResponse.value
             ? ecommrcesResponse.value?.data
-            : {items:[]},
+            : { items: [] },
       };
       return theData;
     },
     enabled: trigged,
-    retry: 2 ,
+    retry: 2,
   });
 
   useEffect(() => {
-    if (status === "authenticated" && !!authData?.user.data.token && !trigged) {
+    if (status === "authenticated" && !!authData?.user?.data?.token && !trigged) {
       settrigged(true);
     }
   }, [authData]);
 
   useEffect(() => {
-    if (data && trigged) {
-      const productIds = data?.productsIds?.map(
+    if (data && trigged) { 
+      (async () => {
+        const favCache = await db.bgData
+          .where("reqType")
+          .equals([6, 5, 1])
+          .toArray();
+
+        const localProductIds = favCache
+          .filter((item) => item.reqType === 1)
+          .map((item) => +item.Id);
+
+        const localStoreIds = favCache
+          .filter((item) => item.reqType === 5)
+          .map((item) => item.Id as string);
+
+        const localEcomIds = favCache
+          .filter((item) => item.reqType === 6)
+          .map((item) => +item.Id);
+
+        // البيانات الجاية من الباك
+        const backendProductIds = data?.productsIds?.map(
         (item: { productId: number }) => item.productId
-      );
-      setFavoriteProducts(productIds || []);
-      setFavoriteEcommerceIds(
-        data.ecommrces?.items?.map((e) => e?.ecommerceStoreId) || []
-      );
-      setFavoriteStoreIds(data.stores?.items?.map((e) => e.storeId)|| []);
+      ) || [];
+        const backendStoreIds = data.stores?.items?.map((e) => e.storeId) || [];
+        const backendEcomIds =
+          data.ecommrces?.items?.map((e) => e.ecommerceStoreId) || [];
+
+        // دمج البيانات: إذا فيه ID في المحلي وما هو موجود في الباك، نضيفه
+        const allProductIds = Array.from(
+          new Set([
+            ...backendProductIds,
+            ...localProductIds.filter((id) => !backendProductIds.includes(id)),
+          ])
+        );
+        const allStoreIds = Array.from(
+          new Set([
+            ...backendStoreIds,
+            ...localStoreIds.filter((id) => !backendStoreIds.includes(id)),
+          ])
+        );
+        const allEcomIds = Array.from(
+          new Set([
+            ...backendEcomIds,
+            ...localEcomIds.filter((id) => !backendEcomIds.includes(id)),
+          ])
+        );
+
+        // حفظهم في الستور
+        setFavoriteProducts(allProductIds);
+        setFavoriteStoreIds(allStoreIds);
+        setFavoriteEcommerceIds(allEcomIds);
+
+        // setFavoriteProducts(productIds || []);
+        // setFavoriteEcommerceIds(
+        //   data.ecommrces?.items?.map((e) => e?.ecommerceStoreId) || []
+        // );
+        // setFavoriteStoreIds(data.stores?.items?.map((e) => e.storeId) || []);
+      })();
     }
   }, [data]);
 

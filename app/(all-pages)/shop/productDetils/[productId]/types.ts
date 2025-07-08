@@ -81,7 +81,7 @@ export interface ProductImage {
 }
 export interface AttributeWithValues {
   attributeName: string;
-  values: string[];
+  attributeValue: string[];
 }
 export interface Product {
   id: number;

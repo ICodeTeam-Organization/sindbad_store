@@ -36,7 +36,7 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
           headers: {
             "Accept-Language": "ar",
             "Content-type": "application/json",
-            Authorization: `Bearer ${session?.user.data.token}`,
+            Authorization: `Bearer ${session?.user?.data?.token}`,
           },
           body: {
             storeId: id,
@@ -66,7 +66,7 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
       mutationFn: async () => {
         return await deleteApi(`FavoriteShop/RemoveStore/` + id, {
           headers: {
-            Authorization: `Bearer ${session?.user.data.token}`,
+            Authorization: `Bearer ${session?.user?.data?.token}`,
           },
         });
       },

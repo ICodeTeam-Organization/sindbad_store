@@ -3,7 +3,7 @@ export type ProductImage = {
 };
 export type AttributeWithValues = {
   attributeName: string;
-  values: string[];
+  attributeValue: string;
 };
 export type Product = {
   id: number;

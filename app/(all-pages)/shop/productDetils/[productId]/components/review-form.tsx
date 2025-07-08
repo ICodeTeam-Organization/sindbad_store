@@ -32,7 +32,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , has
           headers: {
             "Accept-Language": "ar",
             "Content-Type": "application/json",
-            Authorization: `Bearer ${session.user.data.token}`,
+            Authorization: `Bearer ${session.user?.data?.token}`,
           },
           body:{
             productId,

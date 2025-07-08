@@ -22,20 +22,20 @@ export const authOption: NextAuthOptions = {
                 phoneNumber: phone,
                 password: password,
               }
-            );
-
+            ); 
+            
             const user: User = res.data;
-
-            if (res.status === 200 && user) {
+            
+            if (res.data?.success && user) {
               return user;
             } else {
               return null;
             }
           } catch (error: any) {
-            console.log(error.response?.data?.message || "فشلت عملية الدخول حاول مجددا");
+            console.log(error|| "فشلت عملية الدخول حاول مجددا");
             
             throw new Error(
-              error.response?.data?.message || "فشلت عملية الدخول حاول مجددا"
+              error.response?.data?.Message || "فشلت عملية الدخول حاول مجددا"
             );
           }
         } else {

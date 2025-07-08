@@ -70,7 +70,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
                   product.attributesWithValues?.map((attribute, index) => (
                     <div key={index} className="flex items-center mb-2">
                       <span className="font-medium ml-1">{attribute.attributeName}: </span>
-                      <span>{attribute.values.join(", ")}</span>
+                      <span>{attribute.attributeValue}</span>
                     </div>
                   ))
                 }

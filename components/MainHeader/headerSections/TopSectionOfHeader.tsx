@@ -20,7 +20,7 @@ function TopSectionOfHeader({isHomePage=false,isAuth=false}:{isHomePage?:boolean
   return (
     <div
               className={cn(
-                "flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center ms-5   ",
+                "flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center ms-5    ",
                 isHomePage && "mdHalf:mr-[170px]"
               )}
             >

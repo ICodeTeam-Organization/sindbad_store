@@ -1,5 +1,5 @@
 "use client";
-import ProductCard from "@/app/(home)/components/product-card";
+import ProductCard from "@/components/product_card/ProductCard";
 import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { db } from "@/Data/database/db";
@@ -29,12 +29,12 @@ function FavoriteProducts() {
             pageNumber:1,
             PageSize:100
           }, 
-      ); 
-       
+      );  
       return (dt.data.map(normalizeProduct))
       
      },
-     staleTime:1000*60*60*24
+     staleTime:1000*60*60*24,
+     gcTime:0,
     // enabled: status == "authenticated",
   });
 

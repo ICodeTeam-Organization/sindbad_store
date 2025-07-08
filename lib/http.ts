@@ -25,11 +25,13 @@ async function http<T>(
   //   endpoint += ?${decodeURIComponent(stringifyParams(params))};
   // }
 
-    // استخدم params لبناء query string
-    if (params) {
-      const queryString = new URLSearchParams(params as Record<string, string>).toString();
-      endpoint += `?${decodeURIComponent(queryString)}`;
-    }
+  // استخدم params لبناء query string
+  if (params) {
+    const queryString = new URLSearchParams(
+      params as Record<string, string>
+    ).toString();
+    endpoint += `?${decodeURIComponent(queryString)}`;
+  }
 
   // const locale = cookies.get("NEXT_LOCALE") || "ar";
   let session;
@@ -49,21 +51,25 @@ async function http<T>(
       "Accept-Language": "ar",
       ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...config?.headers,
-      ...(session && { Authorization: `Bearer ${session?.user.data.token}` }), // ----- here error in jwt check
+      ...(session && { Authorization: `Bearer ${session?.user?.data?.token}` }), // ----- here error in jwt check
     },
   });
 
   let content: unknown; // --------- change any to unkonwn to avoid an error
   if (!response.ok) {
-    
     const errorResponse = await response;
-    let failure:any = null;
+    let failure: any = null;
     try {
-        failure = await response?.json();
+      failure = await response?.json();
     } catch (error) {
-        failure = {}; // Default to an empty object if JSON parsing fails
+      failure = {}; // Default to an empty object if JSON parsing fails
     }
-    content = errorResponse?.statusText || (!failure?.success ? failure?.message : null) || "حدث خطأ ما!";
+    content =
+      errorResponse?.statusText ||
+      (!failure?.success || !failure?.Success
+        ? failure?.message || failure?.Message
+        : null) ||
+      "حدث خطأ ما!";
     if (errorResponse.status === 404) {
       return notFound();
     }

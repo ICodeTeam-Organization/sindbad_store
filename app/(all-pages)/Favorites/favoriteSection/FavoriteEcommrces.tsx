@@ -15,7 +15,7 @@ function FavoriteEcommrces() {
         `FavoriteShop/GetFavoriteEcommerceStores`,
         {
           headers: {
-            Authorization: `Bearer ${authData?.user.data.token}`,
+            Authorization: `Bearer ${authData?.user?.data?.token}`,
           },
         }
       ),

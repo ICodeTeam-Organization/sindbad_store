@@ -42,7 +42,7 @@ function SearchComponent({ isHomePage = false }) {
   };
 
   return (
-    <div className="flex px-1 h-[46px] xl:w-full border-[0px] rounded-[9px] shadow justify-between gap-x-1 bg-white w-full">
+    <div className="flex px-1 h-[46px] xl:w-full  mdHalf::rounded-full overflow-hidden border justify-between gap-x-1 bg-white w-full z-0">
       <input
         className="pr-2 w-full h-full outline-none rounded-full text-[13px]"
         type="text"

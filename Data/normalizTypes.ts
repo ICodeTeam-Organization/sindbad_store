@@ -3,7 +3,7 @@ export type NormalizedProductType = {
   name: string;
   description?: string;
   shortDecription?: string;
-
+  
   price: number; // السعر الأساسي
   priceAfterDiscount: number; // السعر بعد العرض أو الخصم
   priceBeforeDiscount: number; // السعر قبل العرض أو الخصم
@@ -22,6 +22,8 @@ export type NormalizedProductType = {
   threeStarCount?: number;
   fourStarCount?: number;
   fiveStarCount?: number;
+  storeId?: string,
+  storeName?: string,
 
   image: string; // صورة رئيسية
   images?: string[];
@@ -53,7 +55,7 @@ export type NormalizedProductType = {
 
   attributesWithValues?: {
     attributeName: string;
-    values: string[];
+    attributeValue: string;
   }[];
 };
 

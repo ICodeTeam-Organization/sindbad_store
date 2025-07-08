@@ -20,7 +20,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import useResendCode from "@/hooks/useResendCode";
 import { postApi } from "@/lib/http";
-import { cn } from "@/lib/utils"; 
+import { cn } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
 import { remmainingTime } from "@/lib/timeFuns";
 const MobileValidation = () => {
@@ -33,7 +33,11 @@ const MobileValidation = () => {
 
   const { toast } = useToast();
   const router = useRouter();
-  const { handleReset, timeLeft , handleReSendCode:handleReSendCodeChange } = useResendCode();
+  const {
+    handleReset,
+    timeLeft,
+    handleReSendCode: handleReSendCodeChange,
+  } = useResendCode();
 
   const { mutate, isPending } = useMutation({
     mutationFn: async ({
@@ -45,24 +49,32 @@ const MobileValidation = () => {
       phoneNumber: string;
       code: string;
       pass: string;
-      isForRigester:boolean;
+      isForRigester: boolean;
     }) => {
       const data = await postApi<any>(
         "Auth/Register/VerificationCode?code=" + code + "&number=" + phoneNumber
       );
+ 
       if (data?.success && isForRigester) {
-        await loginUser({ phone: phoneNumber, password: pass });
+        await loginUser({
+          phone: phoneNumber,
+          password: pass, 
+        }); 
       }
       return isForRigester;
     },
     // mutationFn: registerUser,
-    onSuccess: (isRigester:boolean) => {
-      handleReset(); 
+    onSuccess: (isRigester: boolean) => {
+      handleReset();
       if (isRigester) {
         toast({
           variant: "default",
           description: "تم تسجيل الدخول بنجاح",
         });
+        // toast({
+        //   variant: "default",
+        //   description: "تم تسجيل الدخول بنجاح",
+        // });
         sessionStorage.removeItem("signupdata");
         window.location.replace("/");
       } else {
@@ -73,10 +85,9 @@ const MobileValidation = () => {
         sessionStorage.removeItem("forgotdata");
         router.replace("/auth");
       }
-      
     },
     onError: (err) => {
-      console.log(err.message);
+      console.log(err);
       toast({
         variant: "destructive",
         description: err.message || "حدث خطأ ما",
@@ -105,18 +116,18 @@ const MobileValidation = () => {
         } else if ("newPass" in data && !isForRigester) {
           await postApi<any>("Auth/ForgotPassword", {
             body: {
-             phoneNumber: data.phone,
-             newPassword: data.newPass,
+              phoneNumber: data.phone,
+              newPassword: data.newPass,
             },
           });
-        } 
-      }, 
+        }
+      },
       onSuccess: () => {
         toast({
           variant: "default",
           description: "تم إعادة إرسال كود التحقق بنجاح",
         });
-        handleReSendCodeChange() 
+        handleReSendCodeChange();
       },
       onError: (err) => {
         console.log(err.message);
@@ -127,59 +138,65 @@ const MobileValidation = () => {
       },
     });
 
-    const handleReSendCode = () => {
-      const userSignupData = JSON.parse(
-        sessionStorage.getItem("signupdata") || "null"
-      );
-      const forgotPassData = JSON.parse(
-        sessionStorage.getItem("forgotdata") || "null"
-      );
-    
-      if (forgotPassData && forgotPassData.phone && forgotPassData.newPass) {
-        mutateForResendCode({
-          data: forgotPassData as { phone: string; newPass: string },
-          isForRigester: false,
-        });
-      } else if (userSignupData && Object.keys(userSignupData).length > 0) {
-        mutateForResendCode({
-          data: userSignupData as registerFormField,
-          isForRigester: true,
-        });
-      } else {
-        toast({
-          variant: "destructive",
-          description: "حدث خطأ يرجى إعادة التسجيل أو إدخال البيانات من جديد.",
-        });
-      }
-    };
-    
+  const handleReSendCode = () => {
+    const userSignupData = JSON.parse(
+      sessionStorage.getItem("signupdata") || "null"
+    );
+    const forgotPassData = JSON.parse(
+      sessionStorage.getItem("forgotdata") || "null"
+    );
 
-    function onSubmit(values: z.infer<typeof VertificationCodeSchema>) {
-      const userSignupData = JSON.parse(sessionStorage.getItem("signupdata") || "null");
-      const forgotPassData = JSON.parse(sessionStorage.getItem("forgotdata") || "null");
-    
-      if (forgotPassData && forgotPassData.phone && forgotPassData.newPass) {
-        mutate({
-          phoneNumber: forgotPassData.phone,
-          code: values.activation,
-          pass: forgotPassData.newPass,
-          isForRigester: false,
-        });
-      } else if (userSignupData && userSignupData.phone && userSignupData.password) {
-        mutate({
-          phoneNumber: userSignupData.phone,
-          code: values.activation,
-          pass: userSignupData.password,
-          isForRigester: true,
-        });
-      } else {
-        toast({
-          variant: "destructive",
-          description: "حدث خطأ، يرجى إعادة التسجيل أو إدخال البيانات من جديد.",
-        });
-      }
+    if (forgotPassData && forgotPassData.phone && forgotPassData.newPass) {
+      mutateForResendCode({
+        data: forgotPassData as { phone: string; newPass: string },
+        isForRigester: false,
+      });
+    } else if (userSignupData && Object.keys(userSignupData).length > 0) {
+      mutateForResendCode({
+        data: userSignupData as registerFormField,
+        isForRigester: true,
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        description: "حدث خطأ يرجى إعادة التسجيل أو إدخال البيانات من جديد.",
+      });
     }
-    
+  };
+
+  function onSubmit(values: z.infer<typeof VertificationCodeSchema>) {
+    const userSignupData = JSON.parse(
+      sessionStorage.getItem("signupdata") || "null"
+    );
+    const forgotPassData = JSON.parse(
+      sessionStorage.getItem("forgotdata") || "null"
+    );
+
+    if (forgotPassData && forgotPassData.phone && forgotPassData.newPass) {
+      mutate({
+        phoneNumber: forgotPassData.phone,
+        code: values.activation,
+        pass: forgotPassData.newPass,
+        isForRigester: false,
+      });
+    } else if (
+      userSignupData &&
+      userSignupData.phone &&
+      userSignupData.password
+    ) {
+      mutate({
+        phoneNumber: userSignupData.phone,
+        code: values.activation,
+        pass: userSignupData.password,
+        isForRigester: true,
+      });
+    } else {
+      toast({
+        variant: "destructive",
+        description: "حدث خطأ، يرجى إعادة التسجيل أو إدخال البيانات من جديد.",
+      });
+    }
+  }
 
   return (
     <Form {...form}>

@@ -27,7 +27,7 @@ const AddToFavorite = ({ id }: Props) => {
     //                 headers: {
     //                     "Accept-Language": "ar",
     //                     "Content-type": "multipart/form-data",
-    //                     Authorization: `Bearer ${session?.user.data.token}`,
+    //                     Authorization: `Bearer ${session?.user?.data?.token}`,
     //                 },
     //             }
     //         );
@@ -55,7 +55,7 @@ const AddToFavorite = ({ id }: Props) => {
     //                 headers: {
     //                     "Accept-Language": "ar",
     //                     "Content-type": "multipart/form-data",
-    //                     Authorization: `Bearer ${session?.user.data.token}`,
+    //                     Authorization: `Bearer ${session?.user?.data?.token}`,
     //                 },
     //             }
     //         );

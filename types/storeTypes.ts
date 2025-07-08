@@ -19,6 +19,7 @@ export interface Store {
   mainImageUrl: string;
   imagesUrl:string[];
 }
+ 
 
 export interface EcommerceStoreImage {
   id: number;

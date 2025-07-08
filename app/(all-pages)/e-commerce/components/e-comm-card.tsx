@@ -45,7 +45,7 @@ const E_commerceCard = ({
           headers: {
             "Accept-Language": "ar",
             "Content-type": "application/json",
-            Authorization: `Bearer ${session?.user.data.token}`,
+            Authorization: `Bearer ${session?.user?.data?.token}`,
           },
           body:{
             ecommerceStoreId: id,
@@ -76,7 +76,7 @@ const E_commerceCard = ({
             id,
           {
             headers: {
-              Authorization: `Bearer ${session?.user.data.token}`,
+              Authorization: `Bearer ${session?.user?.data?.token}`,
             },
           }
         );

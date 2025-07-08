@@ -30,13 +30,11 @@ export const useFavorite = create<FavoriteState>((set) => ({
   pageSize: 50,
 
   setFavoriteProducts: (ids) =>
-    set((state) => ({ ...state, productsIds: [...ids] })),
- 
+    set((state) => ({ ...state, productsIds: [...ids] })), 
   addProductToFavorite: (id) => {
     savebackgroundDataInCache({ reqType: 1, reqValue: 1, Id: id, reviewText: null, primaryValue:0})
     set((state) => ({ ...state, productsIds: [...state.productsIds, id] }));
-  },
- 
+  }, 
   delProductFromFavorite: (id) => {
     savebackgroundDataInCache({ reqType: 1, reqValue: 0, Id: id, reviewText: null,primaryValue:1 })
     set((state) => ({
@@ -45,11 +43,14 @@ export const useFavorite = create<FavoriteState>((set) => ({
     }));
   },
 
-  setFavoriteStoreIds: (ids) =>
-    set((state) => ({ ...state, favoriteStoreIds: [...ids] })),
+  setFavoriteStoreIds: (ids) =>{
+    
+    set((state) => ({ ...state, favoriteStoreIds: [...ids] }))
+  },
 
   // ✅ إضافة تخزين البيانات عند الإضافة
   addStoreToFavorite: (id) => {
+    savebackgroundDataInCache({ reqType: 5, reqValue: 1, Id: 0, reviewText: id, primaryValue:0})
     set((state) => ({
       ...state,
       favoriteStoreIds: [...state.favoriteStoreIds, id],
@@ -58,6 +59,7 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الحذف
   delStoreToFavorite: (id) => {
+    savebackgroundDataInCache({ reqType: 5, reqValue: 0, Id: 0, reviewText: id, primaryValue:1}) 
     set((state) => ({
       ...state,
       favoriteStoreIds: state.favoriteStoreIds.filter((item) => item !== id),
@@ -72,6 +74,7 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الإضافة
   addEcommerceToFavorite: (id) => {
+    savebackgroundDataInCache({ reqType: 6, reqValue: 1, Id: id, reviewText: null, primaryValue:0})
     set((state) => ({
       ...state,
       favoriteEcommerceIds: [...state.favoriteEcommerceIds, id],
@@ -80,6 +83,7 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الحذف
   delEcommerceFromFavorite: (id) => {
+    savebackgroundDataInCache({ reqType: 6, reqValue: 0, Id: id, reviewText: null, primaryValue:0}) 
     set((state) => ({
       ...state,
       favoriteEcommerceIds: state.favoriteEcommerceIds.filter(

@@ -1,6 +1,6 @@
 "use client";
 import { BiMenu } from "react-icons/bi";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
@@ -16,58 +16,58 @@ const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boo
   // const session = useSession();
   // const isAuth = session.status === "authenticated";
 
-  let lastScrollTop = 0; 
-  const handleScroll = () => {
-    const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-    const divElement = document.getElementById("hideSearchComponentInMobileWhenScoll");
+  // let lastScrollTop = 0; 
+  // const handleScroll = () => {
+  //   const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+  //   const divElement = document.getElementById("hideSearchComponentInMobileWhenScoll");
     
-    if (divElement) {
-      if (currentScroll > lastScrollTop) {
-        // Scrolling down, hide the div by translating it upwards
-        divElement.style.zIndex = "0";
-        divElement.style.opacity = "0";
-        divElement.style.visibility = "hidden";
-        divElement.style.transform = 'translateY(-100%)';
-        divElement.style.position = 'absolute'; // Ensure it doesn't take up space
-      } else {
-        // Scrolling up, show the div by resetting the transform
-        divElement.style.opacity = "1";
-        divElement.style.visibility = "visible";
-        divElement.style.transform = 'translateY(0)';
-        divElement.style.position = 'static'; // Ensure it's fixed on the screen again
-      }
+  //   if (divElement) {
+  //     if (currentScroll > lastScrollTop) {
+  //       // Scrolling down, hide the div by translating it upwards
+  //       divElement.style.zIndex = "0";
+  //       divElement.style.opacity = "0";
+  //       divElement.style.visibility = "hidden";
+  //       divElement.style.transform = 'translateY(-100%)';
+  //       divElement.style.position = 'absolute'; // Ensure it doesn't take up space
+  //     } else {
+  //       // Scrolling up, show the div by resetting the transform
+  //       divElement.style.opacity = "1";
+  //       divElement.style.visibility = "visible";
+  //       divElement.style.transform = 'translateY(0)';
+  //       divElement.style.position = 'static'; // Ensure it's fixed on the screen again
+  //     }
   
-      // Update last scroll position
-      lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Prevent negative values
-    }
-  };
+  //     // Update last scroll position
+  //     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Prevent negative values
+  //   }
+  // };
   
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleScroll);
+  //   };
+  // }, []);
 
 
   return (
     <div className="duration-300  ">
       <div
         className={cn(
-          "  bg-header-gradient z-50 mdHalf:shadow-sm shadow-md border-b-0 mdHalf:border-b-0  border-b-white flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600"
+          "  bg-white z-50 mdHalf:shadow-sm shadow-md border-b-0 mdHalf:border-b-0  border-b-white flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600"
         )}
       >
         {/* logo section*/}
         <div>
           {/* هذي الوقو الي بتظهر في الصفحة الرئيسية في الشاشات الكبيرة */}
           {isHomePage && (
-            <div className="p-2 px-0  cursor-pointer lg:m-4 mdHalf:my-4 mdHalf:mx-1  hidden mdHalf:block absolute z-[99999999] ">
+            <div className="p-2 px-0  cursor-pointer  mdHalf:mx-5  hidden mdHalf:block absolute z-[99999999]  -mt-[6px] ">
               <Link href="/">
                 <Image
                   className="block relative "
                   src={"/images/sedebadLogo.svg"}
                   width={130}
-                  height={100}
+                  height={80}
                   alt=""
                 />
               </Link>
@@ -135,7 +135,7 @@ const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boo
       <div
         id='hideSearchComponentInMobileWhenScoll'
         className={cn(
-          "md:hidden block z-10 mdHalf:shadow-sm shadow-md bg-header-gradient w-full relative p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  "
+          "md:hidden block z-10 mdHalf:shadow-sm shadow-md  w-full relative mdHalf:p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  "
         )}
       >
         <SearchComponent isHomePage={isHomePage} />

@@ -16,7 +16,7 @@ const ProductFeaturesTable  = ({
             className={index % 2 === 0 ? "bg-gray-100" : ""}
           >
             <TableCell>{feature.attributeName}</TableCell>
-            <TableCell>{feature.values[0]}</TableCell>
+            <TableCell>{feature.attributeValue}</TableCell>
           </TableRow>
         ))}
       </TableBody>

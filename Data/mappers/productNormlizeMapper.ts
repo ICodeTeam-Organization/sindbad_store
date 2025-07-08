@@ -44,7 +44,7 @@ export function normalizeProduct(input: any): NormalizedProductType {
         input.amountYouGet &&
         `اشتري ${input.amountYouBuy} واحصل على ${input.amountYouGet}`) ??
       undefined
-    : "";
+    : hasDiscount ? "خصم " + percentageOfDiscount + "%" : "";
 
   const isOfferStillOn =
     getRemainingTimeForOffer(input?.offerEndDate ?? "") != "";
@@ -117,5 +117,7 @@ export function normalizeProduct(input: any): NormalizedProductType {
     fiveStarCount: input.fiveStarCount ?? 0,
     shortDecription: input?.productDetails ?? "",
     isOfferStillOn,
+    storeId:input?.storeId,
+    storeName:input?.storeName
   };
 }

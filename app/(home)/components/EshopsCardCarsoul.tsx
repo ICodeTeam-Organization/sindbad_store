@@ -41,7 +41,7 @@ const EshopsCardCarsoul: React.FC<Shop> = ({
         headers: {
           "Accept-Language": "ar",
           "Content-type": "application/json",
-          Authorization: `Bearer ${session?.user.data.token}`,
+          Authorization: `Bearer ${session?.user?.data?.token}`,
         },
       });
     },
@@ -68,7 +68,7 @@ const EshopsCardCarsoul: React.FC<Shop> = ({
             ecommrcesId,
           {
             headers: {
-              Authorization: `Bearer ${session?.user.data.token}`,
+              Authorization: `Bearer ${session?.user?.data?.token}`,
             },
           }
         );
@@ -102,12 +102,12 @@ const EshopsCardCarsoul: React.FC<Shop> = ({
 
   return (
     <>
-      <div className="flex justify-center items-center w-[35%] h-full relative me-3">
+      <div className="flex justify-center items-center w-[35%] h-full relative  ">
         {logo === null ? (
           <h1>لاتوجد صورة للمتجر</h1>
         ) : (
           <Image
-            src={logo?.startsWith("http") ? logo : "/" + logo}
+            src={"https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80"}
             alt={"shop"}
             layout="fill"
             className="object-contain"

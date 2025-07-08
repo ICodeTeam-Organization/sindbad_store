@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ProductCard from "@/app/(home)/components/product-card";
+import ProductCard from "@/components/product_card/ProductCard";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { postApi } from "@/lib/http";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";

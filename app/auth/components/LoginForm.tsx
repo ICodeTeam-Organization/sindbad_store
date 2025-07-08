@@ -15,14 +15,19 @@ import { useMutation } from "@tanstack/react-query";
 import { loginUser } from "../helpers";
 
 const LoginForm: React.FC = () => {
+  
   const [error, setError] = useState<string | null>(null);
+
   const { mutate, isPending } = useMutation({
     mutationFn: loginUser,
     onSuccess: () => {
       // router.replace("/")
       window.location.replace('/')
     },
-    onError: (err) => setError(err.message),
+    onError: (err) => {
+      console.log(err)
+      setError(err.message); 
+    },
   });
 
   // validate form fields
@@ -35,8 +40,8 @@ const LoginForm: React.FC = () => {
   });
 
   const onSubmit = async (formData: registerFormField) => {  // تعديل هنا
-    setError(null);
-    mutate(formData);
+    setError(null); 
+    mutate({password:formData.password,phone:formData.phone});
   };
 
   return (

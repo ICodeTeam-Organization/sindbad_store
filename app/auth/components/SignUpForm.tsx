@@ -16,6 +16,7 @@ import { toast } from "@/hooks/use-toast";
 import useResendCode from "@/hooks/useResendCode";
 import { registerUser } from "../helpers";
 import { remmainingTime } from "@/lib/timeFuns";
+import Link from "next/link";
 
 const SignUpForm: React.FC = () => {
 
@@ -145,7 +146,8 @@ const SignUpForm: React.FC = () => {
             <span className="text-sm text-red-500">{errors.confirmPassword.message}</span>
           )}
         </div>
-        <div className="space-y-2 w-full flex items-center justify-center">
+       <div>
+         <div className="space-y-2 w-full flex items-center justify-center text-sm  ">
           هل توافق على شروط وأحكام وسياسة الخصوصية
           <input
             {...register("agreeTerms")}
@@ -154,6 +156,10 @@ const SignUpForm: React.FC = () => {
             name="agreeTerms"
           />
         </div>
+        <Link href="/privacy" className="text-sm  text-blue-600 underline  ">
+           سياسة الخصوصية 
+        </Link>
+       </div>
         {errors.agreeTerms && (
           <span className="block text-sm text-red-500">
             {errors.agreeTerms.message}

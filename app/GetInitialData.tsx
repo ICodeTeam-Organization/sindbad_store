@@ -10,10 +10,7 @@ import GetUserData from "./(home)/(getInitData)/GetUserData";
 
 async function GetInitialData() {
 
-  const date = new Date();
-  console.log("THIS IS DATE FROM SERVER : ",date);
-  
-
+  const date = new Date(); 
   let session = null;
   try {
     session = await getServerSession(authOption);

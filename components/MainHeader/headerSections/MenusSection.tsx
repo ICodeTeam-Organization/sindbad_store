@@ -35,7 +35,7 @@ function MenusSection({onClose,isHomePage,isAuth}:PropsType) {
         event.stopPropagation();
       }}
       className={cn(
-        "flex flex-col mdHalf:flex-row mdHalf:relative hover:z-[9999999] bg-white mdHalf:shadow-md  xl:text-sm text-xs  xl:px-4  mdHalf:justify-between justify-start  mdHalf:h-auto mdHalf:w-auto h-full w-full transition-all duration-300 xl:pr-[170px]  mdHalf:pr-[170px] "
+        "flex flex-col mdHalf:flex-row mdHalf:relative hover:z-[9999999] mdHalf:bg-secondary mdHalf:text-white mdHalf:shadow-md  xl:text-sm text-xs  xl:px-4  mdHalf:justify-between justify-start  mdHalf:h-auto mdHalf:w-auto h-full w-full transition-all duration-300 xl:pr-[170px]  mdHalf:pr-[170px] "
       )}
     >
       {/* this just show in mobile */}

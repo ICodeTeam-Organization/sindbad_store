@@ -29,14 +29,22 @@ const config: Config = {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				background: '#F1A721',
-  				DEFAULT: '#F1A721',
+  				background: '#FF8527',
+  				DEFAULT: '#FF8527',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
   			secondary: {
-  				DEFAULT: 'hsl(var(--secondary))',
+  				DEFAULT: '#093456',
   				foreground: 'hsl(var(--secondary-foreground))'
   			},
+			bg:{
+				"50":"#F8F8F8",
+				"100":"#F2F3F4",
+				"200":"#E1E2E3",
+				"400":"#B3B4BA",
+				"800":"#636773",
+			},
+			danger:"#D63B30",
   			muted: {
   				DEFAULT: 'hsl(var(--muted))',
   				foreground: 'hsl(var(--muted-foreground))'
@@ -65,13 +73,16 @@ const config: Config = {
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
   		},
+		// Do NOT REMOVE IT 👾
   		screens: {
   			mdHalf: '934px',
   			xlHalf: '1530px',
+			lgHalf:'1280px',
   			'2lg': '1130px',
-  			'2sm': '732px',
+  			'smHalf': '660px',
   			'2xs': '500px',
-  			'1xs': '350px'
+  			'3xs': '350px',
+  			'xxs': '300px'
   		},
   		keyframes: {
   			'accordion-down': {

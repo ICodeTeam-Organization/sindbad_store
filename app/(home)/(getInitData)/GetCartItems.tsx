@@ -23,7 +23,7 @@ export default function GetCartItems() {
           `Cart/GetAllCustomerProductsInCartForViewInCartPage`,
         {},{
           headers: {
-            Authorization: `Bearer ${authData?.user.data.token}`,
+            Authorization: `Bearer ${authData?.user?.data?.token}`,
           },
         }
       );
@@ -33,7 +33,9 @@ export default function GetCartItems() {
   });
 
   useEffect(()=>{
-    if (status === "authenticated" && !!(authData?.user.data.token)) {
+    console.log(authData,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##################@#@#@#@#@#@#@##$#%%Y^&$");
+    
+    if (status === "authenticated" && !!(authData?.user?.data?.token)) {
       settrigged(true)
     }
   },[authData])

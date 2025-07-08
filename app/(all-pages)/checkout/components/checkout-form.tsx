@@ -128,7 +128,7 @@ const CheckoutForm = () => {
         isPage: true,
         headers: {
           "Accept-Language": "ar",
-          Authorization: `Bearer ${authData?.user.data.token}`,
+          Authorization: `Bearer ${authData?.user?.data?.token}`,
         },
       });
     },

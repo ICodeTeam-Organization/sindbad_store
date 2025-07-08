@@ -75,7 +75,7 @@ export default function DropDownMenuOrderFrom() {
   
 
   return (
-    <div className="flex items-center gap-x-2 w-full">
+    <div className="flex items-center gap-x-2 w-full ">
       <Alert open={openAlert} onClose={setOpenAlert} />
       <h3 className="text-[13px]"> أطلب مــن </h3>
       <DropdownMenu dir="rtl">

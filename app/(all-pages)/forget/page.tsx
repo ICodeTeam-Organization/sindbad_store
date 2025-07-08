@@ -23,20 +23,7 @@ const forgetPass = () => {
         <div className="m-auto mt-[30px]">
           <PhoneValidation />
         </div>
-        {/* <div className="text-start my-5 text-sm text-[#5F6C72]">
-          <p>
-            لديك حساب بالفعل؟
-            <Link className="mr-1 text-[#2DA5F3]" href={"/auth"}>
-              تسجيل الدخول
-            </Link>
-          </p>
-          <p>
-            ليس لديك حساب؟
-            <Link className="mr-2 text-[#2DA5F3]" href={"/auth"}>
-              حساب جديد
-            </Link>
-          </p>
-        </div> */}
+         
         <hr />
         <p className="text-center text-sm text-[#475156] mt-6">
           يمكنك الإتصال

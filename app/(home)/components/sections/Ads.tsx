@@ -1,10 +1,8 @@
-import Image from "next/image";
 import Adds from "@/public/images/Ads.svg";
+import AdsCarousel from "@/components/AdsCarsoule";
 const Ads = () => {
   return (
-    <div className="m-auto w-full xl:container mx-auto">
-      <Image className="w-full rounded-xl" src={Adds} alt={""} />
-    </div>
+    <AdsCarousel images={[Adds,Adds,Adds,Adds]} />
   );
 };
 
