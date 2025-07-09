@@ -53,7 +53,6 @@ const ShoppingNow = async () => {
             products.map((product: NormalizedProductType) => (
               <div key={product.id} className=" ">
                 <ProductCard
-                  key={product.id}
                   data={product}
                 />
               </div>

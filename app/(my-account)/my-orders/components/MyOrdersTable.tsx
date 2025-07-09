@@ -10,6 +10,7 @@ import { getApi } from "@/lib/http";
 import { useRouter } from "next-nprogress-bar";
 import Link from "next/link"; 
 import { convertToArabicDate } from "@/lib/timeFuns";
+import { currency } from "@/lib/utils";
 
 interface Props {
   initData: {
@@ -247,7 +248,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                     <div className="mb-2 flex justify-between items-center text-sm">
                       <span className="font-medium"> إجمالي السعر : </span>
                       <span className="text-primary-background font-bold">
-                        {totalPrice} رس
+                        {totalPrice} {currency}
                       </span>
                     </div>
                     <div className="mb-2 flex justify-between items-center text-sm">

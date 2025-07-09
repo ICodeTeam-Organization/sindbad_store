@@ -11,7 +11,7 @@ const CategoryCard = ({ name, imageUrl , id }: Props) => {
   return (
     <Link href={"/shop?cats="+id}>
       <div className="text-center w-28 flex flex-col items-center ">
-        <div className="w-28 h-28 p-4  relative overflow-hidden bg-neutral-100 rounded-full border-2 group-hover:border-primary group-hover:shadow-lg border-transparent transition-[border,shadow]  flex justify-center items-center group-hover:cursor-pointer       ">
+        <div className="w-24 h-24 p-4  relative overflow-hidden bg-neutral-100 rounded-full border-2 group-hover:border-primary group-hover:shadow-lg border-transparent transition-[border,shadow]  flex justify-center items-center group-hover:cursor-pointer       ">
           <SafeImage
             src={imageUrl}
             // layout="fill"

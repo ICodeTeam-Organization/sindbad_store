@@ -1,17 +1,18 @@
 "use client"
 import SafeImage from "@/components/SafeImage";
 import { NormalizedProductType } from "@/Data/normalizTypes";
+import { getCurrencyInServerSide } from "@/hooks/useGetCurrency";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next-nprogress-bar";
+import { useRouter } from "next/router";
 import React from "react";
 
 type Detail = {
   detail: NormalizedProductType[];
 };
 
-const OrderDetailProductsTable = ({ detail }: Detail) => {
+const OrderDetailProductsTable = async ({ detail }: Detail) => {
 
-
+  const {currency} = await getCurrencyInServerSide()
   const router = useRouter()
   const goToProductdetails = (id:number) => { 
     router.push("/shop/productDetils/" + id)
@@ -57,7 +58,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                       </span>
                     </div>
                   </td>
-                  <td className="py-2">{details?.price.toFixed(2)} رس</td>
+                  <td className="py-2">{details?.price.toFixed(2)} {currency}</td>
                   <td className="py-2">
                     <div className="flex items-center justify-center">
                       <input
@@ -68,9 +69,9 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                       />
                     </div>
                   </td>
-                  <td className="py-2">{(details?.shipCost ?? 0).toFixed(2)} رس</td>
+                  <td className="py-2">{(details?.shipCost ?? 0).toFixed(2)} {currency}</td>
                   <td className="py-2">
-                    {(((details?.quantity ?? 0) * (details?.price ?? 0)) + (((details?.quantity ?? 0) + (details?.extraQuantity ?? 0)) * (details?.shipCost ?? 0))).toFixed(2)} رس
+                    {(((details?.quantity ?? 0) * (details?.price ?? 0)) + (((details?.quantity ?? 0) + (details?.extraQuantity ?? 0)) * (details?.shipCost ?? 0))).toFixed(2)} {currency}
                   </td>
                 </tr>
               ))}
@@ -80,7 +81,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
 
         {/* Mobile Cards */}
         <div className="block mdHalf:hidden">
-          {detail.map((details, ix) => (
+          {detail.map(async (details, ix) => (
             <div
             onClick={()=>{goToProductdetails(+details?.id)}}
               key={ix}
@@ -100,11 +101,11 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                   <p className="text-xs mt-1 text-primary-background font-bold" >
                   <span className="font-bold text-black">  السعر: </span>
 
-                    {details?.price.toFixed(2)} رس
+                    {details?.price.toFixed(2)} {currency}
                   </p>
                   <p className="text-xs mt-1 text-primary-background font-bold" >
                   <span className="font-bold text-black">تكلفة الشحن: </span>
-                  {(details?.shipCost ?? 0) * ((details?.extraQuantity ?? 0) + (details?.quantity ?? 0))} رس
+                  {(details?.shipCost ?? 0) * ((details?.extraQuantity ?? 0) + (details?.quantity ?? 0))} {currency}
                 </p>
                 </div>
               </div>
@@ -117,7 +118,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                 
                 <p className="text-primary-background flex justify-between items-center my-2 -mb-1" >
                   <span className="font-bold text-black"> إجمالي السعر والشحن </span>
-                  <span className="text-base  font-bold" >{(((details?.quantity ?? 0) * (details?.price ?? 0)) + (((details?.quantity ?? 0) + (details?.extraQuantity ?? 0)) * (details?.shipCost ?? 0))).toFixed(2)} رس</span>
+                  <span className="text-base  font-bold" >{(((details?.quantity ?? 0) * (details?.price ?? 0)) + (((details?.quantity ?? 0) + (details?.extraQuantity ?? 0)) * (details?.shipCost ?? 0))).toFixed(2)} {currency}</span>
                 </p>
               </div>
             </div>

@@ -26,14 +26,14 @@ const ProductCarsoule = ({
   };
   const settings: import("react-slick").Settings = {
     dots: false,
-    infinite: true,
-    speed: 300,
+    infinite:products?.length > 2? true : false,
+    speed: 200,
     slidesToShow: 6,
-    slidesToScroll: 1,
-    autoplay: false, 
-    autoplaySpeed: 2500,
+    slidesToScroll: 2,
+    autoplay: true, 
+    autoplaySpeed: 5000,
     arrows: true,
-    rtl: true,
+    // rtl: true, 
     responsive: [
       {
         breakpoint: 1530, // أقل من XL (1280px)
@@ -92,10 +92,10 @@ const ProductCarsoule = ({
           <div className="w-[150px] h-[2px] rounded-full bg-primary" />
         </div>
       </div>
-      <div className="w-full relative overflow-hidden">
+      <div className="w-full relative overflow-hidden " >
         <Slider {...settings} ref={sliderRef}>
           {products.map((product) => (
-            <div key={product.id} className="px-2 my-2 sm:w-[220px] w-[180px]">
+            <div key={product.id} className="px-2 my-2 sm:w-[220px] w-[180px]" dir="rtl" >
               <ProductCard data={product} />
             </div>
           ))}

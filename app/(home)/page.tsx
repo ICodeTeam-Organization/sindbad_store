@@ -1,10 +1,11 @@
 import dynamic from "next/dynamic";
-import { getApi,  } from "@/lib/http";
+import { getApi } from "@/lib/http";
 import { Product, Store } from "@/types/storeTypes";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import { normalizeCategory } from "@/Data/mappers/categoryNormlizeMapper";
 import StoresCarsoule from "./components/sections/StoresCarsoule";
 import Hero from "./components/sections/Hero/Hero";
+import CategoriesSlider from "./components/CategoriesSlider"; 
 
  
 const Categories = dynamic(() => import("./components/sections/Categories"));
@@ -18,7 +19,7 @@ export default async function Home() {
   // let allEcommrce = null;
   let offersProducts = null;
   let bestSellerInWeek = null;
-  // let recentlyProducts = null;
+  let recentlyProducts = null;
 
   // Fetching data concurrently using Promise.allSettled
   // This allows us to handle each request independently and avoid blocking the UI. by ali bawazir
@@ -29,7 +30,7 @@ export default async function Home() {
       // allEcommrceResult,
       offersProductsResult,
       bestSellerInWeekResult,
-      // recentlyProductsResult,
+      recentlyProductsResult,
     ] = await Promise.allSettled([
       getApi<{ data: any[] }>(
         "Market/categories/GetAllMainCategoriesWithPaginationForViewInCategoriesPage/1/100000",
@@ -50,9 +51,9 @@ export default async function Home() {
       getApi<{ data: Product[] }>(
         "Products/HomePage/GetMostProductsSellingInWeekForViewInMarketHomePage/20"
       ),
-      // getApi<{ data: Product[] }>(
-      //   "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/20"
-      // ),
+      getApi<{ data: Product[] }>(
+        "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/20"
+      ),
     ]);
 
     categories =
@@ -76,20 +77,20 @@ export default async function Home() {
         ? bestSellerInWeekResult.value.data.map(normalizeProduct)
         : null;
 
-    // recentlyProducts =
-    //   recentlyProductsResult.status === "fulfilled"
-    //     ? recentlyProductsResult.value.data.map(normalizeProduct)
-    //     : null;
+    recentlyProducts =
+      recentlyProductsResult.status === "fulfilled"
+        ? recentlyProductsResult.value.data.map(normalizeProduct)
+        : null;
   } catch (error) {
     console.log(error);
   }
-
+ 
   return (
     <section className="w-full">
       {/* <Hero /> */}
-      {/* <div className="w-full xl:container mx-auto">
+      <div className="w-full xl:container mx-auto">
         <CategoriesSlider />
-      </div> */}
+      </div>
       <Hero />
       <div className="w-full xl:container mx-auto">
         {categories && categories?.length > 0 && (
@@ -117,7 +118,7 @@ export default async function Home() {
         />
       )}
       {/* <Ads /> */}
-      {/* <div className=" ">
+      <div className=" ">
         {recentlyProducts && recentlyProducts?.length > 0 && (
           <ProductCarsoule
             products={recentlyProducts}
@@ -127,7 +128,7 @@ export default async function Home() {
         )}
         <div className="mb-10" />
         <ShoppingNow />
-      </div> */}
+      </div>
       {/* <div className="my-10">
         {allEcommrce && allEcommrce?.data?.items?.length > 0 && (
           <AllEShops AllEShops={allEcommrce} />

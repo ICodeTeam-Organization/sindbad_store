@@ -8,7 +8,10 @@ import React, { useState } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
 import { IoChevronDownOutline } from "react-icons/io5";
 
-
+interface PropsType {
+  isAuth: boolean;
+  defaultCountry:string;
+}
 
 const Loader = () => (
   <div className="flex items-center justify-center my-4 ">
@@ -16,7 +19,7 @@ const Loader = () => (
   </div>
 );
 
-function OrderFromAndHow({isAuth}:{isAuth:boolean}) {
+function OrderFromAndHow({ isAuth , defaultCountry }: PropsType) {
   const [showHowDialog, setshowHowDialog] = useState<number | null>(null);
 
   const { data: questions, isFetching } = useQuery<{
@@ -30,16 +33,23 @@ function OrderFromAndHow({isAuth}:{isAuth:boolean}) {
     <>
       <div className="flex mdHalf:flex-row flex-col-reverse xl:gap-6 gap-4 mdHalf:items-center  mdHalf:p-0 pb-10">
         <div className="mdHalf:flex flex-row items-center mdHalf:justify-center mdHalf:p-0 px-6 ">
-          <DropDownMenuOrderFrom />
+          <DropDownMenuOrderFrom defaultCountry={defaultCountry} />
         </div>
-        {isAuth &&<div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />}
-        {isAuth && <div className="mdHalf:block hidden">
-          <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0  mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] py-3 ">
-            <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
-              <Link href="/my-orders" className="text-[13px] mdHalf:m-0 "> طلباتي </Link>
+        {isAuth && (
+          <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
+        )}
+        {isAuth && (
+          <div className="mdHalf:block hidden">
+            <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0  mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] py-3 ">
+              <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
+                <Link href="/my-orders" className="text-[13px] mdHalf:m-0 ">
+                  {" "}
+                  طلباتي{" "}
+                </Link>
+              </div>
             </div>
           </div>
-        </div>}
+        )}
         <div className="w-[1.5px] rounded-full h-4 bg-[#AAA7A7] hidden mdHalf:block" />
         <div className="  group cursor-pointer relative mdHalf:p-0  mdHalf:m-0 mt-2 mdHalf:hover:bg-transparent hover:bg-[#FF8F7E22] pt-3 ">
           <div className="flex gap-2 items-center mdHalf:justify-center justify-between mdHalf:p-0 px-6 ">
@@ -56,7 +66,9 @@ function OrderFromAndHow({isAuth}:{isAuth:boolean}) {
                 "right-0"
               )}
             >
-                {!isFetching && questions?.data?.items.length ==  0 && <p className="text-center text-xs p-4" >لا توجد اسئلة</p>}
+              {!isFetching && questions?.data?.items.length == 0 && (
+                <p className="text-center text-xs p-4">لا توجد اسئلة</p>
+              )}
               {isFetching ? (
                 <Loader />
               ) : (
@@ -76,7 +88,6 @@ function OrderFromAndHow({isAuth}:{isAuth:boolean}) {
                 ))
               )}
             </ul>
-         
           </div>
           {/* mobile */}
           <div className="mdHalf:hidden block">
@@ -86,7 +97,9 @@ function OrderFromAndHow({isAuth}:{isAuth:boolean}) {
                 " mt-2 opacity-0 invisible  group-hover:visible group-hover:opacity-100 hidden group-hover:block transition-all top-12 z-[999999] min-w-[180px] overflow-y-scroll overflow-x-hidden  bg-white focus:outline-none border-b p-2"
               )}
             >
-               {!isFetching && questions?.data?.items.length ==  0 && <p className="text-center text-xs p-4" >لا توجد اسئلة</p>}
+              {!isFetching && questions?.data?.items.length == 0 && (
+                <p className="text-center text-xs p-4">لا توجد اسئلة</p>
+              )}
               {isFetching ? (
                 <Loader />
               ) : (

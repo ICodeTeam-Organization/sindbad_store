@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Pricing } from "../../types";
 import ImagesViewr from "@/components/ImagesViewr";
+import { currency } from "@/lib/utils";
 
 function ShowPricingInfoDialog({
   show,
@@ -39,10 +40,10 @@ function ShowPricingInfoDialog({
           {/* السعر والشحن */}
           <div className="flex justify-between items-center tajawal">
             <span className="text-sm font-semibold">
-              السعر: {data?.price} رس
+              السعر: {data?.price} {currency}
             </span>
             <span className="text-sm text-gray-500">
-              الشحن: {data?.shippingCost} رس
+              الشحن: {data?.shippingCost} {currency}
             </span>
           </div>
 

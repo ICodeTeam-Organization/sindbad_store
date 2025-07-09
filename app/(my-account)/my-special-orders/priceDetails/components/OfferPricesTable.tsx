@@ -5,6 +5,7 @@ import { OfferDetailsResponseType, Pricing } from "../../types";
 import { Checkbox } from "@/components/ui/checkbox";
 import ShowPricingInfoDialog from "./ShowPricingInfoDialog";
 import AddSpecialOrderToCartButton from "./AddSpecialOrderToCartButton";
+import { currency } from "@/lib/utils";
 
 const TABLE_HEAD = ["السعر", "الشحن", "الكمية", "الملاحظات"];
 function OfferPricesTable({
@@ -68,8 +69,8 @@ function OfferPricesTable({
                     />
                   </td>
 
-                  <td className="px-4 py-3">{ele?.price} رس</td>
-                  <td className="px-4 py-3">{ele?.shippingCost} رس</td>
+                  <td className="px-4 py-3">{ele?.price} {currency}</td>
+                  <td className="px-4 py-3">{ele?.shippingCost} {currency}</td>
                   <td className="px-4 py-3">{ele?.quantity}</td>
                   <td className="px-4 py-3">{ele?.note ?? "لا توجد ملاحظة"}</td>
                   <td className=" py-3 mx-0 px-0">
@@ -119,13 +120,13 @@ function OfferPricesTable({
                   <div className="mb-2">
                     <span className=" font-[400]">السعر : </span>
                     <span className="text-primary-background">
-                      {ele?.price} رس
+                      {ele?.price} {currency}
                     </span>
                   </div>
                   <div className="mb-2">
                     <span className=" font-[400]"> الشحن : </span>
                     <span className="text-primary-background">
-                      {ele?.shippingCost} رس
+                      {ele?.shippingCost} {currency}
                     </span>
                   </div>
                 </div>

@@ -10,17 +10,27 @@ import MenusSection from "./headerSections/MenusSection";
 import SearchComponent from "./headerSections/SearchComponent";
 import TopSectionOfHeader from "./headerSections/TopSectionOfHeader";
 import { Drawer } from "../Drawer/Drawer";
-const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boolean , isAuth : boolean }) => {
 
+interface HeaderPropsType {
+  isHomePage: boolean;
+  isAuth: boolean;
+  defaultCountry:string
+}
+
+const MainHeader = ({
+  isHomePage = false,
+  isAuth = false,
+  defaultCountry
+}: HeaderPropsType) => {
   const [openNav, setopenNav] = useState<boolean>(false);
   // const session = useSession();
   // const isAuth = session.status === "authenticated";
 
-  // let lastScrollTop = 0; 
+  // let lastScrollTop = 0;
   // const handleScroll = () => {
   //   const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
   //   const divElement = document.getElementById("hideSearchComponentInMobileWhenScoll");
-    
+
   //   if (divElement) {
   //     if (currentScroll > lastScrollTop) {
   //       // Scrolling down, hide the div by translating it upwards
@@ -36,12 +46,12 @@ const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boo
   //       divElement.style.transform = 'translateY(0)';
   //       divElement.style.position = 'static'; // Ensure it's fixed on the screen again
   //     }
-  
+
   //     // Update last scroll position
   //     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Prevent negative values
   //   }
   // };
-  
+
   // useEffect(() => {
   //   window.addEventListener('scroll', handleScroll);
   //   return () => {
@@ -49,9 +59,8 @@ const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boo
   //   };
   // }, []);
 
-
   return (
-    <div className="duration-300  ">
+    <div className="duration-300  lg:container mx-auto">
       <div
         className={cn(
           "  bg-white z-50 mdHalf:shadow-sm shadow-md border-b-0 mdHalf:border-b-0  border-b-white flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600"
@@ -106,19 +115,33 @@ const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boo
         {/* header => top,down sections */}
         <div className="flex flex-col md:w-full   ">
           {/* top section */}
-          <TopSectionOfHeader isHomePage={isHomePage} isAuth={isAuth} />
+          <TopSectionOfHeader isHomePage={isHomePage} isAuth={isAuth} defaultCountry={defaultCountry} />
 
           {/* down section this section in mobile become the navbarMenu */}
           <div className="tajawal   mdHalf:block hidden ">
             {/* content of navmenu */}
-            <MenusSection onClose={setopenNav} isHomePage={isHomePage} isAuth={isAuth} />
+            <MenusSection
+              onClose={setopenNav}
+              isHomePage={isHomePage}
+              isAuth={isAuth}
+              defaultCountry={defaultCountry}
+            />
           </div>
 
           {/* this drawer for mobile */}
           <div className="mdHalf:hidden">
-          <Drawer anchor="right" open={openNav} onClose={()=>setopenNav(false)} >
-              <MenusSection onClose={setopenNav} isHomePage={isHomePage} isAuth={isAuth} />
-          </Drawer>
+            <Drawer
+              anchor="right"
+              open={openNav}
+              onClose={() => setopenNav(false)}
+            >
+              <MenusSection
+                onClose={setopenNav}
+                isHomePage={isHomePage}
+                isAuth={isAuth}
+                defaultCountry={defaultCountry}
+              />
+            </Drawer>
             {/* <Sheet open={openNav} onOpenChange={setopenNav} >
               <SheetContent
                 side="right"
@@ -133,7 +156,7 @@ const MainHeader = ({ isHomePage = false , isAuth = false } : { isHomePage : boo
 
       {/* serach component for mobiles */}
       <div
-        id='hideSearchComponentInMobileWhenScoll'
+        id="hideSearchComponentInMobileWhenScoll"
         className={cn(
           "md:hidden block z-10 mdHalf:shadow-sm shadow-md  w-full relative mdHalf:p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  "
         )}

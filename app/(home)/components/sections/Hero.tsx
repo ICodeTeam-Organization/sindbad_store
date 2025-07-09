@@ -4,17 +4,19 @@ import Image from "next/image";
 import MainHeader from "@/components/MainHeader/MainHeader";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/authOption";
+import { getCookie } from "@/lib/coockie-utls";
 
 const Hero = async () => {
 
   const session = await getServerSession(authOption);
+  const defaultCountry = getCookie("country");
 
   return (
     <>
       <div className="sticky top-0 z-[50]">
         <div className="relative overflow-visible ">
           {/* <HomeHeader /> */}
-          <MainHeader isHomePage isAuth={!!session} />
+          <MainHeader isHomePage isAuth={!!session} defaultCountry={defaultCountry??"1"} />
         </div>
       </div>
       <div className="relative">

@@ -14,7 +14,7 @@ function HeroCardsFetures() {
         {
           title: "المحلات  والمراكز التجارية",
           desc: "مئات المحلات بالسعودية  وضعنا منتجاتها بين يديك",
-          image: "/images/store_ic.svg",
+          image: "/images/hero_images/shiping_ic.svg",
          
           more: "المزيد",
           href:"/stores",
@@ -25,7 +25,7 @@ function HeroCardsFetures() {
         {
           title: "المتاجر الإلكترونية",
           desc: "هناك المئات من المتاجر الالكترونية التي تقدم منتجات مختلف وباسعار منافسة .. كلها وضعناها بين يديك",
-          image: "/images/EShop_ic.svg",
+          image: "/images/hero_images/supermarket_ic.svg",
         
           more: "المزيد",
           href:"/e-commerce",
@@ -36,7 +36,7 @@ function HeroCardsFetures() {
         {
           title: "أطلب بالجملة",
           desc: "نوفر لك ما تريد من كل الأصناف والمنتجات",
-          image: "/images/track_ic.svg",
+          image: "/images/hero_images/mb_shipping_ic.svg",
         
           more: "أطلب الآن",
           // href:"/special-order?sh=1&tab=3",
@@ -47,17 +47,20 @@ function HeroCardsFetures() {
       ];
 
   return (
-    <div className=" bg-bg-100 py-4 flex items-center justify-evenly flex-wrap gap-y-8 " >
+    <div className=" bg-bg-100 py-4 flex items-center justify-evenly flex-wrap gap-y-8  " >
     {cards.map((item,ix)=>(
       item.href ? 
       <Link key={ix} href={item.href}   className="group  cursor-pointer p-5  flex justify-between h-[160px] w-[400px] rounded-[10px] " >
        
-         <div className="w-[60%] h-full flex-col flex justify-between" >
+         <div className="w-[60%] text-secondary h-full flex-col flex justify-between" >
            <h1 className="font-bold mb-4 " > {item.title} </h1>
            <h3 className="text-[13px]" >{item.desc}</h3>
         </div>
         <div className="w-[40%] flex flex-col items-end mdHalf:px-3 justify-between" >
-          <Image alt={item.title} src={item.image} width={60} height={60} />
+          <div className='bg-white p-2 rounded-full' >
+          <Image alt={item.title} src={item.image} width={50} height={50} className='m-2' />
+          </div>
+
           <div className="flex items-center  text-[#222222] mdHalf:text-xs text-xs" >
             <p className="group-hover:text-primary" >
               {item.more}
@@ -68,12 +71,15 @@ function HeroCardsFetures() {
        </Link>
       :
       <div key={ix} onClick={item.onClick}  className="group  cursor-pointer p-5 flex justify-between h-[160px] w-[400px] rounded-[10px] " >
-         <div className="w-[60%] h-full flex-col flex justify-between" >
+         <div className="w-[60%] text-secondary h-full flex-col flex justify-between" >
            <h1 className="font-bold mb-4 " > {item.title} </h1>
            <h3 className="text-[13px]" >{item.desc}</h3>
         </div>
         <div className="w-[40%] flex flex-col items-end mdHalf:px-3 justify-between" >
-          <Image alt={item.title} src={item.image} width={60} height={60} />
+          <div className='bg-white p-2 rounded-full' >
+          <Image alt={item.title} src={item.image} width={50} height={50} className='m-2' />
+          </div>
+
           <div className="flex items-center  text-[#222222] mdHalf:text-xs text-xs" >
             <p className="group-hover:text-primary" >
               {item.more}

@@ -7,23 +7,23 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"; 
+} from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-
+import Cookies from "js-cookie";
 import { GrDown } from "react-icons/gr";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { Alert } from "./Alert";
-
+import LoadingAlert from "./LoadingAlert";
 
 const orderFrom = [
   {
     name: "السعودية",
-    key: "SA",
+    key: "1",
   },
   {
     name: "اليمن",
-    key: "YE",
+    key: "3",
     sub: [
       {
         name: "حضرموت",
@@ -41,41 +41,58 @@ const orderFrom = [
   },
   {
     name: "الإمارات",
-    key: "UA",
+    key: "2",
   },
   {
     name: "مصر",
-    key: "EJ",
+    key: "4",
   },
 ];
 
-export default function DropDownMenuOrderFrom() {
+interface PropsType {
+  defaultCountry: string;
+}
 
-
-  const [
-    selectedCountry, 
-    // setselectedCountry
-  ] = useState({
-    name: "السعودية",
-    key: "SA",
-  });
-  const [openAlert, setOpenAlert] = useState(false)
+export default function DropDownMenuOrderFrom({ defaultCountry }: PropsType) {
+  const [selectedCountry] = useState(
+    orderFrom.find((e) => e.key == defaultCountry) ?? {
+      name: "السعودية",
+      key: "1",
+    }
+  );
+  const [openAlert, setOpenAlert] = useState(false);
+  const [changeCountryLoader, setchangeCountryLoader] = useState(false)
 
   const onSelect = (item: { name: string; key: string }) => {
-    if (item.key != selectedCountry.key) {
-      // toast({
-      //   variant: "destructive",
-      //   description: `سيتم إضافة هذي المناطق قريبا`,
-      // });
-      setOpenAlert(true)
+    if (["1", "2"].includes(item.key)) {
+      setchangeCountryLoader(true)
+      Cookies.remove("country");
+      Cookies.set("country", item?.key, {
+        path:'/', sameSite:"Lax"
+      });
+      window.location.replace("/");
+    } else {
+      setOpenAlert(true);
     }
     // setselectedCountry(item)
   };
 
-  
+  // useEffect(() => {
+  //   (async () => {
+  //     const country = await getCookie("country");
+  //     if (country) {
+  //       const countryDefault = orderFrom.find((e) => e.key == country);
+  //       setselectedCountry({
+  //         name: countryDefault?.name ?? orderFrom[0]?.name,
+  //         key: countryDefault?.key ?? orderFrom[0]?.key,
+  //       });
+  //     }
+  //   })();
+  // }, []);
 
   return (
     <div className="flex items-center gap-x-2 w-full ">
+      <LoadingAlert open={changeCountryLoader} placeholder="جاري تغيير المنطقة"  />
       <Alert open={openAlert} onClose={setOpenAlert} />
       <h3 className="text-[13px]"> أطلب مــن </h3>
       <DropdownMenu dir="rtl">
@@ -135,7 +152,6 @@ export default function DropDownMenuOrderFrom() {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-      
     </div>
   );
 }

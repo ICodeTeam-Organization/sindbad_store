@@ -7,7 +7,7 @@ import { useDebounce } from "@/hooks/useDebounce";
 import Spinner from "@/app/(home)/components/Spinner"; 
 import SafeImage from "@/components/SafeImage";
 import { CartItem } from "@/types/storeTypes";
-import { calculateBonus } from "@/lib/utils";
+import { calculateBonus, currency } from "@/lib/utils";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
 
 // type Props = {
@@ -45,7 +45,7 @@ const ProductRow = ({ cartItemData }: Props) => {
   const { updateQuantity: updateQuantityInStore, removeItem } = useCartStore();
 
   const [quantity, setQuantity] = useState<number>(initialQuantity);
-  const [isUpdated, setIsUpdated] = useState<boolean>(false);
+  const [isUpdated, setIsUpdated] = useState<boolean>(false); 
   // const { toast } = useToast();
   // const freeProducts = 0;
 
@@ -153,10 +153,10 @@ const ProductRow = ({ cartItemData }: Props) => {
           </div>
         </td>
         <td className="">
-          <p>{thePrice?.toFixed(2)} رس</p>
+          <p>{thePrice?.toFixed(2)} {currency}</p>
           {priceAfterDiscount < price && (
             <p className="text-xs line-through text-red-600">
-              {price?.toFixed(2)} رس
+              {price?.toFixed(2)} {currency}
             </p>
           )}
           {/* <span className="text-[10px] text-gray-400" >{percentageDiscount}%</span> */}
@@ -194,8 +194,8 @@ const ProductRow = ({ cartItemData }: Props) => {
             />
           </div>
         </td>
-        <td className="py-2">{shipCost?.toFixed(2)} رس</td>
-        {/* <td className="py-2">{finalPrice?.toFixed(2)} رس</td> */}
+        <td className="py-2">{shipCost?.toFixed(2)} {currency}</td>
+        {/* <td className="py-2">{finalPrice?.toFixed(2)} {currency}</td> */}
         <td className="py-2">
           {(
             thePrice * quantity +
@@ -207,7 +207,7 @@ const ProductRow = ({ cartItemData }: Props) => {
                   amountYouGet || 0
                 ) || 0))
           )?.toFixed(2)}{" "}
-          رس
+          {currency}
         </td>
         <td className="py-2">
           {

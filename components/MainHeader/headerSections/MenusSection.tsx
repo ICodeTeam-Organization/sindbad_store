@@ -16,11 +16,12 @@ import { IoChevronDownOutline, IoMenu } from 'react-icons/io5';
 interface PropsType {
   onClose?:(status:boolean)=>void; // this is for close drawer in mobile
   isHomePage?:boolean; // For checking is the header for home page or other
-  isAuth:boolean
+  isAuth:boolean;
+  defaultCountry:string
 }
 
 // this component is the down section of header and it is the drawer of in mobile screens
-function MenusSection({onClose,isHomePage,isAuth}:PropsType) {
+function MenusSection({onClose,isHomePage,isAuth,defaultCountry}:PropsType) {
 
   const closeSheet = () => { 
     if (onClose) {
@@ -132,7 +133,7 @@ function MenusSection({onClose,isHomePage,isAuth}:PropsType) {
         <PersonButton forMobile  isAuth={isAuth} closeSheet={closeSheet}  />
       </div>
       <div className="mdHalf:hidden mb-10 block  relative">
-        <OrderFromAndHow isAuth={isAuth} />
+        <OrderFromAndHow isAuth={isAuth} defaultCountry={defaultCountry} />
       </div>
     </div>
   )

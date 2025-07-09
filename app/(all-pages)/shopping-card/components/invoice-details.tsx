@@ -10,7 +10,7 @@ import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
 import PriceLabel from "./price-label";
 import { CartItem } from "@/types/storeTypes";
-import { calculateBonus } from "@/lib/utils";
+import { calculateBonus, currency } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
 
 // Function to calculate the total price
@@ -19,8 +19,7 @@ const calculateTotalPrice = (cartItems: CartItem[]): number => {
     const price = item.priceAfterDiscount || item.price;
     return total + price * item.quantity;
   }, 0);
-};
-
+}; 
 // Function to calculate the total shipping cost
 const calculateTotalShippingCost = (cartItems: CartItem[]): number => {
   return cartItems?.reduce((total, item) => {
@@ -36,8 +35,7 @@ const calculateTotalShippingCost = (cartItems: CartItem[]): number => {
           ) || 0))
     );
   }, 0);
-};
-
+}; 
 // Function to calculate the total discount
 const calculateTotalDiscount = (cartItems: CartItem[]): number => {
   const totalOldPrice = cartItems?.reduce((total, item) => {
@@ -48,8 +46,7 @@ const calculateTotalDiscount = (cartItems: CartItem[]): number => {
     return total + oldPrice * item.quantity;
   }, 0);
   return totalOldPrice;
-};
-
+}; 
 const calculateFinalTotal = (cartItems: CartItem[]): number => {
   const totalPrice = cartItems?.reduce((total, item) => {
     const price = item.priceAfterDiscount || item.price || 0;
@@ -86,7 +83,7 @@ const Summary = ({
       setaddressError(true)
     }
    }
- 
+
 
   return (
     <Card className="mdHalf:sticky mdHalf:top-[100px] mdHalf:z-10 ">
@@ -112,7 +109,7 @@ const Summary = ({
         <div className="flex justify-between mb-2">
           <span className="font-semibold">الإجمالي</span>
           <span className="font-semibold">
-            {calculateFinalTotal(cartItems)?.toFixed(2) || 0} رس
+            {calculateFinalTotal(cartItems)?.toFixed(2) || 0} {currency}
           </span>
         </div>
       </CardContent>

@@ -5,6 +5,7 @@ import { isClient } from "./utils";
 import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { authOption } from "./authOption";
+import { getCookie } from "./coockie-utls";
 //import { authOptions } from './auth-options';
 // import { isClient } from "./utils";
 // import cookies from "js-cookie";
@@ -20,6 +21,7 @@ async function http<T>(
   config?: Config
 ) {
   let endpoint = process.env.NEXT_PUBLIC_BASE_URL + url;
+ const country = getCookie("country");
 
   // if (params) {
   //   endpoint += ?${decodeURIComponent(stringifyParams(params))};
@@ -52,6 +54,7 @@ async function http<T>(
       ...(isFormData ? {} : { "Content-Type": "application/json" }),
       ...config?.headers,
       ...(session && { Authorization: `Bearer ${session?.user?.data?.token}` }), // ----- here error in jwt check
+        "x-country":country ?? "1",
     },
   });
 
@@ -112,3 +115,7 @@ export function postApi<T>(url: string, config?: Config) {
 export function deleteApi<T>(url: string, config?: Config) {
   return http<T>(url, undefined, { ...config, method: "DELETE" });
 }
+
+
+// import { cookies } from 'next/headers';
+ 

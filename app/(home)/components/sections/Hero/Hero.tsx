@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react"; 
+import React  from "react"; 
 import specialrequist from "@/public/images/specialrequist.svg";
 // import Stores from "@/public/images/Stores.svg";
 import discounts from "@/public/images/discounts.svg";
@@ -13,7 +13,6 @@ import { toast } from "@/hooks/use-toast";
 import { ToastAction } from "@radix-ui/react-toast";
 import Link from "next/link";
 import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore"; 
-import ReactPlayer from "react-player";
 import RotatingText from "@/components/animations/RotatingText";
 import HeroServiceCard from "./HeroServiceCard";
 import HeroCardsFetures from "./HeroCardsFetures";
@@ -105,15 +104,14 @@ function Hero() {
     "شحن أسرع وأمن الى اليمن",
    ]
 
-  const playerRef = useRef<any | null>(null);
 
   return (
     <div className=" lg:container mx-auto ">
-      <div className=' w-full bg-[url("/images/hero_images/bg_hero.svg")] relative overflow-hidden bg-cover bg-no-repeat bg-center 2lg:h-[650px] flex flex-col items-center justify-center sm:p-4 p-2   '>
+      <div className=' w-full bg-[url("/images/hero_images/bg_hero.svg")] relative overflow-hidden bg-cover bg-no-repeat bg-center 2lg:h-[550px] flex flex-col items-center justify-center sm:p-4 p-2   '>
         <div className="absolute inset-0 bg-black bg-opacity-20 z-0"></div>
 
          {/* INTRO  */}
-        <div className="my-6 text-center z-0 mt-10">
+        <div className="my-6 text-center z-0 mt-16 mb-0">
           <h2 className="text-white 2lg:text-2xl text-[16px] font-bold">
             وفرنا توصيل من السعودية ودول الخليج وبشكل اسهل{" "}
           </h2>
@@ -140,67 +138,8 @@ function Hero() {
 
         {/* CARDS AND VIDEO */}
     
-        <div className="grid grid-cols-1 2lg:grid-cols-11 gap-4 gap-y-2  mb-10">
-          {/* الفيديو للشاشات الصغيرة - يأخذ كامل العرض */}
-          <div className="col-span-full w-full 2lg:hidden">
-            <div className="bg-white w-full rounded overflow-hidden flex">
-              <ReactPlayer
-                src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4"
-                playing={false}
-                controls={true}
-                width="100%"
-                height="auto"
-                style={{ aspectRatio: "16/9" }}
-                ref={playerRef}
-              />
-            </div>
-          </div>
-
-          {/* التنسيق الأصلي للشاشات الكبيرة */}
-          <div className="hidden 2lg:flex col-span-2   justify-end ">
-            <HeroServiceCard
-              {...cards[0]}
-              transpColor={cards[0]?.transpColor}
-            />
-          </div>
-
-          <div className="hidden 2lg:flex justify-end col-span-2 col-start-1 row-start-3">
-            <HeroServiceCard
-              {...cards[1]}
-              transpColor={cards[2]?.transpColor}
-            />
-          </div>
-
-          <div className="hidden 2lg:flex col-span-7 row-span-4 col-start-3 items-center justify-center">
-            <div className="bg-white h-[90%] w-full rounded overflow-hidden flex">
-              <ReactPlayer
-                src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4"
-                playing={true}
-                controls={true}
-                width="100%"
-                height="100%"
-                className="aspect-video"
-                ref={playerRef}
-              />
-            </div>
-          </div>
-
-          <div className="hidden 2lg:block col-span-2 col-start-10 row-start-1">
-            <HeroServiceCard
-              {...cards[2]}
-              transpColor={cards[2]?.transpColor}
-            />
-          </div>
-
-          <div className="hidden 2lg:block col-span-2 col-start-10 row-start-3">
-            <HeroServiceCard
-              {...cards[3]}
-              transpColor={cards[3]?.transpColor}
-            />
-          </div>
-
-          {/* كروت الخدمات للشاشات الصغيرة - أسفل الفيديو */}
-          <div className="flex items-center justify-center gap-6 mt-14 max-smHalf:flex-wrap 2lg:hidden">
+     
+<div className="flex items-center justify-center gap-6 mt-14 max-smHalf:flex-wrap  ">
             <HeroServiceCard
               {...cards[0]}
               transpColor={cards[0]?.transpColor}
@@ -218,8 +157,6 @@ function Hero() {
               transpColor={cards[3]?.transpColor}
             />
           </div>
-        </div>
-
 
 
       </div>
@@ -232,5 +169,85 @@ function Hero() {
     </div>
   );
 }
+
+  //  <div className="grid grid-cols-1 2lg:grid-cols-11 gap-4 gap-y-2  mb-10">
+  //         {/* الفيديو للشاشات الصغيرة - يأخذ كامل العرض */}
+  //         <div className="col-span-full w-full 2lg:hidden">
+  //           <div className="bg-white w-full rounded overflow-hidden flex">
+  //             <ReactPlayer
+  //               src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4"
+  //               playing={false}
+  //               controls={true}
+  //               width="100%"
+  //               height="auto"
+  //               style={{ aspectRatio: "16/9" }}
+  //               ref={playerRef}
+  //             />
+  //           </div>
+  //         </div>
+
+  //         {/* التنسيق الأصلي للشاشات الكبيرة */}
+  //         <div className="hidden 2lg:flex col-span-2   justify-end ">
+  //           <HeroServiceCard
+  //             {...cards[0]}
+  //             transpColor={cards[0]?.transpColor}
+  //           />
+  //         </div>
+
+  //         <div className="hidden 2lg:flex justify-end col-span-2 col-start-1 row-start-3">
+  //           <HeroServiceCard
+  //             {...cards[1]}
+  //             transpColor={cards[2]?.transpColor}
+  //           />
+  //         </div>
+
+  //         <div className="hidden 2lg:flex col-span-7 row-span-4 col-start-3 items-center justify-center">
+  //           <div className="bg-white h-[90%] w-full rounded overflow-hidden flex">
+  //             <ReactPlayer
+  //               src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/av1/360/Big_Buck_Bunny_360_10s_1MB.mp4"
+  //               playing={true}
+  //               controls={true}
+  //               width="100%"
+  //               height="100%"
+  //               className="aspect-video"
+  //               ref={playerRef}
+  //             />
+  //           </div>
+  //         </div>
+
+  //         <div className="hidden 2lg:block col-span-2 col-start-10 row-start-1">
+  //           <HeroServiceCard
+  //             {...cards[2]}
+  //             transpColor={cards[2]?.transpColor}
+  //           />
+  //         </div>
+
+  //         <div className="hidden 2lg:block col-span-2 col-start-10 row-start-3">
+  //           <HeroServiceCard
+  //             {...cards[3]}
+  //             transpColor={cards[3]?.transpColor}
+  //           />
+  //         </div>
+
+  //         {/* كروت الخدمات للشاشات الصغيرة - أسفل الفيديو */}
+  //         <div className="flex items-center justify-center gap-6 mt-14 max-smHalf:flex-wrap 2lg:hidden">
+  //           <HeroServiceCard
+  //             {...cards[0]}
+  //             transpColor={cards[0]?.transpColor}
+  //           />
+  //           <HeroServiceCard
+  //             {...cards[2]}
+  //             transpColor={cards[2]?.transpColor}
+  //           />
+  //           <HeroServiceCard
+  //             {...cards[1]}
+  //             transpColor={cards[2]?.transpColor}
+  //           />
+  //           <HeroServiceCard
+  //             {...cards[3]}
+  //             transpColor={cards[3]?.transpColor}
+  //           />
+  //         </div>
+  //       </div>
 
 export default Hero

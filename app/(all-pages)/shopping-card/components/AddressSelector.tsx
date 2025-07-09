@@ -15,7 +15,7 @@ export default function AddressSelector({onSelect}:{onSelect:(id:string)=>void})
       queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress`),
       staleTime:1000 * 60 * 60 * 24,
     });
-  const [selectedAddressId, setSelectedAddressId] = useState<string>(sessionStorage.getItem("cartAddress") || "");
+  const [selectedAddressId, setSelectedAddressId] = useState<string>(window?.sessionStorage?.getItem("cartAddress") || "");
   const selectedAddress = addressData?.data?.find((e: any) => +e.id === +selectedAddressId);
 
   return (

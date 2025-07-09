@@ -1,20 +1,21 @@
+import { currency } from "@/lib/utils";
 import { PriceSectionProps } from "../types";
 
-const PriceSection = ({
+const PriceSection = async ({
   discountedPrice,
   originalPrice,
   discount,
-}: PriceSectionProps) => {
+}: PriceSectionProps) => { 
   return (
     <div className="flex items-center gap-4">
       <div className="flex justify-between gap-x-2">
         <span className="text-xl font-bold text-black">
           {!!discountedPrice ? discountedPrice : originalPrice}{" "}
-          <span className="text-sm">رس</span>{" "}
+          <span className="text-sm">{currency}</span>{" "}
         </span>
         {!!discountedPrice && (
           <span className="text-base line-through text-gray-500">
-            {originalPrice} رس
+            {originalPrice} {currency}
           </span>
         )}
       </div>

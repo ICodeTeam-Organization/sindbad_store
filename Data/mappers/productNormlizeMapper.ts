@@ -1,7 +1,7 @@
 import { getRemainingTimeForOffer } from "@/lib/timeFuns";
 import { NormalizedProductType } from "../normalizTypes";
 
-export function normalizeProduct(input: any): NormalizedProductType {
+export  function  normalizeProduct(input: any): NormalizedProductType {
   const numOfReviewers =
     (input?.oneStarCount || 0) +
     (input?.twoStarCount || 0) +

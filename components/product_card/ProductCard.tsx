@@ -54,12 +54,12 @@
 //           </p>
 //           <div className="text-right flex flex-col justify-start items-start ">
 //             <p className="max-md:pr-3 pr-3 max-md:text-xs text-[16px] text-[#F55157]">
-//               <strong>{data.price}</strong> <span className="text-[13px]">رس</span> <span className="text-[10px] bg-zinc-100 p-1 rounded-sm" > + مصاريف الشحن </span>
+//               <strong>{data.price}</strong> <span className="text-[13px]">{await getCurrencykey()}</span> <span className="text-[10px] bg-zinc-100 p-1 rounded-sm" > + مصاريف الشحن </span>
 //             </p>
 //             { data.hasDiscount ? (
 //               <div className="flex">
 //                 <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px] line-through text-[#9C9C9C]">
-//                   {data.priceBeforeDiscount}رس
+//                   {data.priceBeforeDiscount}{await getCurrencykey()}
 //                 </p>
 //                 <p className="pr-4 max-md:pr-2 text-[12px] max-md:text-[9px]  text-[#9C9C9C]">
 //                   خصم {data.percentageOfDiscount}%
@@ -134,6 +134,7 @@ import { AiFillStar } from "react-icons/ai";
 import { NormalizedProductType } from "@/Data/normalizTypes"; 
 import AddToCartBtn from "./AddToCartBtn";
 import AddToFavBtn from "./AddToFavBtn";
+import { currency } from "@/lib/utils";
 
 // function calculateDiscountPercentage(
 //   oldPrice: number,
@@ -146,7 +147,7 @@ import AddToFavBtn from "./AddToFavBtn";
 type propsType = {
   data: NormalizedProductType;
 };
-const ProductCard = ({ data }: propsType) => {
+const ProductCard = async ({ data }: propsType) => {
   return (
     <div
       dir="rtl"
@@ -201,12 +202,12 @@ const ProductCard = ({ data }: propsType) => {
             <div className="flex items-center justify-center gap-x-2">
               <p className="max-md:text-xs text-[16px] text-secondary">
                 <strong>
-                  {data.price} <span className="text-[13px]">رس</span>{" "}
+                  {data.price} <span className="text-[13px]">{currency}</span>{" "}
                 </strong>
               </p>
               {data.hasDiscount && (
                 <p className="text-[12px] max-md:text-[9px] line-through text-bg-400">
-                  {data.priceBeforeDiscount}رس
+                  {data.priceBeforeDiscount} {currency}
                 </p>
               )}
             </div>
