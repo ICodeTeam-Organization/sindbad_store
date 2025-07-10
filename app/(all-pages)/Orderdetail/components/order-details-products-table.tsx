@@ -1,8 +1,7 @@
 "use client"
 import SafeImage from "@/components/SafeImage";
 import { NormalizedProductType } from "@/Data/normalizTypes";
-import { getCurrencyInServerSide } from "@/hooks/useGetCurrency";
-import { cn } from "@/lib/utils";
+import { cn, currency } from "@/lib/utils";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -10,9 +9,8 @@ type Detail = {
   detail: NormalizedProductType[];
 };
 
-const OrderDetailProductsTable = async ({ detail }: Detail) => {
-
-  const {currency} = await getCurrencyInServerSide()
+const OrderDetailProductsTable = ({ detail }: Detail) => {
+ 
   const router = useRouter()
   const goToProductdetails = (id:number) => { 
     router.push("/shop/productDetils/" + id)

@@ -15,6 +15,7 @@ import { GrDown } from "react-icons/gr";
 import { RiArrowLeftLine } from "react-icons/ri";
 import { Alert } from "./Alert";
 import LoadingAlert from "./LoadingAlert";
+import { useRouter } from "next-nprogress-bar";
 
 const orderFrom = [
   {
@@ -54,14 +55,15 @@ interface PropsType {
 }
 
 export default function DropDownMenuOrderFrom({ defaultCountry }: PropsType) {
-  const [selectedCountry] = useState(
+  const [selectedCountry,setselectedCountry] = useState(
     orderFrom.find((e) => e.key == defaultCountry) ?? {
       name: "السعودية",
       key: "1",
     }
   );
   const [openAlert, setOpenAlert] = useState(false);
-  const [changeCountryLoader, setchangeCountryLoader] = useState(false)
+  const [changeCountryLoader, setchangeCountryLoader] = useState(false);
+  const router  = useRouter()
 
   const onSelect = (item: { name: string; key: string }) => {
     if (["1", "2"].includes(item.key)) {
@@ -70,11 +72,12 @@ export default function DropDownMenuOrderFrom({ defaultCountry }: PropsType) {
       Cookies.set("country", item?.key, {
         path:'/', sameSite:"Lax"
       });
+      setselectedCountry(item)
+      router.refresh();
       window.location.replace("/");
     } else {
       setOpenAlert(true);
     }
-    // setselectedCountry(item)
   };
 
   // useEffect(() => {

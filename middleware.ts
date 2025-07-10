@@ -18,6 +18,7 @@ export default withAuth(
 
     // Initialize response
     let response = NextResponse.next();
+console.log("Current cookie:", countryCookie);
 
     // Set country cookie if not exists
     if (!countryCookie) {

@@ -1,7 +1,7 @@
 import { currency } from "@/lib/utils";
 import { PriceSectionProps } from "../types";
 
-const PriceSection = async ({
+const PriceSection = ({
   discountedPrice,
   originalPrice,
   discount,
