@@ -10,8 +10,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Pricing } from "../../types";
-import ImagesViewr from "@/components/ImagesViewr";
-import { currency } from "@/lib/utils";
+import ImagesViewr from "@/components/ImagesViewr"; 
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 
 function ShowPricingInfoDialog({
   show,
@@ -22,6 +22,7 @@ function ShowPricingInfoDialog({
   setShow: (status: boolean) => void;
   data: Pricing | null;
 }) {
+  const currency = get_currency_key()
   return (
     <Dialog open={show && data != null} onOpenChange={setShow}>
       <DialogContent className="sm:max-w-md">

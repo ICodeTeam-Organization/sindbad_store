@@ -18,18 +18,17 @@ export default withAuth(
 
     // Initialize response
     let response = NextResponse.next();
-console.log("Current cookie:", countryCookie);
-
+ 
     // Set country cookie if not exists
-    if (!countryCookie) {
-      // console.log('[Middleware] Setting country cookie');
-      response.cookies.set("country", "1", {
-        path: "/",
-        httpOnly: false,
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 365,
-      });
-    }
+    // if (!countryCookie) {
+    //   // console.log('[Middleware] Setting country cookie');
+    //   response.cookies.set("country", "1", {
+    //     path: "/",
+    //     httpOnly: false,
+    //     sameSite: "lax",
+    //     maxAge: 60 * 60 * 24 * 365,
+    //   });
+    // }
 
     // Protected paths
     const protectedPaths = [
@@ -58,14 +57,7 @@ console.log("Current cookie:", countryCookie);
       const redirectResponse = NextResponse.redirect(loginUrl);
       
       // Set cookie if not exists in redirect response
-      if (!countryCookie) {
-        redirectResponse.cookies.set("country", "1", {
-          path: "/",
-          httpOnly: false,
-          sameSite: "lax",
-          maxAge: 60 * 60 * 24 * 365,
-        });
-      }
+      
       
       return redirectResponse;
     }

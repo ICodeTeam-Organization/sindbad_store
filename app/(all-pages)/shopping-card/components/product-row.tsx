@@ -7,8 +7,9 @@ import { useDebounce } from "@/hooks/useDebounce";
 import Spinner from "@/app/(home)/components/Spinner"; 
 import SafeImage from "@/components/SafeImage";
 import { CartItem } from "@/types/storeTypes";
-import { calculateBonus, currency } from "@/lib/utils";
+import { calculateBonus,   } from "@/lib/utils";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 
 // type Props = {
 //   id: number;
@@ -43,7 +44,7 @@ const ProductRow = ({ cartItemData }: Props) => {
 
   const thePrice = priceAfterDiscount || price;
   const { updateQuantity: updateQuantityInStore, removeItem } = useCartStore();
-
+const currency = get_currency_key()
   const [quantity, setQuantity] = useState<number>(initialQuantity);
   const [isUpdated, setIsUpdated] = useState<boolean>(false); 
   // const { toast } = useToast();

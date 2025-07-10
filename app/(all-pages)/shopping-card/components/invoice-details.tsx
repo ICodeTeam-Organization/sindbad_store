@@ -10,8 +10,9 @@ import { ArrowLeft } from "lucide-react";
 import React, { useState } from "react";
 import PriceLabel from "./price-label";
 import { CartItem } from "@/types/storeTypes";
-import { calculateBonus, currency } from "@/lib/utils";
+import { calculateBonus } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 
 // Function to calculate the total price
 const calculateTotalPrice = (cartItems: CartItem[]): number => {
@@ -72,6 +73,8 @@ const Summary = ({
   cartItems: CartItem[];
   isRefetching: boolean;
 }) => {
+
+ const currency = get_currency_key()
   cartItems = cartItems.filter((e) => e.quantity > 0);
   const router = useRouter()
   const [addressError, setaddressError] = useState(false)

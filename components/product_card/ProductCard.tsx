@@ -1,3 +1,5 @@
+"use client"
+
 // import AddToBasket from "./add-to-basket";
 // import Link from "next/link";
 // import SafeImage from "@/components/SafeImage";
@@ -125,7 +127,6 @@
 // };
 
 // export default ProductCard;
-
 import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 
@@ -133,7 +134,8 @@ import SafeImage from "@/components/SafeImage";
 import { AiFillStar } from "react-icons/ai";
 import { NormalizedProductType } from "@/Data/normalizTypes"; 
 import AddToCartBtn from "./AddToCartBtn";
-import AddToFavBtn from "./AddToFavBtn";
+import AddToFavBtn from "./AddToFavBtn"; 
+// import { const currency = get_currency_key() } from "@/lib/cookie/cookie.clients";
 import { currency } from "@/lib/utils";
 
 // function calculateDiscountPercentage(
@@ -147,7 +149,7 @@ import { currency } from "@/lib/utils";
 type propsType = {
   data: NormalizedProductType;
 };
-const ProductCard = async ({ data }: propsType) => {
+const ProductCard = async ({ data }: propsType) => { 
   return (
     <div
       dir="rtl"

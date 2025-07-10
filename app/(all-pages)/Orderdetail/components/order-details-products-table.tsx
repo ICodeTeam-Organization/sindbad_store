@@ -1,7 +1,8 @@
 "use client"
 import SafeImage from "@/components/SafeImage";
 import { NormalizedProductType } from "@/Data/normalizTypes";
-import { cn, currency } from "@/lib/utils";
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
+import { cn,  } from "@/lib/utils";
 import { useRouter } from "next/router";
 import React from "react";
 
@@ -11,6 +12,8 @@ type Detail = {
 
 const OrderDetailProductsTable = ({ detail }: Detail) => {
  
+  const currency = get_currency_key()
+
   const router = useRouter()
   const goToProductdetails = (id:number) => { 
     router.push("/shop/productDetils/" + id)

@@ -9,8 +9,8 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/http"; 
 import { useRouter } from "next-nprogress-bar";
 import Link from "next/link"; 
-import { convertToArabicDate } from "@/lib/timeFuns";
-import { currency } from "@/lib/utils";
+import { convertToArabicDate } from "@/lib/timeFuns"; 
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 
 interface Props {
   initData: {
@@ -47,6 +47,9 @@ const sortingOptions = [
 ];
 
 const MyOrdersTable: React.FC<Props> = ({ initData }) => {
+
+  const currency = get_currency_key()
+
   const router = useRouter();
   
   const [ordersFilters, setOrdersFilters] = useState<{

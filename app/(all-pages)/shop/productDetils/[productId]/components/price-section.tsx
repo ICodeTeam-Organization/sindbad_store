@@ -1,4 +1,5 @@
-import { currency } from "@/lib/utils";
+"use client" 
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 import { PriceSectionProps } from "../types";
 
 const PriceSection = ({
@@ -6,6 +7,7 @@ const PriceSection = ({
   originalPrice,
   discount,
 }: PriceSectionProps) => { 
+  const currency = get_currency_key()
   return (
     <div className="flex items-center gap-4">
       <div className="flex justify-between gap-x-2">

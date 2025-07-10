@@ -16,10 +16,11 @@ import {
   calculateTotalDiscount,
   calculateTotalPrice,
   calculateTotalShippingCost,
-} from "@/lib/calcPricesAndOffers";
-import { currency } from "@/lib/utils";
+} from "@/lib/calcPricesAndOffers"; 
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 
 const PrintOrderBill = ({ Bill }: { Bill: OrderData }) => {
+  const currency = get_currency_key()
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
   const [orderItems] = useState(Bill?.pagedOrderDetails?.items);

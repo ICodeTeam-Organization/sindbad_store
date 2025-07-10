@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import { OfferDetailsResponseType, Pricing } from "../../types";
 import { Checkbox } from "@/components/ui/checkbox";
 import ShowPricingInfoDialog from "./ShowPricingInfoDialog";
-import AddSpecialOrderToCartButton from "./AddSpecialOrderToCartButton";
-import { currency } from "@/lib/utils";
+import AddSpecialOrderToCartButton from "./AddSpecialOrderToCartButton"; 
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 
 const TABLE_HEAD = ["السعر", "الشحن", "الكمية", "الملاحظات"];
 function OfferPricesTable({
@@ -14,6 +14,7 @@ function OfferPricesTable({
   initData: OfferDetailsResponseType;
   
 }) {
+  const currency = get_currency_key()
   const [SelectedPricing, setSelectedPricing] = useState<Pricing>(initData?.data[0]);
  
   const [showPricingInfo, setshowPricingInfo] = useState<{

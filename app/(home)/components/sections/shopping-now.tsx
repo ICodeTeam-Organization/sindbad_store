@@ -4,7 +4,13 @@ import React from "react";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import { NormalizedProductType } from "@/Data/normalizTypes";
 import Link from "next/link";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack } from "react-icons/io";  
+
+
+// // This component fetches the latest products added to the market and displays them in a grid format.
+// // It uses the `getApi` function to fetch data from the API and normalizes the product data using the `normalizeProduct` function.
+// // The products are displayed in a responsive grid layout, and if there are no products available, a message is shown.  
+
 
 const ShoppingNow = async () => {
   let products:NormalizedProductType[] = [];
