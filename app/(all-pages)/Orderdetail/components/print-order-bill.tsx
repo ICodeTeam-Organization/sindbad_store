@@ -20,7 +20,7 @@ import {
 import { get_currency_key } from "@/lib/cookie/cookie.clients";
 
 const PrintOrderBill = ({ Bill }: { Bill: OrderData }) => {
-  const currency = get_currency_key()
+  const currency = get_currency_key(Bill?.pagedOrderDetails?.items[0]?.country);
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
   const [orderItems] = useState(Bill?.pagedOrderDetails?.items);
@@ -64,7 +64,7 @@ const PrintOrderBill = ({ Bill }: { Bill: OrderData }) => {
   const handlePrint = () => {
     reactToPrintFn();
   };
-
+ 
   return (
     <div>
       {
@@ -72,9 +72,9 @@ const PrintOrderBill = ({ Bill }: { Bill: OrderData }) => {
           ref={contentRef}
           className="text-sm p-0 mdHalf:p-6 mdHalf:pt-0 pb-6 m-4 hidden print:block"
         >
-          <PriceLabel title="المجموع" price={totalPrice} />
-          <PriceLabel title="الشحن" price={totalShipcost} />
-          <PriceLabel title="الخصم" price={totalDiscount} />
+          <PriceLabel title="المجموع" price={totalPrice} currency={currency} />
+          <PriceLabel title="الشحن" price={totalShipcost} currency={currency} />
+          <PriceLabel title="الخصم" price={totalDiscount} currency={currency} />
           <hr className="my-2" />
           <div className="flex justify-between mb-2">
             <span className="font-semibold">الإجمالي</span>
@@ -94,9 +94,9 @@ const PrintOrderBill = ({ Bill }: { Bill: OrderData }) => {
           </div>
         </CardHeader>
         <CardContent className="text-sm p-0 mdHalf:p-6 mdHalf:pt-0 pb-6 ">
-          <PriceLabel title="المجموع" price={totalPrice} />
-          <PriceLabel title="الشحن" price={totalShipcost} />
-          <PriceLabel title="الخصم" price={totalDiscount} />
+          <PriceLabel title="المجموع" price={totalPrice} currency={currency} />
+          <PriceLabel title="الشحن" price={totalShipcost} currency={currency} />
+          <PriceLabel title="الخصم" price={totalDiscount} currency={currency} />
           <hr className="my-2" />
           <div className="flex justify-between mb-2">
             <span className="font-semibold">الإجمالي</span>

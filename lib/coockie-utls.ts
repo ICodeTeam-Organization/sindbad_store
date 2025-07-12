@@ -1,6 +1,8 @@
  
 import Cookies from 'js-cookie';
- 
+
+
+
 export  function getCookie(name: string):string | undefined {
   if (typeof window === 'undefined') { 
     try {

@@ -106,6 +106,7 @@ export type SpecialOrderDetailsType = {
     statusName: string;
     images: string[]; // Array of image URLs or paths
     note: string | null;
+    country: string | null;
   }
  export type OfferDetailsResponseType = {
     success: boolean;

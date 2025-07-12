@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getApi } from "@/lib/http";
 import { notFound } from "next/navigation";
-import React from "react";
+import React from "react"; 
 
 const MyOrders = async () => {
   const Orders = await getApi<any>(
@@ -29,7 +29,7 @@ const MyOrders = async () => {
             <Link href={`/Orderdetail/${itm.id}`}>{itm.orderNumber}</Link>
           </h1>
           <h1 className="m-auto text-gray-500 px-3 line-clamp-3 text-right max-md:text-xs max-md:line-clamp-4 mt-9">
-            {itm.totalPrice}
+            {itm.totalPrice} ---
           </h1>
           <h1 className="m-auto px-3 line-clamp-3 max-sm:text-[9px] mt-9">
             {new Date(itm.orderDate).toLocaleDateString("ar")}

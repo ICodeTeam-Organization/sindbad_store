@@ -47,9 +47,7 @@ const sortingOptions = [
 ];
 
 const MyOrdersTable: React.FC<Props> = ({ initData }) => {
-
-  const currency = get_currency_key()
-
+ 
   const router = useRouter();
   
   const [ordersFilters, setOrdersFilters] = useState<{
@@ -116,7 +114,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
   const goToOrderDetails = (id: number) => {
     router.push("/Orderdetail/" + id);
   };
- 
+  
 
   return (
     <div>
@@ -187,7 +185,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                 <tbody className="text-sm text-center text-[#000]">
                   {orders.map(
                     (
-                      { orderNumber, totalPrice, orderDate, orderStatus, id },
+                      { orderNumber, totalPrice, orderDate, orderStatus, id , country },
                       index
                     ) => (
                       <tr
@@ -200,7 +198,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                         }}
                       >
                         <td className="px-4 py-3">{orderNumber}</td>
-                        <td className="px-4 py-3">{totalPrice}</td>
+                        <td className="px-4 py-3">{totalPrice} {get_currency_key(country)  }</td>
                         <td className="px-4 py-3">
                           {convertToArabicDate(orderDate)}
                         </td>
@@ -232,7 +230,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
             <div className="block md:hidden">
               {orders.map(
                 (
-                  { orderNumber, totalPrice, orderDate, orderStatus, id },
+                  { orderNumber, totalPrice, orderDate, orderStatus, id , country },
                   index
                 ) => (
                   <div
@@ -251,7 +249,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                     <div className="mb-2 flex justify-between items-center text-sm">
                       <span className="font-medium"> إجمالي السعر : </span>
                       <span className="text-primary-background font-bold">
-                        {totalPrice} {currency}
+                        {totalPrice} {get_currency_key(country)}
                       </span>
                     </div>
                     <div className="mb-2 flex justify-between items-center text-sm">

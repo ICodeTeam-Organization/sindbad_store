@@ -22,7 +22,9 @@ function ShowPricingInfoDialog({
   setShow: (status: boolean) => void;
   data: Pricing | null;
 }) {
-  const currency = get_currency_key()
+
+  const currency = get_currency_key(data?.country);
+  
   return (
     <Dialog open={show && data != null} onOpenChange={setShow}>
       <DialogContent className="sm:max-w-md">

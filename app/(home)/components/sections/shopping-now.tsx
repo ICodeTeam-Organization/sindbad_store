@@ -13,8 +13,7 @@ import { IoIosArrowBack } from "react-icons/io";
 
 
 const ShoppingNow = async () => {
-  let products:NormalizedProductType[] = [];
-  
+  let products:NormalizedProductType[] = []; 
   try {
     const response = await getApi<any>(
       "Products/HomePage/GetLastProductsAddedToMarketForViewInMarketHomePage/18"
@@ -23,27 +22,8 @@ const ShoppingNow = async () => {
   } catch (error) {
     console.error("Error fetching products:", error);
   }
-
-  return (
-    // <div className="pt-10 mx-auto">
-    //   <SectionTitle title={"تسوق الآن"} href="/shop" />
-    //   <div className="md:px8 lg:px-0 mt-10">
-    //     <div className="flex flex-wrap xl:gap-4 sm:gap-7 gap-4 items-center justify-center">
-    //       {products.length > 0 ? (
-    //         products.map((product: NormalizedProductType) => (
-    //           <div key={product.id} className="sm:w-[220px] w-[180px]">
-    //             <ProductCard
-    //               key={product.id}
-    //               data={product}
-    //             />
-    //           </div>
-    //         ))
-    //       ) : (
-    //         <p className="text-center text-gray-500">لا توجد منتجات متاحة حاليًا</p>
-    //       )}
-    //     </div>
-    //   </div>
-    // </div>
+ 
+  return ( 
      <div className="lg:container mx-auto sm:p-4 p-2 "> 
      <div className="pt-5 w-full">
         <div className="flex flex-col justify-center items-center mb-5 ">

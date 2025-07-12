@@ -37,6 +37,7 @@ export interface PriceSectionProps {
   discountedPrice: number;
   originalPrice: number;
   discount: number;
+  currency: string;
 }
 
 export interface ProductInfoRowProps {

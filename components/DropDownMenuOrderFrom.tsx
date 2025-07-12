@@ -16,6 +16,8 @@ import { RiArrowLeftLine } from "react-icons/ri";
 import { Alert } from "./Alert";
 import LoadingAlert from "./LoadingAlert";
 import { useRouter } from "next-nprogress-bar";
+import useSendDataInBg from "@/hooks/useSendDataInBg";
+import { db } from "@/Data/database/db";
 
 const orderFrom = [
   {
@@ -55,7 +57,7 @@ interface PropsType {
 }
 
 export default function DropDownMenuOrderFrom({ defaultCountry }: PropsType) {
-  const [selectedCountry,setselectedCountry] = useState(
+  const [selectedCountry, setselectedCountry] = useState(
     orderFrom.find((e) => e.key == defaultCountry) ?? {
       name: "السعودية",
       key: "1",
@@ -63,16 +65,23 @@ export default function DropDownMenuOrderFrom({ defaultCountry }: PropsType) {
   );
   const [openAlert, setOpenAlert] = useState(false);
   const [changeCountryLoader, setchangeCountryLoader] = useState(false);
-  const router  = useRouter()
+  const router = useRouter();
+  const { mutateAsync } = useSendDataInBg();
 
-  const onSelect = (item: { name: string; key: string }) => {
+  const onSelect = async (item: { name: string; key: string }) => {
     if (["1", "2"].includes(item.key)) {
-      setchangeCountryLoader(true)
+      setchangeCountryLoader(true);
+
+      // Send data that is in cache to the server
+      const data = await db.bgData.toArray();
+      await mutateAsync(data);
+
       Cookies.remove("country");
       Cookies.set("country", item?.key, {
-        path:'/', sameSite:"Lax"
+        path: "/",
+        sameSite: "Lax",
       });
-      setselectedCountry(item)
+      setselectedCountry(item);
       router.refresh();
       window.location.replace("/");
     } else {
@@ -95,7 +104,10 @@ export default function DropDownMenuOrderFrom({ defaultCountry }: PropsType) {
 
   return (
     <div className="flex items-center gap-x-2 w-full ">
-      <LoadingAlert open={changeCountryLoader} placeholder="جاري تغيير المنطقة"  />
+      <LoadingAlert
+        open={changeCountryLoader}
+        placeholder="جاري تغيير المنطقة"
+      />
       <Alert open={openAlert} onClose={setOpenAlert} />
       <h3 className="text-[13px]"> أطلب مــن </h3>
       <DropdownMenu dir="rtl">

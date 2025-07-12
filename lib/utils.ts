@@ -2,8 +2,7 @@ import { clsx, type ClassValue } from "clsx";
 import { getServerSession } from "next-auth";
 import { twMerge } from "tailwind-merge";
 import { authOption } from "./authOption";
-import { getSession } from "next-auth/react"; 
-import { getCookie } from "./coockie-utls";
+import { getSession } from "next-auth/react";  
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 } 
@@ -39,17 +38,17 @@ export const calculateBonus = (
 };
 
 
-export const getCurrencykey = () => { 
-  const country = getCookie("country");
-  switch (country ?? "1") {
-    case "1":
-      return "ر.س"
-      case "2":
-      return "د.إ"
-    default:
-      return "رس"
-      break;
-  }
- }
+// export const getCurrencykey = () => { 
+//   const country = getCookie("country");
+//   switch (country ?? "1") {
+//     case "1":
+//       return "ر.س"
+//       case "2":
+//       return "د.إ"
+//     default:
+//       return "رس"
+//       break;
+//   }
+//  }
 
-export const currency = getCurrencykey()
+// export const currency = getCurrencykey()

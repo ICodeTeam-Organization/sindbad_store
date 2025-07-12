@@ -1,15 +1,13 @@
   
-import Cookies from 'js-cookie';
-
-export const get_currency_key = () => {
-  const country = Cookies.get("country");
-  switch (country ?? "1") {
+ 
+export const get_currency_key = (country?:any) => { 
+  switch (country) {
     case "1":
       return "ر.س";
     case "2":
       return "د.إ";
     default:
-      return "رس";
+      return "~~";
       break;
   }
 };

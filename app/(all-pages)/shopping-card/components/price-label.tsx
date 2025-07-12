@@ -1,14 +1,11 @@
-'use client';
-
-import { get_currency_key } from "@/lib/cookie/cookie.clients";
-
+'use client';  
 type Props = {
   title: string;
   price: number;
+  currency: string;
 };
 
-const PriceLabel = ({ title, price }: Props) => {
-  const currency = get_currency_key()
+const PriceLabel = ({ title, price, currency }: Props) => {
   return (
     <div className="flex justify-between  mb-2">
       <span className="text-gray-500">{title}</span>

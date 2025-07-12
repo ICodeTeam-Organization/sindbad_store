@@ -12,7 +12,7 @@ type Detail = {
 
 const OrderDetailProductsTable = ({ detail }: Detail) => {
  
-  const currency = get_currency_key()
+  const currency = get_currency_key(detail[0]?.country);
 
   const router = useRouter()
   const goToProductdetails = (id:number) => { 

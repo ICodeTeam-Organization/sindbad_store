@@ -118,6 +118,7 @@ export  function  normalizeProduct(input: any): NormalizedProductType {
     shortDecription: input?.productDetails ?? "",
     isOfferStillOn,
     storeId:input?.storeId,
-    storeName:input?.storeName
+    storeName:input?.storeName,
+    country: input?.country ?? "~",
   };
 }

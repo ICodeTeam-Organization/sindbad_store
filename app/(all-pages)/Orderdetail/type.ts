@@ -7,6 +7,7 @@
     productNumber: string;
     specialProductName: string | null;
     price: number;
+    country:string
     discount: number;
     quantity: number;
     extraQuantity: number;

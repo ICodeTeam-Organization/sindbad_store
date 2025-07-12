@@ -40,11 +40,12 @@ const ProductRow = ({ cartItemData }: Props) => {
     shipCost,
     productId,
     specialProductId,
+    country
   } = cartItemData;
 
   const thePrice = priceAfterDiscount || price;
   const { updateQuantity: updateQuantityInStore, removeItem } = useCartStore();
-const currency = get_currency_key()
+   const currency = get_currency_key(country)
   const [quantity, setQuantity] = useState<number>(initialQuantity);
   const [isUpdated, setIsUpdated] = useState<boolean>(false); 
   // const { toast } = useToast();

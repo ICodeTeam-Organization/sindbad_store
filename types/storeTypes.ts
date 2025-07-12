@@ -101,7 +101,8 @@ export type CartItem =  {
   quantity: number,
   amountYouBuy?: number,
   amountYouGet?: number,
-  shipCost: number
+  shipCost: number,
+  country?:string
 }
 
 

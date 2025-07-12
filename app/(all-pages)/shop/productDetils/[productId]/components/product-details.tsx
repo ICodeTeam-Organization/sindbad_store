@@ -7,6 +7,7 @@ import { getRemainingTimeForOffer } from "@/lib/timeFuns";
 import { NormalizedProductType } from "@/Data/normalizTypes";
 import Link from "next/link";
 import CategorisListSection from "./CategorisListSection";
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 type ProductDetailsProps = {
   product: NormalizedProductType;
 };
@@ -50,6 +51,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                 discountedPrice={product?.price} // product?.price هذا اذا فيه خصم يكون فيه السعر بعد الخصم واذا مافيه خصم يكون فيه السعر الاصلي
                 originalPrice={product.priceBeforeDiscount ?? product?.price}
                 discount={product.percentageOfDiscount ?? 0}
+                currency={get_currency_key(product.country)}
               />
             </div>
 

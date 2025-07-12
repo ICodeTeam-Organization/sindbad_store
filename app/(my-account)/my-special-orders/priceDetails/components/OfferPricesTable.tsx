@@ -13,8 +13,7 @@ function OfferPricesTable({
 }: {
   initData: OfferDetailsResponseType;
   
-}) {
-  const currency = get_currency_key()
+}) { 
   const [SelectedPricing, setSelectedPricing] = useState<Pricing>(initData?.data[0]);
  
   const [showPricingInfo, setshowPricingInfo] = useState<{
@@ -70,8 +69,8 @@ function OfferPricesTable({
                     />
                   </td>
 
-                  <td className="px-4 py-3">{ele?.price} {currency}</td>
-                  <td className="px-4 py-3">{ele?.shippingCost} {currency}</td>
+                  <td className="px-4 py-3">{ele?.price} {get_currency_key(ele?.country)}</td>
+                  <td className="px-4 py-3">{ele?.shippingCost} {get_currency_key(ele?.country)}</td>
                   <td className="px-4 py-3">{ele?.quantity}</td>
                   <td className="px-4 py-3">{ele?.note ?? "لا توجد ملاحظة"}</td>
                   <td className=" py-3 mx-0 px-0">
@@ -121,13 +120,13 @@ function OfferPricesTable({
                   <div className="mb-2">
                     <span className=" font-[400]">السعر : </span>
                     <span className="text-primary-background">
-                      {ele?.price} {currency}
+                      {ele?.price} {get_currency_key(ele?.country)}
                     </span>
                   </div>
                   <div className="mb-2">
                     <span className=" font-[400]"> الشحن : </span>
                     <span className="text-primary-background">
-                      {ele?.shippingCost} {currency}
+                      {ele?.shippingCost} {get_currency_key(ele?.country)}
                     </span>
                   </div>
                 </div>

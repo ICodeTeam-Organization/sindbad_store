@@ -49,7 +49,7 @@ async function http<T>(
     // -----add type to response
     ...config,
     body: isFormData ? (config.body as FormData) : JSON.stringify(config?.body),
-    cache:'no-cache',
+    // next: { revalidate: 60 } ,
     headers: {
       "Accept-Language": "ar",
       ...(isFormData ? {} : { "Content-Type": "application/json" }),

@@ -36,7 +36,7 @@ export type NormalizedProductType = {
   quantity: number;
   extraQuantity: number;
   shipCost: number;
-
+  country: string;
   favoriteId?: number;
   customerId?: string;
   isDisabled?: boolean;

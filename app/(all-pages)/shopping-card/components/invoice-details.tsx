@@ -74,7 +74,7 @@ const Summary = ({
   isRefetching: boolean;
 }) => {
 
- const currency = get_currency_key()
+ const currency = get_currency_key(cartItems[0]?.country) ;
   cartItems = cartItems.filter((e) => e.quantity > 0);
   const router = useRouter()
   const [addressError, setaddressError] = useState(false)
@@ -86,7 +86,7 @@ const Summary = ({
       setaddressError(true)
     }
    }
-
+ 
 
   return (
     <Card className="mdHalf:sticky mdHalf:top-[100px] mdHalf:z-10 ">
@@ -99,14 +99,17 @@ const Summary = ({
         <PriceLabel
           title="الإجمالي"
           price={calculateTotalPrice(cartItems) || 0}
+          currency={currency}
         />
         <PriceLabel
           title="الشحن"
           price={calculateTotalShippingCost(cartItems) || 0}
+          currency={currency}
         />
         <PriceLabel
           title="الخصم"
           price={calculateTotalDiscount(cartItems) || 0}
+          currency={currency}
         />
         <hr className="my-2" />
         <div className="flex justify-between mb-2">
