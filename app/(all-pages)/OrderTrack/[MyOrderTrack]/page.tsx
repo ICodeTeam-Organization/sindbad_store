@@ -153,6 +153,7 @@ import { OrderTrackResponseType } from "@/types/storeTypes";
 import { notFound } from "next/navigation"; 
 import Link from "next/link";
 import { convertToArabicDate } from "@/lib/timeFuns";
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 
 
 const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
@@ -171,12 +172,8 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
 
   if (!OrderTrack?.success) {
     return notFound();
-  }
-
-  const orderData = OrderTrack.data; 
-
-  console.log("orderData", orderData);
-  
+  } 
+  const orderData = OrderTrack.data;  
   
   return (
     <>
@@ -218,7 +215,7 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
 
           </div>
           <h1 className="text-2xl font-bold text-primary-background max-md:text-lg  ">
-            {(orderData?.totalPrice).toFixed(2) + " "}ر.س 
+            {(orderData?.totalPrice).toFixed(2) + " "} {get_currency_key(orderData?.country)}
           </h1>
           </div>
           <div className="sm:hidden  " >

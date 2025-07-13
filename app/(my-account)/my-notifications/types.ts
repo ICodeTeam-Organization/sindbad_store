@@ -44,4 +44,5 @@ export type NotificationType = {
   createdAt: string;
   action: number;
   isRead: boolean;
+  country:string
 };

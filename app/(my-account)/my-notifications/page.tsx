@@ -24,7 +24,7 @@ const Notifications = async () => {
     notifeeCount.push(OrdersNotificationCount);
 
 
-    // console.log(data);
+    console.log(data?.data?.items);
     // console.log("Notifications?pageNumber=1&pageSize=30&" + actionsQeries);
     // console.log(notificationsCounts );
     // console.log(notifeeCount);

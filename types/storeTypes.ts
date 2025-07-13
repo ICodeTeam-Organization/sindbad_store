@@ -169,6 +169,7 @@ export type OrderTrackType = {
   deliveredAt: string | null;
   arrivedAtDistributionArea: string | null;
   deliverdToCustomerAt: string | null;
+  country:string
 };
 export type OrderTrackResponseType = {
   success: boolean;

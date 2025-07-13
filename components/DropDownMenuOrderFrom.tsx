@@ -108,7 +108,13 @@ export default function DropDownMenuOrderFrom({ defaultCountry }: PropsType) {
         open={changeCountryLoader}
         placeholder="جاري تغيير المنطقة"
       />
-      <Alert open={openAlert} onClose={setOpenAlert} />
+      <Alert
+      open={openAlert}
+      onClose={setOpenAlert}
+      title="⚠️"
+      description={`عذرا، لا يمكننا جلب الطلبات من هذا الموقع في الوقت الحالي.\nسيتم إضافة هذي المناطق قريبا.`}
+      cancelText="إغلاق"
+    />
       <h3 className="text-[13px]"> أطلب مــن </h3>
       <DropdownMenu dir="rtl">
         <DropdownMenuTrigger asChild className="cursor-pointer">

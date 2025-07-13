@@ -37,6 +37,16 @@ export const calculateBonus = (
   return 0;
 };
 
+export const getCountryName = (country:string) => {
+  switch (country) {
+    case "1":
+      return "المملكة العربية السعودية";
+    case "2":
+      return "الإمارات العربية المتحدة";
+    default:
+      return "دولة غير معروفة";
+  }
+};
 
 // export const getCurrencykey = () => { 
 //   const country = getCookie("country");

@@ -5,7 +5,7 @@ import { getApi, postApi } from "@/lib/http";
 import { NotificationType } from "../types";
 import { Button } from "@/components/ui/button";
 import FilterButton from "./FilterButton";
-import { cn } from "@/lib/utils";
+import { cn, getCountryName } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
 import { convertToArabicDate } from "@/lib/timeFuns";
 import {
@@ -13,7 +13,8 @@ import {
   actionsSpecialProducts,
   notifyActionToQuery,
 } from "../notificationsActions";
-
+import Cookies from 'js-cookie';
+import { Alert } from "@/components/Alert";
 const NotificationCard = ({
   initData,
   notifeeCounts,
@@ -29,11 +30,24 @@ const NotificationCard = ({
   notifeeCounts: number[];
   actionsQuery: string;
 }) => {
-
-  
   const [notifeeType, setnotifeeType] = useState(0);
   const [actionsQueries, setActionsQueries] = useState(actionsQuery);
   const router = useRouter();
+  const [alertData, setAlertData] = useState<{
+    open: boolean;
+    message: string;
+    newCountry: string;
+    notificationId: string | number;
+    action:number;
+    target: number | string;
+  }>({
+    open: false,
+    message: "",
+    newCountry: "",
+    notificationId: "",
+    action: 0,
+    target: "",
+  });
 
   const fetchNotifications = async ({ pageParam = 1 }) => {
     const response = await getApi<any>(
@@ -95,17 +109,37 @@ const NotificationCard = ({
     setnotifeeType(type);
   };
 
-  const hanleMarkAsRead = async (noti: NotificationType) => {
+   const handleMarkAsRead = async (noti: NotificationType) => {
+    const currentCountry = Cookies.get("country");
+    const isCurrentCountry = currentCountry === noti.country;
+
+    if (!isCurrentCountry) {
+      setAlertData({
+        open: true,
+        message: `أنت الآن في دولة (${getCountryName(currentCountry ?? "")}) والإشعار خاص بدولة (${ getCountryName(noti.country)})، هل ترغب بالانتقال لها؟`,
+        newCountry: noti.country,
+        notificationId: noti.id,
+        action: noti.action,
+        target: noti.target,
+      });
+      return;
+    }
+
+    // ✅ نفس الدولة: أكمل التنقل حسب نوع الإجراء
+    await handleAction(noti);
+  };
+
+  const handleAction = async (noti: NotificationType) => {
     switch (noti?.action) {
       case 4:
       case 9:
       case 11:
       case 12:
       case 13:
-        router.push("OrderTrack/" + noti?.target);
+        router.push("/OrderTrack/" + noti?.target);
         break;
       case 2:
-        router.push("my-special-orders/priceDetails/" + noti?.target);
+        router.push("/my-special-orders/priceDetails/" + noti?.target);
         break;
       default:
         break;
@@ -114,8 +148,79 @@ const NotificationCard = ({
     await postApi("Notifications/MarkAsRead?NotificationId=" + noti?.id);
   };
 
+  const confirmChangeCountry = async () => {
+    const { newCountry , notificationId ,action , target} = alertData;
+    Cookies.remove("country");
+    Cookies.set("country", newCountry, { path: "/", sameSite: "Lax" });
+    postApi("Notifications/MarkAsRead?NotificationId=" + notificationId);
+
+    setAlertData((prev) => ({ ...prev, open: false }));
+    switch (action) {
+      case 4:
+      case 9:
+      case 11:
+      case 12:
+      case 13:
+         window.location.replace("/OrderTrack/" + target);
+        break;
+      case 2:
+         window.location.replace("/my-special-orders/priceDetails/" + target);
+        break;
+      default:
+        break;
+    }
+
+  };
+
+
+//   const hanleMarkAsRead = async (noti: NotificationType) => {
+
+//     const currentCountry =  Cookies.get("country");
+//     const isCurrentCountry = currentCountry !== noti.country;
+//     // setchangeCountryLoader(true);
+
+// //       // Send data that is in cache to the server
+// //       const data = await db.bgData.toArray();
+// //       await mutateAsync(data);
+
+// //       Cookies.remove("country");
+// //       Cookies.set("country", item?.key, {
+// //         path: "/",
+// //         sameSite: "Lax",
+// //       });
+// //       setselectedCountry(item);
+// //       router.refresh();
+// //       window.location.replace("/");
+
+//     switch (noti?.action) {
+//       case 4:
+//       case 9:
+//       case 11:
+//       case 12:
+//       case 13:
+//         router.push("OrderTrack/" + noti?.target);
+//         break;
+//       case 2:
+//         router.push("my-special-orders/priceDetails/" + noti?.target);
+//         break;
+//       default:
+//         break;
+//     }
+
+//     await postApi("Notifications/MarkAsRead?NotificationId=" + noti?.id);
+//   };
+
   return (
     <div className="space-y-4 mt-4">
+       <Alert
+          open={alertData.open}
+          onClose={() => setAlertData((prev) => ({ ...prev, open: false }))}
+          onOk={confirmChangeCountry}
+          title="🚨"
+          description={alertData.message}
+          cancelText="إلغاء"
+          okText="نعم، انتقل"
+        />
       <div className="flex gap-4 my-6 justify-start flex-wrap sm:flex-nowrap">
         <FilterButton
           title="كل الإشعارات"
@@ -164,7 +269,7 @@ const NotificationCard = ({
           {notifications.map((notification: NotificationType) => (
             <div
               onClick={() => {
-                hanleMarkAsRead(notification);
+                handleMarkAsRead(notification);
               }}
               key={notification.id}
               className={cn(
@@ -179,14 +284,27 @@ const NotificationCard = ({
                 </span>
               )}
               <div>
-                <p className="text-xs mb-2 text-gray-500">
-                  {convertToArabicDate(notification.createdAt)}
-                </p>
-                <span className="text-base text-black   px-2 rounded-sm">
+                <div className=" flex gap-x-4 mb-2">
+                  <p className="text-xs  text-gray-500">
+                    {convertToArabicDate(notification.createdAt)}
+                  </p>
+                  <span className="text-xs text-secondary bg-white px-2 rounded-sm">
+                    {notification.country == "1" ? (
+                      <span role="img" aria-label="Saudi Arabia">
+                        من السعودية
+                      </span>
+                    ) : notification.country == "2" ? (
+                      <span role="img" aria-label="UAE">
+                        من الإمارات
+                      </span>
+                    ) : null}
+                  </span>
+                </div>
+                <span className="sm:text-base text-sm text-black   px-2 rounded-sm">
                   {notification.title}
                 </span>
                 {/* <span className="mr-2 text-black">{notification.}</span> */}
-                <p className="text-sm px-2 mt-2 text-gray-600">
+                <p className="sm:text-sm text-xs px-2 mt-2 text-gray-600">
                   {notification.body}
                 </p>
               </div>
