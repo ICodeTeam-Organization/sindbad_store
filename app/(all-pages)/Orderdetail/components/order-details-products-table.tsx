@@ -49,6 +49,8 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                       <div className="w-20 h-20 relative mr-4 bg-slate-100 rounded-lg me-4 overflow-hidden">
                         <SafeImage
                           fill
+                          width={80}
+                          height={80}
                           className="ml-3"
                           src={details?.image || ""}
                           alt="Product"
@@ -93,7 +95,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
             >
               <div className="flex  mb-2">
                 <div className="w-20 h-20 relative bg-slate-100 rounded-lg overflow-hidden ">
-                  <SafeImage fill src={details?.image || ""} alt="Product" />
+                  <SafeImage  fill src={details?.image || ""} alt="Product" width={0} height={0} />
                 </div>
                 <div className="px-3 my-2" >
                   <span className="text-sm font-bold block ">

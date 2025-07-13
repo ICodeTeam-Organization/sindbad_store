@@ -15,7 +15,7 @@ import ShareButton from "./ShareButton";
 const ImageGalleryProductDetails = ({
   images,
   productId,
-  blurHash
+  // blurHash
 }: {
   images: string[];
   productId: number;
@@ -55,8 +55,7 @@ const ImageGalleryProductDetails = ({
                   src={image}
                   alt={image}
                   className="object-contain rounded-lg border shadow-sm"
-                  fill
-                  blurHash={blurHash}
+                  fill width={0} height={0}                  // blurHash={blurHash}
                 />
               </CarouselItem>
             ))}

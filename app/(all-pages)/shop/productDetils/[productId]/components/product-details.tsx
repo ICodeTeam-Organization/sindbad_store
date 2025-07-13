@@ -13,6 +13,7 @@ type ProductDetailsProps = {
 };
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
+ 
   return (
     <div className="flex flex-col lg:flex-row gap-4 mt-12 mdHalf:px-12 px-4">
       <div className=" ml-8 mdHalf:w-[500px] w-full">

@@ -110,8 +110,7 @@ function StoresMegaMenu() {
                         alt={i.name}
                         fill
                         className="bg-gray-50"
-                        src={i.imageUrl}
-                      />
+                        src={i.imageUrl} width={0} height={0}                      />
                     </div>
                     <p className="line-clamp-1 flex-grow overflow-hidden text-ellipsis">
                       {i.name}

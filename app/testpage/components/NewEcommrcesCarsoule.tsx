@@ -254,11 +254,10 @@ const NewEcommrcesCarsoule = () => {
                         <div className="flex justify-center items-center lgHalf:aspect-[10/7]  aspect-square  overflow-hidden rounded-[8px]   relative ">
                          
                             <SafeImage
-                              src={shop.logo}
-                              alt={shop.name}
-                              fill
-                              className="object-cover"
-                            />
+                            src={shop.logo}
+                            alt={shop.name}
+                            fill
+                            className="object-cover" width={0} height={0}                            />
                          
                           <div
                               onClick={() => toggleFavorite(shop.id)}

@@ -124,8 +124,7 @@ const StoreDetailsCard = ({
                         src={image.imageUrl}
                         alt={name}
                         className="w-full h-[350px] aspect-video object-cover rounded-lg border shadow-sm"
-                        fill
-                      />
+                        fill width={0} height={0}                      />
                     </CarouselItem>
                   ))}
                 </CarouselContent>

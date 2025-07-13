@@ -35,8 +35,7 @@ const ImagesViewr = ({ images }: { images: string[] }) => {
         src={img}
         alt={`صورة مصغرة ${index + 1}`}
         fill
-        className="w-full h-full object-cover"
-      />
+        className="w-full h-full object-cover" width={0} height={0}      />
     </button>
   ))}
 </div>

@@ -1,3 +1,107 @@
+// "use client";
+
+// import { useRef } from "react";
+// import Autoplay from "embla-carousel-autoplay";
+// import Link from "next/link";
+// import { IoIosArrowBack } from "react-icons/io";
+// import { ArrowLeft, ArrowRight } from "lucide-react";
+// import {
+//   Carousel,
+//   CarouselContent,
+//   CarouselItem,
+//   CarouselNext,
+//   CarouselPrevious,
+// } from "@/components/ui/carousel";
+// import ProductCard from "@/components/product_card/ProductCard";
+// import { NormalizedProductType } from "@/Data/normalizTypes";
+
+// const ProductCarsoule = ({
+//   products = [],
+//   sectionTitle,
+//   sectionHref,
+// }: {
+//   products: NormalizedProductType[];
+//   sectionTitle: string;
+//   sectionHref?: string;
+// }) => {
+//   const plugin = useRef(
+//     Autoplay({
+//       delay: 5000,
+//       stopOnInteraction: true,
+//       stopOnMouseEnter: true,
+//     })
+//   );
+//   const carouselRef = useRef<any>(null);
+
+//   return (
+//     <div dir="rtl" className="lg:container mx-auto sm:p-4 p-2">
+//       <div className="pt-5 w-full">
+//         <div className="flex flex-col justify-center items-center mb-5">
+//           <h3 className="lg:text-lg text-base font-bold relative p-3">
+//             {sectionTitle}
+//           </h3>
+//           <div className="w-[150px] h-[2px] rounded-full bg-primary" />
+//         </div>
+//       </div>
+
+//         <Carousel
+//           opts={{
+//             direction: "rtl",
+//             align: "start",
+//           }}
+//           plugins={[plugin.current]}
+//           className="w-full"
+//           ref={carouselRef}
+//         >
+//           <CarouselContent className="w-full">
+//             {products.map((product) => (
+//               <CarouselItem
+//                 key={product.id}
+//                 className="px-2 my-2 sm:basis-[220px] basis-[180px]"
+//               >
+//                 <ProductCard data={product} />
+//               </CarouselItem>
+//             ))}
+//           </CarouselContent>
+
+//           <button
+//             className="bg-white opacity-85 absolute top-1/2 -translate-y-1/2 z-10 hover:opacity-100 p-3 border rounded-full text-primary hover:text-black hover:shadow-sm transition duration-300 -right-4"
+//             onClick={() => carouselRef.current?.scrollNext?.()}
+//           >
+//             <ArrowRight />
+//           </button>
+
+//           <button
+//             className="bg-white p-3 absolute top-1/2 -translate-y-1/2 z-10 border opacity-85 hover:opacity-100 rounded-full text-primary hover:text-black hover:shadow-sm transition duration-300 -left-4"
+//             onClick={() => carouselRef.current?.scrollPrev?.()}
+//           >
+//             <ArrowLeft />
+//           </button>
+//         </Carousel>
+
+//       {sectionHref && (
+//         <div className="flex items-center justify-center my-4 border-b mt-8">
+//           <Link href={sectionHref}>
+//             <button className="btn bg-secondary flex items-center gap-x-4 text-sm p-3 rounded-t-md text-white group">
+//               <h3 className="mdHalf:text-sm text-xs -translate-y-[1px] transition duration-500 pr-1">
+//                 عرض المزيد
+//               </h3>
+//               <IoIosArrowBack className="transition duration-500 text-lg" />
+//             </button>
+//           </Link>
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default ProductCarsoule;
+
+
+
+
+
+
 "use client";
  
 import ProductCard from "@/components/product_card/ProductCard";
@@ -143,9 +247,9 @@ export default ProductCarsoule;
 //   CarouselPrevious,
 // } from "@/components/ui/carousel";
 // import Autoplay from "embla-carousel-autoplay";
-// import SectionTitle from "@/app/(home)/components/section-title";
-// import ProductCard from "@/app/(home)/components/product-card";
+// import SectionTitle from "@/app/(home)/components/section-title"; 
 // import { NormalizedProductType } from "@/Data/normalizTypes";
+// import ProductCard from "./product_card/ProductCard";
 
 // const ProductCarsoule = ({
 //   products = [],

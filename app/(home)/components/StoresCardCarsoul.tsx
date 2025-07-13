@@ -99,8 +99,7 @@ const StoresCardCarsoul: React.FC<{
               src={store.mainImageUrl}
               alt={store.name}
               fill
-              className="object-cover"
-            />
+              className="object-cover" width={0} height={0}            />
             <a  
               onClick={(e) => {
                 handleAddToFav();
