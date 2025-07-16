@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectItem } from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
@@ -20,7 +19,7 @@ export default function AddressSelector({onSelect}:{onSelect:(id:string)=>void})
 
   return (
     <div className="w-full">
-      <Label>عنوان الإستلام</Label>
+      {/* <Label>عنوان الإستلام</Label> */}
       <Select dir="rtl" onValueChange={(value) => {setSelectedAddressId(value);onSelect(value)}} value={selectedAddressId}>
         <SelectTrigger>
           <SelectValue placeholder="حدد عنوان الإستلام" />

@@ -35,7 +35,7 @@ const ProductCard = ({ data }: propsType) => {
             src={data?.image}
             // blurHash={data?.blurHash}
             width={300}
-            height={256}
+            height={300}
             // objectFit="contain"
             sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
             className="w-full mdHalf:h-56 3xs:h-52 h-44 object-contain"

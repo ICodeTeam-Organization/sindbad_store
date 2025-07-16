@@ -10,9 +10,10 @@ export const registrationSchema = z
 
     email: z
       .string()
-      .regex(
-        /^[\w\d][\w\d\.]+[\w\d]@\w{1,10}\.\w{2,4}$/,
-        "الرجاء إدخال البريد الإلكتروني صالح"
+      .optional()
+      .refine(
+        (val) => !val || /^[\w\d][\w\d\.]*[\w\d]@\w{1,10}\.\w{2,4}$/.test(val),
+        { message: "الرجاء إدخال بريد إلكتروني صالح" }
       ),
 
     password: z
@@ -98,14 +99,23 @@ export const changePassSchema = z
       path: ["confirmPassword"],
     }
   );
-
+ 
 export const AddshipingadressSchema = z.object({
-  locationDescription: z.string().min(1, "يجب إدخال العنوان"),
-  userName: z.string().min(1, "يجب إدخال اسم المستلم"),
-  phoneNumber: z.string().min(9, "رقم الهاتف يجب أن يكون على الأقل 9 أرقام"),
-  // state: z.string().min(1, "اختر المحافظة"),
+  locationDescription: z.string().optional(),
+  userName: z
+    .string()
+    .optional()
+    .refine((val) => !val || val.trim().length >= 1, {
+      message: "يجب إدخال اسم المستلم",
+    }),
+  phoneNumber: z
+    .string()
+    .optional()
+    .refine((val) => !val || val.trim().length >= 9, {
+      message: "رقم الهاتف يجب أن يكون على الأقل 9 أرقام",
+    }),
   stateid: z.string().min(1, "اختر المحافظة"),
-  city: z.string().min(1, "اختر المدينة"),
-  // place: z.string().min(1, "اختر المنطقة"),
+  city: z.string().min(1, "اختر المديرية"),
 });
+
 

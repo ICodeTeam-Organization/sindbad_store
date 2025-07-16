@@ -42,7 +42,7 @@ function StoresSearchSelector({
     retry:false
   });
 
-  const { isLoading, data } = useQuery<{ data: { items: Store[] } }>({
+  const { isLoading, data , error} = useQuery<{ data: { items: Store[] } }>({
     queryKey: ["getStoresForSearchFilter", params.pageNumber, params.storeName],
     queryFn: () =>
       postApi(`Stores/GetStoresWithFilter`, {
@@ -64,6 +64,8 @@ function StoresSearchSelector({
 
   // this to set the store Filter if send from url query
   React.useEffect(() => {
+    console.log(error);
+    
     if (dataInitStore?.data) {
       setSelectedStore(dataInitStore?.data);
       setstoreId("")

@@ -14,14 +14,14 @@ function Footer() {
   const aboutSindbad = [
     { title: "عن متجر سندباد", href: "/account" },
     { title: "ماهو الطلب الخاص", href: "/orders" },
-    { title: "الأسئلة الشائعة", href: "/shopping-card" },
+    { title: "الأسئلة الشائعة", href: "/cart" },
     // { title: "المفضلة", href: "/Favorites" },
   ] as const;
 
   // const servicesLinks = [
   //   { title: "طلب خاص", href: "/about" },
   //   { title: "العروض", href: "/orders" },
-  //   { title: "المحلات التجارية", href: "/shopping-card" },
+  //   { title: "المحلات التجارية", href: "/cart" },
   //   { title: "متاجر الكترونية", href: "/Favorites" },
   // ] as const;
 

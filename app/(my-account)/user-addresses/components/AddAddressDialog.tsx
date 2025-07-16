@@ -245,7 +245,7 @@ const AddAddressDialog = ({
                   <div className="grid grid-cols-2 gap-2 ">
                     <div>
                       <FormLabel className="m-auto text-sm font-bold mb-2">
-                        <p className=" text-right">المحافظة</p>
+                        <p className=" text-right">المحافظة*</p>
                       </FormLabel>
                       <FormField
                         control={form.control}
@@ -298,7 +298,7 @@ const AddAddressDialog = ({
 
                     <div>
                       <FormLabel className="m-auto text-sm font-bold ">
-                        <p className=" text-right">المديرية</p>
+                        <p className=" text-right">المديرية*</p>
                       </FormLabel>
                       <FormField
                         control={form.control}
@@ -402,7 +402,7 @@ const AddAddressDialog = ({
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
                         <FormLabel className="m-auto text-sm font-bold mb-2">
-                          <p>المستلم</p>
+                          <p>المستلم {"(إختياري)"}</p>
                         </FormLabel>
                         <FormControl>
                           <Input {...field} />
@@ -417,7 +417,7 @@ const AddAddressDialog = ({
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
                         <FormLabel className="m-auto text-sm font-bold mb-2">
-                          <p>رقم التلفون</p>
+                          <p>رقم التلفون {"(إختياري)"}</p>
                         </FormLabel>
                         <FormControl>
                           <Input {...field} />
@@ -433,7 +433,7 @@ const AddAddressDialog = ({
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
                         <FormLabel className="m-auto text-sm font-bold mb-2">
-                          <p>العنوان</p>
+                          <p>العنوان {"(إختياري)"}</p>
                         </FormLabel>
                         <FormControl>
                           <Textarea {...field} />

@@ -1,12 +1,9 @@
-"use client";
-import { Button } from "@/components/ui/button";
+"use client"; 
 import {
   Card,
   CardContent,
   CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import { ArrowLeft } from "lucide-react";
+} from "@/components/ui/card"; 
 import React, { useState } from "react";
 import PriceLabel from "./price-label";
 import { CartItem } from "@/types/storeTypes";
@@ -89,12 +86,13 @@ const Summary = ({
  
 
   return (
-    <Card className="mdHalf:sticky mdHalf:top-[100px] mdHalf:z-10 ">
-      <CardHeader>
-        <h2 className="text-lg text-center font-bold mb-4">
+    <Card className=" border-0 ">
+      <div className="flex items-center justify-between p-4 py-8">
+        <h2 className="text-base font-bold  ">
           تفاصيل قيمة الطلب
         </h2>
-      </CardHeader>
+        
+      </div>
       <CardContent>
         <PriceLabel
           title="الإجمالي"
@@ -129,10 +127,10 @@ const Summary = ({
         cartItems.length > 0 && (
           <CardFooter className="flex-col">
             <div onClick={handleCheckout}  className=" w-full">
-              <Button className="bg-primary hover:bg-orange-600 text-white text-lg  w-full">
-                ادخال سند السداد
-                <ArrowLeft className="mr-3 " />
-              </Button>
+              <div className="bg-primary hover:bg-orange-600 text-white text-base  p-3 text-center rounded w-full">
+                إكمال الطلب
+                {/* <ArrowLeft className="mr-3 " /> */}
+              </div>
             </div>
             
             { addressError &&  <p className="mt-2 text-sm text-red-600 ">    يجب ان تحدد عنوانا للإستلام    </p>}

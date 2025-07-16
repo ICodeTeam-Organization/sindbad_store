@@ -13,14 +13,14 @@ const About = () => {
   const myAccount = [
     { title: "حسابي", href: "/account" },
     { title: "طلباتي", href: "/orders" },
-    { title: "سلة المشتريات", href: "/shopping-card" },
+    { title: "سلة المشتريات", href: "/cart" },
     { title: "المفضلة", href: "/Favorites" }
   ] as const;
 
   const importantLinks = [
     { title: "من نحن", href: "/about" },
     { title: "سياسة الخصوصية", href: "/orders" },
-    { title: "الشروط والأحكام", href: "/shopping-card" },
+    { title: "الشروط والأحكام", href: "/cart" },
     { title: "الدعم الفني", href: "/Favorites" }
   ]as const;
 

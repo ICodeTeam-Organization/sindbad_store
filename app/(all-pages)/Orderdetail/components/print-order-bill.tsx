@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/card";
 import React, { useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
-import PriceLabel from "../../shopping-card/components/price-label";
+import PriceLabel from "../../cart/components/price-label";
 import { Button } from "@/components/ui/button";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { OrderData } from "../type";

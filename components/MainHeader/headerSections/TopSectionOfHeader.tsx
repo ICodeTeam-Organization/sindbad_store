@@ -63,7 +63,7 @@ function TopSectionOfHeader({
               <GoHeart className="text-secondary  text-[20px] m-2 " />
             </Link>
             <Link
-              href="/shopping-card"
+              href="/cart"
               className="cursor-pointer bg-bg-100 transition-[background-color] duration-500 hover:bg-bg-200  rounded-full"
             >
               {" "}

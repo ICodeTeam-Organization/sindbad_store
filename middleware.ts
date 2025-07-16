@@ -32,7 +32,7 @@ export default withAuth(
 
     // Protected paths
     const protectedPaths = [
-      "/shopping-card",
+      "/cart",
       "/my-notifications",
       "/my-orders",
       "/my-special-orders",
@@ -80,7 +80,7 @@ export default withAuth(
 export const config = {
   // المسارت الي بيشتغل فيها المدل وير
   matcher: [
-    // "/shopping-card/:path*",
+    // "/cart/:path*",
     // "/my-notifications/:path*",
     // "/my-orders/:path*",
     // "/my-special-orders/:path*",

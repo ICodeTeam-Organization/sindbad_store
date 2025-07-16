@@ -121,7 +121,7 @@ const CheckoutForm = () => {
         formData.append("BondImageFile", data.image[0]);
       }
       formData.append("BondTyep", "1");
-      formData.append("IsUrgentOrder", "false");
+      formData.append("IsUrgentOrder", sessionStorage?.getItem("urgentDelivery") ? "true" : "false");
 
       return postApi("Orders/CompleteCustomerPurchase", {
         body: formData,

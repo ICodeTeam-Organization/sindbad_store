@@ -91,7 +91,7 @@ function ResulteDialog({onOpenChange,open,data}:props) {
 
           <DialogFooter className="sm:justify-start">
             <DialogClose asChild>
-              <Button type="button" variant="secondary">
+              <Button type="button" variant="secondary" className='text-white'>
                 اغلاق
               </Button>
             </DialogClose>

@@ -80,10 +80,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , has
 
     if (hasReview) return setValidationError("لقد قمت بالفعل بنشر مراجعة لهذا المنتج.");
 
-    if (reviewText.trim() === "") {
-      setValidationError("يرجى إضافة تعليق قبل النشر.");
-      return;
-    }
+    // if (reviewText.trim() === "") {
+    //   setValidationError("يرجى إضافة تعليق قبل النشر.");
+    //   return;
+    // }
 
     if (rate < 1 || rate > 5) {
       setValidationError("يرجى اختيار تقييم بين 1 و 5.");

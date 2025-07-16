@@ -11,7 +11,7 @@ function FooterServicesSection() {
      const servicesLinks = [
     { title: "طلب خاص", click: ()=>{setShowSpecialOrderDialog(true)} , href:"" },
     { title: "العروض", href: "/orders",click: ()=>{} , },
-    { title: "المحلات التجارية", href: "/shopping-card",click: ()=>{} , },
+    { title: "المحلات التجارية", href: "/cart",click: ()=>{} , },
     { title: "متاجر الكترونية", href: "/Favorites",click: ()=>{} , },
   ] as const;
 

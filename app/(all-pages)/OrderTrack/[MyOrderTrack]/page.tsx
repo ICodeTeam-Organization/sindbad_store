@@ -156,7 +156,7 @@ import { convertToArabicDate } from "@/lib/timeFuns";
 import { get_currency_key } from "@/lib/cookie/cookie.clients";
 
 
-const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
+const OrderTrack = async ({ params }: { params: { MyOrderTrack: string } }) => {
  
     
 
@@ -293,4 +293,4 @@ const page = async ({ params }: { params: { MyOrderTrack: string } }) => {
   );
 };
 
-export default page;
+export default OrderTrack;

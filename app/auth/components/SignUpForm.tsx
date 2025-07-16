@@ -102,8 +102,8 @@ const SignUpForm: React.FC = () => {
       <CardContent className="space-y-4">
         {error && <div className="p-2 bg-red-100 text-red-600">{error}</div>}
         <div className="space-y-2">
-          <Label className={`font-bold text-lg`} htmlFor="name">
-            الاسم
+          <Label className={`font-bold text-base `} htmlFor="name">
+            الاسم*
           </Label>
           <Input {...register("name")} id="name" type="text" placeholder="" />
           {errors.name && (
@@ -111,8 +111,8 @@ const SignUpForm: React.FC = () => {
           )}
         </div>
         <div className="space-y-2">
-          <Label className={`font-bold text-lg`} htmlFor="phone">
-            رقم الهاتف
+          <Label className={`font-bold text-base `} htmlFor="phone">
+            رقم الهاتف*
           </Label>
           <Input {...register("phone")} id="phone" type="text" placeholder="" />
           {errors.phone && (
@@ -120,7 +120,7 @@ const SignUpForm: React.FC = () => {
           )}
         </div>
         <div className="space-y-2">
-          <Label className={`font-bold text-lg`} htmlFor="email">
+          <Label className={`font-bold text-base `} htmlFor="email">
             البريد الألكتروني
           </Label>
           <Input {...register("email")} id="email" type="text" placeholder="" />
@@ -129,8 +129,8 @@ const SignUpForm: React.FC = () => {
           )}
         </div>
         <div className="space-y-2">
-          <Label className={`font-bold text-lg`} htmlFor="password">
-            كلمة المرور
+          <Label className={`font-bold text-base `} htmlFor="password">
+            كلمة المرور*
           </Label>
           <PasswordInput register={register} fieldName="password" />
           {errors.password && (
@@ -138,8 +138,8 @@ const SignUpForm: React.FC = () => {
           )}
         </div>
         <div className="space-y-2">
-          <Label className={`font-bold text-lg`} htmlFor="confirmPassword">
-            تأكيد كلمة المرور
+          <Label className={`font-bold text-base `} htmlFor="confirmPassword">
+            تأكيد كلمة المرور*
           </Label>
           <PasswordInput register={register} fieldName="confirmPassword" />
           {errors.confirmPassword && (
