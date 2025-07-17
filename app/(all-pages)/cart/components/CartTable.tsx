@@ -1,7 +1,8 @@
- 
 import { CartItem } from "@/types/storeTypes";
-import React from "react"; 
+import React from "react";
 import CartProductItem from "./CartProductItem";
+import Link from "next/link";
+import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 
 interface Propstype {
   cartItems: CartItem[];
@@ -9,6 +10,26 @@ interface Propstype {
 }
 
 function CartTable({ cartItems, loading }: Propstype) {
+
+  const { setShowSpecialOrderDialog } = useSpecialOrdersDialogsStore();
+
+  if (!cartItems || cartItems.length === 0) {
+    return (
+      <div className="bg-white p-4 rounded shadow-sm mt-2 h-52 flex flex-col items-center justify-center">
+        <div className="text-center text-secondary py-4">
+          لا توجد عناصر في سلة التسوق الخاصة بك.
+        </div>
+        <div className="flex flex-col items-center justify-center gap-4">
+          <Link href="/shop" className="text-primary hover:underline">
+            العودة للتسوق
+          </Link>
+          <div onClick={() => {setShowSpecialOrderDialog(true)}} className="text-primary hover:underline">
+            طلب خاص
+          </div>
+        </div>
+      </div>
+    );
+  }
   if (loading) {
     return (
       <div className="h-full bg-white mt-2 rounded-md">
@@ -31,8 +52,11 @@ function CartTable({ cartItems, loading }: Propstype) {
       </div>
     );
   }
-  return cartItems.map((item, x) => (
-    <CartProductItem key={x} cartItemData={item} x={x} />
+  return cartItems.map((item) => (
+    <CartProductItem
+      cartItemData={item}
+      key={item?.productId || item?.specialProductId}
+    />
   ));
 }
 

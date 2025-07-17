@@ -30,11 +30,11 @@ export default function GetCartItems() {
       return response; // Ensure the response is correctly unwrapped
     },
     enabled:trigged, 
+    gcTime:0,
+    staleTime: 1000 * 60 * 60 * 24, // 1 day
   });
 
-  useEffect(()=>{
-    console.log(authData,"@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@##################@#@#@#@#@#@#@##$#%%Y^&$");
-    
+  useEffect(()=>{ 
     if (status === "authenticated" && !!(authData?.user?.data?.token)) {
       settrigged(true)
     }

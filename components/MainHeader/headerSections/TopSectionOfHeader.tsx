@@ -67,9 +67,9 @@ function TopSectionOfHeader({
               className="cursor-pointer bg-bg-100 transition-[background-color] duration-500 hover:bg-bg-200  rounded-full"
             >
               {" "}
-              {cartItems.length > 0 && (
+              {cartItems.filter(item => item.quantity > 0).length > 0 && (
                 <div className="bg-primary text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute">
-                  {cartItems.length}
+                  {cartItems.filter(item => item.quantity > 0).length}
                 </div>
               )}
               <BsCart className="text-secondary  text-[20px] m-2 " />

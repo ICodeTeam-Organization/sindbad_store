@@ -3,7 +3,7 @@ import { getApi } from "@/lib/http";
 import { CartItem } from "@/types/storeTypes"; 
 import { useQuery } from "@tanstack/react-query";
 import InvoiceDetails from "./invoice-details";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import useSendDataInBg from "@/hooks/useSendDataInBg";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
 import { db } from "@/Data/database/db";
@@ -19,31 +19,31 @@ const CartBody = ({}: // initCartProducts,
 {
   // initCartProducts: { data: CartItem[] };
 }) => {
+
   const { items: cartItems, setCartItems } = useCartStore();
 
   const {
-    mutate,
-    isPending: isPendingForSendDataInBg,
-    isSuccess,
+    mutateAsync,
+    isPending: isPendingForSendDataInBg, 
   } = useSendDataInBg();
-  const [isReadytogetData, setIsReadytogetData] = useState(false);
-  useEffect(() => {
-    (async () => {
-      if (!isSuccess) {
-        setCartItems([]);
-        const bgData: BgHandlerDataItemType[] = await db.bgData
-          .where("reqType")
-          .anyOf(3, 4)
-          .toArray();
-        mutate(bgData);
-      } else {
-        setIsReadytogetData(true);
-      }
-      if (isSuccess) {
-        setIsReadytogetData(true);
-      }
-    })();
-  }, [isSuccess]);
+  // const [isReadytogetData, setIsReadytogetData] = useState(false);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (!isSuccess) {
+  //       setCartItems([]);
+  //       const bgData: BgHandlerDataItemType[] = await db.bgData
+  //         .where("reqType")
+  //         .anyOf(3, 4)
+  //         .toArray();
+  //       await mutateAsync(bgData);
+  //     } else {
+  //       setIsReadytogetData(true);
+  //     }
+  //     if (isSuccess) {
+  //       setIsReadytogetData(true);
+  //     }
+  //   })();
+  // }, [isSuccess]);
 
   const {
     data: items,
@@ -51,21 +51,27 @@ const CartBody = ({}: // initCartProducts,
     isRefetching,
   } = useQuery<CartApiResponse>({
     queryKey: ["cart-data"],
-    queryFn: async () =>
-      await getApi<CartApiResponse>(
-        "Cart/GetAllCustomerProductsInCartForViewInCartPage"
-      ),
+    queryFn: async () =>{
+        const bgData: BgHandlerDataItemType[] = await db.bgData
+          .where("reqType")
+          .anyOf(3, 4)
+          .toArray();
+        await mutateAsync(bgData);
+        return await getApi<CartApiResponse>(
+          "Cart/GetAllCustomerProductsInCartForViewInCartPage"
+        );
+    },
     // initialData: initCartProducts,
-    enabled: isReadytogetData,
+    // enabled: isReadytogetData,
     gcTime: 0, // يمنع تخزين البيانات في الكاش
     staleTime: 0, // البيانات تعتبر دائمًا قديمة
   });
 
   useEffect(() => {
     if (!!items) {
-      setCartItems(items.data);
-      console.log(items.data);
-    }
+      setCartItems(items.data);  
+      console.log("Cart items updated:", items.data);
+    } 
   }, [items]);
 
   return (
@@ -75,8 +81,7 @@ const CartBody = ({}: // initCartProducts,
           <h1 className="text-lg font-semibold ">
             سلة المشتريات {`(${cartItems.length})`}
           </h1>
-        </div>
-
+        </div> 
         <CartTable
           cartItems={cartItems}
           loading={isPendingToCartItems || isPendingForSendDataInBg}

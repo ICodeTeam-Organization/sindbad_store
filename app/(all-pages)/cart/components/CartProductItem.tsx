@@ -73,11 +73,10 @@ import { get_currency_key } from "@/lib/cookie/cookie.clients";
 import { CgClose } from "react-icons/cg";
 
 type Props = {
-  cartItemData: CartItem;
-  x: number;
+  cartItemData: CartItem; 
 };
 
-const CartProductItem = ({ cartItemData, x }: Props) => {
+const CartProductItem = ({ cartItemData }: Props) => {
   const {
     name,
     price,
@@ -143,7 +142,7 @@ const CartProductItem = ({ cartItemData, x }: Props) => {
   return (
     <div className="bg-white p-4 rounded shadow-sm mt-2 relative">
       {/* Main product card */}
-      <div key={x} className="smHalf:flex items-center justify-between">
+      <div   className="smHalf:flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center">
             {/* <div className="">
