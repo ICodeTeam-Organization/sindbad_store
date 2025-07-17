@@ -25,26 +25,7 @@ const CartBody = ({}: // initCartProducts,
   const {
     mutateAsync,
     isPending: isPendingForSendDataInBg, 
-  } = useSendDataInBg();
-  // const [isReadytogetData, setIsReadytogetData] = useState(false);
-  // useEffect(() => {
-  //   (async () => {
-  //     if (!isSuccess) {
-  //       setCartItems([]);
-  //       const bgData: BgHandlerDataItemType[] = await db.bgData
-  //         .where("reqType")
-  //         .anyOf(3, 4)
-  //         .toArray();
-  //       await mutateAsync(bgData);
-  //     } else {
-  //       setIsReadytogetData(true);
-  //     }
-  //     if (isSuccess) {
-  //       setIsReadytogetData(true);
-  //     }
-  //   })();
-  // }, [isSuccess]);
-
+  } = useSendDataInBg(); 
   const {
     data: items,
     isPending: isPendingToCartItems,

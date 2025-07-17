@@ -10,7 +10,6 @@ interface Propstype {
 }
 
 function CartTable({ cartItems, loading }: Propstype) {
-
   const { setShowSpecialOrderDialog } = useSpecialOrdersDialogsStore();
 
   if (!cartItems || cartItems.length === 0) {
@@ -23,7 +22,12 @@ function CartTable({ cartItems, loading }: Propstype) {
           <Link href="/shop" className="text-primary hover:underline">
             العودة للتسوق
           </Link>
-          <div onClick={() => {setShowSpecialOrderDialog(true)}} className="text-primary hover:underline">
+          <div
+            onClick={() => {
+              setShowSpecialOrderDialog(true);
+            }}
+            className="text-primary hover:underline"
+          >
             طلب خاص
           </div>
         </div>

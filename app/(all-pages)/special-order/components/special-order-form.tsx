@@ -212,7 +212,7 @@ const SpecialOrderForm = ({
         open={showResultesDialog != null}
       />
 
-      <div className=" bg-[#257F24] p-4 text-white flex items-center justify-between sticky top-0 z-50 ">
+      <div className=" bg-secondary p-4 text-white flex items-center justify-between sticky top-0 z-50 ">
         <div className="flex gap-x-3">
           <X
             className="cursor-pointer"
@@ -306,7 +306,6 @@ const SpecialOrderForm = ({
               orderKey={order?.orderKey}
               key={order?.orderKey}
               orderslength={ordersValues?.length}
-              ordersNumber={ordersValues?.length}
               index={index}
               initCategory={category}
               initOrderType={tabType}

@@ -78,8 +78,6 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
     queryFn: () => getApi<any>(`Locations/GetGovernorateWithChildren`),
   });
 
- 
-
   const allGovs = data?.data as Governorate[]; // All governorates
   const allDirects = (allGovs?.flatMap((gov) => gov.directorates) ||
     []) as Directorate[]; // All directorates
@@ -163,25 +161,25 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
         <div className="flex gap-x-4 items-center">
           {!isEditable && (
             <>
-            <Button
-              type="button"
-              onClick={() => {
-                setIsEditable(true);
-              }}
-              className="bg-orange-500 hover:bg-orange-600 text-white mb-4 "
-            >
-              تعديل
-            </Button>
-             <Link href="/profile/changePassword">
-             <Button
-               type="button"
-               className="bg-orange-500 hover:bg-orange-600 text-white mb-4 "
-             >
-               تغيير كلمة المرور
-             </Button>
-           </Link></>
+              <Button
+                type="button"
+                onClick={() => {
+                  setIsEditable(true);
+                }}
+                className="bg-orange-500 hover:bg-orange-600 text-white mb-4 "
+              >
+                تعديل
+              </Button>
+              <Link href="/profile/changePassword">
+                <Button
+                  type="button"
+                  className="bg-orange-500 hover:bg-orange-600 text-white mb-4 "
+                >
+                  تغيير كلمة المرور
+                </Button>
+              </Link>
+            </>
           )}
-         
         </div>
 
         {/* Personal Information Section */}
@@ -361,7 +359,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
 
         {/* Action Buttons */}
         {isEditable && (
-          <div className="flex  gap-x-4 items-center mdHalf:static mdHalf:p-0 mdHalf:shadow-none mdHalf:m-0 fixed bottom-0 p-4  rounded-lg shadow-xl bg-white w-full left-0 right-0">
+          <div className="flex gap-x-4 items-center mdHalf:static mdHalf:p-0 mdHalf:shadow-none mdHalf:m-0 fixed bottom-0 p-4  rounded-lg shadow-xl  bg-white w-full left-0 right-0">
             <Button
               onClick={() => {
                 setIsEditable(false);
@@ -369,7 +367,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
               }}
               variant="secondary"
               type="button"
-              className=""
+              className="text-white"
             >
               تجاهل
             </Button>

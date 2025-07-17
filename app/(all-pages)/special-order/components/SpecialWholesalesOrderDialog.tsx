@@ -159,7 +159,7 @@ function SpecialWholesalesOrderDialog({
         />
 
         <div className="mdHalf:h-[80vh] mdHalf:overflow-hidden overflow-auto" >
-          <div className=" bg-[#257F24] sticky top-0 z-10  p-4 text-white flex items-center justify-between">
+          <div className=" bg-secondary sticky top-0 z-10  p-4 text-white flex items-center justify-between">
           <div className="flex gap-x-3" >
         <X  className="cursor-pointer" onClick={closeDialog} />
        <p>طلب بالجملة</p>

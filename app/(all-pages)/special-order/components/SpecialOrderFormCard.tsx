@@ -16,8 +16,7 @@ import SpecialOrderFromShopForm from "./SpecialOrderFormsTypes/SpecialOrderFromS
 interface Props {
   index: number;
   initOrderType?: number;
-  initCategory?: number;
-  ordersNumber?: number;
+  initCategory?: number; 
   orderKey: string;
   onChangeValues: (
     values:
@@ -33,7 +32,6 @@ function SpecialOrderFormCard({
   initOrderType,
   index,
   onChangeValues,
-  ordersNumber,
   onOrderDelete,
   orderKey,
   orderslength,
@@ -52,7 +50,7 @@ function SpecialOrderFormCard({
         <div className="flex text-sm items-center mdHalf:justify-center justify-between   gap-x-4">
           <p className="text-xs bg-gray-200 rounded p-1 px-4">
             {" "}
-            الرقم {index + 1} من {ordersNumber}{" "}
+            الرقم {index + 1} من {orderslength}{" "}
           </p>
           {orderslength > 1 && (
             <div

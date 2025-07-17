@@ -7,7 +7,7 @@ export const get_currency_key = (country?:any) => {
     case "2":
       return "د.إ";
     default:
-      return "~~";
+      return "";
       break;
   }
 };
