@@ -1,5 +1,4 @@
-"use client";
-import { MdOutlineLocalGroceryStore } from "react-icons/md";
+"use client"; 
 import { useRouter } from "next-nprogress-bar";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
@@ -66,7 +65,7 @@ const AddToBasketBtnForProductDetails = ({ id , productInfo  }: BtnAddTobascketP
   };
  
   const [isUpdated, setIsUpdated] = useState(false);
-  const debounceQuantity = useDebounce(quantity, 1000);
+  const debounceQuantity = useDebounce(quantity, 0);
   useEffect(() => {
     if (debounceQuantity >= 0 && isUpdated) {
       setIsUpdated(false);
@@ -81,9 +80,9 @@ const AddToBasketBtnForProductDetails = ({ id , productInfo  }: BtnAddTobascketP
   }, [debounceQuantity]);
 
   return (
-    <div className="cursor-pointer  my-1 flex gap-x-2   mb-2    ">
+    <div className="cursor-pointer  my-1 flex gap-x-2  mb-2  w-full ">
       {inCart ? (
-        <div className="min-w-[300px] min-h-[50px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1">
+        <div className="min-w-[300px] max-smHalf:w-full  min-h-[50px] rounded-[5px] border-[1px] flex justify-center items-center px-1 max-md:px-1">
           <div
             className="text-[20px] bg-slate-100 px-2 h-[90%] aspect-square flex items-center justify-center rounded-full "
             onClick={() => {
@@ -119,14 +118,14 @@ const AddToBasketBtnForProductDetails = ({ id , productInfo  }: BtnAddTobascketP
           // disabled={mutationAdd.isPending}
           variant={"outline"}
           onClick={() => handleAddToCart()}
-          className="hover:bg-primary min-w-[300px] min-h-[50px] bg-primary hover:text-white text-white text-2xl  flex justify-center items-center mb-2 md:mb-0"
+          className="hover:bg-primary min-w-[300px]  max-smHalf:w-full min-h-[50px] bg-primary hover:text-white text-white text-2xl  flex justify-center items-center mb-2 md:mb-0"
         >
           {false ? (
             <Loader2 className="animate-spin" />
           ) : (
             <div className="flex items-center justify-center gap-2">
-              <MdOutlineLocalGroceryStore />
-              <p className="text-lg font-bold ">اضف للسلة</p>
+              {/* <MdOutlineLocalGroceryStore /> */}
+              <p className="mdHalf:text-lg text-base font-semibold">اضف للسلة</p>
             </div>
           )}
         </Button>

@@ -34,13 +34,13 @@ const ButtonAddToFavoriteOfProDetails = ({ id }: Props) => {
     <div
       onClick={() => handleAddToFav()}
       className={cn(
-        "bg-white bg-opacity-95 p-3 cursor-pointer rounded-full shadow-sm hover:shadow-lg duration-300 border group"
+        " bg-white p-3 rounded shadow-sm   mt-0 cursor-pointer  group"
         // isInFavorite && "bg-[#F55157]"
       )}
     >
       <FaHeart 
         className={cn(
-          " text-2xl text-[#D5D5D5] duration-300 translate-y-[1px]  backdrop:", 
+          " text-2xl text-gray-300 duration-300 translate-y-[1px]  backdrop:", 
           isInFavorite && "text-red-500"
         )}
       />

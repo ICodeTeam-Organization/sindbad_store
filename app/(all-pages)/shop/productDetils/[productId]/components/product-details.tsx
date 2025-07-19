@@ -7,32 +7,73 @@ import { getRemainingTimeForOffer } from "@/lib/timeFuns";
 import { NormalizedProductType } from "@/Data/normalizTypes";
 import Link from "next/link";
 import CategorisListSection from "./CategorisListSection";
-import { get_currency_key } from "@/lib/cookie/cookie.clients";
+import { get_currency_key } from "@/lib/cookie/cookie.clients"; 
+import ShareButton from "./ShareButton";
+import ButtonAddToFavoriteOfProDetails from "./ButtonAddToFavoriteOfProDetails"; 
 type ProductDetailsProps = {
   product: NormalizedProductType;
+  // store:Store |null
 };
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
- 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 mt-12 mdHalf:px-12 px-4">
-      <div className=" ml-8 mdHalf:w-[500px] w-full">
+    <div className="flex  2lg:flex-row flex-col gap-4 gap-x-0 bg-whi mdHalf:px-12 px-4">
+      <div className="max-2lg:hidden">
+        <div className="me-4">
+          <ShareButton />
+        </div>
+        <div className="me-4 mt-4">
+          <ButtonAddToFavoriteOfProDetails id={product.id} />
+        </div>
+      </div>
+      <div className=" ml-8 lgHalf:w-[500px] 2lg:w-[410px] w-full bg-white p-8 rounded-lg shadow-sm">
         <ImageGalleryProductDetails
-          blurHash={product.blurHash}
-          productId={+product.id}
           images={[product.image, ...(product.images ?? [])]}
         />
       </div>
-      <div className="flex flex-1 flex-col justify-between">
+      <div className="2lg:hidden   ">
+        <div className="flex gap-x-2">
+          <div className="2lg:m-4  ">
+            <ShareButton />
+          </div>
+          <div className="2lg:m-4  ">
+            <ButtonAddToFavoriteOfProDetails id={product.id} />
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-1 flex-col justify-between bg-white 2lg:p-8 p-4 rounded-lg shadow-sm">
         <div>
-          <div className="mb-4 my-6">
-            <div>
-              <div className=" border-l-2 pl-4 border-l-gray-200 py-1 flex mb-4">
-                <span className="text-gray-500 text-base mx-1">
-                  {product?.rate?.toFixed(1)}
-                </span>
+          <div className="mb-6">
+            <div className="flex items-center col-span-2 mb-2 text-sm text-gray-500">
+              <span className="font-medium ml-1 ">رقم المنتج : </span>
+              <span className=" px-2  ">{product.productNumber}</span>
+            </div>
+
+            <div className="my-4">
+              <h2 className="text-black mdHalf:text-lg text-base font-semibold">
+                {product?.name}
+              </h2>
+            </div>
+
+            <div className="flex  my-4 mt-6 items-center gap-x-4 justify-between ">
+              <div className="flex items-center justify-center">
+                <PriceSection
+                  discountedPrice={product?.price} // product?.price هذا اذا فيه خصم يكون فيه السعر بعد الخصم واذا مافيه خصم يكون فيه السعر الاصلي
+                  originalPrice={product.priceBeforeDiscount ?? product?.price}
+                  discount={product.percentageOfDiscount ?? 0}
+                  currency={get_currency_key(product.country)}
+                />
+                {product.offerSentence && product.hasOffer && (
+                  <div className="flex items-center col-span-2   text-xs bg-danger text-white p-1 w-fit px-2 rounded-sm tajawal">
+                    <span>
+                      {product.offerSentence ? product.offerSentence : ""}
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="  border-l-gray-200  flex  pr-2">
                 <Rating
-                  style={{ maxWidth: 100 }}
+                  style={{ maxWidth: 90 }}
                   halfFillMode="svg"
                   itemStyles={{
                     itemShapes: RoundedStar,
@@ -42,34 +83,18 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                   readOnly
                   value={product?.rate}
                 />
+                <span className="text-secondary font-bold text-base mx-2">
+                  {product?.rate?.toFixed(1)}
+                </span>
               </div>
-              <h2 className="text-black text-2xl font-semibold">
-                {product?.name}
-              </h2>
-            </div>
-            <div className="flex  my-4 mt-6 items-center gap-x-4 ">
-              <PriceSection
-                discountedPrice={product?.price} // product?.price هذا اذا فيه خصم يكون فيه السعر بعد الخصم واذا مافيه خصم يكون فيه السعر الاصلي
-                originalPrice={product.priceBeforeDiscount ?? product?.price}
-                discount={product.percentageOfDiscount ?? 0}
-                currency={get_currency_key(product.country)}
-              />
             </div>
 
             <div>
-              {product.offerSentence && product.hasOffer && (
-                <div className="flex items-center col-span-2 mb-2 text-xs bg-primary text-white p-1 w-fit px-2 rounded-md tajawal">
-                  <span>
-                    {product.offerSentence ? product.offerSentence : ""}
-                  </span>
-                </div>
-              )}
-              {}
               {/* OFFER TIME  */}
               {(product.hasOffer ||
                 (product.hasDiscount && product.isOfferStillOn)) && (
                 <div className="flex flex-wrap gap-x-4 text-sm text-primary-background ">
-                  <div className="text-red-600 text-sm mt-2">
+                  <div className="text-secondary text-sm mt-2">
                     الوقت المتبقي لنهاية العرض :{" "}
                     {getRemainingTimeForOffer(product.offerEndDate ?? "")}
                   </div>
@@ -77,10 +102,13 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
               )}
             </div>
 
-            <hr className="my-4   border border-primary-background border-opacity-15" />
-            <p className="text-base text-gray-600 mt-4">
-              {product?.shortDecription}
-            </p>
+            <hr className="my-4   border-2 border-dashed border-primary-background border-opacity-15" />
+            <div>
+              <p className="ml-1 font-bold mt-2 text-sm">الوصف</p>
+              <p className="text-base text-gray-600 mt-4">
+                {product?.shortDecription}
+              </p>
+            </div>
           </div>
 
           <div className="text-sm">
@@ -98,7 +126,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             />
 
             {product.tags.length > 0 && (
-              <div className="  mb-2">
+              <div className="mt-4  mb-2">
                 <p className="  ml-1 mb-2 font-bold mt-2">التاقات</p>
                 <div className="flex flex-wrap gap-4">
                   {product.tags
@@ -106,7 +134,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                     .map((tag, x) => (
                       <Link
                         href={"/shop?tags=" + tag.id}
-                        className="bg-zinc-100 px-2 py-1 shadow cursor-pointer rounded text-xs  "
+                        className="border border-zinc-100 p-2 cursor-pointer rounded text-xs  "
                         key={tag.id + x}
                       >
                         {tag.name.split(" ").join("_")}#
@@ -115,15 +143,11 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                 </div>
               </div>
             )}
-
-            <div className="flex items-center col-span-2 mb-2 mt-4">
-              <span className="font-medium ml-1 ">رقم المنتج : </span>
-              <span className="bg-primary mx-1 text-white px-2  ">
-                {product.productNumber}
-              </span>
-            </div>
           </div>
         </div>
+
+        <div>{/* <StoreSectionDetails store={store} /> */}</div>
+
         <div className="flex items-center gap-4 mt-8">
           <AddToBasketBtnForProductDetails
             id={product.id}

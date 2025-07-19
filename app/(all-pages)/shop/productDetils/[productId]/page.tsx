@@ -6,7 +6,7 @@ import { Product } from "./types";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import TabsComponent from "./components/taps";
 import { NormalizedProductType } from "@/Data/normalizTypes";
-import ProductCarsoule from "@/components/ProductCarsoule";
+import ProductCarsoule from "@/components/ProductCarsoule"; 
 
 type ProductPageProps = {
   params: {
@@ -28,7 +28,6 @@ const fetchProductDetails = async (id: string): Promise<Product | null> => {
   }
   return null;
 };
-
 const fetchSimilerProducts = async (
   product: NormalizedProductType
 ): Promise<{ items: NormalizedProductType[] } | null> => {
@@ -81,8 +80,6 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   }
 
   const productData = await fetchProductDetails(productId);
-console.log(productData);
-
   if (!productData) {
     notFound();
   }
@@ -95,21 +92,27 @@ console.log(productData);
     notFound();
   }
 
+  // const storeData = await fetchStoreDetails(product?.storeId ?? "");
+
   return (
-    <div className="xl:container mx-auto">
-      <ProductDetails product={product} />
-      <div className="mdHalf:px-12 px-4 my-10">
-        {/* <ProductDetailsAccordingmenus product={product} productId={productId} /> */}
+    <div className="bg-bg-100">
+      <div className="xl:container mx-auto  pt-10 ">
+        <ProductDetails product={product} />
+        <div className="mdHalf:px-12 px-4 ">
+          {/* <ProductDetailsAccordingmenus product={product} productId={productId} /> */}
+          <TabsComponent product={product} productId={productId} />
+        </div>
+        <div className="bg-white mdHalf:mx-12 rounded shadow-sm px-4">
+          <ProductCarsoule
+            products={similerproducts.items}
+            sectionTitle="منتجات مشابهة"
+            sectionHref={`/shop?cats=${[
+              ...product?.subCategoriesIds,
+              product.mainCategoriesIds,
+            ].join(",")}`}
+          />
+        </div>
       </div>
-      <TabsComponent product={product} productId={productId} />
-      <ProductCarsoule
-        products={similerproducts.items}
-        sectionTitle="منتجات مشابهة"
-        sectionHref={`/shop?cats=${[
-          ...product?.subCategoriesIds,
-          product.mainCategoriesIds,
-        ].join(",")}`}
-      />
     </div>
   );
 };

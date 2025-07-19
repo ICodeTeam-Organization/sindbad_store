@@ -1,8 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import React from "react";
-import { IoShareSocialSharp } from "react-icons/io5";
+import { Share } from "lucide-react";
+import React from "react"; 
 
 function ShareButton() {
   const handleShare = async () => {
@@ -31,12 +31,12 @@ function ShareButton() {
     <div
       onClick={handleShare}
       className={cn(
-        "bg-white bg-opacity-95 p-3 cursor-pointer rounded-full shadow-sm hover:shadow-lg duration-300 border group"
+        "bg-white p-3 rounded shadow-sm   mt-0 cursor-pointer  group"
       )}
     >
-      <IoShareSocialSharp
+      <Share
         className={cn(
-          " text-2xl text-gray-400 duration-300 translate-y-[1px]  backdrop:"
+          " text-2xl text-gray-600 duration-300  backdrop:"
         )}
       />
     </div>

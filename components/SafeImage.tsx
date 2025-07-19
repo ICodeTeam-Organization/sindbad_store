@@ -103,8 +103,8 @@ interface SafeImageProps extends Omit<ImageProps, "src" | "width" | "height"> {
   src: string;
   fallbackSrc?: string;
   alt: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
   blurDataURL?: string;
   className?: string;
 }
@@ -114,12 +114,9 @@ import { useState } from "react";
 const SafeImage = ({
   src,
   fallbackSrc = "/images/Image_not_available.png",
-  alt,
-  width,
-  height,
+  alt, 
   blurDataURL,
   className,
-  fill,
   ...rest
 }: SafeImageProps) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -130,9 +127,7 @@ const SafeImage = ({
   return (
     <Image
       src={validSrc}
-      alt={alt}
-      width={width}
-      height={height}
+      alt={alt} 
       className={cn(
         className,
         "transition duration-1000",
@@ -146,8 +141,7 @@ const SafeImage = ({
         e.currentTarget.src = fallbackSrc;
         setIsImageLoaded(true);
       }}
-      onLoadingComplete={() => setIsImageLoaded(true)}
-      fill={fill}
+      onLoad={() => setIsImageLoaded(true)} 
       {...rest}
     />
   );

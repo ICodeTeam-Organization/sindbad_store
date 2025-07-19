@@ -2,8 +2,8 @@
 import SafeImage from "@/components/SafeImage";
 import { NormalizedProductType } from "@/Data/normalizTypes";
 import { get_currency_key } from "@/lib/cookie/cookie.clients";
-import { cn,  } from "@/lib/utils";
-import { useRouter } from "next/router";
+import { cn,  } from "@/lib/utils"; 
+import { useRouter } from "next-nprogress-bar";
 import React from "react";
 
 type Detail = {
@@ -46,11 +46,12 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                 >
                   <td className="py-2">
                     <div className="flex items-center">
+                      
                       <div className="w-20 h-20 relative mr-4 bg-slate-100 rounded-lg me-4 overflow-hidden">
                         <SafeImage
-                          fill
-                          width={80}
-                          height={80}
+                          // fill 
+                          width={20}
+                          height={20}
                           className="ml-3"
                           src={details?.image || ""}
                           alt="Product"

@@ -118,11 +118,14 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , has
   };
 
   return (
-    <form className="space-y-4 text-start" onSubmit={handleSubmit}>
-      <div className="text-gray-600">أضف تعليقك</div>
+    <form className="space-y-4 text-start " onSubmit={handleSubmit}>
+      <div>
+        <p className="text-secondary p-2">أضف تعليقك</p>
+        <p className="text-gray-600 p-2 text-sm"> لا يمكنك كتابة مراجعة إلا بعد شراء المنتج. </p>
+      </div>
 
       <textarea
-        className="w-full border border-gray-300 p-2 rounded-md text-sm"
+        className="w-full border border-gray-200 bg-[#fafafa] p-2 rounded-md text-sm"
         rows={4}
         placeholder="يرجى إضافة تعليقك .."
         value={reviewText}
@@ -130,9 +133,9 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , has
       ></textarea>
 
       <div>
-        <label className="text-gray-600">التقييم: </label>
+        <label className="text-gray-600">  </label>
         <select
-          className="border border-gray-300 p-2 rounded-md"
+          className="border border-gray-200 p-2 py-1 rounded-md w-full"
           value={rate}
           onChange={(e) => setRate(Number(e.target.value))}
         >
@@ -147,7 +150,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , has
       {validationError && <p className="text-red-500 text-sm">{validationError}</p>}
 
       <button
-        className="w-full bg-orange-500 text-white py-2 rounded-md hover:bg-orange-600"
+        className="w-full bg-primary text-white py-2 rounded-md hover:bg-primary"
         type="submit"
         disabled={isPending}
       >
