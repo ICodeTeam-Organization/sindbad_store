@@ -41,7 +41,8 @@ import {
   UpdateAdressResponse,
 } from "../types";
 import { DialogTitle } from "@radix-ui/react-dialog";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "@/hooks/use-toast"; 
+import { useUserStore } from "@/app/stores_mangament/userStore";
 
 // type addAdress = {
 //   directorateId: number;
@@ -67,6 +68,8 @@ const AddAddressDialog = ({
   onAddAddressEnd?: (data: customerAddressType) => void;
   onClose: () => void;
 }) => {
+ 
+  const {user} = useUserStore(); 
   const [directorates, setDirectorates] = useState<DirectorateType[] | null>(
     []
   );
@@ -127,6 +130,13 @@ const AddAddressDialog = ({
       );
     }
   }, [isEditing, dataEditing]);
+  useEffect(() => { 
+    if (user && show) {
+       form?.setValue("phoneNumber",user?.phoneNumber)
+       form?.setValue("userName",user?.name)
+    }
+  }, [user,show])
+  
 
   const { mutate, isPending } = useMutation({
     mutationFn: async ({
@@ -402,7 +412,7 @@ const AddAddressDialog = ({
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
                         <FormLabel className="m-auto text-sm font-bold mb-2">
-                          <p>المستلم {"(إختياري)"}</p>
+                          <p>المستلم</p>
                         </FormLabel>
                         <FormControl>
                           <Input {...field} />
@@ -417,7 +427,7 @@ const AddAddressDialog = ({
                     render={({ field }) => (
                       <FormItem className="my-4 text-right">
                         <FormLabel className="m-auto text-sm font-bold mb-2">
-                          <p>رقم التلفون {"(إختياري)"}</p>
+                          <p>رقم التلفون</p>
                         </FormLabel>
                         <FormControl>
                           <Input {...field} />

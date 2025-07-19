@@ -9,8 +9,7 @@ import AddAddressDialog from "./AddAddressDialog";
 import { useMutation } from "@tanstack/react-query";
 import { deleteApi } from "@/lib/http";
 import { toast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react";
-
+import { Loader2 } from "lucide-react"; 
 const TABLE_HEAD = ["العنوان", "المنطقة", "المستلم", "التلفون", " "];
 
 const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
