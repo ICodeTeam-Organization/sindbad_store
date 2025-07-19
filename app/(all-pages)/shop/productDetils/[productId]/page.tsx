@@ -86,7 +86,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 
   const product = normalizeProduct(productData); // تحول شكل البينات الى الشكل الموحد NormlizedProductType
 
-  const similerproducts = await fetchSimilerProducts(product);
+  const similerproducts = await fetchSimilerProducts(product); 
 
   if (!similerproducts) {
     notFound();
@@ -104,7 +104,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
         </div>
         <div className="bg-white mdHalf:mx-12 rounded shadow-sm px-4">
           <ProductCarsoule
-            products={similerproducts.items}
+            products={(similerproducts.items).map(normalizeProduct)}
             sectionTitle="منتجات مشابهة"
             sectionHref={`/shop?cats=${[
               ...product?.subCategoriesIds,
