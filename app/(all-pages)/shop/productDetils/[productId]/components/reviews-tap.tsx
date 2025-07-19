@@ -123,7 +123,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
         </h3>
         <div className="flex max-smHalf:flex-col">
           <div className="flex max-2lg:flex-col  w-[30%] max-smHalf:w-full py-0 justify-center items-center mb-3 gap-x-4">
-            <CircularProgress max={5} value={2} color="#ffb700" strokeWidth={4}>
+            <CircularProgress max={5} value={product.rate} color="#ffb700" strokeWidth={4}>
               <span className="text-3xl font-bold  ">
                 {product.rate.toFixed(1)}
               </span>

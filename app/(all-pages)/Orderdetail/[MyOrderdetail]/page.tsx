@@ -13,6 +13,8 @@ interface Detail {
   params: { MyOrderdetail: string };
 }
 const OrderDetail = async ({ params }: Detail) => {
+
+  
   const OrderDetails = await getApi<ApiResponseTypeForOrderDetails>(
     `OrderDetails/Market/OrdersPage/GetOrderDetailsForViewInOrderDetailsPage?orderId=${params.MyOrderdetail}&pageNumber=1&pageSize=10`
   );

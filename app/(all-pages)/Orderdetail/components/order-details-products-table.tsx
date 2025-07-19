@@ -49,10 +49,8 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
                       
                       <div className="w-20 h-20 relative mr-4 bg-slate-100 rounded-lg me-4 overflow-hidden">
                         <SafeImage
-                          // fill 
-                          width={20}
-                          height={20}
-                          className="ml-3"
+                          fill  
+                          className="ml-3 object-cover"
                           src={details?.image || ""}
                           alt="Product"
                         />
@@ -85,7 +83,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
 
         {/* Mobile Cards */}
         <div className="block mdHalf:hidden">
-          {detail.map(async (details, ix) => (
+          {detail.map((details, ix) => (
             <div
             onClick={()=>{goToProductdetails(+details?.id)}}
               key={ix}

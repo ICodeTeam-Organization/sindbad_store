@@ -69,6 +69,7 @@ export type NormalizedCategoryType = {
   code: string;
   parentCategoryId?: number;
   subCategories?: NormalizedCategoryType[];
+  country:string
 };
 
 export type NormalizedbgDataItemType = {
