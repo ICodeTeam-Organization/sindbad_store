@@ -12,9 +12,9 @@ import FooterServicesSection from "./FooterServicesSection";
  
 function Footer() {
   const aboutSindbad = [
-    { title: "عن متجر سندباد", href: "/account" },
-    { title: "ماهو الطلب الخاص", href: "/orders" },
-    { title: "الأسئلة الشائعة", href: "/cart" },
+    { title: "عن متجر سندباد", href: "/about" },
+    { title: "ماهو الطلب الخاص", href: "/about#whatIsSpecialProduct" },
+    { title: "الأسئلة الشائعة", href: "/about#FAQs" },
     // { title: "المفضلة", href: "/Favorites" },
   ] as const;
 

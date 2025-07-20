@@ -17,14 +17,16 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
 }) => {
   const [addresses, setAddresses] = useState<customerAddressType[]>(address);
   const [openAddAddressDialog, setOpenAddAddressDialog] = useState(false);
-  const [selectedIdToDelete, setselectedIdToDelete] = useState<number|null>(null)
+  const [selectedIdToDelete, setselectedIdToDelete] = useState<number | null>(
+    null
+  );
   const [isEditing, setisEditing] = useState<{
     isEdit: boolean;
     data?: customerAddressType;
   }>({
     isEdit: false,
     data: undefined,
-  }); 
+  });
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (id: number) => {
@@ -32,7 +34,7 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
       return id;
     },
     onSuccess: (id) => {
-      setselectedIdToDelete(null)
+      setselectedIdToDelete(null);
       toast({
         variant: "default",
         description: "تم حذف العنوان",
@@ -75,13 +77,13 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
               return ele;
             })
           );
-          setisEditing({data:undefined,isEdit:false})
+          setisEditing({ data: undefined, isEdit: false });
         }}
-        onAddAddressEnd={(newData)=>{
-          setAddresses(prev=>([...prev,newData]))
+        onAddAddressEnd={(newData) => {
+          setAddresses((prev) => [...prev, newData]);
         }}
-        onClose={()=>{
-          setisEditing({data:undefined,isEdit:false})
+        onClose={() => {
+          setisEditing({ data: undefined, isEdit: false });
         }}
       />
 
@@ -109,7 +111,12 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
                     index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
                   } border-b border-gray-200`}
                 >
-                  <td className="px-4 py-3">{item?.locationDescription}</td>
+                  <td className="px-4 py-3">
+                    {item?.locationDescription &&
+                    item.locationDescription.length !== 0
+                      ? item.locationDescription
+                      : "لا يوجد عنوان محدد"}
+                  </td>
                   <td className="px-4 py-3">{item?.directorateName}</td>
                   <td className="px-4 py-3">{item?.userName}</td>
                   <td className="px-4 py-3">{item?.phoneNumber}</td>
@@ -134,7 +141,7 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
                         <button
                           className="text-red-500 hover:text-red-700"
                           onClick={() => {
-                            setselectedIdToDelete(item.id)
+                            setselectedIdToDelete(item.id);
                             mutate(item?.id);
                           }}
                         >

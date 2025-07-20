@@ -10,9 +10,9 @@ function FooterServicesSection() {
 
      const servicesLinks = [
     { title: "طلب خاص", click: ()=>{setShowSpecialOrderDialog(true)} , href:"" },
-    { title: "العروض", href: "/orders",click: ()=>{} , },
-    { title: "المحلات التجارية", href: "/cart",click: ()=>{} , },
-    { title: "متاجر الكترونية", href: "/Favorites",click: ()=>{} , },
+    { title: "العروض", href: "/shop?hasOffer=t",click: ()=>{} , },
+    { title: "المحلات التجارية", href: "/stores",click: ()=>{} , },
+    { title: "متاجر الكترونية", href: "/e-commerce",click: ()=>{} , },
   ] as const;
 
   
