@@ -62,7 +62,7 @@ export default function GetAllCategories({ date }: { date: Date }) {
           );
         }
         const finalCats = await db.categories.toArray();
-        setCategories(finalCats);
+        setCategories(finalCats.filter(e=>e?.country == getCookie("country") ));
       };
 
       updateLocalDatabase();

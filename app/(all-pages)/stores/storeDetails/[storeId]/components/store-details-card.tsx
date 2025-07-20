@@ -1,17 +1,8 @@
-"use client";
-
 import React from "react";
 import { StoreData } from "../../../typest";
-import { IoMdHeart } from "react-icons/io";
 import SafeImage from "@/components/SafeImage";
 import Link from "next/link";
-import { useToast } from "@/hooks/use-toast";
-import { useSession } from "next-auth/react"; 
-import { useMutation } from "@tanstack/react-query";
-import { ToastAction } from "@/components/ui/toast";
-import { cn, goToExtrnalLink } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { goToExtrnalLink } from "@/lib/utils";
 import {
   Carousel,
   CarouselContent,
@@ -19,87 +10,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { deleteApi, postApi } from "@/lib/http";
-import { useFavorite } from "@/app/stores_mangament/favoritesStore";
+import AddStoreToFavBtn from "./AddStoreToFavBtn";
 const StoreDetailsCard = ({
   id,
   name,
-  description,
-  // imageUrl,
+  description, 
   websiteUrl,
   storeCategoriesIds,
   images,
 }: StoreData) => {
-  const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
-    useFavorite();
-  const isFavorite = favoriteStoreIds.find((ele) => ele == id);
-  const { data: session, status } = useSession();
-  const { toast } = useToast();
-  const router = useRouter();
-
-  const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
-    mutationFn: async () => {
-      return await postApi(`FavoriteShop/AddStore`, {
-        headers: {
-          "Accept-Language": "ar",
-          "Content-type": "application/json",
-          Authorization: `Bearer ${session?.user?.data?.token}`,
-        },
-        body: {
-          storeId: id,
-        },
-      });
-    },
-    onSuccess: () => {
-      addStoreToFavorite(id + "");
-    },
-    onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message ||
-        "حدث خطأ أثناء إضافة المحل إلى المفضلة";
-      toast({
-        variant: "destructive",
-        description: `خطأ: ${errorMessage}`,
-        action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-      });
-    },
-  });
-
-  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
-    useMutation({
-      mutationFn: async () => {
-        return await deleteApi(`FavoriteShop/RemoveStore/` + id, {
-          headers: {
-            Authorization: `Bearer ${session?.user?.data?.token}`,
-          },
-        });
-      },
-      onSuccess: () => {
-        delStoreToFavorite(id + "");
-      },
-      onError: (error: any) => {
-        const errorMessage =
-          error.response?.data?.message ||
-          "حدث خطأ أثناء حذف المحل إلى المفضلة";
-        toast({
-          variant: "destructive",
-          description: `خطأ: ${errorMessage}`,
-          action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-        });
-      },
-    });
-
-  const handleFav = () => {
-    if (status === "unauthenticated") router.push("/auth");
-    else if (status === "authenticated") {
-      if (isFavorite) {
-        mutateRemoveFromFav();
-      } else {
-        mutateAddToFav();
-      }
-    }
-  };
-
   return (
     <div className=" p-6 w-full mx-auto xl:container mt-5">
       <div className="flex flex-col mdHalf:flex-row gap-6">
@@ -124,7 +43,10 @@ const StoreDetailsCard = ({
                         src={image.imageUrl}
                         alt={name}
                         className="w-full h-[350px] aspect-video object-cover rounded-lg border shadow-sm"
-                        fill width={0} height={0}                      />
+                        fill
+                        width={0}
+                        height={0}
+                      />
                     </CarouselItem>
                   ))}
                 </CarouselContent>
@@ -161,25 +83,7 @@ const StoreDetailsCard = ({
                 <span className="font-normal text-sm"></span>
               </span> */}
               <div className="flex items-center gap-4">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    handleFav();
-                  }}
-                  className={cn(
-                    " text-gray-200 border rounded-md p-3 hover:text-red-500",
-                    isFavorite && "bg-red-500 text-white hover:text-white"
-                  )}
-                >
-                  {isPendingAddToFav || isPendingRemoveFromFav ? (
-                    <Loader2 className="animate-spin" />
-                  ) : isFavorite ? (
-                    <IoMdHeart className="w-5 h-5" />
-                  ) : (
-                    <IoMdHeart className="w-5 h-5 " />
-                  )}
-                </button>
+                <AddStoreToFavBtn id={id} />
                 <Link
                   href={goToExtrnalLink(websiteUrl) || "#"}
                   target={websiteUrl ? "_blank" : ""}
