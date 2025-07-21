@@ -9,19 +9,20 @@ import PersonButton from "@/app/(home)/components/person-button";
 import Link from "next/link";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
 import { useNotificationsDataStore } from "@/app/stores_mangament/notificationStore";
+import { BiMenu } from "react-icons/bi";
+import Image from "next/image";
 
 interface PropsType {
   isHomePage?: boolean;
   isAuth?: boolean;
-  defaultCountry:string
-  
+  defaultCountry: string;
 }
 
 function TopSectionOfHeader({
   isHomePage = false,
   isAuth = false,
-  defaultCountry
-}:PropsType) {
+  defaultCountry,
+}: PropsType) {
   // const { status } = useSession();
   // const isAuth = status === "authenticated";
   const { items: cartItems } = useCartStore();
@@ -30,10 +31,32 @@ function TopSectionOfHeader({
   return (
     <div
       className={cn(
-        "flex  mdHalf:flex-wrap p-4 xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm 2xl:justify-between mdHalf:justify-end justify-between items-center ms-5    ",
-        isHomePage && "mdHalf:mr-[170px]"
+        "flex  mdHalf:flex-wrap px-4   xl:gap-x-10 lg:gap-x-4 gap-x-2  text-sm  justify-between items-center     ",
+        // isHomePage && "mdHalf:mr-[170px]"
       )}
     >
+      <div
+        className={cn(
+          " flex  items-center z-10 me-2" 
+        )}
+      >
+        <div
+          className={cn("mdHalf:hidden block")}
+          onClick={() => {
+            // setopenNav((o) => !o);
+          }}
+        >
+          <BiMenu className="cursor-pointer" size={40} />
+        </div>
+        <Link href="/" className="2lg:w-[130px] w-[120px] h-[70px]  2lg:h-[80px] relative">
+          <Image
+            className="block relative cursor-pointer"
+            src={"/images/sedebadLogo.svg"} 
+            fill
+            alt="logo"
+          />
+        </Link>
+      </div>
       <div className="hidden mdHalf:block">
         <OrderFromAndHow isAuth={isAuth} defaultCountry={defaultCountry} />
       </div>
@@ -42,7 +65,7 @@ function TopSectionOfHeader({
         <SearchComponent isHomePage={isHomePage} />
       </div>
 
-      <div className="flex flex-row items-center  md:gap-2 gap-6">
+      <div className="flex flex-row items-center  md:gap-2 gap-4">
         {isAuth && (
           <>
             <Link
@@ -67,9 +90,9 @@ function TopSectionOfHeader({
               className="cursor-pointer bg-bg-100 transition-[background-color] duration-500 hover:bg-bg-200  rounded-full"
             >
               {" "}
-              {cartItems.filter(item => item.quantity > 0).length > 0 && (
+              {cartItems.filter((item) => item.quantity > 0).length > 0 && (
                 <div className="bg-primary text-white text-[9px] flex items-center justify-center rounded-full h-4 w-4 absolute">
-                  {cartItems.filter(item => item.quantity > 0).length}
+                  {cartItems.filter((item) => item.quantity > 0).length}
                 </div>
               )}
               <BsCart className="text-secondary  text-[20px] m-2 " />

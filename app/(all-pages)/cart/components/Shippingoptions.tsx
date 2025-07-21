@@ -16,7 +16,7 @@ function Shippingoptions() {
       <div>
         <div className="flex items-center justify-between gap-x-2 mt-3 mx-2">
           <Checkbox
-            defaultChecked={!!sessionStorage.getItem("urgentDelivery")}
+            defaultChecked={!!sessionStorage?.getItem("urgentDelivery")}
             id="urgentDelivery"
             onCheckedChange={(checked) => {
               if (checked) {

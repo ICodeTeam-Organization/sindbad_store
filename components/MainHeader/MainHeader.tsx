@@ -1,7 +1,5 @@
 "use client"; 
-import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { useState } from "react"; 
 import { cn } from "@/lib/utils";
 import React from "react";
 // import { Sheet, SheetContent } from "@/components/ui/sheet";
@@ -83,7 +81,7 @@ const MainHeader = ({
             </div>
           )} */}
 
-          <div className="p-2 px-0  cursor-pointer  mdHalf:mx-5  hidden mdHalf:block absolute z-[99999999]  -mt-[6px] ">
+          {/* <div className="p-2 px-0  cursor-pointer  mdHalf:mx-5  hidden mdHalf:block absolute z-[99999999]  -mt-[6px] ">
               <Link href="/">
                 <Image
                   className="block relative "
@@ -93,13 +91,12 @@ const MainHeader = ({
                   alt=""
                 />
               </Link>
-            </div>
+            </div> */}
 
           {/* هذا فيه الوقو الي بتظهر في باقي الصفحات غير الصفحة الرئيسية وفي الموبايل  . بالإضافة الى زر لفتح ال المنيو في الموبايل */}
           {/* <div
             className={cn(
-              "p-2 px-0 pr-4  mx-0  flex  items-center z-10 ",
-              isHomePage && "mdHalf:hidden flex"
+              "p-2 px-0 pr-4  mx-0  flex  items-center z-10 ", 
               // !isHomePage && "h"
             )}
           > 
@@ -125,7 +122,7 @@ const MainHeader = ({
         </div>
 
         {/* header => top,down sections */}
-        <div className="flex flex-col md:w-full   ">
+        <div className="flex flex-col  w-full   ">
           {/* top section */}
           <TopSectionOfHeader
             isHomePage={isHomePage}

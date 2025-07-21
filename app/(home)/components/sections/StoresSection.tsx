@@ -1,7 +1,7 @@
 // app/components/sections/StoresCarouselSection.tsx
 
 import { getApi } from "@/lib/http";
-import { Store } from "@/types/storeTypes"; 
+import { Store } from "@/types/storeTypes";
 import StoresCarsoule from "./StoresCarsoule";
 
 export default async function StoresSection() {
