@@ -4,8 +4,7 @@ import { useToast } from "@/hooks/use-toast";
 import { deleteApi, postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { ToastAction } from "@radix-ui/react-toast";
-import { useMutation } from "@tanstack/react-query";
-import { Loader2 } from "lucide-react";
+import { useMutation } from "@tanstack/react-query"; 
 import { useSession } from "next-auth/react";
 import { useRouter } from "next-nprogress-bar";
 import React from "react";
@@ -23,7 +22,7 @@ function AddStoreToFavBtn({ id }: PropsType) {
   const { toast } = useToast();
   const router = useRouter();
 
-  const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
+  const { mutate: mutateAddToFav } = useMutation({
     mutationFn: async () => {
       return await postApi(`FavoriteShop/AddStore`, {
         headers: {
@@ -50,7 +49,7 @@ function AddStoreToFavBtn({ id }: PropsType) {
     },
   });
 
-  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
+  const { mutate: mutateRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
         return await deleteApi(`FavoriteShop/RemoveStore/` + id);
@@ -89,17 +88,18 @@ function AddStoreToFavBtn({ id }: PropsType) {
         handleFav();
       }}
       className={cn(
-        " text-gray-200 border rounded-md p-3 hover:text-red-500",
-        isFavorite && "bg-red-500 text-white hover:text-white"
+        " bg-bg-100 border rounded-full p-2 px-4 hover:text-red-500 flex items-center justify-center gap-x-2", 
       )}
     >
-      {isPendingAddToFav || isPendingRemoveFromFav ? (
-        <Loader2 className="animate-spin" />
-      ) : isFavorite ? (
-        <IoMdHeart className="w-5 h-5" />
-      ) : (
-        <IoMdHeart className="w-5 h-5 " />
-      )}
+      <IoMdHeart className={
+        cn(
+          "w-5 h-5 text-bg-400 ",
+          isFavorite && "text-danger"
+        )
+      } />
+      {
+        isFavorite ? <span className="text-xs text-secondary font-bold">  إزالة من المفضلة</span> : <span className="text-xs text-secondary font-bold">إضافة للمفضلة</span>
+      }
     </button>
   );
 }

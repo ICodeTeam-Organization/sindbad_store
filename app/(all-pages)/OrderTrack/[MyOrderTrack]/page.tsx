@@ -174,6 +174,9 @@ const OrderTrack = async ({ params }: { params: { MyOrderTrack: string } }) => {
     return notFound();
   } 
   const orderData = OrderTrack.data;  
+
+  console.log(OrderTrack.data);
+  
   
   return (
     <>
@@ -270,20 +273,20 @@ const OrderTrack = async ({ params }: { params: { MyOrderTrack: string } }) => {
               <p className="text-xs text-gray-500 mt-0.5">{orderData?.shippedAt && convertToArabicDate(orderData?.shippedAt + "")}</p>
             </div>
           </div>}
-          {orderData?.arrivedAtDistributionArea && <div className="flex mt-4">
+          {orderData?.receivedByDeliveryAt && <div className="flex mt-4">
             <Image src={requestAvailable} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم وصول طلبك الى منطقة التوزيع </p>
-              <p className="text-xs text-gray-500 mt-0.5">{orderData?.arrivedAtDistributionArea && convertToArabicDate(orderData?.arrivedAtDistributionArea + "" )}</p>
+              <p className="text-xs text-gray-500 mt-0.5">{orderData?.receivedByDeliveryAt && convertToArabicDate(orderData?.receivedByDeliveryAt + "" )}</p>
             </div>
           </div>}
          
-          {orderData?.deliverdToCustomerAt && <div className="flex mt-4">
+          {orderData?.deliveredAt && <div className="flex mt-4">
             <Image src={date} alt={""} />
             <div className="mr-4">
               <p className="text-lg">تم استلام طلبك</p>
               <p className="text-xs text-gray-500 mt-0.5">
-                {orderData?.deliverdToCustomerAt && convertToArabicDate(orderData?.deliverdToCustomerAt + "")}
+                {orderData?.deliveredAt && convertToArabicDate(orderData?.deliveredAt + "")}
               </p>
             </div>
           </div>}

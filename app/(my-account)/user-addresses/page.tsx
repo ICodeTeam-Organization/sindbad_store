@@ -1,16 +1,10 @@
- 
-
 import AdddressTable from "./components/AddressTable";
 import { getApi } from "@/lib/http";
 import { AddressResponse } from "./types";
 
 
 const MyAccountPage = async () => {
-
-  // const {data} = useSession()
-  // console.log(data?.user);
-  
-
+ 
   const InitAddresses = await getApi<AddressResponse>(`CustomerAddress/GetCustomerAddress`);
  
   return (
