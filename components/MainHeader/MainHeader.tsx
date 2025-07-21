@@ -1,5 +1,4 @@
-"use client";
-import { BiMenu } from "react-icons/bi";
+"use client"; 
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -14,13 +13,13 @@ import { Drawer } from "../Drawer/Drawer";
 interface HeaderPropsType {
   isHomePage: boolean;
   isAuth: boolean;
-  defaultCountry:string
+  defaultCountry: string;
 }
 
 const MainHeader = ({
   isHomePage = false,
   isAuth = false,
-  defaultCountry
+  defaultCountry,
 }: HeaderPropsType) => {
   const [openNav, setopenNav] = useState<boolean>(false);
   // const session = useSession();
@@ -63,13 +62,14 @@ const MainHeader = ({
     <div className="duration-300  lg:container mx-auto">
       <div
         className={cn(
-          "  bg-white z-50 mdHalf:shadow-sm shadow-md border-b-0 mdHalf:border-b-0  border-b-white flex  justify-between  w-full mdHalf:items-start items-center mdHalf::bg-purple-600"
+          "  bg-white z-50 mdHalf:shadow-sm shadow-md border-b-0 mdHalf:border-b-0  border-b-white flex  justify-between  w-full mdHalf:items-center items-center mdHalf::bg-purple-600",
+          isHomePage && "mdHalf:items-start"
         )}
       >
         {/* logo section*/}
         <div>
           {/* هذي الوقو الي بتظهر في الصفحة الرئيسية في الشاشات الكبيرة */}
-          {isHomePage && (
+          {/* {isHomePage && (
             <div className="p-2 px-0  cursor-pointer  mdHalf:mx-5  hidden mdHalf:block absolute z-[99999999]  -mt-[6px] ">
               <Link href="/">
                 <Image
@@ -81,17 +81,28 @@ const MainHeader = ({
                 />
               </Link>
             </div>
-          )}
+          )} */}
+
+          <div className="p-2 px-0  cursor-pointer  mdHalf:mx-5  hidden mdHalf:block absolute z-[99999999]  -mt-[6px] ">
+              <Link href="/">
+                <Image
+                  className="block relative "
+                  src={"/images/sedebadLogo.svg"}
+                  width={130}
+                  height={80}
+                  alt=""
+                />
+              </Link>
+            </div>
 
           {/* هذا فيه الوقو الي بتظهر في باقي الصفحات غير الصفحة الرئيسية وفي الموبايل  . بالإضافة الى زر لفتح ال المنيو في الموبايل */}
-          <div
+          {/* <div
             className={cn(
-              "p-4 px-0 pr-4  mx-0  flex  items-center z-10 ",
+              "p-2 px-0 pr-4  mx-0  flex  items-center z-10 ",
               isHomePage && "mdHalf:hidden flex"
               // !isHomePage && "h"
             )}
-          >
-            {/* btn sliderBarMenu */}
+          > 
             <div
               className={cn("mdHalf:hidden block")}
               onClick={() => {
@@ -104,18 +115,23 @@ const MainHeader = ({
               <Image
                 className="block relative cursor-pointer"
                 src={"/images/sedebadLogo.svg"}
-                width={80}
+                // width={80}
+                width={130}
                 height={80}
                 alt=""
               />
             </Link>
-          </div>
+          </div> */}
         </div>
 
         {/* header => top,down sections */}
         <div className="flex flex-col md:w-full   ">
           {/* top section */}
-          <TopSectionOfHeader isHomePage={isHomePage} isAuth={isAuth} defaultCountry={defaultCountry} />
+          <TopSectionOfHeader
+            isHomePage={isHomePage}
+            isAuth={isAuth}
+            defaultCountry={defaultCountry}
+          />
 
           {/* down section this section in mobile become the navbarMenu */}
           <div className="tajawal   mdHalf:block hidden ">

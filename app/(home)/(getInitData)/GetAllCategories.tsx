@@ -4,16 +4,18 @@ import { useCategoriesDataStore } from "@/app/stores_mangament/categoriesStore";
 import { db } from "@/Data/database/db";
 import { normalizeCategory } from "@/Data/mappers/categoryNormlizeMapper";
 import { NormalizedCategoryType } from "@/Data/normalizTypes";
-import { getCookie } from "@/lib/coockie-utls";
+import { getClientCookie,  } from "@/lib/coockie-utls";
 import { getApi } from "@/lib/http";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 export default function GetAllCategories({ date }: { date: Date }) {
   const { setCategories } = useCategoriesDataStore();
+  const cookieClient = getClientCookie("country")
+  
   const lastupdateOfCategories =
     typeof window !== "undefined"
-      ? localStorage.getItem("CATS_LAST_UPDATE_" + getCookie("country"))
+      ? localStorage.getItem("CATS_LAST_UPDATE_" + cookieClient)
       : null;
   const { data, isSuccess } = useQuery<NormalizedCategoryType[]>({
     queryKey: ["categories"],
@@ -57,12 +59,12 @@ export default function GetAllCategories({ date }: { date: Date }) {
           const now = date || new Date();
           now.setHours(now.getHours() + 2);
           localStorage.setItem(
-            "CATS_LAST_UPDATE_" + getCookie("country"),
+            "CATS_LAST_UPDATE_" + cookieClient,
             now.toISOString()
           );
         }
         const finalCats = await db.categories.toArray();
-        setCategories(finalCats.filter(e=>e?.country == getCookie("country") ));
+        setCategories(finalCats.filter(e=>e?.country == cookieClient ));
       };
 
       updateLocalDatabase();

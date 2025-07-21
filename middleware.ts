@@ -20,15 +20,15 @@ export default withAuth(
     let response = NextResponse.next();
  
     // Set country cookie if not exists
-    // if (!countryCookie) {
-    //   // console.log('[Middleware] Setting country cookie');
-    //   response.cookies.set("country", "1", {
-    //     path: "/",
-    //     httpOnly: false,
-    //     sameSite: "lax",
-    //     maxAge: 60 * 60 * 24 * 365,
-    //   });
-    // }
+    if (!countryCookie) {
+      // console.log('[Middleware] Setting country cookie');
+      response.cookies.set("country", "1", {
+        path: "/",
+        httpOnly: false,
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 365,
+      });
+    }
 
     // Protected paths
     const protectedPaths = [

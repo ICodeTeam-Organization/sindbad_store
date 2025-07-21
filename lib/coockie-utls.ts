@@ -18,3 +18,8 @@ export  function getCookie(name: string):string | undefined {
     return Cookies.get(name);
   }
 }
+
+export  function getClientCookie(name: string):string {
+    const cookie = Cookies.get(name) 
+    return cookie ?? "1";
+}
