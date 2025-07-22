@@ -9,9 +9,7 @@ import PersonButton from "@/app/(home)/components/person-button";
 import Link from "next/link";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
 import { useNotificationsDataStore } from "@/app/stores_mangament/notificationStore";
-import { BiMenu } from "react-icons/bi";
-import Image from "next/image";
-
+ 
 interface PropsType {
   isHomePage?: boolean;
   isAuth?: boolean;
@@ -35,7 +33,7 @@ function TopSectionOfHeader({
         // isHomePage && "mdHalf:mr-[170px]"
       )}
     >
-      <div
+      {/* <div
         className={cn(
           " flex  items-center z-10 me-2" 
         )}
@@ -56,7 +54,7 @@ function TopSectionOfHeader({
             alt="logo"
           />
         </Link>
-      </div>
+      </div> */}
       <div className="hidden mdHalf:block">
         <OrderFromAndHow isAuth={isAuth} defaultCountry={defaultCountry} />
       </div>
@@ -65,7 +63,7 @@ function TopSectionOfHeader({
         <SearchComponent isHomePage={isHomePage} />
       </div>
 
-      <div className="flex flex-row items-center  md:gap-2 gap-4">
+      <div className="flex flex-row items-center  md:gap-2 gap-4 ms-2">
         {isAuth && (
           <>
             <Link

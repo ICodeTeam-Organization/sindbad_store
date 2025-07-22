@@ -43,8 +43,8 @@ function CategoriesSlider() {
   
 
   return (
-    <div className="flex  items-center w-full bg-white relative px-10" >
-      <div className="h-full cursor-pointer sm:w-20 absolute bg-gradient-to-l from-[#fff] via-[#fff1] right-0 to-transparent flex items-center justify-center " onClick={() => scroll("right")} >
+    <div className="flex  items-center w-full bg-white relative mdHalf:px-10 px-3" >
+      <div className="h-full max-mdHalf:hidden cursor-pointer sm:w-20 absolute bg-gradient-to-l from-[#fff] via-[#fff1] right-0 to-transparent flex items-center justify-center " onClick={() => scroll("right")} >
           <Image
             alt="right"
             src={"/images/right_ic.svg"}
@@ -68,7 +68,7 @@ function CategoriesSlider() {
                }
             </div> */}
          </div>
-         <div className="h-full cursor-pointer sm:w-20 absolute bg-gradient-to-r from-[#fff] via-[#fff1] left-0 to-transparent flex items-center justify-center" onClick={() => scroll("left")} >
+         <div className="h-full max-mdHalf:hidden cursor-pointer sm:w-20 absolute bg-gradient-to-r from-[#fff] via-[#fff1] left-0 to-transparent flex items-center justify-center" onClick={() => scroll("left")} >
             <Image
             alt="left"
             src={"/images/left_ic.svg"}

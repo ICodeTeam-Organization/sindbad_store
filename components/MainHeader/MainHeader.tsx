@@ -1,5 +1,5 @@
-"use client"; 
-import { useState } from "react"; 
+"use client";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
 import React from "react";
 // import { Sheet, SheetContent } from "@/components/ui/sheet";
@@ -7,6 +7,9 @@ import MenusSection from "./headerSections/MenusSection";
 import SearchComponent from "./headerSections/SearchComponent";
 import TopSectionOfHeader from "./headerSections/TopSectionOfHeader";
 import { Drawer } from "../Drawer/Drawer";
+import { BiMenu } from "react-icons/bi";
+import Link from "next/link";
+import Image from "next/image";
 
 interface HeaderPropsType {
   isHomePage: boolean;
@@ -124,11 +127,36 @@ const MainHeader = ({
         {/* header => top,down sections */}
         <div className="flex flex-col  w-full   ">
           {/* top section */}
-          <TopSectionOfHeader
-            isHomePage={isHomePage}
-            isAuth={isAuth}
-            defaultCountry={defaultCountry}
-          />
+          <div className="flex items-center max-mdHalf:justify-between  ">
+            <div className={(" flex  items-center z-10 mx-2")}>
+              <div
+                className={cn("mdHalf:hidden block")}
+                onClick={() => {
+                  setopenNav((o) => !o);
+                }}
+              >
+                <BiMenu className="cursor-pointer" size={40} />
+              </div>
+              <Link
+                href="/"
+                className="2lg:w-[130px] w-[120px] h-[70px]  2lg:h-[80px] relative"
+              >
+                <Image
+                  className="block relative cursor-pointer"
+                  src={"/images/sedebadLogo.svg"}
+                  fill
+                  alt="logo"
+                />
+              </Link>
+            </div>
+            <div className="md:flex-1">
+              <TopSectionOfHeader
+                isHomePage={isHomePage}
+                isAuth={isAuth}
+                defaultCountry={defaultCountry}
+              />
+            </div>
+          </div>
 
           {/* down section this section in mobile become the navbarMenu */}
           <div className="tajawal   mdHalf:block hidden ">
@@ -171,7 +199,7 @@ const MainHeader = ({
       <div
         id="hideSearchComponentInMobileWhenScoll"
         className={cn(
-          "md:hidden block z-10 mdHalf:shadow-sm shadow-md  w-full relative mdHalf:p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  "
+          "md:hidden block z-0 mdHalf:shadow-sm shadow-md  w-full relative mdHalf:p-4 pt-0 transition-[transform_0.3s_ease,opacity_0.3s_ease] top-0  "
         )}
       >
         <SearchComponent isHomePage={isHomePage} />
