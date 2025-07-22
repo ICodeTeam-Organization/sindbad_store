@@ -9,10 +9,11 @@ import { savebackgroundDataInCache } from "@/Data/cachingAndBgData/backgroundDat
 export interface ReviewFormProps {
   productId: number;
   onReviewAdded: (review: ReviewProps) => void;  
-  hasReview?: boolean; // هذا الحقل اختياري، يمكن استخدامه لتحديد ما إذا كان المستخدم قد قام بمراجعة المنتج بالفعل
+  hasReview?: boolean; // هذا الحقل اختياري، يمكن استخدامه لتحديد ما إذا كان المستخدم قد قام بمراجعة المنتج بالفعل\
+  isAuth?:boolean;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , hasReview }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , hasReview , isAuth}) => {
   
   const [reviewText, setReviewText] = useState("");
   const [rate, setRate] = useState(3);
@@ -77,6 +78,11 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId , onReviewAdded , has
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+
+    if (!isAuth) {
+      return setValidationError(" يجب تسجيل الدخول اولا ")
+    }
 
     if (hasReview) return setValidationError("لقد قمت بالفعل بنشر مراجعة لهذا المنتج.");
 

@@ -74,12 +74,15 @@ export default function DropDownMenuOrderFrom({ defaultCountry }: PropsType) {
 
       // Send data that is in cache to the server
       const data = await db.bgData.toArray();
-      await mutateAsync(data);
+      if (data.length > 0 &&  status === "authenticated") {
+         await mutateAsync(data);
+      }
 
       Cookies.remove("country");
       Cookies.set("country", item?.key, {
         path: "/",
         sameSite: "Lax",
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365), // سنة من الآن
       });
       setselectedCountry(item);
       router.refresh();

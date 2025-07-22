@@ -12,6 +12,7 @@ export default withAuth(
     const token = await getToken({ req: request });
     const { pathname } = request.nextUrl;
 
+    
     // // Debug: log current cookie and token
     // console.log('[Middleware] Current country cookie:', countryCookie);
     // console.log('[Middleware] User token:', token ? 'Exists' : 'None');
@@ -20,13 +21,13 @@ export default withAuth(
     let response = NextResponse.next();
  
     // Set country cookie if not exists
-    if (!countryCookie) {
+    if (!countryCookie || !(["1","2"].includes(countryCookie))) {
       // console.log('[Middleware] Setting country cookie');
       response.cookies.set("country", "1", {
         path: "/",
         httpOnly: false,
         sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 365,
+        expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365), // سنة من الآن
       });
     }
 

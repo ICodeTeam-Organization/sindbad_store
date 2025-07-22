@@ -15,6 +15,7 @@ import {
   savebackgroundDataInCache,
 } from "@/Data/cachingAndBgData/backgroundData";
 import CircularProgress from "./CircleSlider";
+import { useSession } from "next-auth/react";
 // import { useSession } from "next-auth/react";
 type ProductReviewsTapProps = {
   productId: string | number;
@@ -30,6 +31,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
     isOpen: false,
     data: { comment: "", productId, rating: 0 },
   });
+  const { status } = useSession();
   const [delDialog, setDelDialog] = useState({ isOpen: false, reviewId: 0 });
   // const { data:session } = useSession();
   const {
@@ -48,11 +50,14 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
       }>(
         `CommentsAndRates/GetReviewsOfProduct?productId=${productId}&sort=1&pageNumber=${pageParam}&pageSize=20`
       );
-      let myReviews;
+      let myReviews: { data?: ReviewProps } = {};
       if (pageParam === 1) {
-        myReviews = await getApi<{ data: ReviewProps }>(
-          `CommentsAndRates/GetCommentsAndRates?productId=${productId}`
-        );
+
+        if (status === "authenticated") {
+          myReviews = await getApi<{ data: ReviewProps }>(
+            `CommentsAndRates/GetCommentsAndRates?productId=${productId}`
+          );
+        }
 
         if (cachedReviews.length > 0) {
           const cachedReview = cachedReviews.find(
@@ -123,7 +128,12 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
         </h3>
         <div className="flex max-smHalf:flex-col">
           <div className="flex max-2lg:flex-col  w-[30%] max-smHalf:w-full py-0 justify-center items-center mb-3 gap-x-4">
-            <CircularProgress max={5} value={product.rate} color="#ffb700" strokeWidth={4}>
+            <CircularProgress
+              max={5}
+              value={product.rate}
+              color="#ffb700"
+              strokeWidth={4}
+            >
               <span className="text-3xl font-bold  ">
                 {product.rate.toFixed(1)}
               </span>
@@ -199,6 +209,7 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
         <div className="  border border-gray-300 rounded-md p-3 mb-4">
           <ReviewForm
             productId={Number(productId)}
+            isAuth={status === "authenticated"}
             hasReview={reviewsList.some(
               (review) => review.isMe && review.numOfRate > 0
             )}
