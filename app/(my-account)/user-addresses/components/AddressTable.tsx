@@ -52,7 +52,8 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
 
   return (
     <>
-      <div className="mb-6">
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-xl font-bold" >عنــاويني</h2>
         <Button
           onClick={() => {
             setOpenAddAddressDialog(true);
@@ -93,8 +94,8 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
         </div>
       ) : (
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead className="bg-[#FFECE5] text-sm font-medium   text-[#000]">
+          <table className="w-full border-collapse rounded-md overflow-hidden">
+            <thead className="bg-bg-100 text-sm font-medium   text-[#000]">
               <tr>
                 {TABLE_HEAD.map((head) => (
                   <td key={head} className="px-4 py-3 font-medium">
@@ -108,16 +109,16 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
                 <tr
                   key={index}
                   className={`${
-                    index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
-                  } border-b border-gray-200`}
+                    index % 2 !== 0 ? "bg-bg-100/40" : "bg-white"
+                  }  `}
                 >
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 whitespace-nowrap">
                     {item?.locationDescription &&
                     item.locationDescription.length !== 0
                       ? item.locationDescription
                       : "لا يوجد عنوان محدد"}
                   </td>
-                  <td className="px-4 py-3">{item?.directorateName}</td>
+                  <td className="px-4 py-3 ">{item?.directorateName}</td>
                   <td className="px-4 py-3">{item?.userName}</td>
                   <td className="px-4 py-3">{item?.phoneNumber}</td>
 
@@ -132,21 +133,22 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
                         <button
                           className="text-red-500 hover:text-red-700"
                           onClick={() => {
-                            setOpenAddAddressDialog(true);
-                            setisEditing({ data: item, isEdit: true });
-                          }}
-                        >
-                          <FiEdit fontSize="15px" />
-                        </button>
-                        <button
-                          className="text-red-500 hover:text-red-700"
-                          onClick={() => {
                             setselectedIdToDelete(item.id);
                             mutate(item?.id);
                           }}
                         >
-                          <MdOutlineDelete fontSize="20px" />
+                          <MdOutlineDelete fontSize="25px" />
                         </button>
+                        <button
+                          className="text-secondary "
+                          onClick={() => {
+                            setOpenAddAddressDialog(true);
+                            setisEditing({ data: item, isEdit: true });
+                          }}
+                        >
+                          <FiEdit fontSize="20px" />
+                        </button>
+                        
                       </div>
                     )}
                   </td>

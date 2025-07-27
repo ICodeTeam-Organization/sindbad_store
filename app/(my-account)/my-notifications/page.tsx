@@ -32,7 +32,7 @@ const Notifications = async () => {
 
 
   return (
-      <div className="p-6">
+      <div className="p-6 bg-white rounded-md shadow-sm">
         <h1 className="text-2xl font-semibold text-gray-800">الإشعارات</h1>
         <NotificationCard initData={data?.data} notifeeCounts={notifeeCount} actionsQuery={actionsQeries} />
       </div>

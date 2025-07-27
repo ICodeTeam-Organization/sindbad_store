@@ -6,11 +6,12 @@ import { BsSortDown } from "react-icons/bs";
 import { CgSortAz } from "react-icons/cg";
 import { Button } from "@/components/ui/button";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { getApi } from "@/lib/http"; 
+import { getApi } from "@/lib/http";
 import { useRouter } from "next-nprogress-bar";
-import Link from "next/link"; 
-import { convertToArabicDate } from "@/lib/timeFuns"; 
+import Link from "next/link";
+import { convertToArabicDate } from "@/lib/timeFuns";
 import { get_currency_key } from "@/lib/cookie/cookie.clients";
+import { cn } from "@/lib/utils";
 
 interface Props {
   initData: {
@@ -33,13 +34,22 @@ const TABLE_HEAD = [
 const orderStatuses = [
   { key: -1, status: "الكل" },
   { key: 0, status: "الطلب قيد انتظار التأكيد على السند التابع له" },
-  { key: 1, status: "تم قبول الطلب" }, 
-  { key: 2, status: "تم شراء الطلب" }, 
+  { key: 1, status: "تم قبول الطلب" },
+  { key: 2, status: "تم شراء الطلب" },
   { key: 3, status: "تم شحن الطلب" },
-  { key: 4, status: "تم استلام الطلب لدى مندوب الاستلام" }, 
+  { key: 4, status: "تم استلام الطلب لدى مندوب الاستلام" },
   { key: 5, status: "تم تسليمه" },
   { key: 6, status: "تم الرفض" },
 ];
+
+const statusColors = [
+  "#636773",
+  "#00974F",
+  "#0369A1",
+  "#5A21DB",
+  "#FEF9C3",
+  "#166534"
+]
 
 const sortingOptions = [
   { key: 1, status: "ترتيب تصاعدي" },
@@ -47,9 +57,9 @@ const sortingOptions = [
 ];
 
 const MyOrdersTable: React.FC<Props> = ({ initData }) => {
- 
+
   const router = useRouter();
-  
+
   const [ordersFilters, setOrdersFilters] = useState<{
     status?: number;
     orderBy?: number;
@@ -114,13 +124,13 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
   const goToOrderDetails = (id: number) => {
     router.push("/Orderdetail/" + id);
   };
-  
+
 
   return (
     <div>
       {/* Header */}
       <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-4">
-        <h2 className="text-2xl">طلباتي</h2>
+        <h2 className="mdHalf:text-xl text-lg text-secondary font-bold">طلباتي</h2>
         <div className="flex flex-row md:flex-row sm:items-center gap-4">
           <Dropdown
             placeholder="ترتيب حسب التاريخ"
@@ -173,7 +183,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
             {/* Desktop Table */}
             <div className="hidden md:block">
               <table className="min-w-full">
-                <thead className="bg-[#FFECE5] text-sm font-medium text-center text-[#000]">
+                <thead className="bg-bg-100 text-sm font-medium text-center text-[#000]">
                   <tr>
                     {TABLE_HEAD.map((head) => (
                       <th key={head} className="px-4 py-3 font-medium">
@@ -185,25 +195,30 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                 <tbody className="text-sm text-center text-[#000]">
                   {orders.map(
                     (
-                      { orderNumber, totalPrice, orderDate, orderStatus, id , country },
+                      { orderNumber, totalPrice, orderDate, orderStatus, id, country, orderStatusNumber },
                       index
                     ) => (
                       <tr
                         key={orderNumber}
-                        className={`${
-                          index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
-                        } border-b border-gray-200 cursor-pointer`}
+                        className={`${index % 2 !== 0 ? "bg-bg-100/40" : "bg-white"
+                          } cursor-pointer`}
                         onClick={() => {
                           goToOrderDetails(id);
                         }}
                       >
                         <td className="px-4 py-3">{orderNumber}</td>
-                        <td className="px-4 py-3">{totalPrice} {get_currency_key(country)  }</td>
+                        <td className="px-4 py-3">{totalPrice} {get_currency_key(country)}</td>
                         <td className="px-4 py-3">
                           {convertToArabicDate(orderDate)}
                         </td>
                         <td className="px-4 py-3">
-                          <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm">
+                          <span 
+                          className={cn("inline-block px-4 py-2 whitespace-nowrap  text-sm rounded-full", 
+                          )} 
+                          style={{
+                            backgroundColor: statusColors[orderStatusNumber] + "22",
+                            color: statusColors[orderStatusNumber]
+                          }}>
                             {orderStatus}
                           </span>
                         </td>
@@ -214,9 +229,9 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                               e.stopPropagation();
                               track(id);
                             }}
-                            className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] cursor-pointer rounded-lg bg-[#288B5326] text-sm"
+                            className="inline-block px-4 py-2 whitespace-nowrap text-white cursor-pointer rounded-full bg-secondary text-sm"
                           >
-                            تتبع
+                            تتبع الطلب
                           </Link>
                         </td>
                       </tr>
@@ -230,14 +245,11 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
             <div className="block md:hidden">
               {orders.map(
                 (
-                  { orderNumber, totalPrice, orderDate, orderStatus, id , country },
-                  index
+                  { orderNumber, totalPrice, orderDate, orderStatus, id, country,orderStatusNumber },
                 ) => (
                   <div
                     key={orderNumber}
-                    className={`border rounded-lg p-4 mb-4 cursor-pointer ${
-                      index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
-                    }`}
+                    className={`border rounded-lg p-4 mb-4 cursor-pointer `}
                     onClick={() => {
                       goToOrderDetails(id);
                     }}
@@ -258,7 +270,10 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                     </div>
                     <div className="mb-2 flex flex-wrap justify-between items-center text-sm">
                       <span className="font-medium">الحالة: </span>
-                      <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm rounded">
+                      <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm rounded" style={{
+                            backgroundColor: statusColors[orderStatusNumber] + "22",
+                            color: statusColors[orderStatusNumber]
+                          }}>
                         {orderStatus}
                       </span>
                     </div>
@@ -269,9 +284,9 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                           e.stopPropagation();
                           track(id);
                         }}
-                        className="inline-block p-3 mt-2 w-full text-center whitespace-nowrap text-[#2E9E2C] cursor-pointer rounded-lg bg-[#288B5326] text-sm"
+                        className="inline-block p-3 mt-2 w-full text-center whitespace-nowrap text-white cursor-pointer rounded-lg bg-secondary text-sm"
                       >
-                        تتبع
+                        تتبع اطلب
                       </Link>
                     </div>
                   </div>

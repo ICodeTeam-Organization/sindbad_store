@@ -14,12 +14,8 @@ const UserForm = async () => {
     cache:"no-cache"
   });
 
-  return (
-    <div>
-      <div className="">
-          <ProfileForm profile={resulte?.data} />
-      </div>
-    </div>
+  return ( 
+   <ProfileForm profile={resulte?.data} /> 
   );
 };
 

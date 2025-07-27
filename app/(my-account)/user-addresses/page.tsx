@@ -8,9 +8,8 @@ const MyAccountPage = async () => {
   const InitAddresses = await getApi<AddressResponse>(`CustomerAddress/GetCustomerAddress`);
  
   return (
-      <div className="p-6 h-[500px]">
-        <div className="w-full overflow-hidden rounded-lg  mt-4">
-        
+      <div className=" min-h-[500px] bg-white p-5">
+        <div className="w-full overflow-hidden rounded-lg  mt-4 "> 
          <AdddressTable address={InitAddresses?.data || []} />
         </div>
       </div>

@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 import { Button } from "@/components/ui/button";
 import * as Tabs from "@radix-ui/react-tabs";
@@ -16,41 +16,39 @@ type TabsComponentProps = {
 
 const TabsComponent: React.FC<TabsComponentProps> = ({ tabs }) => {
 
- 
-
-  const {setSpecialOrderState,setWholeSalesOrderState} = useSpecialOrdersDialogsStore()
+  const { setSpecialOrderState, setWholeSalesOrderState } = useSpecialOrdersDialogsStore()
 
   return (
     <>
-      <div className="flex flex-row justify-between flex-wrap gap-y-4 items-center mb-4">
-        <h2 className="text-base">طلباتي الخاصة</h2>
+      <div className="flex flex-row justify-between flex-wrap gap-y-4 items-center gap-x-4   px-4">
+        <h2 className="mdHalf:text-xl text-lg  font-bold text-secondary">طلباتي الخاصة</h2>
         <div className="flex items-center justify-center gap-x-2">
-        <Button onClick={()=>{setSpecialOrderState(true)}} className="bg-primary hover:bg-primary hover:bg-opacity-60 text-xs">
-          <IoMdAddCircleOutline className="ml-4 " size={20} />  طلب خاص جديد
-        </Button>
-        <Button onClick={()=>{setWholeSalesOrderState(true)}} className="bg-primary hover:bg-primary hover:bg-opacity-60 text-xs">
-          <IoMdAddCircleOutline className="ml-4 " size={20} />  طلب جملة جديد
-        </Button>
+          <Button onClick={() => { setSpecialOrderState(true) }} className="bg-primary hover:bg-primary hover:bg-opacity-60 text-xs">
+            <IoMdAddCircleOutline className="ml-4 " size={20} />  طلب خاص جديد
+          </Button>
+          <Button onClick={() => { setWholeSalesOrderState(true) }} className="bg-primary hover:bg-primary hover:bg-opacity-60 text-xs">
+            <IoMdAddCircleOutline className="ml-4 " size={20} />  طلب جملة جديد
+          </Button>
         </div>
       </div>
-  
-      <Tabs.Root defaultValue={tabs[0]?.value || ""} className="w-full mt-10">
+
+      <Tabs.Root defaultValue={tabs[0]?.value || ""} className="w-full mt-4  " dir="rtl">
         {/* Tab List */}
         <Tabs.List
-          className="flex  items-start  w-full justify-start overflow-x-auto border-b-2 border-b-primary-background"
+          className="flex  items-start bg-bg-100/40 p-2 md:w-fit md:justify-start justify-center overflow-x-auto  rounded-md mx-4 "
           dir="rtl"
         >
           {tabs.map((tab) => (
             <Tabs.Trigger
               key={tab.value}
               value={tab.value}
-              className="px-4 py-2 whitespace-nowrap font-medium text-sm text-gray-700 focus:outline-none data-[state=active]:bg-primary data-[state=active]:text-white rounded-tr-lg rounded-tl-lg"
+              className="px-4 py-2 whitespace-nowrap font-medium text-sm text-gray-700 focus:outline-none data-[state=active]:shadow-sm  data-[state=active]:bg-white data-[state=active]:text-secondary rounded-md  "
             >
               {tab.label}
             </Tabs.Trigger>
           ))}
         </Tabs.List>
-  
+
         {/* Tab Content */}
         <div className="pt-4 w-full">
           {tabs.map((tab) => (
@@ -67,7 +65,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({ tabs }) => {
     </>
   );
 }
-  
+
 
 // const TabsComponent: React.FC<TabsComponentProps> = ({ tabs }) => {
 //   return (

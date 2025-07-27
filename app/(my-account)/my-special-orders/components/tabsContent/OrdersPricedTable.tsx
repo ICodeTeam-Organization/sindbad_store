@@ -71,7 +71,7 @@ const OrdersPricedTable: React.FC<{ initData: SpecialOrdersResponseType }> = ({
         <div className="hidden md:block">
           <table className="w-full border-collapse">
             {/* Table Header */}
-            <thead className="bg-[#FFECE5] text-sm font-medium text-center text-[#000]">
+            <thead className="bg-bg-100 text-sm font-medium text-center text-[#000]">
               <tr>
                 {TABLE_HEAD.map((head) => (
                   <th key={head} className="px-4 py-3 font-medium">

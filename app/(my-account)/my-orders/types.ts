@@ -9,7 +9,7 @@ export type Order = {
     orderDate: string; // ISO date string format
     orderStatus: string; // This is in Arabic and represents the status of the order
     totalPrice: number; // Total price of the order
-    orderNumber: string;
+    orderNumber: string;orderStatusNumber:number;
     country: string; // Country code as a string
 };
 

@@ -26,7 +26,7 @@ import { SelectGroup } from "@radix-ui/react-select";
 import { toast } from "@/hooks/use-toast";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next-nprogress-bar";
-import Link from "next/link";
+import Link from "next/link"; 
 
 type Region = {
   id: number;
@@ -152,122 +152,125 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mdHalf:p-8 p-4 w-full"
+        className="  w-full"
       >
-        <h1 className="text-base font-semibold text-right text-gray-800 mb-6">
-          بيانات المستخدم
-        </h1>
 
-        <div className="flex gap-x-4 items-center">
-          {!isEditable && (
-            <>
-              <Button
-                type="button"
-                onClick={() => {
-                  setIsEditable(true);
-                }}
-                className="bg-orange-500 hover:bg-orange-600 text-white mb-4 "
-              >
-                تعديل
-              </Button>
-              <Link href="/profile/changePassword">
-                <Button
-                  type="button"
-                  className="bg-orange-500 hover:bg-orange-600 text-white mb-4 "
-                >
-                  تغيير كلمة المرور
-                </Button>
-              </Link>
-            </>
-          )}
-        </div>
+
 
         {/* Personal Information Section */}
-        <div className="mdHalf:grid grid-cols-1 flex flex-col mdHalf:grid-cols-2 gap-6 mb-8 bg-white border-2 rounded-lg mdHalf:p-8 p-4">
-          <HeadTitle
-            title="معلومات الشخصية"
-            description="كل معلوماتك الشخصية لا يطلع عليها احد غيرك"
-          />
 
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>اسم المستخدم</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={!isEditable}
-                    type="text"
-                    placeholder="اسم المستخدم"
-                    {...field}
-                  />
-                </FormControl>
-                {/* <FormMessage /> */}
-              </FormItem>
-            )}
-          />
+        <div className=" mdHalf:p-8 p-4 bg-white rounded-md   shadow-sm">
+          <div className="flex items-center justify-between mb-10 flex-wrap gap-y-5">
+            <HeadTitle
+              title="معلومات الشخصية"
+              description="كل معلوماتك الشخصية لا يطلع عليها احد غيرك"
+            />
+            <div className="flex gap-x-4 items-center">
+              {!isEditable && (
+                <>
+                  <Button
+                    type="button"
+                    onClick={() => {
+                      setIsEditable(true);
+                    }}
+                    className="bg-orange-500 hover:bg-orange-600 text-white "
+                  >
+                    تعديل
+                  </Button>
+                  <Link href="/profile/changePassword">
+                    <Button
+                      type="button"
+                      className="bg-orange-500 hover:bg-orange-600 text-white "
+                    >
+                      تغيير كلمة المرور
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+          <div className="mdHalf:grid grid-cols-1 flex flex-col mdHalf:grid-cols-2 gap-6 mb-8 ">
 
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>البريد الإلكتروني</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={!isEditable}
-                    type="email"
-                    placeholder="example@mail.com"
-                    {...field}
-                  />
-                </FormControl>
-                {/* <FormMessage /> */}
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>اسم المستخدم</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={!isEditable}
+                      type="text"
+                      placeholder="اسم المستخدم"
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormMessage /> */}
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="phoneNumber"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>رقم الجوال</FormLabel>
-                <FormControl>
-                  <Input
-                    type="text"
-                    disabled
-                    placeholder="أدخل رقم جوالك"
-                    {...field}
-                  />
-                </FormControl>
-                {/* <FormMessage /> */}
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>البريد الإلكتروني</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={!isEditable}
+                      type="email"
+                      placeholder="example@mail.com"
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormMessage /> */}
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            control={form.control}
-            name="telePhone"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>رقم الهاتف (الثابت)</FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={!isEditable}
-                    type="text"
-                    placeholder="أدخل رقم الهاتف الثابت"
-                    {...field}
-                  />
-                </FormControl>
-                {/* <FormMessage /> */}
-              </FormItem>
-            )}
-          />
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>رقم الجوال</FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      disabled
+                      placeholder="أدخل رقم جوالك"
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormMessage /> */}
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="telePhone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>رقم الهاتف (الثابت)</FormLabel>
+                  <FormControl>
+                    <Input
+                      disabled={!isEditable}
+                      type="text"
+                      placeholder="أدخل رقم الهاتف الثابت"
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormMessage /> */}
+                </FormItem>
+              )}
+            />
+          </div>
         </div>
 
         {/* Location Section */}
-        <div className="mdHalf:grid grid-cols-1 flex flex-col sm:grid-cols-2 gap-6 mb-8 bg-white border-2 rounded-lg p-8">
+        <div className="mdHalf:grid grid-cols-1 flex flex-col sm:grid-cols-2 gap-6 mb-8 bg-white mt-2 shadow-sm rounded-lg p-8">
           <HeadTitle
             title="مكان الإقامة"
             description="أخبرنا اين يقع مكان عملك التجاري؟"
@@ -335,10 +338,10 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
                     <SelectContent>
                       {(!form?.getValues()?.governorateId ||
                         form?.getValues()?.governorateId == "") && (
-                        <span className="text-sm text-center p-2">
-                          يجب أن تختار محافظة اولا
-                        </span>
-                      )}
+                          <span className="text-sm text-center p-2">
+                            يجب أن تختار محافظة اولا
+                          </span>
+                        )}
                       {allGovs
                         ?.find(
                           (e) => +e?.id == +form?.getValues()?.governorateId
@@ -359,7 +362,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
 
         {/* Action Buttons */}
         {isEditable && (
-          <div className="flex gap-x-4 items-center mdHalf:static mdHalf:p-0 mdHalf:shadow-none mdHalf:m-0 fixed bottom-0 p-4  rounded-lg shadow-xl  bg-white w-full left-0 right-0">
+          <div className="flex gap-x-4 items-center mdHalf:static   mdHalf:shadow-none mdHalf:m-0 fixed bottom-0 p-4  rounded-lg shadow-xl  bg-white w-full left-0 right-0">
             <Button
               onClick={() => {
                 setIsEditable(false);
