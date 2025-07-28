@@ -12,6 +12,7 @@ import Link from "next/link";
 import { convertToArabicDate } from "@/lib/timeFuns";
 import { get_currency_key } from "@/lib/cookie/cookie.clients";
 import { cn } from "@/lib/utils";
+import UpdateBondDialog from "./UpdateBoundDialog";
 
 interface Props {
   initData: {
@@ -33,13 +34,13 @@ const TABLE_HEAD = [
 
 const orderStatuses = [
   { key: -1, status: "الكل" },
-  { key: 0, status: "الطلب قيد انتظار التأكيد على السند التابع له" },
+  { key: 0, status: "الطلب قيد الإنتظار  " },
   { key: 1, status: "تم قبول الطلب" },
   { key: 2, status: "تم شراء الطلب" },
   { key: 3, status: "تم شحن الطلب" },
   { key: 4, status: "تم استلام الطلب لدى مندوب الاستلام" },
   { key: 5, status: "تم تسليمه" },
-  { key: 6, status: "تم الرفض" },
+  { key: 6, status: "تم رفض السند" },
 ];
 
 const statusColors = [
@@ -48,7 +49,8 @@ const statusColors = [
   "#0369A1",
   "#5A21DB",
   "#FEF9C3",
-  "#166534"
+  "#166534",
+
 ]
 
 const sortingOptions = [
@@ -59,7 +61,7 @@ const sortingOptions = [
 const MyOrdersTable: React.FC<Props> = ({ initData }) => {
 
   const router = useRouter();
-
+  const [openUpdateBondDialog, setopenUpdateBondDialog] = useState<number | null>(null)
   const [ordersFilters, setOrdersFilters] = useState<{
     status?: number;
     orderBy?: number;
@@ -94,7 +96,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
     return data;
   };
 
-  const { data, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, isRefetching, fetchNextPage, hasNextPage, isFetchingNextPage ,refetch, } =
     useInfiniteQuery({
       queryKey: ["customerOrders", ordersFilters],
       queryFn: fetchOrders,
@@ -124,6 +126,9 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
   const goToOrderDetails = (id: number) => {
     router.push("/Orderdetail/" + id);
   };
+  const openUpdateDialog = (orderId: number) => {
+    setopenUpdateBondDialog(orderId)
+  }
 
 
   return (
@@ -212,27 +217,37 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                           {convertToArabicDate(orderDate)}
                         </td>
                         <td className="px-4 py-3">
-                          <span 
-                          className={cn("inline-block px-4 py-2 whitespace-nowrap  text-sm rounded-full", 
-                          )} 
-                          style={{
-                            backgroundColor: statusColors[orderStatusNumber] + "22",
-                            color: statusColors[orderStatusNumber]
-                          }}>
+                          <span
+                            className={cn("inline-block px-4 py-2 whitespace-nowrap  text-sm rounded-full",
+                            )}
+                            style={{
+                              backgroundColor: statusColors[orderStatusNumber] + "22",
+                              color: statusColors[orderStatusNumber]
+                            }}>
                             {orderStatus}
                           </span>
                         </td>
                         <td className="px-4 py-3">
-                          <Link
-                            href={"/OrderTrack/" + id}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              track(id);
-                            }}
-                            className="inline-block px-4 py-2 whitespace-nowrap text-white cursor-pointer rounded-full bg-secondary text-sm"
-                          >
-                            تتبع الطلب
-                          </Link>
+                          {orderStatusNumber === 6 ?
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openUpdateDialog(id);
+                              }}
+                              className="inline-block px-4 py-2 whitespace-nowrap text-white cursor-pointer rounded-full bg-danger text-sm"
+                            >
+                              إدخال سند جديد
+                            </div>
+                            : <Link
+                              href={"/OrderTrack/" + id}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                track(id);
+                              }}
+                              className="inline-block px-4 py-2 whitespace-nowrap text-white cursor-pointer rounded-full bg-secondary text-sm"
+                            >
+                              تتبع الطلب
+                            </Link>}
                         </td>
                       </tr>
                     )
@@ -245,7 +260,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
             <div className="block md:hidden">
               {orders.map(
                 (
-                  { orderNumber, totalPrice, orderDate, orderStatus, id, country,orderStatusNumber },
+                  { orderNumber, totalPrice, orderDate, orderStatus, id, country, orderStatusNumber },
                 ) => (
                   <div
                     key={orderNumber}
@@ -271,23 +286,33 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                     <div className="mb-2 flex flex-wrap justify-between items-center text-sm">
                       <span className="font-medium">الحالة: </span>
                       <span className="inline-block px-3 py-1 whitespace-nowrap text-[#2E9E2C] bg-[#288B5326] text-sm rounded" style={{
-                            backgroundColor: statusColors[orderStatusNumber] + "22",
-                            color: statusColors[orderStatusNumber]
-                          }}>
+                        backgroundColor: statusColors[orderStatusNumber] + "22",
+                        color: statusColors[orderStatusNumber]
+                      }}>
                         {orderStatus}
                       </span>
                     </div>
                     <div className="text-right">
-                      <Link
-                        href={"/OrderTrack/" + id}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          track(id);
-                        }}
-                        className="inline-block p-3 mt-2 w-full text-center whitespace-nowrap text-white cursor-pointer rounded-lg bg-secondary text-sm"
-                      >
-                        تتبع اطلب
-                      </Link>
+                      {orderStatusNumber === 6 ?
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openUpdateDialog(id);
+                          }}
+                          className="inline-block px-4 py-2 whitespace-nowrap text-white cursor-pointer rounded-full bg-danger text-sm"
+                        >
+                          إدخال سند جديد
+                        </div>
+                        : <Link
+                          href={"/OrderTrack/" + id}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            track(id);
+                          }}
+                          className="inline-block p-3 mt-2 w-full text-center whitespace-nowrap text-white cursor-pointer rounded-lg bg-secondary text-sm"
+                        >
+                          تتبع اطلب
+                        </Link>}
                     </div>
                   </div>
                 )
@@ -298,6 +323,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
       )}
 
       {/* Load More Button */}
+      <UpdateBondDialog open={openUpdateBondDialog != null} onOpenChange={() => { setopenUpdateBondDialog(null) }} orderId={openUpdateBondDialog ?? 0} onUpdateComplete={() => { setopenUpdateBondDialog(null);refetch() }} />
       <div className="m-4 flex items-center justify-center">
         {hasNextPage && !isRefetching ? (
           <Button

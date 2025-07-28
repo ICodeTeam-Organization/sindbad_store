@@ -138,6 +138,9 @@ const NotificationCard = ({
       case 13:
         router.push("/OrderTrack/" + noti?.target);
         break;
+      case 14:
+        router.push("/Orderdetail/" + noti?.target);
+        break;
       case 2:
         router.push("/my-special-orders/priceDetails/" + noti?.target);
         break;

@@ -29,7 +29,7 @@ function FavoriteProducts() {
             pageNumber:1,
             PageSize:100
           }, 
-      );  
+      );
       return (dt.data.map(normalizeProduct))
       
      },

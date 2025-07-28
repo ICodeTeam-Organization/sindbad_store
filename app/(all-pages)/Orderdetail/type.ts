@@ -28,6 +28,7 @@
     totalDiscount: number;
     orderDate: string; // ISO Date string e.g., '2025-04-07'
     orderStatus: string;
+    orderStatusNumber:number;
     totalPrice: number;
     orderNumber: string;
     pagedOrderDetails: PagedOrderDetails
