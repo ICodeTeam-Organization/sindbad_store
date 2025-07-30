@@ -42,21 +42,7 @@ const fetchSimilerProducts = async (
             ...product.mainCategoriesIds,
             ...product.subCategoriesIds,
           ],
-          storeId: product?.storeId,
-          // hasOffer: filters.hasOffer == "t",
-          // todayOffers: filters.todayOffer == "t",
-          // productName: filters.productName || null,
-          // minPrice: filters.price[0],
-          // maxPrice: filters.price[1],
-          // categories: [
-          //   ...filters.cats.map((id) => +id),
-          //   ...filters.subCats.map((id) => +id),
-          // ],
-          // mainCategories: [...filters.cats.map((id) => +id)],
-          // subCategories: [...filters.subCats.map((id) => +id)],
-          // brandId: filters.brandId || null,
-          // tags: filters.tagId ? [filters.tagId] : null,
-          // orderBy: filters.orderBy || 0,
+          storeId: product?.storeId, 
         },
       }
     );
@@ -85,7 +71,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   }
 
   const product = normalizeProduct(productData); // تحول شكل البينات الى الشكل الموحد NormlizedProductType
-
+  
   const similerproducts = await fetchSimilerProducts(product); 
 
   if (!similerproducts) {

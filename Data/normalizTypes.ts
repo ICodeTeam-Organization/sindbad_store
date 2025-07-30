@@ -1,10 +1,18 @@
+type ProductQuantityPriceDto = {
+  id: number;
+  productId: number;
+  minQuantity: number;
+  pricePerUnit: number;
+};
 export type NormalizedProductType = {
   id: string | number;
   name: string;
   description?: string;
   shortDecription?: string;
-  
+
   price: number; // السعر الأساسي
+  minPrice: number; //   اقل سعر
+  priceRange: any[] | null; //   اقل سعر
   priceAfterDiscount: number; // السعر بعد العرض أو الخصم
   priceBeforeDiscount: number; // السعر قبل العرض أو الخصم
   hasDiscount: boolean; // هل يوجد خصم
@@ -57,6 +65,8 @@ export type NormalizedProductType = {
     attributeName: string;
     attributeValue: string;
   }[];
+
+  productQuantitiesWithPrices: ProductQuantityPriceDto[]
 };
 
 export type NormalizedCategoryType = {
@@ -69,7 +79,7 @@ export type NormalizedCategoryType = {
   code: string;
   parentCategoryId?: number;
   subCategories?: NormalizedCategoryType[];
-  country:string
+  country: string
 };
 
 export type NormalizedbgDataItemType = {

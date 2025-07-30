@@ -24,9 +24,11 @@ const OrderDetail = async ({ params }: Detail) => {
  
 
   return (
-    <Suspense fallback={<div className="h-[50vh] items-center justify-center flex">
-      <h1>جاري تحديث معلومات الطلب</h1>
-    </div>}>
+    <Suspense 
+      fallback={<div className="h-[50vh] items-center justify-center flex">
+        <h1>جاري تحديث معلومات الطلب</h1>
+      </div>}
+    >
       <div className="xl:container mx-auto">
         {/* <BreadCrumb
         SecondName="طلباتي"
@@ -34,7 +36,6 @@ const OrderDetail = async ({ params }: Detail) => {
         ThirdName="تفاصيل الطلب"
         ThirdDir=""
       /> */}
-
         <div className="mdHalf:m-10 m-5">
           <div className="">
             <div>

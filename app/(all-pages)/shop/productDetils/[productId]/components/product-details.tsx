@@ -10,6 +10,7 @@ import CategorisListSection from "./CategorisListSection";
 import { get_currency_key } from "@/lib/cookie/cookie.clients"; 
 import ShareButton from "./ShareButton";
 import ButtonAddToFavoriteOfProDetails from "./ButtonAddToFavoriteOfProDetails"; 
+import PriceList from "./PriceList";
 type ProductDetailsProps = {
   product: NormalizedProductType;
   // store:Store |null
@@ -57,12 +58,17 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
 
             <div className="flex  my-4 mt-6 items-center gap-x-4 justify-between ">
               <div className="flex items-center justify-center">
-                <PriceSection
+               {product?.productQuantitiesWithPrices.length == 0 
+               ? <PriceSection
                   discountedPrice={product?.price} // product?.price هذا اذا فيه خصم يكون فيه السعر بعد الخصم واذا مافيه خصم يكون فيه السعر الاصلي
                   originalPrice={product.priceBeforeDiscount ?? product?.price}
                   discount={product.percentageOfDiscount ?? 0}
                   currency={get_currency_key(product.country)}
+                  hasDiscount={product?.hasDiscount}
                 />
+              : 
+                <PriceList prices={product?.productQuantitiesWithPrices}/>
+              }
                 {product.offerSentence && product.hasOffer && (
                   <div className="flex items-center col-span-2   text-xs bg-danger text-white p-1 w-fit px-2 rounded-sm tajawal">
                     <span>

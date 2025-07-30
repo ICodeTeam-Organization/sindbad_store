@@ -15,6 +15,7 @@ import {
 } from "../notificationsActions";
 import Cookies from 'js-cookie';
 import { Alert } from "@/components/Alert";
+import Image from "next/image";
 const NotificationCard = ({
   initData,
   notifeeCounts,
@@ -293,13 +294,23 @@ const NotificationCard = ({
                   </p>
                   <span className="text-xs text-secondary bg-white px-2 rounded-sm">
                     {notification.country == "1" ? (
-                      <span role="img" aria-label="Saudi Arabia">
-                        من السعودية
-                      </span>
+                      <div className="flex items-center justify-center gap-x-4 ">
+                        <div className="w-[30px] h-[30px] relative rounded-md overflow-hidden " >
+                          <Image alt="sa" src={"/images/countries/sa.svg"} fill />
+                        </div>
+                        <span role="img" aria-label="Saudi Arabia">
+                          من السعودية
+                        </span>
+                      </div>
                     ) : notification.country == "2" ? (
-                      <span role="img" aria-label="UAE">
-                        من الإمارات
-                      </span>
+                      <div className="flex items-center justify-center gap-x-4 ">
+                        <div className="w-[30px] h-[30px] relative rounded-md overflow-hidden " >
+                          <Image alt="sa" src={"/images/countries/em.svg"} fill />
+                        </div>
+                        <span role="img" aria-label="Saudi Arabia">
+                          من الإمارات
+                        </span>
+                      </div>
                     ) : null}
                   </span>
                 </div>

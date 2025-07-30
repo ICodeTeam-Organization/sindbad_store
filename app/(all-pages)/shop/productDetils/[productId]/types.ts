@@ -38,6 +38,7 @@ export interface PriceSectionProps {
   originalPrice: number;
   discount: number;
   currency: string;
+  hasDiscount:boolean
 }
 
 export interface ProductInfoRowProps {

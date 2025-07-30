@@ -1,7 +1,7 @@
 import { getRemainingTimeForOffer } from "@/lib/timeFuns";
 import { NormalizedProductType } from "../normalizTypes";
 
-export  function  normalizeProduct(input: any): NormalizedProductType {
+export function normalizeProduct(input: any): NormalizedProductType {
   const numOfReviewers =
     (input?.oneStarCount || 0) +
     (input?.twoStarCount || 0) +
@@ -39,15 +39,17 @@ export  function  normalizeProduct(input: any): NormalizedProductType {
 
   const offerSentence = hasOffer
     ? input.offerSentence ??
-      input.buyAndGet ??
-      (input.amountYouBuy &&
-        input.amountYouGet &&
-        `اشتري ${input.amountYouBuy} واحصل على ${input.amountYouGet}`) ??
-      undefined
+    input.buyAndGet ??
+    (input.amountYouBuy &&
+      input.amountYouGet &&
+      `اشتري ${input.amountYouBuy} واحصل على ${input.amountYouGet}`) ??
+    undefined
     : hasDiscount ? "خصم " + percentageOfDiscount + "%" : "";
 
   const isOfferStillOn =
     getRemainingTimeForOffer(input?.offerEndDate ?? "") != "";
+
+  const priceRange = input?.minPrice ? [+input?.minPrice, +input?.price] : null
 
   return {
     id: input.id ?? input.productId ?? input._id,
@@ -117,8 +119,11 @@ export  function  normalizeProduct(input: any): NormalizedProductType {
     fiveStarCount: input.fiveStarCount ?? 0,
     shortDecription: input?.productDetails ?? "",
     isOfferStillOn,
-    storeId:input?.storeId,
-    storeName:input?.storeName,
+    storeId: input?.storeId,
+    storeName: input?.storeName,
     country: input?.country ?? "~",
+    minPrice: input?.minPrice,
+    priceRange,
+    productQuantitiesWithPrices:input?.productQuantityPriceDtos
   };
 }
