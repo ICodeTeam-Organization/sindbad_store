@@ -15,9 +15,7 @@ export default function AddressSelector({onSelect}:{onSelect:(id:string)=>void})
       staleTime:1000 * 60 * 60 * 24,
     });
   const [selectedAddressId, setSelectedAddressId] = useState<string>(window?.sessionStorage?.getItem("cartAddress") || "");
-  console.log(addressData);
   
-  return <></>
   const selectedAddress = addressData?.data?.items.find((e: any) => +e.id === +selectedAddressId);
   return (
     <div className="w-full">
