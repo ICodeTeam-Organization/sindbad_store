@@ -7,9 +7,7 @@ const MyAccountPage = async () => {
    
   //يجيب بينات من اول صفحة ونمررها لل جدول ك بينات اولية عشان تحسن تجربة المستخمد 
   const data = await getApi<ResponsiveOrdersTypes>("Orders/GetAllCustomerOrdersByFilter?pageNumber=1&pageSize=30");
-
-  console.log(data?.data?.items);
-  
+ 
   return (
     <div className="">
       <div className="flex flex-col p-6 bg-white rounded-md shadow-sm  ">

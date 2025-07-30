@@ -258,7 +258,7 @@ const CheckoutForm = () => {
                           المستلم :{" "}
                           </span>
                           {
-                            addressData?.data?.find(
+                            addressData?.data?.items?.find(
                               (e) => +e.id == +field.value
                             )?.userName
                           }{" "}
@@ -269,10 +269,10 @@ const CheckoutForm = () => {
                             {" "}
                           العنوان :
                           </span>
-                          {addressData?.data?.find(e=>e?.id == +field.value)?.directorateName }
+                          {addressData?.data?.items?.find(e=>e?.id == +field.value)?.directorateName }
                           {" - "}
                           {
-                            addressData?.data?.find(
+                            addressData?.data?.items?.find(
                               (e) => +e.id == +field.value
                             )?.locationDescription
                           }{" "}

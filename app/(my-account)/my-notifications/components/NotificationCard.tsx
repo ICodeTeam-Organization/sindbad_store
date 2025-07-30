@@ -39,7 +39,7 @@ const NotificationCard = ({
     message: string;
     newCountry: string;
     notificationId: string | number;
-    action:number;
+    action: number;
     target: number | string;
   }>({
     open: false,
@@ -110,14 +110,14 @@ const NotificationCard = ({
     setnotifeeType(type);
   };
 
-   const handleMarkAsRead = async (noti: NotificationType) => {
+  const handleMarkAsRead = async (noti: NotificationType) => {
     const currentCountry = Cookies.get("country");
     const isCurrentCountry = currentCountry === noti.country;
 
     if (!isCurrentCountry) {
       setAlertData({
         open: true,
-        message: `أنت الآن في دولة (${getCountryName(currentCountry ?? "")}) والإشعار خاص بدولة (${ getCountryName(noti.country)})، هل ترغب بالانتقال لها؟`,
+        message: `أنت الآن في دولة (${getCountryName(currentCountry ?? "")}) والإشعار خاص بدولة (${getCountryName(noti.country)})، هل ترغب بالانتقال لها؟`,
         newCountry: noti.country,
         notificationId: noti.id,
         action: noti.action,
@@ -148,12 +148,13 @@ const NotificationCard = ({
       default:
         break;
     }
-
     await postApi("Notifications/MarkAsRead?NotificationId=" + noti?.id);
+
+
   };
 
   const confirmChangeCountry = async () => {
-    const { newCountry , notificationId ,action , target} = alertData;
+    const { newCountry, notificationId, action, target } = alertData;
     Cookies.remove("country");
     Cookies.set("country", newCountry, { path: "/", sameSite: "Lax" });
     postApi("Notifications/MarkAsRead?NotificationId=" + notificationId);
@@ -165,10 +166,13 @@ const NotificationCard = ({
       case 11:
       case 12:
       case 13:
-         window.location.replace("/OrderTrack/" + target);
+        window.location.replace("/OrderTrack/" + target);
+        break;
+      case 14:
+        window.location.replace("/Orderdetail/" + target);
         break;
       case 2:
-         window.location.replace("/my-special-orders/priceDetails/" + target);
+        window.location.replace("/my-special-orders/priceDetails/" + target);
         break;
       default:
         break;
@@ -177,54 +181,54 @@ const NotificationCard = ({
   };
 
 
-//   const hanleMarkAsRead = async (noti: NotificationType) => {
+  //   const hanleMarkAsRead = async (noti: NotificationType) => {
 
-//     const currentCountry =  Cookies.get("country");
-//     const isCurrentCountry = currentCountry !== noti.country;
-//     // setchangeCountryLoader(true);
+  //     const currentCountry =  Cookies.get("country");
+  //     const isCurrentCountry = currentCountry !== noti.country;
+  //     // setchangeCountryLoader(true);
 
-// //       // Send data that is in cache to the server
-// //       const data = await db.bgData.toArray();
-// //       await mutateAsync(data);
+  // //       // Send data that is in cache to the server
+  // //       const data = await db.bgData.toArray();
+  // //       await mutateAsync(data);
 
-// //       Cookies.remove("country");
-// //       Cookies.set("country", item?.key, {
-// //         path: "/",
-// //         sameSite: "Lax",
-// //       });
-// //       setselectedCountry(item);
-// //       router.refresh();
-// //       window.location.replace("/");
+  // //       Cookies.remove("country");
+  // //       Cookies.set("country", item?.key, {
+  // //         path: "/",
+  // //         sameSite: "Lax",
+  // //       });
+  // //       setselectedCountry(item);
+  // //       router.refresh();
+  // //       window.location.replace("/");
 
-//     switch (noti?.action) {
-//       case 4:
-//       case 9:
-//       case 11:
-//       case 12:
-//       case 13:
-//         router.push("OrderTrack/" + noti?.target);
-//         break;
-//       case 2:
-//         router.push("my-special-orders/priceDetails/" + noti?.target);
-//         break;
-//       default:
-//         break;
-//     }
+  //     switch (noti?.action) {
+  //       case 4:
+  //       case 9:
+  //       case 11:
+  //       case 12:
+  //       case 13:
+  //         router.push("OrderTrack/" + noti?.target);
+  //         break;
+  //       case 2:
+  //         router.push("my-special-orders/priceDetails/" + noti?.target);
+  //         break;
+  //       default:
+  //         break;
+  //     }
 
-//     await postApi("Notifications/MarkAsRead?NotificationId=" + noti?.id);
-//   };
+  //     await postApi("Notifications/MarkAsRead?NotificationId=" + noti?.id);
+  //   };
 
   return (
     <div className="space-y-4 mt-4">
-       <Alert
-          open={alertData.open}
-          onClose={() => setAlertData((prev) => ({ ...prev, open: false }))}
-          onOk={confirmChangeCountry}
-          title="🚨"
-          description={alertData.message}
-          cancelText="إلغاء"
-          okText="نعم، انتقل"
-        />
+      <Alert
+        open={alertData.open}
+        onClose={() => setAlertData((prev) => ({ ...prev, open: false }))}
+        onOk={confirmChangeCountry}
+        title="🚨"
+        description={alertData.message}
+        cancelText="إلغاء"
+        okText="نعم، انتقل"
+      />
       <div className="flex gap-4 my-6 justify-start flex-wrap sm:flex-nowrap">
         <FilterButton
           title="كل الإشعارات"

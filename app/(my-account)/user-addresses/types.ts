@@ -30,7 +30,7 @@ export type customerAddressType = {
 export type AddressResponse = {
   success: boolean;
   message: string;
-  data: customerAddressType[];
+  data: {items:customerAddressType[]};
 }
 
 

@@ -11,12 +11,14 @@ export default function AddressSelector({onSelect}:{onSelect:(id:string)=>void})
     const { data: addressData, isPending: isPendingForAdresses } =
     useQuery<AddressResponse>({
       queryKey: ["addresserss-cart"],
-      queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress`),
+      queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress?pageSize=100&pageNumber=1`),
       staleTime:1000 * 60 * 60 * 24,
     });
   const [selectedAddressId, setSelectedAddressId] = useState<string>(window?.sessionStorage?.getItem("cartAddress") || "");
-  const selectedAddress = addressData?.data?.find((e: any) => +e.id === +selectedAddressId);
-
+  console.log(addressData);
+  
+  return <></>
+  const selectedAddress = addressData?.data?.items.find((e: any) => +e.id === +selectedAddressId);
   return (
     <div className="w-full">
       {/* <Label>عنوان الإستلام</Label> */}
@@ -26,7 +28,7 @@ export default function AddressSelector({onSelect}:{onSelect:(id:string)=>void})
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {addressData?.data?.map((address: any) => (
+            {addressData?.data?.items?.map((address: any) => (
               <SelectItem key={address?.id} value={address?.id.toString()}>
                 <p>
                   <span>{address?.directorateName} : </span>
@@ -43,7 +45,7 @@ export default function AddressSelector({onSelect}:{onSelect:(id:string)=>void})
               <Loader2 className="animate-spin" />
             </div>
           ) : (
-            addressData?.data?.length === 0 && (
+            addressData?.data?.items.length === 0 && (
               <div className="text-sm flex flex-col items-center justify-center p-4">
                 <h1 className="mb-2">لا توجد لديك عناوين</h1>
                 <Link href={"/user-addresses"} className="text-primary-background">
@@ -61,7 +63,7 @@ export default function AddressSelector({onSelect}:{onSelect:(id:string)=>void})
           <span>العنوان: {selectedAddress?.locationDescription}</span>
         </p>
       )}
-      { selectedAddress && !selectedAddress.isLiberated && <div className="mb-4">
+      { selectedAddress && !selectedAddress?.isLiberated && <div className="mb-4">
                       <p className="text-xs text-red-500 mt-1 text-right" > تنبيه: قد يتم فرض رسوم إضافية للتوصيل إلى هذه المنطقة.   </p>
                   </div> }
     </div>

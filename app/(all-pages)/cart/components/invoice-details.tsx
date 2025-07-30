@@ -90,8 +90,7 @@ const Summary = ({
       <div className="flex items-center justify-between p-4 py-8">
         <h2 className="text-base font-bold  ">
           تفاصيل قيمة الطلب
-        </h2>
-        
+        </h2> 
       </div>
       <CardContent>
         <PriceLabel

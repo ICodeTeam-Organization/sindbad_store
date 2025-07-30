@@ -5,12 +5,12 @@ import { AddressResponse } from "./types";
 
 const MyAccountPage = async () => {
  
-  const InitAddresses = await getApi<AddressResponse>(`CustomerAddress/GetCustomerAddress`);
+  const InitAddresses = await getApi<AddressResponse>(`CustomerAddress/GetCustomerAddress?pageSize=100&pageNumber=1`);
  
   return (
       <div className=" min-h-[500px] bg-white p-5">
         <div className="w-full overflow-hidden rounded-lg  mt-4 "> 
-         <AdddressTable address={InitAddresses?.data || []} />
+         <AdddressTable address={InitAddresses?.data?.items || []} />
         </div>
       </div>
   );

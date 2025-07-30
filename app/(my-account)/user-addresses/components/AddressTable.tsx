@@ -9,7 +9,7 @@ import AddAddressDialog from "./AddAddressDialog";
 import { useMutation } from "@tanstack/react-query";
 import { deleteApi } from "@/lib/http";
 import { toast } from "@/hooks/use-toast";
-import { Loader2 } from "lucide-react"; 
+import { Loader2 } from "lucide-react";
 const TABLE_HEAD = ["العنوان", "المنطقة", "المستلم", "التلفون", " "];
 
 const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
@@ -108,13 +108,12 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
               {addresses.map((item, index) => (
                 <tr
                   key={index}
-                  className={`${
-                    index % 2 !== 0 ? "bg-bg-100/40" : "bg-white"
-                  }  `}
+                  className={`${index % 2 !== 0 ? "bg-bg-100/40" : "bg-white"
+                    }  `}
                 >
                   <td className="px-4 py-3 whitespace-nowrap">
                     {item?.locationDescription &&
-                    item.locationDescription.length !== 0
+                      item.locationDescription.length !== 0
                       ? item.locationDescription
                       : "لا يوجد عنوان محدد"}
                   </td>
@@ -125,9 +124,11 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
                   {/* Actions Column */}
                   <td className="px-4 py-3">
                     {isPending && selectedIdToDelete == item.id ? (
-                      <div className="text-red-500 hover:text-red-700">
-                        <Loader2 className="animate-spin" />
-                      </div>
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="text-red-500 hover:text-red-700">
+                          <Loader2 className="animate-spin" />
+                        </div>
+                      </div> 
                     ) : (
                       <div className="flex items-center justify-center gap-2">
                         <button
@@ -148,7 +149,7 @@ const AddressTable: React.FC<{ address: customerAddressType[] }> = ({
                         >
                           <FiEdit fontSize="20px" />
                         </button>
-                        
+
                       </div>
                     )}
                   </td>
