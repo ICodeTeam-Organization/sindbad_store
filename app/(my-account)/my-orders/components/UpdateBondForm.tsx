@@ -24,12 +24,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getApi, postApi, putApi } from "@/lib/http";
+import { getApi,  putApi } from "@/lib/http";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast"; 
 import { CheckoutType } from "@/types/checkout";
 import InputField from "@/app/(all-pages)/checkout/components/input-field";
-import { useRouter } from "next-nprogress-bar"; 
 
 const UpdateBondForm = ({ orderId , onUpdateComplete }: { orderId: number, onUpdateComplete:()=>void }) => {
     const { toast } = useToast();   

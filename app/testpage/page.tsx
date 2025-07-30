@@ -1,9 +1,8 @@
 import React from "react";  
-import NewProductCarousel from "./components/NewproductsCarsoul";
-import { NormalizedProductType } from "@/Data/normalizTypes";
+import NewProductCarousel from "./components/NewproductsCarsoul"; 
 function Test() {
 
-  const dummyProducts: NormalizedProductType[] = [
+  const dummyProducts: any[] = [
   {
     id: 1,
     name: "بخور عود كمبودي فاخر",

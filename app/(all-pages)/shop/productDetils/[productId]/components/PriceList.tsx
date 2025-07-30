@@ -30,7 +30,7 @@ const PriceList: React.FC<PriceListProps> = ({ prices }) => {
           </tr>
         </thead>
         <tbody>
-          {sortedPrices.map((price, index) => (
+          {sortedPrices.map((price,) => (
             <tr key={price.id} className="text-right">
               <td className="p-2">{price.minQuantity}</td>
               <td className="p-2">{price.pricePerUnit} ريال</td>
