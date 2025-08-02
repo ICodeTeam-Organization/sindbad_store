@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import AddToFavorite from "./add-to-favorite"; 
 import Spinner from "./Spinner";
 import { useDebounce } from "@/hooks/useDebounce";
-import { BtnAddTobascketProps, CartItem } from "@/types/storeTypes";
+import { BtnAddTobascketProps } from "@/types/storeTypes";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
  
 
