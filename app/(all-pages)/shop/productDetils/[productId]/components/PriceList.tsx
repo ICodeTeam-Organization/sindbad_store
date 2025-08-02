@@ -23,7 +23,7 @@ const PriceList: React.FC<PriceListProps> = ({ prices, currency}) => {
   );
 
   return (
-    <div className="rounded-xl p-4 bg-white">
+    <div className="rounded-xl p-4 bg-white flex justify-center items-center gap-x-8">
       {/* <table className="w-full">
         <thead>
           <tr className="bg-gray-100 text-right">
@@ -43,21 +43,22 @@ const PriceList: React.FC<PriceListProps> = ({ prices, currency}) => {
       {sortedPrices.map((price, index, arr) => {
         const next = arr[index + 1];
         if (!next) return (
-            <div key={price.id}>
-            <p>
-              {price.minQuantity} ++
+           <div key={price.id}>
+            <p className="text-secondary">
+              {price.minQuantity} 
+                حبة 
             </p>
-            <p>{price.pricePerUnit}</p>
+            <p className="text-primary font-bold text-lg" >{price.pricePerUnit} {currency}</p>
           </div>
         );
 
         return (
           <div key={price.id}>
-            <p>
+            <p className="text-secondary">
               {price.minQuantity} - {next.minQuantity - 1}
                 حبة 
             </p>
-            <p>{price.pricePerUnit} {currency}</p>
+            <p className="text-primary font-bold text-lg" >{price.pricePerUnit} {currency}</p>
           </div>
         );
       })}

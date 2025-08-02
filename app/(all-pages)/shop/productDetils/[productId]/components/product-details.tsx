@@ -67,7 +67,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
                   hasDiscount={product?.hasDiscount}
                 />
               : 
-                <PriceList prices={product?.productQuantitiesWithPrices}/>
+                <PriceList prices={product?.productQuantitiesWithPrices} currency={get_currency_key(product?.country)}  />
               }
                 {product.offerSentence && product.hasOffer && (
                   <div className="flex items-center col-span-2   text-xs bg-danger text-white p-1 w-fit px-2 rounded-sm tajawal">

@@ -6,8 +6,7 @@ import { useRouter } from "next-nprogress-bar";
 import { useSession } from "next-auth/react"; 
 import { Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useDebounce } from "@/hooks/useDebounce";
-import { CartItem } from "@/types/storeTypes";
+import { useDebounce } from "@/hooks/useDebounce"; 
 import { useCartStore } from "@/app/stores_mangament/cartStore";
 
 interface PropsTypes {
@@ -61,7 +60,7 @@ function AddToCartBtn({ id, productInfo }: PropsTypes) {
   const handleAddToCart = () => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
-      const newCart: CartItem = {
+      const newCart: any = {
         productId: +id,
         quantity: 1,
         amountYouBuy: !!productInfo?.amountYouBuy

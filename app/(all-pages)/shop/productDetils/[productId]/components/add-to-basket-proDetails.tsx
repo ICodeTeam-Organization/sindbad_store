@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react"; 
 import { useDebounce } from "@/hooks/useDebounce";
-import { BtnAddTobascketProps, CartItem } from "@/types/storeTypes";
+import { BtnAddTobascketProps,   } from "@/types/storeTypes";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
 
  
@@ -47,7 +47,7 @@ const AddToBasketBtnForProductDetails = ({ id , productInfo  }: BtnAddTobascketP
   const handleAddToCart = () => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
-        const newCart:CartItem = {
+        const newCart:any = {
               productId: +id,   
               quantity: 1,
               amountYouBuy:!!productInfo?.amountYouBuy ? productInfo?.amountYouBuy : undefined, 
