@@ -1,23 +1,23 @@
-"use client"; 
-import {
-  Card,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card"; 
+"use client";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import React, { useState } from "react";
 import PriceLabel from "./price-label";
 import { CartItem } from "@/types/storeTypes";
 import { calculateBonus } from "@/lib/utils";
 import { useRouter } from "next-nprogress-bar";
 import { get_currency_key } from "@/lib/cookie/cookie.clients";
+import { calculateWholeSalesPrices } from "@/lib/calcPricesAndOffers";
 
 // Function to calculate the total price
 const calculateTotalPrice = (cartItems: CartItem[]): number => {
   return cartItems?.reduce((total, item) => {
-    const price = item.priceAfterDiscount || item.price;
+    const price =
+      calculateWholeSalesPrices(item?.quantity, item?.quantityPrices) ||
+      item.priceAfterDiscount ||
+      item.price;
     return total + price * item.quantity;
   }, 0);
-}; 
+};
 // Function to calculate the total shipping cost
 const calculateTotalShippingCost = (cartItems: CartItem[]): number => {
   return cartItems?.reduce((total, item) => {
@@ -33,34 +33,40 @@ const calculateTotalShippingCost = (cartItems: CartItem[]): number => {
           ) || 0))
     );
   }, 0);
-}; 
+};
 // Function to calculate the total discount
 const calculateTotalDiscount = (cartItems: CartItem[]): number => {
   const totalOldPrice = cartItems?.reduce((total, item) => {
+    if (calculateWholeSalesPrices(item?.quantity, item?.quantityPrices)) {
+      return total + 0;
+    }
     const oldPrice =
-      item.priceAfterDiscount !== null && item.priceAfterDiscount < item.price
+      item.priceAfterDiscount !== null &&
+      item.priceAfterDiscount < item.price &&
+      item.priceAfterDiscount != 0
         ? item.price - item.priceAfterDiscount
         : 0;
     return total + oldPrice * item.quantity;
   }, 0);
   return totalOldPrice;
-}; 
+};
 const calculateFinalTotal = (cartItems: CartItem[]): number => {
-  const totalPrice = cartItems?.reduce((total, item) => {
-    const price = item.priceAfterDiscount || item.price || 0;
-    return (
-      total +
-      price * item.quantity +
-      item.shipCost *
-        (item.quantity +
-          (calculateBonus(
-            item.quantity,
-            item.amountYouBuy || 0,
-            item.amountYouGet || 0
-          ) || 0))
-    );
-  }, 0);
-  return totalPrice;
+  // const totalPrice = cartItems?.reduce((total, item) => {
+  //   const price = item.priceAfterDiscount || item.price || 0;
+  //   return (
+  //     total +
+  //     price * item.quantity +
+  //     item.shipCost *
+  //       (item.quantity +
+  //         (calculateBonus(
+  //           item.quantity,
+  //           item.amountYouBuy || 0,
+  //           item.amounctYouGet || 0
+  //         ) || 0))
+  //   );
+  // }, 0);
+  // return totalPrice;
+  return calculateTotalPrice(cartItems) + calculateTotalShippingCost(cartItems )
 };
 
 const Summary = ({
@@ -70,27 +76,23 @@ const Summary = ({
   cartItems: CartItem[];
   isRefetching: boolean;
 }) => {
-
- const currency = get_currency_key(cartItems[0]?.country) ;
+  const currency = get_currency_key(cartItems[0]?.country);
   cartItems = cartItems.filter((e) => e.quantity > 0);
-  const router = useRouter()
-  const [addressError, setaddressError] = useState(false)
-  const handleCheckout =()=>{
+  const router = useRouter();
+  const [addressError, setaddressError] = useState(false);
+  const handleCheckout = () => {
     const address = sessionStorage.getItem("cartAddress");
     if (address && address.length > 0) {
-      router.push("/checkout")
+      router.push("/checkout");
     } else {
-      setaddressError(true)
+      setaddressError(true);
     }
-   }
- 
+  };
 
   return (
     <Card className=" border-0 ">
       <div className="flex items-center justify-between p-4 py-8">
-        <h2 className="text-base font-bold  ">
-          تفاصيل قيمة الطلب
-        </h2> 
+        <h2 className="text-base font-bold  ">تفاصيل قيمة الطلب</h2>
       </div>
       <CardContent>
         <PriceLabel
@@ -125,16 +127,20 @@ const Summary = ({
       ) : (
         cartItems.length > 0 && (
           <CardFooter className="flex-col">
-            <div onClick={handleCheckout}  className=" w-full">
+            <div onClick={handleCheckout} className=" w-full">
               <div className="bg-primary hover:bg-orange-600 text-white text-base  p-3 text-center rounded w-full">
                 إكمال الطلب
                 {/* <ArrowLeft className="mr-3 " /> */}
               </div>
             </div>
-            
-            { addressError &&  <p className="mt-2 text-sm text-red-600 ">    يجب ان تحدد عنوانا للإستلام    </p>}
-          </CardFooter>
 
+            {addressError && (
+              <p className="mt-2 text-sm text-red-600 ">
+                {" "}
+                يجب ان تحدد عنوانا للإستلام{" "}
+              </p>
+            )}
+          </CardFooter>
         )
       )}
     </Card>

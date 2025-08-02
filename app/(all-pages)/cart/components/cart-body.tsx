@@ -38,7 +38,7 @@ const CartBody = ({ }: // initCartProducts,
         .toArray();
       await mutateAsync(bgData);
       return await getApi<CartApiResponse>(
-        "Cart/GetAllCustomerProductsInCartForViewInCartPage"
+        "Cart"
       );
     },
     // initialData: initCartProducts,
@@ -50,8 +50,12 @@ const CartBody = ({ }: // initCartProducts,
   useEffect(() => {
     if (!!items) { 
       setCartItems(items.data); 
+      console.log(items?.data);
+      
     }
   }, [items]);
+
+
   return (
     <>
       <div className="lg:w-3/4 mdHalf:w-[65%] ">

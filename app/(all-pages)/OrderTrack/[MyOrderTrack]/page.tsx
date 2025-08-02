@@ -167,7 +167,7 @@ const OrderTrack = async ({ params }: { params: { MyOrderTrack: string } }) => {
   }
 
   const OrderTrack = await getApi<OrderTrackResponseType>(
-    `Orders/Market/OrdersPage/TrackOrder?orderId=${orderId}`
+    `Orders/${orderId}/Track`
   );
 
   if (!OrderTrack?.success) {

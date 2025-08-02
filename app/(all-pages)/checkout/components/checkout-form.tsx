@@ -123,7 +123,7 @@ const CheckoutForm = () => {
       formData.append("BondTyep", "1");
       formData.append("IsUrgentOrder", sessionStorage?.getItem("urgentDelivery") ? "true" : "false");
 
-      return postApi("Orders/CompleteCustomerPurchase", {
+      return postApi("Orders", {
         body: formData,
         isPage: true,
         headers: {

@@ -1,4 +1,4 @@
-type ProductQuantityPriceDto = {
+export type ProductQuantityPriceDto = {
   id: number;
   productId: number;
   minQuantity: number;

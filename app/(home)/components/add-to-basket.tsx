@@ -160,7 +160,7 @@ const AddToBasket = ({ id , productInfo }: BtnAddTobascketProps) => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
       // mutationAdd.mutate();  
-        const newCart:CartItem = {
+        const newCart:any = {
           productId: +id,   
           quantity: 1,
           amountYouBuy:!!productInfo?.amountYouBuy ? productInfo?.amountYouBuy : undefined, 
@@ -171,6 +171,7 @@ const AddToBasket = ({ id , productInfo }: BtnAddTobascketProps) => {
           name: productInfo?.productName,
           shipCost:0,
           cartId:0,
+
         }; 
         setQuantity(1);
         addItem(newCart);

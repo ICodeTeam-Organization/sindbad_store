@@ -10,8 +10,7 @@ interface Propstype {
 }
 
 function CartTable({ cartItems, loading }: Propstype) {
-  const { setShowSpecialOrderDialog } = useSpecialOrdersDialogsStore();
-
+  const { setShowSpecialOrderDialog } = useSpecialOrdersDialogsStore(); 
   if (!cartItems || cartItems.length === 0) {
     return (
       <div className="bg-white p-4 rounded shadow-sm mt-2 h-52 flex flex-col items-center justify-center">

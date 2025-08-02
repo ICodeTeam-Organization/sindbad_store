@@ -87,7 +87,12 @@ export type Product = {
   }
   
 //////////////////////
-
+type ProductQuantityPriceDto = {
+  id: number;
+  productId: number;
+  minQuantity: number;
+  pricePerUnit: number;
+};
 export type CartItem =  {
   cartId: number,
   productId: number,
@@ -102,7 +107,8 @@ export type CartItem =  {
   amountYouBuy?: number,
   amountYouGet?: number,
   shipCost: number,
-  country?:string
+  country?:string,
+  quantityPrices :ProductQuantityPriceDto[]
 }
 
 

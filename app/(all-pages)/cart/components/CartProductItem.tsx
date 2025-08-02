@@ -1,64 +1,5 @@
-// import Counter from '@/components/Counter'
-// import SafeImage from '@/components/SafeImage'
-// import { Checkbox } from '@/components/ui/checkbox'
-// import { get_currency_key } from '@/lib/cookie/cookie.clients'
-// import { CartItem } from '@/types/storeTypes'
-// import React from 'react'
 
-// function CartProductItem({ item, x }: { item: CartItem, x: number }) {
-//   return (
-//     <div
-//         key={x}
-//         className="bg-white p-4 flex items-center justify-between rounded shadow-sm mt-1"
-//       >
-//         <div className="flex items-center justify-center">
-//             <div className="pl-2">
-//             <Checkbox />
-//         </div>
-
-//         <div className="w-20 h-20 flex-shrink-0">
-//           <SafeImage
-//             width={80}
-//             height={80}
-//             loading="lazy"
-//             src={item.imageUrl}
-//             alt="Product"
-//             className="w-full h-full object-cover rounded"
-//           />
-//         </div>
-//         </div>
-
-//         {/* معلومات المنتج */}
-//         <div className="flex-1 px-4">
-//           <p className="text-sm font-semibold">
-//             {item.name || "اسم المنتج غير متوفر"}
-//           </p>
-//             <div className=" flex items-center gap-x-4 mt-2  ">
-//             <p className="text-secondary font-bold"> {item?.price} </p>
-//             <p className="text-red-500 line-through text-xs">{item?.price}</p>
-//             </div>
-//           <div className="text-sm text-gray-500 mt-1">رسوم الشحن:  {item?.shipCost} {get_currency_key(item?.country)} </div>
-//         </div>
-
-//         {/* السعر */}
-
-//         {/* العمود: الإجمالي + عداد */}
-//         <div className="flex flex-col items-center px-4">
-//           <p className="text-sm font-bold mb-2">ر.س 50,000</p>
-//           <Counter />
-//         </div>
-
-//         {/* زر الحذف */}
-//         <div className="px-2">
-//           <button className="text-gray-400 hover:text-red-500">✕</button>
-//         </div>
-//       </div>
-//   )
-// }
-
-// export default CartProductItem
-
-import { BiGift,  } from "react-icons/bi";
+import { BiGift } from "react-icons/bi";
 import { IoMdAdd } from "react-icons/io";
 import { HiMinusSm } from "react-icons/hi";
 import { Loader2 } from "lucide-react";
@@ -69,11 +10,12 @@ import SafeImage from "@/components/SafeImage";
 import { CartItem } from "@/types/storeTypes";
 import { calculateBonus } from "@/lib/utils";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
-import { get_currency_key } from "@/lib/cookie/cookie.clients"; 
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 import { CgClose } from "react-icons/cg";
+import { calculateWholeSalesPrices } from "@/lib/calcPricesAndOffers";
 
 type Props = {
-  cartItemData: CartItem; 
+  cartItemData: CartItem;
 };
 
 const CartProductItem = ({ cartItemData }: Props) => {
@@ -89,6 +31,7 @@ const CartProductItem = ({ cartItemData }: Props) => {
     productId,
     specialProductId,
     country,
+    quantityPrices,
   } = cartItemData;
 
   const thePrice = priceAfterDiscount || price;
@@ -102,7 +45,6 @@ const CartProductItem = ({ cartItemData }: Props) => {
     setIsUpdated(true);
     setQuantity(quantityPar);
   };
-
   const debounceQuantity = useDebounce(quantity, 1);
   useEffect(() => {
     if (debounceQuantity >= 0 && isUpdated) {
@@ -122,7 +64,6 @@ const CartProductItem = ({ cartItemData }: Props) => {
       }
     }
   }, [debounceQuantity]);
-
   const handleDeleteItem = async () => {
     setIsUpdated(true);
     setQuantity(0);
@@ -142,7 +83,7 @@ const CartProductItem = ({ cartItemData }: Props) => {
   return (
     <div className="bg-white p-4 rounded shadow-sm mt-2 relative">
       {/* Main product card */}
-      <div   className="smHalf:flex items-center justify-between">
+      <div className="smHalf:flex items-center justify-between">
         <div className="flex items-center">
           <div className="flex items-center">
             {/* <div className="">
@@ -172,16 +113,27 @@ const CartProductItem = ({ cartItemData }: Props) => {
               </div>
             )}
             <p className="mdHalf:text-base text-sm line-clamp-2 font-bold text-secondary">
-              {name}  
+              {name}
             </p>
             <div className="flex items-center gap-x-4 mt-2 my-2">
-              <p className="text-secondary font-bold">
-                {thePrice?.toFixed(2)} {currency}
-              </p>
-              {+priceAfterDiscount < +price && priceAfterDiscount > 0 && (
-                <p className="text-xs line-through text-red-600">
-                  {price?.toFixed(2)} {currency}
-                </p>
+              {!calculateWholeSalesPrices(quantity, quantityPrices) ? (
+                <>
+                  <p className="text-secondary font-bold">
+                    {thePrice?.toFixed(2)} {currency}
+                  </p>
+                  {+priceAfterDiscount < +price && priceAfterDiscount > 0 && (
+                    <p className="text-xs line-through text-red-600">
+                      {price?.toFixed(2)} {currency}
+                    </p>
+                  )}
+                </>
+              ) : (
+                <>
+                  <p className="text-secondary font-bold">
+                    {calculateWholeSalesPrices(quantity, quantityPrices)}{" "}
+                    {currency}
+                  </p>
+                </>
               )}
               {hasFreeGift && (
                 <div className=" border-t border-gray-100 flex items-center bg-bg-100 w-fit rounded-md text-primary">
@@ -199,12 +151,18 @@ const CartProductItem = ({ cartItemData }: Props) => {
           </div>
         </div>
 
-        <div className="flex   items-center max-smHalf:mt-4 max-smHalf:justify-between"  >
+        <div className="flex   items-center max-smHalf:mt-4 max-smHalf:justify-between">
           {/* Quantity counter and total price */}
           <div className="flex smHalf:flex-col max-smHalf:gap-x-4 pt-1 items-center px-2">
-            <p className="text-sm font-bold mb-2">
-              المجموع : {totalPrice} {currency}
-            </p>
+            {!calculateWholeSalesPrices(quantity, quantityPrices) ? (
+              <p className="text-sm font-bold mb-2">
+                المجموع : {totalPrice} {currency}
+              </p>
+            ) : (
+              <p className="text-sm font-bold mb-2">
+                المجموع : {calculateWholeSalesPrices(quantity, quantityPrices,true)?.toFixed()} {currency}
+              </p>
+            )}
 
             <div className="flex items-center border rounded p-1 px-2">
               <IoMdAdd

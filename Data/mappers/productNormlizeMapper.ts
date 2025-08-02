@@ -49,7 +49,7 @@ export function normalizeProduct(input: any): NormalizedProductType {
   const isOfferStillOn =
     getRemainingTimeForOffer(input?.offerEndDate ?? "") != "";
 
-  const priceRange = input?.minPrice ? [+input?.minPrice, +input?.price] : null
+  const priceRange = input?.minPrice ? [+input?.minPrice, +originalPrice] : null
 
   return {
     id: input.id ?? input.productId ?? input._id,

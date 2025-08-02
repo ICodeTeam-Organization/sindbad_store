@@ -85,7 +85,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
     );
 
     const response = await getApi<ResponsiveOrdersTypes>(
-      `Orders/GetAllCustomerOrdersByFilter`,
+      `Orders`,
       queryParams
     );
     if (!response.success) {

@@ -1,3 +1,4 @@
+import {ProductQuantityPriceDto} from "../Data/normalizTypes"
 export const calculateTotalPrice = (
   items: { priceAfterDiscount: number | null; price: number; quantity: number }[]
 ): number => {
@@ -83,4 +84,40 @@ export const calculateFinalTotal = (
     );
   }, 0);
   return totalPrice;
+};
+
+/**
+ * @param quantity عدد الوحدات المطلوبة
+ * @param quantityPrices قائمة أسعار الجملة بناءً على الكمية
+ * @param returnTotal إذا true يرجع السعر الإجمالي (الكمية × السعر)، وإذا false يرجع فقط سعر الوحدة
+ */
+export const calculateWholeSalesPrices = (
+  quantity: number,
+  quantityPrices: ProductQuantityPriceDto[],
+  returnTotal: boolean = false
+): number | null => {
+  if (!quantityPrices || quantityPrices.length === 0) return null;
+
+  // فرز الأسعار تصاعدياً حسب الحد الأدنى للكمية
+  const sortedPrices = quantityPrices.sort((a, b) => a.minQuantity - b.minQuantity);
+
+  // إذا الكمية أقل من أقل minQuantity يرجع null
+  if (quantity < sortedPrices[0].minQuantity) {
+    return null;
+  }
+
+  // إيجاد أفضل سعر ينطبق على الكمية
+  let applicablePrice: number | null = null;
+
+  for (const price of sortedPrices) {
+    if (quantity >= price.minQuantity) {
+      applicablePrice = price.pricePerUnit;
+    } else {
+      break;
+    }
+  }
+
+  if (applicablePrice === null) return null;
+
+  return returnTotal ? applicablePrice * quantity : applicablePrice;
 };

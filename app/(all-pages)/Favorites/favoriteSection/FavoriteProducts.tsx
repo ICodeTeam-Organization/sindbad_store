@@ -58,7 +58,7 @@ function FavoriteProducts() {
     >
       {isLoading ? (
         [...Array(18)].map((_, x) => (
-          <div key={x.toString()} className="sm:w-[220px]  w-[180px]">
+          <div key={x.toString()} className="sm:w-[220px] w-[180px]">
             <ProductCardSkeleton />
           </div>
         ))

@@ -6,7 +6,7 @@ import { ResponsiveOrdersTypes } from "./types";
 const MyAccountPage = async () => {
    
   //يجيب بينات من اول صفحة ونمررها لل جدول ك بينات اولية عشان تحسن تجربة المستخمد 
-  const data = await getApi<ResponsiveOrdersTypes>("Orders/GetAllCustomerOrdersByFilter?pageNumber=1&pageSize=30");
+  const data = await getApi<ResponsiveOrdersTypes>("Orders?pageNumber=1&pageSize=30");
  
   return (
     <div className="">
