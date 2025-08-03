@@ -24,30 +24,13 @@ export default function GetFavorite() {
             {
               pageNumber: 1,
               pageSize: 10000,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${authData?.user?.data?.token}`,
-              },
-            }
+            }, 
           ),
           getApi<{ data: { items: FavoriteStores[] } }>(
-            `FavoriteShop/GetFavoriteStores`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${authData?.user?.data?.token}`,
-              },
-            }
+            `FavoriteShop/GetFavoriteStores`, 
           ),
           getApi<{ data: { items: FavoriteEcommerces[] } }>(
-            `FavoriteShop/GetFavoriteEcommerceStores`,
-            {},
-            {
-              headers: {
-                Authorization: `Bearer ${authData?.user?.data?.token}`,
-              },
-            }
+            `FavoriteShop/GetFavoriteEcommerceStores`, 
           ),
         ]);
 
@@ -127,6 +110,7 @@ export default function GetFavorite() {
         );
 
         // حفظهم في الستور
+         
         setFavoriteProducts(allProductIds);
         setFavoriteStoreIds(allStoreIds);
         setFavoriteEcommerceIds(allEcomIds);

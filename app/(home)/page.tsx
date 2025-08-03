@@ -3,7 +3,7 @@ import CategoriesSlider from "./components/CategoriesSlider";
 import { Suspense } from "react";
 import ShoppingNow from "./components/sections/shopping-now";
 import OffersCarousel from "./components/sections/OffersCarousel";
-import StoresSection from "./components/sections/StoresSection";
+import StoresSection from "./components/sections/StoresSection"; 
 import BestSellerSection from "./components/sections/BestSellerSection";
 import RecentlyAddedSection from "./components/sections/RecentlyAddedSection";
 import CategoriesSection from "./components/sections/CategoriesSection";
@@ -11,6 +11,7 @@ import ProductCarouselSkeleton from "@/components/skeletons/ProductsCarsouleSkel
 import CategoriesCarouselSkeleton from "@/components/skeletons/CategoriesCarouselSkeleton";
 import StoreCardSkeleton from "@/components/skeletons/StoreCardSkeleton";
 import ProductGridSkeleton from "@/components/skeletons/ProductsGridSkeleton";
+import EcommrcesSection from "./components/sections/EcommrcesSection";
 
 
 
@@ -46,6 +47,10 @@ export default async function Home() {
 
       <Suspense fallback={<ProductCarouselSkeleton />}>
         <RecentlyAddedSection />
+      </Suspense>
+
+      <Suspense fallback={<StoreCardSkeleton />}>
+        <EcommrcesSection />
       </Suspense>
 
       <div className="mb-10" />

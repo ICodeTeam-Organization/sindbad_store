@@ -32,6 +32,7 @@ export const savebackgroundDataInCache = async (
     await db.bgData.add({
       ...item,
       date: new Date().toISOString(),
+      
     });
   }
 };

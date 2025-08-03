@@ -50,7 +50,7 @@ export const useFavorite = create<FavoriteState>((set) => ({
 
   // ✅ إضافة تخزين البيانات عند الإضافة
   addStoreToFavorite: (id) => {
-    savebackgroundDataInCache({ reqType: 5, reqValue: 1, Id: 0, reviewText: id, primaryValue:0})
+    savebackgroundDataInCache({ reqType: 5, reqValue: 1, Id: id, reviewText: id, primaryValue:0})
     set((state) => ({
       ...state,
       favoriteStoreIds: [...state.favoriteStoreIds, id],

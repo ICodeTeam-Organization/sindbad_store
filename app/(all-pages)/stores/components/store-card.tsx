@@ -2,99 +2,55 @@
 import React from "react";
 import { StoreCardProps } from "../typest";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-import { useToast } from "@/hooks/use-toast";
-import { useSession } from "next-auth/react"; 
-import { useMutation } from "@tanstack/react-query";
-import { ToastAction } from "@/components/ui/toast";
+
+import { useSession } from "next-auth/react";
+
 import { cn, goToExtrnalLink } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
-import { deleteApi, postApi } from "@/lib/http";
+
 import SafeImage from "@/components/SafeImage";
 import { useRouter } from "next/navigation";
 import { useFavorite } from "@/app/stores_mangament/favoritesStore";
-const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCardProps) => {
-  
-  const { favoriteStoreIds, addStoreToFavorite, delStoreToFavorite } =
-    useFavorite();
+const StoreCard = ({
+  id,
+  name,
+  websiteLink,
+  mainImageUrl,
+  imagesUrl,
+}: StoreCardProps) => {
+  const { favoriteStoreIds } = useFavorite();
+  const { delStoreToFavorite, addStoreToFavorite } = useFavorite();
   const isFavorite = favoriteStoreIds.find((ele) => ele == id);
   // const { data: session } = useSession();
-  const { data: session, status } = useSession();
-  const { toast } = useToast();
+  const { status } = useSession();
+
   const router = useRouter();
   const linkToStore = `/stores/storeDetails/${id}`;
   // const redirct = useRouter();
 
-  const { 
-    mutate: mutateAddToFav,
-     isPending: isPendingAddToFav } = useMutation({
-    mutationFn: async () => {
-      return await postApi(
-        `FavoriteShop/AddStore`,
-
-        {
-          headers: {
-            "Accept-Language": "ar",
-            "Content-type": "application/json",
-            Authorization: `Bearer ${session?.user?.data?.token}`,
-          },
-          body: {
-            storeId: id,
-          },
-        }
-      );
-    },
-    onSuccess: () => {
-      addStoreToFavorite(id + "");
-    },
-    onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message ||
-        "حدث خطأ أثناء إضافة المحل إلى المفضلة";
-      toast({
-        variant: "destructive",
-        description: `خطأ: ${errorMessage}`,
-        action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-      });
-    },
-  });
-
-  const { 
-    mutate: mutateRemoveFromFav,
-     isPending: isPendingRemoveFromFav } =
-    useMutation({
-      mutationFn: async () => {
-        return await deleteApi(`FavoriteShop/RemoveStore/` + id, {
-          headers: {
-            Authorization: `Bearer ${session?.user?.data?.token}`,
-          },
-        });
-      },
-      onSuccess: () => {
-        delStoreToFavorite(id + "");
-      },
-      onError: (error: any) => {
-        const errorMessage =
-          error.response?.data?.message ||
-          "حدث خطأ أثناء حذف المحل إلى المفضلة";
-        toast({
-          variant: "destructive",
-          description: `خطأ: ${errorMessage}`,
-          action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-        });
-      },
-    });
-
-  const handleFav = () => {    
+  const handleFav = () => {
     if (status === "unauthenticated") router.push("/auth");
     else if (status === "authenticated") {
       if (isFavorite) {
-        mutateRemoveFromFav();
+        // mutateRemoveFromFav();
+        delStoreToFavorite(id ?? "");
       } else {
-        mutateAddToFav();
+        // mutateAddToFav();
+        addStoreToFavorite(id ?? "");
       }
     }
   };
+  // const handleFav = () => {
+  //   if (status === "unauthenticated") router.push("/auth");
+  //   else if (status === "authenticated") {
+  //     if (isFavorite) {
+  //       mutateRemoveFromFav();
+  //     } else {
+  //       mutateAddToFav();
+  //     }
+  //   }
+  // };
 
   return (
     <div
@@ -122,14 +78,19 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
           >
             عرض المنتجات
           </Link>
-          {
-            websiteLink != null && websiteLink != "" ?           <Link href={goToExtrnalLink(websiteLink)} target="_blank" className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
-            الموقع الإلكتروني
-          </Link> :
-                    <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
-                    لايوجد موقع الكتروني
-                  </button>
-          }
+          {websiteLink != null && websiteLink != "" ? (
+            <Link
+              href={goToExtrnalLink(websiteLink)}
+              target="_blank"
+              className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center "
+            >
+              الموقع الإلكتروني
+            </Link>
+          ) : (
+            <button className="flex-1 min-w-[80px] h-[40px] border border-gray text-black text-[12px] rounded-md flex justify-center items-center ">
+              لايوجد موقع الكتروني
+            </button>
+          )}
 
           <button
             onClick={(e) => {
@@ -142,7 +103,7 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
               isFavorite && "bg-red-500 text-white"
             )}
           >
-            {isPendingAddToFav || isPendingRemoveFromFav ? (
+            {false ? (
               <Loader2 className="animate-spin" />
             ) : isFavorite ? (
               <IoMdHeart className="w-4 h-4" />
@@ -153,7 +114,7 @@ const StoreCard = ({ id, name , websiteLink, mainImageUrl, imagesUrl }: StoreCar
         </div>
       </div>
     </div>
-  ); 
+  );
 };
 
 export default StoreCard;

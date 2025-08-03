@@ -4,14 +4,10 @@ import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { E_commerceCardProps } from "../types";
 import SafeImage from "@/components/SafeImage";
 import { cn, goToExtrnalLink } from "@/lib/utils"; 
-import { useSession } from "next-auth/react";
-import { useToast } from "@/hooks/use-toast";
-import { useMutation } from "@tanstack/react-query";
-import { ToastAction } from "@/components/ui/toast";
+import { useSession } from "next-auth/react"; 
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
-import { deleteApi, postApi } from "@/lib/http"; 
+import Link from "next/link"; 
 import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 import { useSpecialOrdersDialogsStore } from "@/app/stores_mangament/specialordersDialogsStore";
 
@@ -31,79 +27,81 @@ const E_commerceCard = ({
     delEcommerceFromFavorite,
   } = useFavorite();
   const isFavorite = favoriteEcommerceIds.find((ele) => ele == +id);
-  const { data: session, status } = useSession();
-  const { toast } = useToast();
+  const { status } = useSession(); 
 
   const {setSpecialOrderState} = useSpecialOrdersDialogsStore()
 
-  const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
-    mutationFn: async () => {
-      return postApi(
-        `FavoriteShop/AddEcommerceStore`,
+  
+  //   mutationFn: async () => {
+  //     return postApi(
+  //       `FavoriteShop/AddEcommerceStore`,
         
-        {
-          headers: {
-            "Accept-Language": "ar",
-            "Content-type": "application/json",
-            Authorization: `Bearer ${session?.user?.data?.token}`,
-          },
-          body:{
-            ecommerceStoreId: id,
-          },
-        }
-      );
-    },
-    onSuccess: () => {
-      addEcommerceToFavorite(+id);
-    },
-    onError: (error: any) => {
-      const errorMessage =
-        error.response?.data?.message ||
-        "حدث خطأ أثناء إضافة المتجر إلى المفضلة";
-      toast({
-        variant: "destructive",
-        description: `خطأ: ${errorMessage}`,
-        action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-      });
-    },
-  });
+  //       {
+  //         headers: {
+  //           "Accept-Language": "ar",
+  //           "Content-type": "application/json",
+  //           Authorization: `Bearer ${session?.user?.data?.token}`,
+  //         },
+  //         body:{
+  //           ecommerceStoreId: id,
+  //         },
+  //       }
+  //     );
+  //   },
+  //   onSuccess: () => {
+  //     addEcommerceToFavorite(+id);
+  //   },
+  //   onError: (error: any) => {
+  //     const errorMessage =
+  //       error.response?.data?.message ||
+  //       "حدث خطأ أثناء إضافة المتجر إلى المفضلة";
+  //     toast({
+  //       variant: "destructive",
+  //       description: `خطأ: ${errorMessage}`,
+  //       action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
+  //     });
+  //   },
+  // });
 
-  const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
-    useMutation({
-      mutationFn: async () => {
-        return await deleteApi(
-            `FavoriteShop/RemoveEcommerceStore/` +
-            id,
-          {
-            headers: {
-              Authorization: `Bearer ${session?.user?.data?.token}`,
-            },
-          }
-        );
-      },
-      onSuccess: () => {
-        delEcommerceFromFavorite(+id);
-      },
-      onError: (error: any) => {
-        const errorMessage =
-          error.response?.data?.message ||
-          "حدث خطأ أثناء حذف المتجر إلى المفضلة";
-        toast({
-          variant: "destructive",
-          description: `خطأ: ${errorMessage}`,
-          action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
-        });
-      },
-    });
+  // const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
+  //   useMutation({
+  //     mutationFn: async () => {
+  //       return await deleteApi(
+  //           `FavoriteShop/RemoveEcommerceStore/` +
+  //           id,
+  //         {
+  //           headers: {
+  //             Authorization: `Bearer ${session?.user?.data?.token}`,
+  //           },
+  //         }
+  //       );
+  //     },
+  //     onSuccess: () => {
+  //       delEcommerceFromFavorite(+id);
+  //     },
+  //     onError: (error: any) => {
+  //       const errorMessage =
+  //         error.response?.data?.message ||
+  //         "حدث خطأ أثناء حذف المتجر إلى المفضلة";
+  //       toast({
+  //         variant: "destructive",
+  //         description: `خطأ: ${errorMessage}`,
+  //         action: <ToastAction altText="Try again">حاول مرة أخرى</ToastAction>,
+  //       });
+  //     },
+  //   });
   const redirct = useRouter();
 
   const handleFav = () => {
     if (status === "unauthenticated") redirct.push("/auth");
     else if (status === "authenticated") {
       if (isFavorite) {
-        mutateRemoveFromFav();
+        // mutateRemoveFromFav();
+        delEcommerceFromFavorite(id)
       } else {
-        mutateAddToFav();
+        addEcommerceToFavorite(id)
+
+        // mutateAddToFav();
       }
     }
   };
@@ -151,7 +149,7 @@ const E_commerceCard = ({
               isFavorite && "bg-red-500 text-white"
             )}
           >
-            {isPendingAddToFav || isPendingRemoveFromFav ? (
+            {false? (
               <Loader2 className="animate-spin" />
             ) : isFavorite ? (
               <IoMdHeart className="w-4 h-4" />
