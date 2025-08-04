@@ -56,7 +56,7 @@ function extractNumbers(str: string) {
 const CheckoutForm = () => {
   const { data } = useQuery<any>({
     queryKey: ["banks"],
-    queryFn: async () => await getApi("BankAccountsGetAccountsByCompany"),
+    queryFn: async () => await getApi("Accounts",{"UserId":"company"}),
   });
 
   const { data: addressData, isPending: isPendingForAdresses } =
