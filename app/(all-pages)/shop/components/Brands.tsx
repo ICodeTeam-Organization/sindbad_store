@@ -16,7 +16,7 @@ const Brands: React.FC<BrandsProps> = ({ brand, onSelectBrand }) => {
     data: { id: number; name: string }[];
   }>({
     queryKey: ["brands-filter"],
-    queryFn: () => getApi("Brands/GetBrands"),
+    queryFn: () => getApi("Brands"),
   });
 
   return (
