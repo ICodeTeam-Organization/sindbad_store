@@ -48,15 +48,16 @@ const ProductReviewsTap: React.FC<ProductReviewsTapProps> = ({
       const response = await getApi<{
         data: { items: ReviewProps[]; currentPage: number; totalPages: number };
       }>(
-        `CommentsAndRates/GetReviewsOfProduct?productId=${productId}&sort=1&pageNumber=${pageParam}&pageSize=20`
+        `Reviews?productId=${productId}&sort=1&pageNumber=${pageParam}&pageSize=20&owned=false`
       );
       let myReviews: { data?: ReviewProps } = {};
       if (pageParam === 1) {
 
         if (status === "authenticated") {
-          myReviews = await getApi<{ data: ReviewProps }>(
-            `CommentsAndRates/GetCommentsAndRates?productId=${productId}`
-          );
+          const comment = (await getApi<{ data: ReviewProps[] }>(
+            `Reviews?productId=${productId}&owned=true`
+          )).data;
+          myReviews.data = comment.length > 0 ? comment[0] : undefined;
         }
 
         if (cachedReviews.length > 0) {
