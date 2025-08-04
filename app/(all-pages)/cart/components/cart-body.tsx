@@ -38,7 +38,7 @@ const CartBody = ({ }: // initCartProducts,
         .toArray();
       await mutateAsync(bgData);
       return await getApi<CartApiResponse>(
-        "Cart"
+        "Carts"
       );
     },
     // initialData: initCartProducts,
