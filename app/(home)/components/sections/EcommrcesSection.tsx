@@ -6,7 +6,7 @@ import { Shop } from '@/types/storeTypes';
 async function EcommrcesSection() {
    try {
     const res = await getApi<{ data: {items:Shop[]} }>(
-      "EcommercesStores/GetEcommerceStores?pageNumber=1&pageSize=30"
+      "EStores?pageNumber=1&pageSize=30"
     );
 
     const ecommrces = res?.data;
