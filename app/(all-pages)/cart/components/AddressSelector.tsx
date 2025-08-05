@@ -11,7 +11,7 @@ export default function AddressSelector({onSelect}:{onSelect:(id:string)=>void})
     const { data: addressData, isPending: isPendingForAdresses } =
     useQuery<AddressResponse>({
       queryKey: ["addresserss-cart"],
-      queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress?pageSize=100&pageNumber=1`),
+      queryFn: async () => await getApi(`Addresses?pageSize=100&pageNumber=1`),
       staleTime:1000 * 60 * 60 * 24,
     });
   const [selectedAddressId, setSelectedAddressId] = useState<string>(window?.sessionStorage?.getItem("cartAddress") || "");

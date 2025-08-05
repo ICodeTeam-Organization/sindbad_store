@@ -146,7 +146,7 @@ const AddAddressDialog = ({
       locationDescription,
     }: z.infer<typeof AddshipingadressSchema>) =>
       await postApi<UpdateAdressResponse>(
-        `CustomerAddress/AddCustomerAddress`,
+        `Addresses`,
         {
           body: {
             directorateId: +city,
@@ -184,7 +184,7 @@ const AddAddressDialog = ({
         locationDescription,
       }: z.infer<typeof AddshipingadressSchema>) =>
         await putApi<UpdateAdressResponse>(
-          `CustomerAddress/UpdateCustomerAddress?customerAddressId=${dataEditing?.id}`,
+          `Addresses/${dataEditing?.id}`,
           {
             body: {
               directorateId: +city,

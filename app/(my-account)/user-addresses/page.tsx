@@ -5,7 +5,7 @@ import { AddressResponse } from "./types";
 
 const MyAccountPage = async () => {
  
-  const InitAddresses = await getApi<AddressResponse>(`CustomerAddress/GetCustomerAddress?pageSize=100&pageNumber=1`);
+  const InitAddresses = await getApi<AddressResponse>(`Addresses?pageSize=100&pageNumber=1`);
  
   return (
       <div className=" min-h-[500px] bg-white p-5">

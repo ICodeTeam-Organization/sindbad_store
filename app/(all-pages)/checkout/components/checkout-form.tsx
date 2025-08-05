@@ -62,7 +62,7 @@ const CheckoutForm = () => {
   const { data: addressData, isPending: isPendingForAdresses } =
     useQuery<AddressResponse>({
       queryKey: ["address-checkout"],
-      queryFn: async () => await getApi(`CustomerAddress/GetCustomerAddress`),
+      queryFn: async () => await getApi(`Addresses`),
     });
 
   const addressId = sessionStorage.getItem("cartAddress");

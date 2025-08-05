@@ -14,7 +14,7 @@ type AddressType = {
 };
 
 const SelectShppingAdress = async () => {
-  const addresses = await getApi<any>("CustomerAddress/GetCustomerAddress");
+  const addresses = await getApi<any>("Addresses");
   return (
     <div className="w-72 ml-10 ">
       <Select dir="rtl">
