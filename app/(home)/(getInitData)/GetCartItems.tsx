@@ -20,7 +20,7 @@ export default function GetCartItems() {
     queryKey: ["get-cartItms-first-time"],
     queryFn: async () => {
       const  response = await getApi<{data:CartItem[]}>(
-          `Cart/GetAllCustomerProductsInCartForViewInCartPage`,
+          `Carts`,
         {},{
           headers: {
             Authorization: `Bearer ${authData?.user?.data?.token}`,

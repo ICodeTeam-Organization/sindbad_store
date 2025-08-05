@@ -302,7 +302,7 @@ const CheckoutForm = () => {
                       </FormControl>
                       <SelectContent>
                         <SelectGroup>
-                          {data?.data?.map((bank: Bank) => (
+                          {data?.data?.items.map((bank: Bank) => (
                             <SelectItem
                               key={bank?.id}
                               value={bank?.id.toString()}
