@@ -112,6 +112,10 @@ export function putApi<T>(
 export function postApi<T>(url: string, config?: Config) {
   return http<T>(url, undefined, { ...config, method: "POST" });
 }
+export function patchApi<T>(url: string, config?: Config) {
+  return http<T>(url, undefined, { ...config, method: "PATCH" });
+}
+
 
 export function deleteApi<T>(url: string, config?: Config) {
   return http<T>(url, undefined, { ...config, method: "DELETE" });

@@ -1,6 +1,6 @@
 import { BgHandlerDataItemType } from "@/Data/cachingAndBgData/type";
 import { db } from "@/Data/database/db";
-import { postApi } from "@/lib/http"; 
+import { getApi, patchApi, postApi } from "@/lib/http"; 
 import { useMutation } from "@tanstack/react-query";
 
 function useSendDataInBg() {
@@ -12,7 +12,7 @@ function useSendDataInBg() {
         reqValue: ele.reqValue,
         reviewText: ele.reviewText || "",
       }));
-      await postApi("Customer/applyChanges", {
+      await patchApi("Customer", {
         body: {
           data: body,
         },
