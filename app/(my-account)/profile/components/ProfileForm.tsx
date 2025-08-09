@@ -75,7 +75,7 @@ const ProfileFormSchema = z.object({
 function ProfileForm({ profile }: { profile: ProfileType }) {
   const { data } = useQuery({
     queryKey: ["governorate-directorate"],
-    queryFn: () => getApi<any>(`Locations/GetGovernorateWithChildren`),
+    queryFn: () => getApi<any>(`Governorates?withDirectorates=true`),
   });
 
   const allGovs = data?.data as Governorate[]; // All governorates

@@ -79,7 +79,7 @@ const AddAddressDialog = ({
     queryKey: ["city"],
     queryFn: () =>
       getApi<ApiResponseOfGovernorateWithChildren>(
-        `Locations/GetGovernorateWithChildren`
+        `Governorates?withDirectorates=true`
       ),
   });
 

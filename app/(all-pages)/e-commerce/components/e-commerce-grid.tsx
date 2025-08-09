@@ -3,7 +3,7 @@
 "use client";
 import React from "react";
 import E_commerceCard from "./e-comm-card";
-import { postApi } from "@/lib/http";
+import { getApi } from "@/lib/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton"; 
 import { Button } from "@/components/ui/button";
@@ -32,13 +32,7 @@ const E_commerceGrid = () => {
     useInfiniteQuery<EcommercesResponsive>({
       queryKey: ["GetEcommerces-Filter", categoryId,ecommerceName],
       queryFn: async ({ pageParam = 1 }) => {
-        const body = {
-          name:ecommerceName,
-          parentsCategoriesIds: categoryId ? [categoryId] : null,
-          pageSize: 10,
-          pageNumber: pageParam,
-        };
-        const response = await postApi(`EcommercesStores/FilterECommerce`, { body });
+        const response = await getApi(`EStores?pageSize=${10}&pageNumber=${pageParam}&name=${ecommerceName}&categories=${categoryId}`);
         return response as EcommercesResponsive;
       },
       retry:false,

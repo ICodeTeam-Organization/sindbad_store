@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Shop } from "@/types/storeTypes";
 import Spinner from "@/app/(home)/components/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import { postApi } from "@/lib/http";
+import { getApi, postApi } from "@/lib/http";
 import Link from "next/link";
 
 function EcommerceSearchInput({
@@ -38,13 +38,7 @@ function EcommerceSearchInput({
       params.ecommerceName,
     ],
     queryFn: () =>
-      postApi(`EcommercesStores/FilterECommerce`, {
-        body: {
-          name: params.ecommerceName || null,
-          pageSize: params.pageSize,
-          pageNumber: params.pageNumber,
-        },
-      }),
+      getApi(`EStores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}&name=${params.ecommerceName}`),
   });
 
   React.useEffect(() => {

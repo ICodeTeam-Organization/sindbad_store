@@ -11,13 +11,16 @@ export type CategoryWithSub = {
   subCategoriesForVeiw:[]
 }; 
 // for e shops
+
 export interface Store {
   id: string;
   name: string;
-  websiteLink: string;
+  websiteUrl: string;
   description: string;
-  mainImageUrl: string;
-  imagesUrl:string[];
+  imageUrl: string;
+  images:{imageUrl:string}[];
+  storeCategoriesIds:{id: number, categoryName: string}[];
+
 }
  
 
@@ -49,19 +52,17 @@ export type FavoriteProduct = {
 
 
 export type FavoriteStores = {
-  id?: string;
-  storeId: string;
-  storeName: string;
+  id: string;
+  name: string;
   description: string;
   imageUrl: string;
 };
 
 export type FavoriteEcommerces = {
   id: number;
-  ecommerceStoreId: number;
   description: string;
   logo: string;
-  ecommerceStoreName?:string
+  name?:string
   urlLinkOfStore:string
 };
 

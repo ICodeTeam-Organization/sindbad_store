@@ -24,7 +24,7 @@ function AddStoreToFavBtn({ id }: PropsType) {
 
   const { mutate: mutateAddToFav } = useMutation({
     mutationFn: async () => {
-      return await postApi(`FavoriteShop/AddStore`, {
+      return await postApi(`Favorites/Stores`, {
         headers: {
           "Accept-Language": "ar",
           "Content-type": "application/json",
@@ -52,7 +52,7 @@ function AddStoreToFavBtn({ id }: PropsType) {
   const { mutate: mutateRemoveFromFav } =
     useMutation({
       mutationFn: async () => {
-        return await deleteApi(`FavoriteShop/RemoveStore/` + id);
+        return await deleteApi(`Favorites/Stores` + id);
       },
       onSuccess: () => {
         delStoreToFavorite(id + "");

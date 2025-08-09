@@ -30,7 +30,7 @@ function FavoriteEcommrces() {
     queryKey: ["GetFavoriteEcommerceStores"],
     queryFn: async ({ pageParam = 1 }) =>
       await getApi(
-        `FavoriteShop/GetFavoriteEcommerceStores?pageNumber=${pageParam}&pageSize=10`, 
+        `EStores?pageNumber=${pageParam}&pageSize=10&favorite=true`, 
       ),
     enabled: status === "authenticated",
     getNextPageParam: (lastPage) => {
@@ -64,11 +64,11 @@ function FavoriteEcommrces() {
         <div className="px-10 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-center">
           {allEcomms.map((ecommrce) => (
             <E_commerceCard
-              key={ecommrce.ecommerceStoreId}
-              name={ecommrce?.ecommerceStoreName + ""}
+              key={ecommrce.id}
+              name={ecommrce?.name + ""}
               logo={ecommrce?.logo}
               LinkOFStore={ecommrce?.urlLinkOfStore}
-              id={ecommrce.ecommerceStoreId}
+              id={ecommrce.id}
               categories={[]}
               ecommerceStoreImages={[]}
             />

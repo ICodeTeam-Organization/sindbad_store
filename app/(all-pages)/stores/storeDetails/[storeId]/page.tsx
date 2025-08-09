@@ -8,6 +8,7 @@ import { goToExtrnalLink } from "@/lib/utils";
  
 import SafeImage from "@/components/SafeImage";
 import { StoreDetailsTabs } from "./components/StoreDetailsTabs";
+import { Store } from "@/types/storeTypes";
 
 type StoredetailsProps = {
   params: {
@@ -18,13 +19,13 @@ type StoredetailsProps = {
 // Fetch store details on the server
 const fetchStoreDetails = async (
   storeId: string
-): Promise<StoreData | null> => {
+): Promise<Store | null> => {
   try {
-    const storesResponse = await getApi<ApiResponse>(
-      `Stores/GetStoreDetailsById/${storeId}`
+    const storesResponse = await getApi<{data:{Items:Store[]}}>(
+      `Stores/${storeId}`
     );
-    if (storesResponse?.data) {
-      return storesResponse.data;
+    if (storesResponse?.data?.Items?.length ?? null) {
+      return storesResponse.data.Items[0];
     } else {
       return null; // Return null if no data is found
     }
@@ -47,7 +48,7 @@ const Storedetails: React.FC<StoredetailsProps> = async ({ params }) => {
     notFound(); // Redirect to 404 page if no store details are found
   }
 
-  const { description, id, name, imageUrl, storeCategoriesIds, websiteUrl,images } =
+  const { description, id, name, imageUrl, websiteUrl,images, storeCategoriesIds } =
     storeDetails;
 
   return (

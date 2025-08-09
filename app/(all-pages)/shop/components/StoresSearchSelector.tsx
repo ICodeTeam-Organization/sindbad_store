@@ -34,10 +34,10 @@ function StoresSearchSelector({
   
 
   const { isLoading: loadInitStore, data: dataInitStore } = useQuery<{
-    data: Store;
+    data: {Items : Store[]};
   }>({
     queryKey: ["getStoreFromInitDataFIltering", storeId],
-    queryFn: () => getApi(`Stores/GetStoreDetailsById/` + storeId),
+    queryFn: () => getApi(`Stores/` + storeId),
     enabled:storeId != "" && params.storeName == "" && !selectedStore?.id ,
     retry:false
   });
@@ -45,13 +45,7 @@ function StoresSearchSelector({
   const { isLoading, data , error} = useQuery<{ data: { items: Store[] } }>({
     queryKey: ["getStoresForSearchFilter", params.pageNumber, params.storeName],
     queryFn: () =>
-      postApi(`Stores/GetStoresWithFilter`, {
-        body: {
-          name: params.storeName,
-          pageSize: params.pageSize,
-          pageNumber: params.pageNumber,
-        },
-      }),
+      getApi(`Stores?name=${params.storeName}&pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`),
     // enabled: params.storeName != "" || storeId != "",
   });
 
@@ -66,8 +60,8 @@ function StoresSearchSelector({
   React.useEffect(() => {
     console.log(error);
     
-    if (dataInitStore?.data) {
-      setSelectedStore(dataInitStore?.data);
+    if (dataInitStore?.data?.Items?.length ?? null) {
+      setSelectedStore(dataInitStore?.data.Items[0]);
       setstoreId("")
     }
   }, [dataInitStore]);

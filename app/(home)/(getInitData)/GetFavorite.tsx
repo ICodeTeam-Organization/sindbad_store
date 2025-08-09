@@ -27,10 +27,10 @@ export default function GetFavorite() {
             }, 
           ),
           getApi<{ data: { items: FavoriteStores[] } }>(
-            `FavoriteShop/GetFavoriteStores`, 
+            `Stores?favorite=true`, 
           ),
           getApi<{ data: { items: FavoriteEcommerces[] } }>(
-            `FavoriteShop/GetFavoriteEcommerceStores`, 
+            `EStores?favorite=true`, 
           ),
         ]);
 
@@ -85,9 +85,9 @@ export default function GetFavorite() {
         const backendProductIds = data?.productsIds?.map(
         (item: { productId: number }) => item.productId
       ) || [];
-        const backendStoreIds = data.stores?.items?.map((e) => e.storeId) || [];
+        const backendStoreIds = data.stores?.items?.map((e) => e.id) || [];
         const backendEcomIds =
-          data.ecommrces?.items?.map((e) => e.ecommerceStoreId) || [];
+          data.ecommrces?.items?.map((e) => e.id) || [];
 
         // دمج البيانات: إذا فيه ID في المحلي وما هو موجود في الباك، نضيفه
         const allProductIds = Array.from(

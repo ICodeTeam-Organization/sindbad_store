@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import StoreCard from "./store-card";
-import { postApi } from "@/lib/http";
+import { getApi, postApi } from "@/lib/http";
 import useStoreQuerySearch from "../hooks/useStoreQuerySearch";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
@@ -17,13 +17,7 @@ const StoreGrid = () => {
     useInfiniteQuery<any>({
       queryKey: ["GetStores-Filter", categoryId , storeName],
       queryFn: async ({ pageParam = 1 }) => {
-        const body = {
-          name:storeName,
-          parentsCategoriesIds: categoryId ? [categoryId] : null,
-          pageSize: 20,
-          pageNumber: pageParam,
-        }; 
-        const response = await postApi(`Stores/GetStoresWithFilter`, { body });
+        const response = await getApi(`Stores?pageSize=${20}&pageNumber=${pageParam}&categories=${categoryId}&name=${storeName}`);
         return response;
       },
       retry:false,

@@ -1,6 +1,6 @@
 "use clinet";
  
-import { postApi } from "@/lib/http";
+import { getApi, postApi } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { ApiResponse } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
@@ -31,13 +31,7 @@ function StoresMegaMenu() {
       "GetStoresByCategoryId",
     ],
     queryFn: () =>
-      postApi(`Stores/GetStoresWithFilter`, {
-        body: {
-          parentsCategoriesIds: params.selectedCategory ? [ params.selectedCategory] : [],
-          pageSize: params.pageSize,
-          pageNumber: params.pageNumber,
-        },
-      }),
+      getApi(`Stores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}&categories=${params.selectedCategory}`),
       retry:3
   });
 

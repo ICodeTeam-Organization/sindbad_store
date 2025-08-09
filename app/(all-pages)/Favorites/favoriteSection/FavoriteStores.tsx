@@ -100,7 +100,7 @@ function FavoriteStores() {
         if (localData.length > 0) {
           await mutateAsync(localData);
         }
-        return await getApi(`FavoriteShop/GetFavoriteStores?pageNumber=${pageParam}&pageSize=10` );
+        return await getApi(`Stores?pageNumber=${pageParam}&pageSize=10&favorite=true` );
       },
       enabled: status === "authenticated",
       getNextPageParam: (lastPage) => {
@@ -142,9 +142,9 @@ function FavoriteStores() {
         <div className="px-10 mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-center">
           {allStores.map((store) => (
             <StoreCard
-              key={store.storeId}
-              id={store.storeId}
-              name={store.storeName}
+              key={store.id}
+              id={store.id}
+              name={store.name}
               imagesUrl={[]}
               storeCategories={[]}
               mainImageUrl={store.imageUrl}
