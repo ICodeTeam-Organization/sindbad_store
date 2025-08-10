@@ -32,7 +32,7 @@ const E_commerceGrid = () => {
     useInfiniteQuery<EcommercesResponsive>({
       queryKey: ["GetEcommerces-Filter", categoryId,ecommerceName],
       queryFn: async ({ pageParam = 1 }) => {
-        const response = await getApi(`EStores?pageSize=${10}&pageNumber=${pageParam}&name=${ecommerceName}&categories=${categoryId}`);
+        const response = await getApi(`EStores?pageSize=${10}&pageNumber=${pageParam}&name=${ecommerceName != '' ?ecommerceName : null}&categories=${categoryId}`);
         return response as EcommercesResponsive;
       },
       retry:false,

@@ -34,7 +34,7 @@ const E_commerceCard = ({
   
   //   mutationFn: async () => {
   //     return postApi(
-  //       `FavoriteShop/AddEcommerceStore`,
+  //       ``,
         
   //       {
   //         headers: {
@@ -67,7 +67,7 @@ const E_commerceCard = ({
   //   useMutation({
   //     mutationFn: async () => {
   //       return await deleteApi(
-  //           `FavoriteShop/RemoveEcommerceStore/` +
+  //           `` +
   //           id,
   //         {
   //           headers: {

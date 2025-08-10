@@ -24,7 +24,7 @@ const StoresCardCarsoul: React.FC<{
 
   // const { mutate: mutateAddToFav, isPending: isPendingAddToFav } = useMutation({
   //   mutationFn: async () => {
-  //     return await postApi(`FavoriteShop/AddStore`, {
+  //     return await postApi(``, {
   //       body: {
   //         storeId: store.id,
   //       },
@@ -53,7 +53,7 @@ const StoresCardCarsoul: React.FC<{
   // const { mutate: mutateRemoveFromFav, isPending: isPendingRemoveFromFav } =
   //   useMutation({
   //     mutationFn: async () => {
-  //       return await deleteApi(`FavoriteShop/RemoveStore/` + store.id, {
+  //       return await deleteApi(`` + store.id, {
   //         headers: {
   //           Authorization: `Bearer ${session?.user?.data?.token}`,
   //         },

@@ -14,7 +14,7 @@
 //     queryKey: ["favorites-stores"],
 //     queryFn: async () =>
 //       await getApi(
-//         `FavoriteShop/GetFavoriteStores`,
+//         ``,
 //         {
 //           headers: {
 //             Authorization: `Bearer ${authData?.user?.data?.token}`,
