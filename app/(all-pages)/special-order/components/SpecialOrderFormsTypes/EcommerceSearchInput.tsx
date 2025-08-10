@@ -37,8 +37,14 @@ function EcommerceSearchInput({
       params.pageNumber,
       params.ecommerceName,
     ],
-    queryFn: () =>
-      getApi(`EStores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}&name=${params.ecommerceName}`),
+    queryFn: () => {
+      var endpoint = `EStores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`;
+      if(params.ecommerceName != ""){
+        endpoint += `&name=${params.ecommerceName}`
+      }
+      return getApi(endpoint)
+    }
+
   });
 
   React.useEffect(() => {

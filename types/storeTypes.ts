@@ -51,20 +51,6 @@ export type FavoriteProduct = {
 };
 
 
-export type FavoriteStores = {
-  id: string;
-  name: string;
-  description: string;
-  imageUrl: string;
-};
-
-export type FavoriteEcommerces = {
-  id: number;
-  description: string;
-  logo: string;
-  name?:string
-  urlLinkOfStore:string
-};
 
 
 //this Product type just for testing

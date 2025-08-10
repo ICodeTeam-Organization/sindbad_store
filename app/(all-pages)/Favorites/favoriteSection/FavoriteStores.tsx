@@ -71,7 +71,7 @@
 import StoreCard from "../../stores/components/store-card";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { FavoriteStores as FavoriteStoresType } from "@/types/storeTypes";
+import { Store } from "@/types/storeTypes";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import { getApi } from "@/lib/http";
 import React from "react";
@@ -80,7 +80,7 @@ import { db } from "@/Data/database/db";
 
 type ApiResponse = {
   data: {
-    items: FavoriteStoresType[];
+    items: Store[];
     currentPage: number;
     pageSize: number;
     totalCount: number;

@@ -17,7 +17,14 @@ const StoreGrid = () => {
     useInfiniteQuery<any>({
       queryKey: ["GetStores-Filter", categoryId , storeName],
       queryFn: async ({ pageParam = 1 }) => {
-        const response = await getApi(`Stores?pageSize=${20}&pageNumber=${pageParam}&categories=${categoryId}&name=${storeName}`);
+        let endpoint = `Stores?pageSize=${20}&pageNumber=${pageParam}`;
+        if(storeName != ""){
+          endpoint += `&name=${storeName}`
+        }
+        if(categoryId != null){
+          endpoint += `&categories=${categoryId}`
+        }
+        const response = await getApi(endpoint);
         return response;
       },
       retry:false,

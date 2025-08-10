@@ -44,8 +44,13 @@ function StoresSearchSelector({
 
   const { isLoading, data , error} = useQuery<{ data: { items: Store[] } }>({
     queryKey: ["getStoresForSearchFilter", params.pageNumber, params.storeName],
-    queryFn: () =>
-      getApi(`Stores?name=${params.storeName}&pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`),
+    queryFn: () =>{
+      let endpoint = `Stores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`;
+      if(params.storeName != ""){
+        endpoint += `&name=${params.storeName}`
+      }
+      return getApi(endpoint)
+    },
     // enabled: params.storeName != "" || storeId != "",
   });
 

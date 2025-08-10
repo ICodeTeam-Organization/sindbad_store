@@ -2,7 +2,7 @@
 import { useFavorite } from "@/app/stores_mangament/favoritesStore";
 import { db } from "@/Data/database/db"; 
 import { getApi } from "@/lib/http";
-import { FavoriteEcommerces, FavoriteStores } from "@/types/storeTypes";
+import {  Shop, Store } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
@@ -26,10 +26,10 @@ export default function GetFavorite() {
               pageSize: 10000,
             }, 
           ),
-          getApi<{ data: { items: FavoriteStores[] } }>(
+          getApi<{ data: { items: Store[] } }>(
             `Stores?favorite=true`, 
           ),
-          getApi<{ data: { items: FavoriteEcommerces[] } }>(
+          getApi<{ data: { items: Shop[] } }>(
             `EStores?favorite=true`, 
           ),
         ]);

@@ -30,8 +30,13 @@ function StoresMegaMenu() {
       params.pageNumber,
       "GetStoresByCategoryId",
     ],
-    queryFn: () =>
-      getApi(`Stores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}&categories=${params.selectedCategory}`),
+    queryFn: () =>{
+      let endpoint = `Stores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`;
+        if(params.selectedCategory != null){
+          endpoint += `&categories=${params.selectedCategory}`
+        }
+     return getApi(endpoint)
+    },
       retry:3
   });
 

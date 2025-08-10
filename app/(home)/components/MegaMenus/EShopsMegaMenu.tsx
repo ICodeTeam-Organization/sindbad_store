@@ -26,7 +26,13 @@ function EShopsMegaMenu() {
   const { data, isLoading } = useQuery<{ data: { items: Shop[] } }>({
     queryKey: [params.selectedCategory, "FilterECommerceInMegaMenu"],
     queryFn: () =>
-      getApi(`EStores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}&categories=${params.selectedCategory}`),
+    {
+      var endpoint = `EStores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`;
+        if(params.selectedCategory != null){
+          endpoint += `&categories=${params.selectedCategory}`
+        }
+      return getApi(endpoint)
+    },
       retry:3,
   });
 

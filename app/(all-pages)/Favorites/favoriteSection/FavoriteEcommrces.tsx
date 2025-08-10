@@ -1,7 +1,7 @@
 "use client";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
-import { FavoriteEcommerces } from "@/types/storeTypes";
+import { Shop } from "@/types/storeTypes";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import E_commerceCard from "../../e-commerce/components/e-comm-card";
 import { getApi } from "@/lib/http";
@@ -9,7 +9,7 @@ import React from "react";
 
 type ApiResponse = {
   data: {
-    items: FavoriteEcommerces[];
+    items: Shop[];
     currentPage: number;
     pageSize: number;
     totalCount: number;
