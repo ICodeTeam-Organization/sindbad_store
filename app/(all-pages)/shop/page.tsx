@@ -22,10 +22,10 @@ const ProductPage = async () => {
   // const {productName,brands,cats,newProducts,store,subCats,tags,todayOffers} = searchParams
 
   return (
-    <div className="xl:container mx-auto mdHalf:py-6 mdHalf:px-4">
-      <div className="flex flex-col md:flex-row gap-6">
+    <div className="   mdHalf:px-4 bg-bg-50">
+      <div className="flex flex-col md:flex-row gap-6 xl:container mx-auto mdHalf:pb-6">
         {/* Sidebar */}
-        <div className="xl:w-[22%] mdHalf:w-[32%] mdHalf:block hidden mt-10 ms-7 border-l pl-4 sticky top-[100px] h-[86vh] overflow-y-auto  p-4">
+        <div className="xl:w-[22%] bg-white rounded-md shadow-sm mdHalf:w-[32%] mdHalf:block hidden     pl-4 sticky top-[94px] h-[86vh] overflow-y-auto  p-4">
           <Sidebar />
         </div>
         <div className="mdHalf:hidden">
@@ -47,7 +47,7 @@ const ProductPage = async () => {
           </Sheet>
         </div>
         {/* Main content */}
-        <main className="w-full xl:w-[78%] mdHalf:w-[68%] md:my-10 mb-16  ">
+        <main className="w-full xl:w-[78%] mdHalf:w-[68%] md:my-4 mb-16 rounded-md shadow-sm bg-white pt-4 ">
           {/* Products Section */}
           <section>
             <ShopProductsGrid />

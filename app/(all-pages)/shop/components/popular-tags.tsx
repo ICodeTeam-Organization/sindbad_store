@@ -25,8 +25,7 @@ const PopularTags: React.FC<PopularTagsProps> = ({onSelectTag,activeTagId}) => {
   }
 
   return (
-    <div>
-      <h3 className="mb-2">الأكثر بحثأ</h3>
+    <div> 
       <div className="flex flex-wrap gap-2">
         {isLoading
           ? [1, 2, 3, 3, 3, 3, 4, 2, 5, 4].map((_,x) => (
