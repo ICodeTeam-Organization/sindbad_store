@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Shop } from "@/types/storeTypes";
 import Spinner from "@/app/(home)/components/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import { getApi, postApi } from "@/lib/http";
+import { getApi } from "@/lib/http";
 import Link from "next/link";
 
 function EcommerceSearchInput({
@@ -38,7 +38,7 @@ function EcommerceSearchInput({
       params.ecommerceName,
     ],
     queryFn: () => {
-      var endpoint = `EStores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`;
+      let endpoint = `EStores?pageSize=${params.pageSize}&pageNumber=${params.pageNumber}`;
       if(params.ecommerceName != ""){
         endpoint += `&name=${params.ecommerceName}`
       }

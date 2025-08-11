@@ -12,7 +12,7 @@ const StoreLayout = async ({ children }: { children: React.ReactNode }) => {
     <>
       {
         // <StoreHeader />
-        <div className="sticky top-0 z-[50]">
+        <div className="sticky top-0 z-[50] bg-white">
           <div className="relative overflow-visible ">
             <MainHeader isHomePage={false} isAuth={!!session} defaultCountry={defaultCountry ?? "1"} />
           </div>

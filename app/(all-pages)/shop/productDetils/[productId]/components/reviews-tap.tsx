@@ -14,7 +14,7 @@ import {
   getbackgroundData,
   savebackgroundDataInCache,
 } from "@/Data/cachingAndBgData/backgroundData";
-import CircularProgress from "./CircleSlider";
+import CircularProgress from "../../../../../../components/CircleSlider";
 import { useSession } from "next-auth/react";
 // import { useSession } from "next-auth/react";
 type ProductReviewsTapProps = {

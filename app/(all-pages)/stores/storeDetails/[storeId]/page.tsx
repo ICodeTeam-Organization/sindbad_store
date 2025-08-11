@@ -1,6 +1,5 @@
 import React from "react";
-import { getApi } from "@/lib/http";
-import { ApiResponse, StoreData } from "../../typest";
+import { getApi } from "@/lib/http"; 
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import AddStoreToFavBtn from "./components/AddStoreToFavBtn";

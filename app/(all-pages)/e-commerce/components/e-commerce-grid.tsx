@@ -32,7 +32,7 @@ const E_commerceGrid = () => {
     useInfiniteQuery<EcommercesResponsive>({
       queryKey: ["GetEcommerces-Filter", categoryId,ecommerceName],
       queryFn: async ({ pageParam = 1 }) => {
-        var endpoint = `EStores?pageSize=${10}&pageNumber=${pageParam}`;
+        let endpoint = `EStores?pageSize=${10}&pageNumber=${pageParam}`;
         if(ecommerceName != ""){
           endpoint += `&name=${ecommerceName}`
         }

@@ -60,10 +60,11 @@ const MainHeader = ({
   // }, []);
 
   return (
-    <div className="duration-300  lg:container mx-auto">
+   <div className="mdHalf:shadow-sm shadow-md bg-white" >
+     <div className="duration-300  lg:container mx-auto">
       <div
         className={cn(
-          "  bg-white z-50 mdHalf:shadow-sm shadow-md border-b-0 mdHalf:border-b-0  border-b-white flex  justify-between  w-full mdHalf:items-center items-center mdHalf::bg-purple-600",
+          "  bg-white z-50  border-b-0 mdHalf:border-b-0  border-b-white flex  justify-between  w-full mdHalf:items-center items-center mdHalf::bg-purple-600",
           isHomePage && "mdHalf:items-start"
         )}
       >
@@ -204,7 +205,8 @@ const MainHeader = ({
       >
         <SearchComponent isHomePage={isHomePage} />
       </div>
-    </div>
+     </div>
+   </div>
   );
 };
 

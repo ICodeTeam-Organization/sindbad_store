@@ -1,6 +1,6 @@
 "use clinet";
  
-import { getApi, postApi } from "@/lib/http";
+import { getApi,   } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { ApiResponse } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";

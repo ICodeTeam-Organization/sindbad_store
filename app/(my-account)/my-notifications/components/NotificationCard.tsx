@@ -180,44 +180,7 @@ const NotificationCard = ({
 
   };
 
-
-  //   const hanleMarkAsRead = async (noti: NotificationType) => {
-
-  //     const currentCountry =  Cookies.get("country");
-  //     const isCurrentCountry = currentCountry !== noti.country;
-  //     // setchangeCountryLoader(true);
-
-  // //       // Send data that is in cache to the server
-  // //       const data = await db.bgData.toArray();
-  // //       await mutateAsync(data);
-
-  // //       Cookies.remove("country");
-  // //       Cookies.set("country", item?.key, {
-  // //         path: "/",
-  // //         sameSite: "Lax",
-  // //       });
-  // //       setselectedCountry(item);
-  // //       router.refresh();
-  // //       window.location.replace("/");
-
-  //     switch (noti?.action) {
-  //       case 4:
-  //       case 9:
-  //       case 11:
-  //       case 12:
-  //       case 13:
-  //         router.push("OrderTrack/" + noti?.target);
-  //         break;
-  //       case 2:
-  //         router.push("my-special-orders/priceDetails/" + noti?.target);
-  //         break;
-  //       default:
-  //         break;
-  //     }
-
-  //     await postApi("Notifications/MarkAsRead?NotificationId=" + noti?.id);
-  //   };
-
+ 
   return (
     <div className="space-y-4 mt-4">
       <Alert
@@ -229,9 +192,9 @@ const NotificationCard = ({
         cancelText="إلغاء"
         okText="نعم، انتقل"
       />
-      <div className="flex gap-4 my-6 justify-start flex-wrap sm:flex-nowrap">
+      <div className="flex mdHalf:gap-4 gap-2 my-6 justify-start flex-wrap sm:flex-nowrap">
         <FilterButton
-          title="كل الإشعارات"
+          title="الكل"
           count={notifeeCounts[0]}
           onClick={() => {
             changeNotfieeType(0);
@@ -239,7 +202,7 @@ const NotificationCard = ({
           isActive={notifeeType == 0}
         />
         <FilterButton
-          title="إشعارات التسعير"
+          title="  التسعير"
           count={notifeeCounts[1]}
           onClick={() => {
             changeNotfieeType(1);
@@ -247,7 +210,7 @@ const NotificationCard = ({
           isActive={notifeeType == 1}
         />
         <FilterButton
-          title="إشعارات المنتجات"
+          title="  المنتجات"
           count={notifeeCounts[2]}
           onClick={() => {
             changeNotfieeType(2);
@@ -286,7 +249,7 @@ const NotificationCard = ({
               )}
             >
               {!notification?.isRead && (
-                <span className="absolute bg-red-500 text-white rounded px-1 top-2 left-2">
+                <span className="absolute bg-red-500 text-white rounded px-1 text-sm top-2 left-2">
                   {" "}
                   جديد{" "}
                 </span>
@@ -299,19 +262,19 @@ const NotificationCard = ({
                   <span className="text-xs text-secondary bg-white px-2 rounded-sm">
                     {notification.country == "1" ? (
                       <div className="flex items-center justify-center gap-x-4 ">
-                        <div className="w-[30px] h-[30px] relative rounded-md overflow-hidden " >
+                        <div className="mdHalf:w-[25px] w-[17px] h-[17px] mdHalf:h-[25px] relative rounded-md overflow-hidden " >
                           <Image alt="sa" src={"/images/countries/sa.svg"} fill />
                         </div>
-                        <span role="img" aria-label="Saudi Arabia">
+                        <span role="img" aria-label="Saudi Arabia" className="max-mdHalf:hidden ">
                           من السعودية
                         </span>
                       </div>
                     ) : notification.country == "2" ? (
                       <div className="flex items-center justify-center gap-x-4 ">
-                        <div className="w-[30px] h-[30px] relative rounded-md overflow-hidden " >
+                        <div className="mdHalf:w-[25px] w-[17px] h-[17px] mdHalf:h-[25px] relative rounded-md overflow-hidden" >
                           <Image alt="sa" src={"/images/countries/em.svg"} fill />
                         </div>
-                        <span role="img" aria-label="Saudi Arabia">
+                        <span role="img" aria-label="Saudi Arabia" className="max-mdHalf:hidden ">
                           من الإمارات
                         </span>
                       </div>

@@ -1,181 +1,187 @@
-import { BiCheck } from "react-icons/bi";
-import { Progress } from "@/components/ui/progress";
-import Image from "next/image";
-import Notebook from "@/public/images/Notebook.svg";
-import Package from "@/public/images/Package.svg";
-import Handshake from "@/public/images/Handshake.svg";
-import Truck from "@/public/images/Truck.svg";
-import { GiSandsOfTime } from "react-icons/gi";
-import { TbReportMoney } from "react-icons/tb";
- 
-type props = {
-  progress: number;
-};
-const Progresses = ({ progress }: props) => {
+import { Package, Clock, CheckCircle, CreditCard, Truck, Handshake } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { convertToArabicDate } from "@/lib/timeFuns";
 
-  
-  let data: number = 0;
-  data = 1;
-  if (progress == 0) { 
-    data = 100;
-  }else if (progress == 1) {
-    data = 80;
-  } else if (progress == 2) {
-    data = 60;
-  } else if (progress == 3) {
-    data = 40;
-  } else if (progress == 4) {
-    data = 20;
-  } else if (progress == 5) {
-    data = 0;
-  } 
+interface ShippingProgressProps {
+  status: number; // 0-6
+  statusDates: (string | null)[]
+}
+
+const steps = [
+  {
+    id: 0,
+    title: "  إنشاء الطلب",
+    subtitle: "قيد الانتظار",
+    icon: Clock,
+  },
+  {
+    id: 1,
+    title: "  قبول الطلب",
+    subtitle: "تحت التأكيد",
+    icon: CheckCircle,
+  },
+  {
+    id: 2,
+    title: "  شراء الطلب",
+    subtitle: "مكتمل",
+    icon: CreditCard,
+  },
+  {
+    id: 3,
+    title: "شحن الطلب",
+    subtitle: "مكتمل",
+    icon: Package,
+  },
+  {
+    id: 4,
+    title: "وصول الطلب",
+    subtitle: "مكتمل",
+    icon: Truck,
+  },
+  {
+    id: 5,
+    title: "تسليم الطلب",
+    subtitle: "مكتمل",
+    icon: Handshake,
+  },
+]
+
+export default function ShippingProgress({ statusDates, status }: ShippingProgressProps) {
+
+   
+  const getStepStatus = (stepId: number) => {
+    if (stepId <= status) return "completed"
+    if (status + 1 == stepId) return "current"
+    return "pending"
+  }
+
+  const getStepColor = (stepId: number) => {
+    const stepStatus = getStepStatus(stepId)
+    if (stepStatus === "completed") return "bg-green-500 border-white"
+    if (stepStatus === "current") return "bg-primary border-white"
+    return "bg-gray-100 border-gray-200"
+  }
+
+  const progressPercentage = status === 0 ? 0 : ((  status) / (steps.length - 1)) * 100;
 
   return (
-    <>
-    <div  className="mdHalf:block hidden" >
-<div className="m-auto mt-5 ">
-  <Progress value={data} className="w-[85%] m-auto h-3" />
-  <div className="relative -top-5 flex justify-around">
-    <div
-      className={
-        data <= 100
-          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
-          : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
-      }
-    >
-      {data <= 80 && <BiCheck className="text-white w-20 h-20" />}
-    </div>
-    <div
-      className={
-        data <= 80
-          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
-          : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
-      }
-    >
-      {data <= 80 && <BiCheck className="text-white w-20 h-20" />}
-    </div>
-    <div
-      className={
-        data <= 60
-          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
-          : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
-      }
-    >
-      {data <= 60 && <BiCheck className="text-white w-20 h-20" />}
-    </div>
-    <div
-      className={
-        data <= 40
-          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
-          : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
-      }
-    >
-      {data <= 40 && <BiCheck className="text-white w-20 h-20" size={30} />}
-    </div>
-    <div
-      className={
-        data <= 20
-          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
-          : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
-      }
-    >
-      {data <= 20 && <BiCheck className="text-white w-20 h-20" size={30} />}
-    </div>
-    <div
-      className={
-        data === 0
-          ? `bg-primary border-white w-7 h-7 rounded-full border-2 flex items-center`
-          : `w-7 h-7 rounded-full border-primary-background border-2 bg-white`
-      }
-    >
-      {data <= 0 && <BiCheck className="text-white w-20 h-20" size={30} />}
-    </div>
-  </div>
-</div>
-<div className="grid grid-cols-6 justify-items-center mt-3">
-<div className="m-auto grid justify-items-center">
-  {/* <Image src={Notebook} alt="Notebook" /> */}
-  <GiSandsOfTime className="text-3xl text-primary-background " />
-  <h1>الطلب قيد الإنتظار</h1>
-</div>
-<div className="m-auto grid justify-items-center">
-  <Image src={Notebook} alt="Notebook" />
-  <h1>تم تأكيد الطلب</h1>
-</div>
-<div className="m-auto grid justify-items-center">
-  {/* <Image src={Notebook} alt="Notebook" /> */}
-  <TbReportMoney   className="text-3xl text-primary-background " />
+    <div className="w-full bg-white p-10  rounded-md shadow-sm">
+      <h3 className="mdHalf:text-2xl text-lg font-bold pb-10"> مراحل الشحن </h3>
+      {/* Desktop Layout */}
+      <div className="hidden md:block">
+        <div className="relative">
+          {/* Progress Line */}
+          <div className="absolute top-[48px] left-8 right-8 h-1 bg-gray-300 rounded-full">
+            <div
+              className="h-full bg-primary transition-all duration-500 ease-in-out rounded-full"
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
 
-  <h1>تم شراء الطلب</h1>
-</div>
-<div className="m-auto grid justify-items-center">
-  <Image src={Package} alt="Package" />
-  <h1>تم الشحن</h1>
-</div>
-<div className="m-auto grid justify-items-center">
-  <Image src={Truck} alt="Truck" />
-  <h1>وصول الطلب</h1>
-</div>
-<div className="m-auto grid justify-items-center">
-  <Image src={Handshake} alt="Handshake" />
-  <h1>تم تسليمه</h1>
-</div>
-</div>
-    </div> 
-    <div className="flex   justify-center gap-x-6  mdHalf:hidden   ">
-    {/* Progress line */}
-    <div className="relative h-full flex flex-col items-center">
-      {/* Line */}
-      <div className="absolute top-0 bottom-10 w-1 bg-gray-300" />
-  
-      {/* Step Circles */}
-      {[100, 80, 60, 40, 20, 0].map((threshold, index) => (
-        <div
-          key={index}
-          className={`z-10 mb-6 flex items-center justify-center w-7 h-7 rounded-full border-2 ${
-            data <= threshold
-              ? "bg-primary border-white"
-              : "bg-white border-primary-background"
-          }`}
-        >
-          {data <= threshold && (
-            <BiCheck className="text-white w-5 h-5" />
-          )}
+          {/* Steps */}
+          <div className="relative flex justify-between">
+            {steps.map((step, index) => {
+              const Icon = step.icon
+              const stepStatus = getStepStatus(index)
+
+              return (
+                <div key={step.id} className="flex flex-col items-center">
+                  {/* Circle */}
+                  <div
+                    className={cn(
+                      "w-24 h-24 rounded-full border-4 flex items-center justify-center transition-all duration-300 relative z-10",
+                      getStepColor(index),
+                      stepStatus == "current" && "shadow-lg",
+                    )}
+                  >
+                    {stepStatus === "completed" ? (
+                      <CheckCircle className="w-9 h-9 text-white" />
+                    ) : (
+                      <Icon className={cn("w-9 h-9", stepStatus === "pending" ? "text-gray-600" : "text-white")} />
+                    )}
+                  </div>
+
+                  {/* Labels */}
+                  <div className="mt-4 text-center max-w-24">
+                    <p className="text-sm font-semibold text-gray-900 leading-tight">{step.title}</p>
+                    <p
+                      className={cn(
+                        "text-xs mt-1 bg-bg-50 rounded-full py-1 px-3 mx-auto w-fit",
+                        stepStatus === "completed"
+                          ? "text-green-600"
+                          : stepStatus === "current"
+                            ? "text-primary"
+                            : "text-gray-500",
+                      )}
+                    >
+                      {stepStatus === "completed" ? "مكتمل" : stepStatus === "current" ? "تحت المعالجة" : "قيد الانتظار"}
+                    </p>
+                    {stepStatus !== "pending" && statusDates[index] && <p className="text-xs text-gray-400 mt-1">{convertToArabicDate(statusDates[index])}</p>}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
         </div>
-      ))}
-    </div>
-  
-    {/* Step Labels with Icons */}
-    <div className="  ml-10 space-y-5 ">
-      <div className="flex items-center gap-2">
-        <Image src={Notebook} alt="Notebook" />
-        <h1>الطلب قيد الإنتظار</h1>
       </div>
-      <div className="flex items-center gap-2">
-        <Image src={Notebook} alt="Notebook" />
-        <h1>تم تأكيد الطلب</h1>
-      </div>
-      <div className="flex items-center gap-2">
-        <Image src={Notebook} alt="Notebook" />
-        <h1>تم شراء الطلب</h1>
-      </div>
-      <div className="flex items-center gap-2">
-        <Image src={Package} alt="Package" />
-        <h1>تم الشحن</h1>
-      </div>
-      <div className="flex items-center gap-2">
-        <Image src={Truck} alt="Truck" />
-        <h1>وصول الطلب</h1>
-      </div>
-      <div className="flex items-center gap-2">
-        <Image src={Handshake} alt="Handshake" />
-        <h1>تم تسليمه</h1>
-      </div>
-    </div>
-    </div>
-    </>
-  
-  );
-};
 
-export default Progresses;
+      {/* Mobile Layout */}
+      <div className="md:hidden">
+        <div className="relative">
+          {steps.map((step, index) => {
+            const Icon = step.icon
+            const stepStatus = getStepStatus(index)
+
+            return (
+              <div key={step.id} className="flex items-start gap-4 pb-8 last:pb-0">
+                {/* Vertical Line */}
+                {index < steps.length - 1 && <div className="absolute right-6 top-12 w-0.5 h-96 bg-gray-300" />}
+
+                {/* Circle */}
+                <div
+                  className={cn(
+                    "w-12 h-12 rounded-full border-3 flex items-center justify-center flex-shrink-0 transition-all duration-300 relative z-10",
+                    getStepColor(index),
+                    "shadow-md",
+                  )}
+                >
+                  {stepStatus === "completed" ? (
+                    <CheckCircle className="w-5 h-5 text-white" />
+                  ) : (
+                    <Icon className={cn("w-5 h-5", stepStatus === "pending" ? "text-gray-600" : "text-white")} />
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 pt-2">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-gray-900">{step.title}</p>
+                      <p
+                        className={cn(
+                          "text-xs mt-1",
+                          stepStatus === "completed"
+                            ? "text-green-600"
+                            : stepStatus === "current"
+                              ? "text-primary"
+                              : "text-gray-500",
+                        )}
+                      >
+                        {stepStatus === "completed"
+                          ? "مكتمل"
+                          : stepStatus === "current"
+                            ? "تحت المعالجة"
+                            : "قيد الانتظار"}
+                      </p>
+                    </div>
+                    {stepStatus !== "pending" && statusDates[index] && <p className="text-xs text-gray-400">{convertToArabicDate(statusDates[index])}</p>}
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}

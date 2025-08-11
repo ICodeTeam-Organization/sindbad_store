@@ -43,7 +43,7 @@ export default async function PriceDetails({
   
 
   return (
-    <div className="mdHalf:m-10 m-4 tajawal  ">
+    <div className=" p-5  rounded-md shadow-sm tajawal bg-white  ">
       <div className=" ">
         <h1 className="font-bold">طلب خاص</h1>
         {prices?.success ? (
