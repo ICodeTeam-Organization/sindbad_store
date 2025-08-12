@@ -106,7 +106,7 @@ function EShopsMegaMenu() {
                         alt={i.name}
                         fill
                         className="bg-gray-100"
-                        src={i?.logo || i?.ecommerceStoreImages[0]?.imageUrl || ""} width={0} height={0}                      />
+                        src={i?.logo || i?.ecommerceStoreImages[0]?.imageUrl || ""}   />
                     </div>
                     <p className="line-clamp-1 flex-grow overflow-hidden text-ellipsis">
                       {i.name}

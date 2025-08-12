@@ -94,7 +94,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
             >
               <div className="flex  mb-2">
                 <div className="w-20 h-20 relative bg-slate-100 rounded-lg overflow-hidden ">
-                  <SafeImage  fill src={details?.image || ""} alt="Product" width={0} height={0} />
+                  <SafeImage  fill src={details?.image || ""} alt="Product"  />
                 </div>
                 <div className="px-3 my-2" >
                   <span className="text-sm font-bold block ">

@@ -22,8 +22,7 @@ const PriceRange = ({ onChangeRange }: { onChangeRange: (s: [number, number]) =>
 
   useEffect(() => {
     setPriecRange(filters.price)
-  }, [filters.price])
-
+  }, [filters.price]) 
 
   return (
     <div className="my-6  ">

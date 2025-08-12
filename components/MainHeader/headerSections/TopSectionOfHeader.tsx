@@ -49,7 +49,7 @@ function TopSectionOfHeader({
         <Link href="/" className="2lg:w-[130px] w-[120px] h-[70px]  2lg:h-[80px] relative">
           <Image
             className="block relative cursor-pointer"
-            src={"/images/sedebadLogo.svg"} 
+            src={"/images/logo.png"} 
             fill
             alt="logo"
           />

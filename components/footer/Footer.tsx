@@ -57,7 +57,7 @@ function Footer() {
             <h3 className="font-bold text-lg text-black mb-3 flex items-center ">
               <Image
                 alt="sendbad"
-                src="/images/sedebadLogo.svg"
+                src="/images/logo.png"
                 width={150}
                 height={40}
               />
