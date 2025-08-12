@@ -121,10 +121,10 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
   );
 
   const track = (id: number) => {
-    router.push("/OrderTrack/" + id);
+    router.push("/my-orders/track/" + id);
   };
   const goToOrderDetails = (id: number) => {
-    router.push("/Orderdetail/" + id);
+    router.push("/my-orders/details/" + id);
   };
   const openUpdateDialog = (orderId: number) => {
     setopenUpdateBondDialog(orderId)
@@ -239,7 +239,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                               إدخال سند جديد
                             </div>
                             : <Link
-                              href={"/OrderTrack/" + id}
+                              href={"/my-orders/track/" + id}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 track(id);
@@ -304,7 +304,7 @@ const MyOrdersTable: React.FC<Props> = ({ initData }) => {
                           إدخال سند جديد
                         </div>
                         : <Link
-                          href={"/OrderTrack/" + id}
+                          href={"/my-orders/track/" + id}
                           onClick={(e) => {
                             e.stopPropagation();
                             track(id);

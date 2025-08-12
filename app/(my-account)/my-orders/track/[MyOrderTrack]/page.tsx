@@ -86,7 +86,7 @@ const OrderTrack = async ({ params }: { params: { MyOrderTrack: string } }) => {
               <div className=" " >
                 <Link
                   className="flex items-center gap-x-2 bg-primary text-white w-fit   rounded text-sm mt-4 p-3 px-4 "
-                  href={`/Orderdetail/${orderData?.orderNumber}`}
+                  href={`/my-orders/details/${orderData?.orderNumber}`}
                 >
                   معلومات الطلب
                 </Link>

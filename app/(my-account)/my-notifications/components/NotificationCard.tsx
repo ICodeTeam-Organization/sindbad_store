@@ -137,10 +137,10 @@ const NotificationCard = ({
       case 11:
       case 12:
       case 13:
-        router.push("/OrderTrack/" + noti?.target);
+        router.push("/my-orders/track/" + noti?.target);
         break;
       case 14:
-        router.push("/Orderdetail/" + noti?.target);
+        router.push("/my-orders/details/" + noti?.target);
         break;
       case 2:
         router.push("/my-special-orders/priceDetails/" + noti?.target);
@@ -166,10 +166,10 @@ const NotificationCard = ({
       case 11:
       case 12:
       case 13:
-        window.location.replace("/OrderTrack/" + target);
+        window.location.replace("/my-orders/track/" + target);
         break;
       case 14:
-        window.location.replace("/Orderdetail/" + target);
+        window.location.replace("/my-orders/details/" + target);
         break;
       case 2:
         window.location.replace("/my-special-orders/priceDetails/" + target);

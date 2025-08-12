@@ -42,8 +42,8 @@ export default withAuth(
       "/Favorites",
       "/checkout",
       "/checkout-success",
-      "/Orderdetail",
-      "/OrderTrack",
+      "/detail",
+      "/track",
     ];
 
     // Check if current path is protected

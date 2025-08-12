@@ -88,9 +88,7 @@ const MainHeader = ({
                   <Image
                     className="block relative cursor-pointer"
                     src={"/images/logo.png"}
-                    fill
-                      width={150}
-                height={40}
+                    fill 
                     alt="logo"
                   />
                 </Link>

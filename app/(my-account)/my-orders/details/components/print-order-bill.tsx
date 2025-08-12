@@ -6,8 +6,7 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import React, { useRef, useState } from "react";
-import { useReactToPrint } from "react-to-print";
-import PriceLabel from "../../cart/components/price-label";
+import { useReactToPrint } from "react-to-print";  
 import { Button } from "@/components/ui/button";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { OrderData } from "../type";
@@ -18,6 +17,7 @@ import {
   calculateTotalShippingCost,
 } from "@/lib/calcPricesAndOffers"; 
 import { get_currency_key } from "@/lib/cookie/cookie.clients";
+import PriceLabel from "@/app/(all-pages)/cart/components/price-label";
 
 const PrintOrderBill = ({ Bill }: { Bill: OrderData }) => {
   const currency = get_currency_key(Bill?.pagedOrderDetails?.items[0]?.country);
