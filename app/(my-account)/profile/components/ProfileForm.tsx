@@ -108,7 +108,7 @@ function ProfileForm({ profile }: { profile: ProfileType }) {
       telePhone,
       phoneNumber,
     }: z.infer<typeof ProfileFormSchema>) => {
-      await putApi(`Customer/profile`, {
+      await putApi(`Customers/Profile`, {
         body: {
           name,
           email,

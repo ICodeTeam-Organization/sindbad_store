@@ -14,7 +14,7 @@ export default async function HomeLayout({
   children: React.ReactNode;
 }>) {
 
-  const resulte = await getApi<ProfileResponsiveType>("Customer/profile", {}, {
+  const resulte = await getApi<ProfileResponsiveType>("Customers/Profile", {}, {
     cache: "no-cache"
   });
 

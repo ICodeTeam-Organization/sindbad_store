@@ -12,7 +12,7 @@ function useSendDataInBg() {
         reqValue: ele.reqValue,
         reviewText: ele.reviewText || "",
       }));
-      await patchApi("Customer", {
+      await patchApi("Customers", {
         body: {
           data: body,
         },
