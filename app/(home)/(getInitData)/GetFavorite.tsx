@@ -20,7 +20,7 @@ export default function GetFavorite() {
       const [productsResponse, storesResponse, ecommrcesResponse] =
         await Promise.allSettled([
           getApi<{ data: { productId: number }[] }>(
-            `Favorites/GetFavoriteProductIds`,
+            `Favorites/Products`,
             {
               pageNumber: 1,
               pageSize: 10000,

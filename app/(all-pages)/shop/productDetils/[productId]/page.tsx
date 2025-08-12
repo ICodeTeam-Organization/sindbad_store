@@ -42,7 +42,7 @@ const fetchSimilerProducts = async (
             ...product.mainCategoriesIds,
             ...product.subCategoriesIds,
           ],
-          storeId: product?.storeId, 
+          // storeId: product?.storeId, 
         },
       }
     );

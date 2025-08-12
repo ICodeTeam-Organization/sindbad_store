@@ -37,9 +37,8 @@ function StoresMegaMenu() {
         }
      return getApi(endpoint)
     },
-      retry:3
-  });
-
+  }); 
+  
   useEffect(() => {
     if (allMainCat.length > 0) {
       setParams((o) => ({ ...o, selectedCategory: allMainCat[0]?.id }));
