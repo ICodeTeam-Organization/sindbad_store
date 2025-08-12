@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import StoreCard from "./store-card";
-import { getApi, postApi } from "@/lib/http";
+import { getApi,   } from "@/lib/http";
 import useStoreQuerySearch from "../hooks/useStoreQuerySearch";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import ProductCardSkeleton from "@/components/ProductCardSkeleton";

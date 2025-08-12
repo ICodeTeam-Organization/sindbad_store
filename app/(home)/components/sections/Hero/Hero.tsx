@@ -107,7 +107,7 @@ function Hero() {
 
   return (
     <div className=" lg:container mx-auto ">
-      <div className=' w-full bg-[url("/images/hero_images/bg_hero.svg")] relative overflow-hidden bg-cover bg-no-repeat bg-center 2lg:h-[550px] flex flex-col items-center justify-center sm:p-4 p-2   '>
+      <div className=' w-full bg-[url("/images/hero_images/bg_hero.png")] relative overflow-hidden bg-cover bg-no-repeat bg-center 2lg:h-[550px] flex flex-col items-center justify-center sm:p-4 p-2   '>
         <div className="absolute inset-0 bg-black bg-opacity-20 z-0"></div>
 
          {/* INTRO  */}

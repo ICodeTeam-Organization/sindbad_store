@@ -74,10 +74,10 @@ const StoresCarsoule = ({ allStores }: Props) => {
                     key={store.id}
                     description={store?.description}
                     id={store?.id}
-                    mainImageUrl={store?.mainImageUrl}
+                    mainImageUrl={store?.imageUrl}
                     name={store?.name}
-                    websiteLink={store?.websiteLink}
-                    imagesUrl={store?.imagesUrl}
+                    websiteLink={store?.websiteUrl}
+                    imagesUrl={store?.images.map(e=>e.imageUrl)}
                     //  rate={store?.}
                   />
                 );

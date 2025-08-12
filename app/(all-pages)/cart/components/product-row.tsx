@@ -148,7 +148,7 @@ const ProductRow = ({ cartItemData }: Props) => {
                 fill
                 className="ml-3"
                 src={imageUrl || ""}
-                alt="Product" width={0} height={0}              />
+                alt="Product"          />
             </div>
             <span className="text-sm font-bold">{name}</span>
           </div>

@@ -1,6 +1,8 @@
  
-
-module.exports = {
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+module.exports = withBundleAnalyzer({
   images: {
     remotePatterns: [
       // this for allow all domains
@@ -79,7 +81,87 @@ module.exports = {
   experimental: {
     missingSuspenseWithCSRBailout: false,
   },
-};
+})
+// module.exports = {
+//   images: {
+//     remotePatterns: [
+//       // this for allow all domains
+//       {
+//         protocol: "https",
+//         hostname: "**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "example.com",
+//         port: "",
+//         pathname: "/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "icode-sendbad-store.runasp.net",
+//         port: "",
+//         pathname: "/images/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "cdn.salla.sa",
+//         port: "",
+//         pathname: "/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "logo.clearbit.com",
+//         port: "",
+//         pathname: "/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "img-cdn.pixlr.com",
+//         port: "",
+//         pathname: "/image-generator/history/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "via.placeholder.com",
+//         port: "",
+//         pathname: "/150/0000FF/808080?text=/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "th.bing.com",
+//         port: "",
+//         pathname: "/th/id/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "img.freepik.com",
+//         port: "",
+//         pathname: "/free-vector/**",
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "img.freepik.com",
+//         port: "",
+//         pathname: "/free-photo/**",
+//       },
+//       {
+//         protocol: 'http',
+//         hostname: 'example.com',
+//         port: '',
+//         pathname: '/**',
+//       },
+//       {
+//         protocol: "https",
+//         hostname: "ik.imagekit.io",
+//         port: "",
+//         pathname: "/**",
+//       },
+//     ],
+//   },
+//   experimental: {
+//     missingSuspenseWithCSRBailout: false,
+//   },
+// };
 
 /* 
 

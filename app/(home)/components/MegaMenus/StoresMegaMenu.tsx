@@ -1,6 +1,6 @@
 "use clinet";
  
-import { getApi, postApi } from "@/lib/http";
+import { getApi,   } from "@/lib/http";
 import { cn } from "@/lib/utils";
 import { ApiResponse } from "@/types/storeTypes";
 import { useQuery } from "@tanstack/react-query";
@@ -37,9 +37,8 @@ function StoresMegaMenu() {
         }
      return getApi(endpoint)
     },
-      retry:3
-  });
-
+  }); 
+  
   useEffect(() => {
     if (allMainCat.length > 0) {
       setParams((o) => ({ ...o, selectedCategory: allMainCat[0]?.id }));
@@ -109,7 +108,7 @@ function StoresMegaMenu() {
                         alt={i.name}
                         fill
                         className="bg-gray-50"
-                        src={i.imageUrl} width={0} height={0}                      />
+                        src={i.imageUrl}  />
                     </div>
                     <p className="line-clamp-1 flex-grow overflow-hidden text-ellipsis">
                       {i.name}

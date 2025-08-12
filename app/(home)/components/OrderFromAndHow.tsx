@@ -26,7 +26,10 @@ function OrderFromAndHow({ isAuth , defaultCountry }: PropsType) {
     data: { items: { id: number; question: string }[] };
   }>({
     queryKey: ["how-FAQs"],
-    queryFn: () => getApi("FAQs/GetFAQ_QuestionsWithIds/1/10/1"),
+    queryFn: () => getApi(
+      // "FAQs/GetFAQ_QuestionsWithIds/1/10/1"
+      "/FAQs/1?classification=1&pageNumber=1&pageSize=10&brief=true"
+    ),
   });
 
   return (

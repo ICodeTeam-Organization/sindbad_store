@@ -6,7 +6,7 @@ function StoreSectionDetails({store}:{store:Store|null}) {
   return (
     <div>
         <div>
-            <Image  width={50} height={50} alt='' src={store?.mainImageUrl ?? store?.imagesUrl[0] ?? ""} />
+            <Image  width={50} height={50} alt='' src={store?.imageUrl ?? store?.images[0].imageUrl ?? ""} />
             <p>
                 {/* {store?.name} */}
             </p>

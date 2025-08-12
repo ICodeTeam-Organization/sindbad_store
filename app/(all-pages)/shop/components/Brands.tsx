@@ -20,8 +20,7 @@ const Brands: React.FC<BrandsProps> = ({ brand, onSelectBrand }) => {
   });
 
   return (
-    <div className="mb-6">
-      <h3 className=" mb-2">الماركات</h3>
+    <div className="mb-6"> 
       <div className="grid grid-cols-2 gap-2 gap-x-6">
         {isLoading
           ? [1, 2, 3, 3, 3, 3, 4, 2, 5, 4].map((_,x) => (

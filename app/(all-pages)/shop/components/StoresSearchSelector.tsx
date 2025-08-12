@@ -11,7 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Store } from "@/types/storeTypes";
 import Spinner from "@/app/(home)/components/Spinner";
 import { useQuery } from "@tanstack/react-query";
-import { getApi, postApi } from "@/lib/http"; 
+import { getApi } from "@/lib/http"; 
 import { useShopFiltersStore } from "@/app/stores_mangament/shopFiltersStore";
 
 function StoresSearchSelector({

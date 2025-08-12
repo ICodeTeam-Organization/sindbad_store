@@ -16,8 +16,8 @@ const CategoryCard = ({ name, imageUrl , id }: Props) => {
             src={imageUrl}
             // layout="fill"
             width={120}
-            height={120}
-            objectFit="cover"
+            height={120} 
+            style={{objectFit:"cover"}} 
             // className="w-10 h-10 md:w-12 md:h-12"
             alt="صورة الصنف"
           />
