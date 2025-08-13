@@ -10,8 +10,9 @@ import {
 
 const StoresPage = async () => {
   return (
-    <div className="mt-12 flex xl:container xl:mx-auto">
-      <div className="xl:w-[23%] lg:block hidden" >
+    <div className="bg-bg-100 pt-6" >
+      <div className="  flex xl:container xl:mx-auto gap-x-7 ">
+      <div className="xl:w-[23%] lg:block hidden bg-white p-5 rounded-md shadow-sm" >
         <StoreSideBar  />
       </div>
       <div className="lg:hidden" >
@@ -29,9 +30,10 @@ const StoresPage = async () => {
             </SheetContent>
           </Sheet>
         </div>
-      <div className="lg:w-[77%] w-full"  >
+      <div className="lg:w-[77%] w-full bg-white p-5 rounded-md shadow-sm"  >
         <StoreGrid  />
       </div>
+    </div>
     </div>
   );
 }

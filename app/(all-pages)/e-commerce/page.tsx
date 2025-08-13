@@ -1,4 +1,4 @@
-import React  from "react";
+import React from "react";
 import E_commerceGrid from "./components/e-commerce-grid";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { FilterIcon } from "lucide-react";
@@ -6,8 +6,20 @@ import EcommerceSideBar from "./components/EcommerceSideBar";
 
 const E_commercePage = () => {
   return (
-      <div className="mt-12 flex xl:container xl:mx-auto">
-        <div className="xl:w-[23%] lg:block hidden">
+
+
+    <div className="bg-bg-100  ">
+      {/* <div className="pt-6 flex xl:container xl:mx-auto gap-x-6 ">
+        <div className="xl:w-[23%] lg:block hidden bg-white p-5 rounded-md shadow-sm sticky top-10">
+          <EcommerceSideBar />
+        </div>
+        
+        <div className="lg:w-[77%] w-full bg-white p-5 rounded-md shadow-sm">
+          <E_commerceGrid />
+        </div>
+      </div> */}
+      <div className="pt-6 xl:container xl:mx-auto gap-x-6 flex">
+        <div className="xl:w-[23%] lg:block hidden bg-white p-5 rounded-md shadow-sm sticky top-[105px] self-start">
           <EcommerceSideBar />
         </div>
         <div className="lg:hidden">
@@ -28,10 +40,11 @@ const E_commercePage = () => {
             </SheetContent>
           </Sheet>
         </div>
-        <div className="lg:w-[77%] w-full">
+        <div className="lg:w-[77%] w-full bg-white p-5 rounded-md shadow-sm">
           <E_commerceGrid />
         </div>
       </div>
+    </div>
   );
 };
 

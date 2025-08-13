@@ -12,6 +12,7 @@ import CategoriesCarouselSkeleton from "@/components/skeletons/CategoriesCarouse
 import StoreCardSkeleton from "@/components/skeletons/StoreCardSkeleton";
 import ProductGridSkeleton from "@/components/skeletons/ProductsGridSkeleton";
 import EcommrcesSection from "./components/sections/EcommrcesSection";
+import Ads from "./components/sections/Ads";
 
 
 
@@ -23,6 +24,9 @@ export default async function Home() {
       </div>
 
       <Hero />
+
+
+      <Ads/>
 
       <Suspense fallback={<CategoriesCarouselSkeleton />}>
         <CategoriesSection />

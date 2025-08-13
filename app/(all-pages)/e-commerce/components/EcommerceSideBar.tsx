@@ -10,7 +10,7 @@ function EcommerceSideBar() {
   const { categoryId, setCategoryId } = useEcommerceQuerySearch();
 
   return (
-    <div className="lg:border-l lg:mx-4" >
+    <div className=" l lg:mx-4" >
       {/* Filter Ecommerces by category */}
       <div  >
         <MainCategoriesFilter
