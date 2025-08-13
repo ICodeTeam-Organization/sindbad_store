@@ -1,53 +1,23 @@
+"use client"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import React from "react";
-
-const faqList = [
-  {
-    question: "كيف أطلب من متجر سندباد؟",
-    answer:
-      "تضيف منتج إلى السلة ثم تنتقل للسلة وتكمل البيانات مثل تحديد العنوان ومن ثم تضغط على زر إكمال الطلب لإدخال معلومات السند.",
-  },
-  {
-    question: "كيف أطلب طلب خاص؟",
-    answer:
-      "تنتقل إلى مودل الطلب الخاص من خلال رأس الموقع أو بالضغط على 'طلب خاص'. ثم يفتح لك مودل الطلب الخاص، ولديك ثلاثة أنواع للطلب: 'منتج' وهو طلب منتج معين، و'خدمة' وهي طلب خدمة معينة، و'طلب من متجر إلكتروني'. تقوم بإدخال البيانات المطلوبة التي تدل على المنتج، وبعد ذلك تقوم بإرسال الطلب. بعد ذلك، يقوم المندوب بالبحث عن طلبك ويرسل لك عدة تسعيرات لنفس المنتج بنفس النوع أو أنواع مختلفة، وتقوم أنت بالاختيار من هذه التسعيرات وتضيفها إلى عربة التسوق، ومن ثم تنتقل إلى العربة وتقوم بإكمال الطلب بالشكل المعروف.",
-  },
-  {
-    question: "كيف تتم عملية الدفع؟",
-    answer:
-      "تتم عملية الدفع عبر شركات الصرافة المحلية مثل العمقي والبسيري وبندول وغيرهم، وذلك من خلال إيداع مبلغ الطلب إلى أحد حساباتنا البنكية، ثم تضيف رقم السند مع تاريخ الدفع وتحديد البنك، أو من خلال إرسال صورة السند.",
-  },
-  {
-    question: "كيف أتتبع طلبي؟",
-    answer:
-      "تتم عملية تتبع طلبك من خلال الذهاب إلى صفحة 'طلباتي' ثم النقر على زر 'تتبع الطلب' للانتقال إلى صفحة التتبع. ستظهر لك حالات الطلب كما يلي:\n" +
-      "1. **الطلب قيد الانتظار**: يعني أن طلبك تحت المراجعة المالية.\n" +
-      "2. **تم قبول الطلب**: يعني أن طلبك تم تأكيده ويجري العمل على شرائه.\n" +
-      "3. **تم شراء الطلب**: يعني أن طلبك قد تم شراؤه وهو جاهز للإرسال.\n" +
-      "4. **تم شحن الطلب**: يعني أن طلبك تم شحنه وسيصلك قريباً.\n" +
-      "5. **تم وصول الطلب إلى المقر**: يعني أن الطلب وصل إلى مقر التسليم وسيتم تسليمه قريباً.\n" +
-      "6. **تم تسليم طلبك**: يعني أن طلبك تم تسليمه لك.",
-  }, 
-  {
-    question: "كيف أضمن توصيل طلبي؟",
-    answer:
-      "نعمل جاهدين لضمان توصيل طلبك في الوقت المحدد من خلال شركائنا في الشحن، ونحرص على متابعة الطلبات حتى تسليمها. في حال واجهت أي تأخير أو مشكلة، يرجى التواصل معنا وسنعمل على حلها فوراً.",
-  }
-]   
+import React, { useState } from "react";
+import { faqList } from "../components/AboutSidebar";
+  
 
 function FAQs() {
+  const [openedFAQ, setopenedFAQ] = useState(faqList.filter(e=>!!e.answer).map((_,idx)=>`faq-${idx}`))
   return (
     <section id="FAQs" className="scroll-mt-28">
       <h2 className="text-3xl font-bold mb-6">الأسئلة الشائعة</h2>
       <div>
-        <Accordion type="single" collapsible className="w-full space-y-2">
-          {faqList.map(({ question, answer }, idx) => (
-            <AccordionItem key={idx} value={`faq-${idx}`}>
+        <Accordion type="multiple" value={openedFAQ} onValueChange={(s)=>setopenedFAQ(s)} className="w-full space-y-2">
+          {faqList.filter(e=>!!e.answer).map(({ question, answer , id }, idx) => (
+            <AccordionItem  id={id} key={idx} value={`faq-${idx}`} className="scroll-mt-28">
               <AccordionTrigger>{question}</AccordionTrigger>
               <AccordionContent>{answer}</AccordionContent>
             </AccordionItem>

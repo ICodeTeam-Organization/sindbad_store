@@ -2,9 +2,9 @@ import React from 'react'
 
 function WhatIsSpecialProduct() {
   return (
-    <section id="whatIsSpecialProduct" className="scroll-mt-28">
+    <section id="whatIsSpecialProduct" className="scroll-mt-28 my-16">
         <h2 className="text-3xl font-bold mb-4">ما هو الطلب الخاص؟</h2>
-        <div className="max-w-5xl mx-auto">
+        <div className="  mx-auto">
           <h2 className="text-lg font-bold text-gray-800 mb-6 border-b pb-2 border-gray-300">
             خدمة الطلب الخاص – اطلب من العالم إلى باب بيتك!
           </h2>

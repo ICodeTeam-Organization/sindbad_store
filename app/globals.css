@@ -26,6 +26,7 @@ body {
   }
 }
 
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -108,7 +109,9 @@ body {
   font-family: var(--font-main) !important;
     scroll-behavior: smooth;
 }
-
+*{
+   scroll-behavior: smooth;
+}
 .tajawal {
   font-family: var(--font-tajawal);
 }

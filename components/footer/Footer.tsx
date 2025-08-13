@@ -47,7 +47,7 @@ function Footer() {
   ];
 
   return (
-    <div className=" bg-white z-10 relative">
+    <div className=" bg-white z-10 relative  border-primary">
      
 
       {/* about */}

@@ -15,26 +15,26 @@ type TabsComponentProps = {
 };
 
 const FavoriteTabs: React.FC<TabsComponentProps> = ({ tabLabels, tabContent }) => (
-  <Tabs.Root  defaultValue="details" className="w-full">
+  <Tabs.Root  defaultValue="details" className="w-full pt-4" dir="rtl">
     <Tabs.List
-      className="flex items-start space-x-reverse space-x-4 border-b-2 border-orange-500 pb-2 w-full justify-start"
+      className="flex items-start rounded-md justify-start bg-bg-50 p-2 w-fit mx-auto"
       dir="rtl"
     >
       <Tabs.Trigger
         value="details"
-        className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
+        className="px-4 py-2 font-medium text-secondary focus:outline-none data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
       >
         {tabLabels.details}
       </Tabs.Trigger>
       <Tabs.Trigger
         value="features"
-        className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
+        className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
       >
         {tabLabels.features}
       </Tabs.Trigger>
       <Tabs.Trigger
         value="reviews"
-        className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:border-b-2 data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
+        className="px-4 py-2 font-medium text-gray-700 focus:outline-none data-[state=active]:bg-white data-[state=active]:shadow-sm rounded-md data-[state=active]:border-orange-500 data-[state=active]:text-orange-600"
       >
         {tabLabels.reviews}
       </Tabs.Trigger>

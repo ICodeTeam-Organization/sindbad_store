@@ -4,7 +4,7 @@ import React from 'react';
 
 const Policies = () => {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-12 text-gray-800 leading-relaxed">
+    <div className="max-w-4xl mx-auto px-4 py-12 text-gray-800 leading-relaxed scroll-smooth">
       {/* روابط التنقل */}
       <nav className="flex flex-wrap gap-6 justify-center mb-12 text-blue-600 font-medium text-lg">
         <a href="#terms" className="hover:underline">الشروط والأحكام</a>

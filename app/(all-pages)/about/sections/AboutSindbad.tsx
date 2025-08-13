@@ -2,8 +2,8 @@ import React from 'react'
 
 function AboutSindbad() {
   return (
-    <section className=" ">
-      <div className="max-w-5xl mx-auto">
+    <section className="mt-0 pt-0 scroll-mt-28  " id='sindbadabout'>
+      <div className="  mx-auto">
         <h1 className="text-4xl font-bold mb-6 text-gray-800">
           عن متجر سندباد
         </h1>
