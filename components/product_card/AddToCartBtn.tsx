@@ -2,12 +2,12 @@
 import {
   MdOutlineAddShoppingCart, 
 } from "react-icons/md";
-import { useRouter } from "next-nprogress-bar";
 import { useSession } from "next-auth/react"; 
 import { Minus, Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce"; 
 import { useCartStore } from "@/app/stores_mangament/cartStore";
+import { toast } from "react-toastify";
 
 interface PropsTypes {
   id: string | number;
@@ -23,7 +23,6 @@ interface PropsTypes {
 }
 
 function AddToCartBtn({ id, productInfo }: PropsTypes) {
-  const redirct = useRouter();
   const { status } = useSession();
 
   const {
@@ -58,7 +57,9 @@ function AddToCartBtn({ id, productInfo }: PropsTypes) {
   };
 
   const handleAddToCart = () => {
-    if (status === "unauthenticated") redirct.push("/auth");
+    if (status === "unauthenticated"){
+      toast.error("يجب عليك تسجيل الدخول اولاً")
+    }
     else if (status === "authenticated") {
       const newCart: any = {
         productId: +id,

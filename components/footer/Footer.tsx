@@ -9,6 +9,7 @@ import {
 } from "react-icons/bs";
 import { FaChevronLeft, FaPhone } from "react-icons/fa";
 import FooterServicesSection from "./FooterServicesSection";
+import Feature from "@/app/(home)/components/sections/Feature";
  
 function Footer() {
   const aboutSindbad = [
@@ -47,8 +48,9 @@ function Footer() {
   ];
 
   return (
-    <div className=" bg-white z-10 relative  border-primary">
+    <div className=" bg-white mt-24 z-10 relative  border-primary">
      
+     <Feature/>
 
       {/* about */}
       <div className="bg-[url('/images/footer_images/footer_bg.svg')] bg-cover bg-no-repeat  w-full">

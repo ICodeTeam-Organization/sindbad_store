@@ -42,7 +42,7 @@
 //         },
 //       );
 //       console.log(dt ," favvvvvvvvv");
-      
+
 //       return (dt.data?.items.map(normalizeProduct))
 
 //     },
@@ -95,7 +95,7 @@ import { db } from "@/Data/database/db";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import { NormalizedProductType } from "@/Data/normalizTypes";
 import useSendDataInBg from "@/hooks/useSendDataInBg";
-import { getApi } from "@/lib/http";
+import { postApi } from "@/lib/http";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React from "react";
 
@@ -129,14 +129,17 @@ function FavoriteProducts() {
         await mutateAsync(localData);
       }
 
-      const dt = await getApi<ApiResponse>(
-        "Favorites/GetAllCustomerFavoritesWithPagination",
+      const dt = await postApi<ApiResponse>(
+        "Products/GetProductsWitheFilter?returnDtoName=2",
         {
-          pageNumber: pageParam,
-          PageSize: 12,
+          body: {
+            pageNumber: pageParam,
+            PageSize: 12,
+            favorite: true,
+          }
         }
       );
-    
+
       return {
         items: dt.data.items.map(normalizeProduct),
         currentPage: dt.data.currentPage,
@@ -149,17 +152,17 @@ function FavoriteProducts() {
       }
       return undefined;
     },
-    initialPageParam:1,
+    initialPageParam: 1,
     staleTime: 1000 * 60 * 60 * 24,
     gcTime: 0,
   });
 
   const allProducts = data?.pages
     .flatMap((page) => page.items)
-    // .filter((e) => productsIds.includes(+e.id));
-    console.log(allProducts?.map(e=>e.id),"THIS IS FROM BACK");
-    console.log(productsIds ,"THIS IS FROM front cached");
-    
+  // .filter((e) => productsIds.includes(+e.id));
+  console.log(allProducts?.map(e => e.id), "THIS IS FROM BACK");
+  console.log(productsIds, "THIS IS FROM front cached");
+
 
   return (
     <div dir="rtl" className="mb-12 flex flex-wrap justify-center mdHalf:gap-6 gap-3">
