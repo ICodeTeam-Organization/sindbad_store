@@ -23,8 +23,6 @@ const fetchStoreDetails = async (
     const storesResponse = await getApi<{data:{items:Store[]}}>(
       `Stores/${storeId}`
     );
-    console.log(storeId)
-    console.log(storesResponse)
     if (storesResponse?.data?.items?.length ?? null) {
       return storesResponse.data.items[0];
     } else {
