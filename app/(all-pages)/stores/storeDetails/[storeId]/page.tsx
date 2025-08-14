@@ -20,11 +20,13 @@ const fetchStoreDetails = async (
   storeId: string
 ): Promise<Store | null> => {
   try {
-    const storesResponse = await getApi<{data:{Items:Store[]}}>(
+    const storesResponse = await getApi<{data:{items:Store[]}}>(
       `Stores/${storeId}`
     );
-    if (storesResponse?.data?.Items?.length ?? null) {
-      return storesResponse.data.Items[0];
+    console.log(storeId)
+    console.log(storesResponse)
+    if (storesResponse?.data?.items?.length ?? null) {
+      return storesResponse.data.items[0];
     } else {
       return null; // Return null if no data is found
     }
