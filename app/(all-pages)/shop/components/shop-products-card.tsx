@@ -10,7 +10,7 @@ const ShopProductsCard = ({ product }: { product: ProductCardProps }) => {
 
   return (
     <div className="border rounded-lg shadow-sm relative max-w-[230px] mx-auto text-center cursor-pointer">
-      <a href={`/shop/productDetils/${product.id}`}>
+      <a href={`/shop/product/${product.id}`}>
         <Image
           src={product?.mainImageUrl || productImg}
           alt={product?.name}

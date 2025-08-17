@@ -28,7 +28,7 @@ const ProductCard = ({ data }: propsType) => {
       className={`m-auto rounded-[8px] group overflow-hidden border hover:border-primary hover:border  transition-all   hover:shadow  `}
     >
       <div className="relative  ">
-        <Link href={`/shop/productDetils/${data?.id}`}>
+        <Link href={`/shop/product/${data?.id}`}>
           <SafeImage
             alt={data?.name}
             loading="lazy"
@@ -67,7 +67,7 @@ const ProductCard = ({ data }: propsType) => {
         </div>
       </div>
       <div className="bg-bg-50 p-2 relative">
-        <Link href={`/shop/productDetils/${data.id}`}>
+        <Link href={`/shop/product/${data.id}`}>
           <p className=" line-clamp-2 h-10  text-black 3xs:text-[13px] text-[10px] py-2 pt-0   text-right flex items-center">
             <span className="line-clamp-2 ">{data.name}</span>
           </p>
