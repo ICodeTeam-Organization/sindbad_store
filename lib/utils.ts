@@ -48,6 +48,13 @@ export const getCountryName = (country:string) => {
   }
 };
 
+export const countrys: { [key: string]: string } = {
+  "1": "KSA",
+  "2": "UAE",
+};
+
+ 
+
 // export const getCurrencykey = () => { 
 //   const country = getCookie("country");
 //   switch (country ?? "1") {

@@ -1,12 +1,12 @@
 import React from "react";
-import GetFavorite from "./(home)/(getInitData)/GetFavorite";
-import GetCartItems from "./(home)/(getInitData)/GetCartItems";
-import GetAllCategories from "./(home)/(getInitData)/GetAllCategories";
+import GetFavorite from "./[country]/(home)/(getInitData)/GetFavorite";
+import GetCartItems from "./[country]/(home)/(getInitData)/GetCartItems";
+import GetAllCategories from "./[country]/(home)/(getInitData)/GetAllCategories";
 import { getApi } from "@/lib/http";
-import GetNotificationCount from "./(home)/(getInitData)/GetNotificationCount";
+import GetNotificationCount from "./[country]/(home)/(getInitData)/GetNotificationCount";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/authOption";
-import GetUserData from "./(home)/(getInitData)/GetUserData";
+import GetUserData from "./[country]/(home)/(getInitData)/GetUserData";
 
 async function GetInitialData() {
 
