@@ -9,7 +9,7 @@ import {
 } from "react-icons/bs";
 import { FaChevronLeft, FaPhone } from "react-icons/fa";
 import FooterServicesSection from "./FooterServicesSection";
-import Feature from "@/app/(home)/components/sections/Feature";
+import Feature from "@/app/[country]/(home)/components/sections/Feature";
  
 function Footer() {
   const aboutSindbad = [

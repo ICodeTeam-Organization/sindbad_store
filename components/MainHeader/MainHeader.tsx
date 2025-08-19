@@ -10,18 +10,20 @@ import { Drawer } from "../Drawer/Drawer";
 import { BiMenu } from "react-icons/bi";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 interface HeaderPropsType {
-  isHomePage: boolean;
+  isHomePage?: boolean;
   isAuth: boolean;
   defaultCountry: string;
 }
 
-const MainHeader = ({
-  isHomePage = false,
+const MainHeader = ({ 
   isAuth = false,
   defaultCountry,
 }: HeaderPropsType) => {
+  const pathname = usePathname()
+  const isHomePage = pathname.endsWith('/') || pathname.endsWith("/KSA" ) || pathname.endsWith("/UAE")
   const [openNav, setopenNav] = useState<boolean>(false);
   // const session = useSession();
   // const isAuth = session.status === "authenticated";

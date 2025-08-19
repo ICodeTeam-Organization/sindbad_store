@@ -9,6 +9,7 @@ import AddToCartBtn from "./AddToCartBtn";
 import AddToFavBtn from "./AddToFavBtn";  
 import ProductCardPriceSection from "./ProductCardPriceSection";
 import { get_currency_key } from "@/lib/cookie/cookie.clients";
+import { countrys } from "@/lib/utils";
 
 // function calculateDiscountPercentage(
 //   oldPrice: number,
@@ -22,13 +23,14 @@ type propsType = {
   data: NormalizedProductType;
 };
 const ProductCard = ({ data }: propsType) => { 
+  const goto =  "/" +countrys[data?.country].toString() + `/shop/product/${data?.id}`;
   return (
     <div
       dir="rtl"
       className={`m-auto rounded-[8px] group overflow-hidden border hover:border-primary hover:border  transition-all   hover:shadow  `}
     >
       <div className="relative  ">
-        <Link href={`/shop/product/${data?.id}`}>
+        <Link href={goto}>
           <SafeImage
             alt={data?.name}
             loading="lazy"
@@ -67,7 +69,7 @@ const ProductCard = ({ data }: propsType) => {
         </div>
       </div>
       <div className="bg-bg-50 p-2 relative">
-        <Link href={`/shop/product/${data.id}`}>
+        <Link href={goto}>
           <p className=" line-clamp-2 h-10  text-black 3xs:text-[13px] text-[10px] py-2 pt-0   text-right flex items-center">
             <span className="line-clamp-2 ">{data.name}</span>
           </p>

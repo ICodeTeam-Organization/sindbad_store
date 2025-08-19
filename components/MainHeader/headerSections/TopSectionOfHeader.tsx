@@ -1,11 +1,11 @@
-import OrderFromAndHow from "@/app/(home)/components/OrderFromAndHow";
+import OrderFromAndHow from "@/app/[country]/(home)/components/OrderFromAndHow";
 import React from "react";
 import SearchComponent from "./SearchComponent";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { GoHeart } from "react-icons/go";
 import { cn } from "@/lib/utils";
 import { BsCart } from "react-icons/bs";
-import PersonButton from "@/app/(home)/components/person-button";
+import PersonButton from "@/app/[country]/(home)/components/person-button";
 import Link from "next/link";
 import { useCartStore } from "@/app/stores_mangament/cartStore";
 import { useNotificationsDataStore } from "@/app/stores_mangament/notificationStore";

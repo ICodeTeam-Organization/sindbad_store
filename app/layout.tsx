@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 import ClientProviders from "@/components/client-providers";
-import {  Cairo,   } from "next/font/google";
+import { Cairo } from "next/font/google";
 import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
-import { Toaster as SonanerToaster } from "sonner";
 // import Footer from "@/components/Footer";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import SpecialOrderDialogsViewer from "@/components/SpecialOrderDialogsViewer";
@@ -15,21 +14,14 @@ import { ToastContainer } from 'react-toastify';
 import GetInitialData from "./GetInitialData";
 import SendDataInBG from "@/components/DataHandler/SendDataInBG";
 import Footer from "@/components/footer/Footer";
+import MainHeader from "@/components/MainHeader/MainHeader";
+import { getServerSession } from "next-auth";
+import { authOption } from "@/lib/authOption";
+import { getCookie } from "@/lib/coockie-utls"; 
 
-// const Noto_Kufi = Almarai({
-//   weight: ["400", "700"],
-//   subsets: ["arabic"],
-//   display: "swap",
-//   variable: "--font-noto",
-// });
-// const tajawal = Tajawal({
-//   weight: ["400", "700"],
-//   subsets: ["arabic"],
-//   display: "swap",
-//   variable: "--font-tajawal",
-// });
+
 const cairo = Cairo({
-  weight: ["400", "700", "500","600","800","300"],
+  weight: ["300", "700"],
   subsets: ["arabic"],
   display: "swap",
   variable: "--font-main",
@@ -53,7 +45,7 @@ export const metadata: Metadata = {
     title: "متجر سندباد",
     description:
       "منصة إلكترونية متعددة البائعين لطلب المنتجات من مختلف أنحاء العالم، بما في ذلك المتاجر العالمية مثل أمازون وعلي بابا.",
-    url: "https://sindbad-store.vercel.app",  
+    url: "https://sindbad-store.vercel.app",
     siteName: "متجر سندباد",
     locale: "ar",
     type: "website",
@@ -67,21 +59,27 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOption);
+  const defaultCountry = getCookie("country");
+  
+  // const pathname
+
   return (
     <html lang="en">
-      <body className={`${cairo.variable} `} dir="rtl">
+      <body className={`${cairo.variable} font-bold `} dir="rtl">
         <ProgressBarProvider>
           <NextAuthProvider>
             <main>
               <ClientProviders>
                 {/* this to get init data like categories , favorites */}
                 <GetInitialData />
-                <SendDataInBG/>
+                <SendDataInBG />
                 <NuqsAdapter>
-                  <SpecialOrderDialogsViewer/>
+                  <SpecialOrderDialogsViewer />
+                  <MainHeader isHomePage isAuth={!!session} defaultCountry={defaultCountry ?? "1"} />
                   {children}
-                  <Footer/>
-                   {/* <About />
+                  <Footer />
+                  {/* <About />
                   <Footer /> */}
                 </NuqsAdapter>
               </ClientProviders>
@@ -90,8 +88,8 @@ export default async function RootLayout({
           </NextAuthProvider>
 
           {/* to show toaster messages */}
-          <Toaster  />
-          <SonanerToaster richColors />
+          <Toaster />
+          {/* <SonanerToaster richColors /> */}
           <ToastContainer position="bottom-right" />
         </ProgressBarProvider>
       </body>
