@@ -96,7 +96,7 @@ function SpecialWholesalesOrderDialog({
 
           // إرسال الطلب إلى API
           return await postApi(
-            `SpecialProducts/Market/AskNewSpecialProductByCustomer`,
+            `SpecialProducts`,
             {
               body: formData,
             }

@@ -13,10 +13,10 @@ const MyAccountPage = async () => {
       // PreviousOrdersData,
     ] = await Promise.all([
       getApi<SpecialOrdersResponseType>(
-        "SpecialProducts/Market/GetSpecialProductsByCustomerFilter/200/10/1"
+        "SpecialProducts?owned=true&pageSize=10&pageNumber=1&statuses=3"
       ), // تم تسعبرها
       getApi<SpecialOrdersResponseType>(
-        "SpecialProducts/Market/GetSpecialProductsByCustomerFilter/100/10/1"
+        "SpecialProducts?owned=true&pageSize=10&pageNumber=1&statuses=1"
       ), // في انتظار المراجعه من قبل المندوب
       // getApi<SpecialOrdersResponseType>(
       //   "SpecialProducts/Market/GetSpecialProductsByCustomerFilter/300/10/1"

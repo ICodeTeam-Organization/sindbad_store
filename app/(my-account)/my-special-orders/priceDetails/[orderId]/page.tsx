@@ -24,7 +24,7 @@ export default async function PriceDetails({
 
   try {
     specialOrderDetails = await getApi<SpecialOrderDetailsType>(
-      `SpecialProducts/Market/GetSpecialProductDetails/${+params?.orderId}`
+      `SpecialProducts/${+params?.orderId}`
     );
   } catch (error) {
     console.error("خطأ أثناء جلب تفاصيل الطلب الخاص:", error);

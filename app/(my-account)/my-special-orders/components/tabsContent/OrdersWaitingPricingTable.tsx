@@ -33,7 +33,7 @@ const OrdersWaitingPricingTable: React.FC<{
       queryKey: ["customerOrdersWaitingPricing"],
       queryFn: async ({ pageParam = 1 }) => {
         return getApi<SpecialOrdersResponseType>(
-          `SpecialProducts/Market/GetSpecialProductsByCustomerFilter/100/10/${pageParam}`
+          `SpecialProducts?owned=true&pageSize=10&pageNumber=${pageParam}&statuses=1`
         );
       },
       getNextPageParam: (lastPage) => {

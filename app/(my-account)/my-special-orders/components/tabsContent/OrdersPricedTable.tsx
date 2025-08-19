@@ -36,7 +36,7 @@ const OrdersPricedTable: React.FC<{ initData: SpecialOrdersResponseType }> = ({
       queryKey: ["customerOrdersPriced"],
       queryFn: async ({ pageParam = 1 }) => {
         return getApi<SpecialOrdersResponseType>(
-          `SpecialProducts/Market/GetSpecialProductsByCustomerFilter/200/10/${pageParam}`
+          `SpecialProducts?owned=true&pageSize=10&pageNumber=${pageParam}&statuses=3`
         );
       },
       getNextPageParam: (lastPage) => {
