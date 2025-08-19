@@ -74,7 +74,7 @@ function ShowPricingInfoDialog({
 
         <DialogFooter className="sm:justify-start mt-4 space-x-2 gap-x-2 ">
           <DialogClose asChild>
-            <Button type="button" variant="secondary">
+            <Button type="button" >
               إغلاق
             </Button>
           </DialogClose>

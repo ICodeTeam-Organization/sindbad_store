@@ -1,20 +1,21 @@
 "use client";
 import { AiFillHeart,   } from "react-icons/ai";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react"; 
 import React from "react";
 import { cn } from "@/lib/utils";
 import { useFavorite } from "@/app/stores_mangament/favoritesStore";
+import { toast } from "react-toastify";
 
 function AddToFavBtn({ id }: { id: number }) {
-  const redirct = useRouter();
   const { status } = useSession();
   const { productsIds, addProductToFavorite, delProductFromFavorite } =
     useFavorite();
   const isInFavorite = productsIds.includes(+id);
 
   const handleAddToFav = () => {
-    if (status === "unauthenticated") redirct.push("/auth");
+    if (status === "unauthenticated") {
+       toast.error("يجب عليك تسجيل الدخول اولاً")
+    }
     else if (status === "authenticated") {
       if (isInFavorite) {
         delProductFromFavorite(+id);

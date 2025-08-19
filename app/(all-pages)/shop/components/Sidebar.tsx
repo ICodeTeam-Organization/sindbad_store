@@ -40,8 +40,7 @@ const Sidebar = () => {
       <Accordion
         type={"multiple" as any}
         // collapsible
-        className="w-full"
-        defaultValue="item-1"
+        className="w-full" 
       >
         <div className="mb-8 flex gap-x-2 items-center cursor-pointer bg-bg-50 py-2 rounded-md  justify-center" onClick={resetFilters}  >
           <GrPowerReset size={18} />

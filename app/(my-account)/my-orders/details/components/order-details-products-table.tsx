@@ -16,7 +16,7 @@ const OrderDetailProductsTable = ({ detail }: Detail) => {
 
   const router = useRouter()
   const goToProductdetails = (id:number) => { 
-    router.push("/shop/productDetils/" + id)
+    router.push("/shop/product/" + id)
    }
 
   return (
