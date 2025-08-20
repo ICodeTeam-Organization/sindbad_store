@@ -7,6 +7,7 @@ import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import TabsComponent from "./components/taps";
 import { NormalizedProductType } from "@/Data/normalizTypes";
 import ProductCarsoule from "@/components/ProductCarsoule";  
+import { get_currency_key } from "@/lib/cookie/cookie.clients";
 type ProductPageProps = {
   params: {
     productId: string;
@@ -57,14 +58,13 @@ const fetchSimilerProducts = async (
   return null;
 };
 
-
 export async function generateMetadata({ params }: ProductPageProps) {
   const productId = params.productId.split("_")[0];
   const productData = await fetchProductDetails(productId);
   const product: NormalizedProductType = normalizeProduct(productData);
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://sindbad-store.vercel.app";
-  const imageUrl = product.image     ;
+  const imageUrl = product.image;
   const pageUrl = `${baseUrl}/product/${params.productId}`;
 
   const description =
@@ -72,6 +72,33 @@ export async function generateMetadata({ params }: ProductPageProps) {
     product.shortDecription ||
     product.description ||
     "اكتشف هذا المنتج الرائع الآن في متجرنا.";
+ 
+  const productStructuredData = {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    name: product.name,
+    image: [imageUrl],
+    description: description,
+    sku: product.productNumber || "",
+    brand: {
+      "@type": "Brand",
+      name: product.brandName || "",
+    },
+    offers: {
+      "@type": "Offer",
+      url: pageUrl,
+      priceCurrency: get_currency_key(product.country),
+      price: product.priceAfterDiscount || product.price,
+      availability: product.isDisabled ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
+      validFrom: product.offerStartDate || undefined,
+      validThrough: product.offerEndDate || undefined,
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: product.rate || 0,
+      reviewCount: product.numOfReviewers || 0,
+    },
+  };
 
   return {
     title: product?.name,
@@ -88,6 +115,14 @@ export async function generateMetadata({ params }: ProductPageProps) {
       description: description,
       images: [imageUrl],
       card: "summary_large_image",
+    },
+    // إضافة الـStructured Data للـSEO
+    alternates: {},
+    metadataBase: new URL(baseUrl),
+    icons: {},
+    robots: { index: true, follow: true },
+    other: {
+      "application/ld+json": JSON.stringify(productStructuredData),
     },
   };
 }
