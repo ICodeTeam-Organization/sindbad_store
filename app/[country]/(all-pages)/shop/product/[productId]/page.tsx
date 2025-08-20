@@ -6,9 +6,7 @@ import { Product } from "./types";
 import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import TabsComponent from "./components/taps";
 import { NormalizedProductType } from "@/Data/normalizTypes";
-import ProductCarsoule from "@/components/ProductCarsoule"; 
-import ProductMeta from "./components/ProductMetaData";
-
+import ProductCarsoule from "@/components/ProductCarsoule";  
 type ProductPageProps = {
   params: {
     productId: string;
@@ -59,6 +57,41 @@ const fetchSimilerProducts = async (
   return null;
 };
 
+
+export async function generateMetadata({ params }: ProductPageProps) {
+  const productId = params.productId.split("_")[0];
+  const productData = await fetchProductDetails(productId);
+  const product: NormalizedProductType = normalizeProduct(productData);
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://sindbad-store.vercel.app";
+  const imageUrl = product.image     ;
+  const pageUrl = `${baseUrl}/product/${params.productId}`;
+
+  const description =
+    (product.isOfferStillOn && product.offerSentence) ||
+    product.shortDecription ||
+    product.description ||
+    "اكتشف هذا المنتج الرائع الآن في متجرنا.";
+
+  return {
+    title: product.name,
+    description: description,
+    openGraph: {
+      title: product.name,
+      description: description,
+      url: pageUrl,
+      images: [imageUrl],
+      type: "product",
+    },
+    twitter: {
+      title: product.name,
+      description: description,
+      images: [imageUrl],
+      card: "summary_large_image",
+    },
+  };
+}
+
 const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   let { productId } = params;
   productId = productId.split("_")[0]
@@ -83,8 +116,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
   // const storeData = await fetchStoreDetails(product?.storeId ?? "");
 
   return (
-    <div className="bg-bg-100">
-      <ProductMeta product={product} />
+    <div className="bg-bg-100"> 
       <div className="xl:container mx-auto  pt-10 ">
         <ProductDetails product={product} />
         <div className="mdHalf:px-12 px-4 ">
