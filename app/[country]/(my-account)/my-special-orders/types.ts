@@ -49,6 +49,7 @@ export type SpecialOrderDetailsType = {
     success: boolean;
     message: string;
     data: {
+      items:[{
       id: number;
       customerId: string;
       salesmanId: string;
@@ -75,6 +76,7 @@ export type SpecialOrderDetailsType = {
       statusName: string;
       images: {imageUrl:string}[]; // Array of image URLs or paths
       note: string | null;
+      }]
     };
   };
   
