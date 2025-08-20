@@ -1,13 +1,10 @@
-import type { Metadata } from "next";
 import "./globals.css";
-// import "slick-carousel/slick/slick.css";
-// import "slick-carousel/slick/slick-theme.css";
+import type { Metadata } from "next";
 import ClientProviders from "@/components/client-providers";
 import { Cairo } from "next/font/google";
 import { NextAuthProvider } from "@/components/session-providers";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarProvider from "@/components/progress-bar-providers";
-// import Footer from "@/components/Footer";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import SpecialOrderDialogsViewer from "@/components/SpecialOrderDialogsViewer";
 import { ToastContainer } from 'react-toastify';
@@ -17,11 +14,11 @@ import Footer from "@/components/footer/Footer";
 import MainHeader from "@/components/MainHeader/MainHeader";
 import { getServerSession } from "next-auth";
 import { authOption } from "@/lib/authOption";
-import { getCookie } from "@/lib/coockie-utls"; 
+import { getCookie } from "@/lib/coockie-utls";
 
 
 const cairo = Cairo({
-  weight: ["300", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["arabic"],
   display: "swap",
   variable: "--font-main",
@@ -61,7 +58,7 @@ export default async function RootLayout({
 }>) {
   const session = await getServerSession(authOption);
   const defaultCountry = getCookie("country");
-  
+
   // const pathname
 
   return (

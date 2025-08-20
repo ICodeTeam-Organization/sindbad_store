@@ -9,16 +9,8 @@ import AddToCartBtn from "./AddToCartBtn";
 import AddToFavBtn from "./AddToFavBtn";  
 import ProductCardPriceSection from "./ProductCardPriceSection";
 import { get_currency_key } from "@/lib/cookie/cookie.clients";
-import { countrys } from "@/lib/utils";
-
-// function calculateDiscountPercentage(
-//   oldPrice: number,
-//   newPrice: number
-// ): number {
-//   const discount = ((oldPrice - newPrice) / oldPrice) * 100;
-//   return discount;
-// }
-
+import { countrys } from "@/lib/utils"; 
+ 
 type propsType = {
   data: NormalizedProductType;
 };

@@ -69,56 +69,48 @@ const OrdersPricedTable: React.FC<{ initData: SpecialOrdersResponseType }> = ({
       {/* Desktop Table */}
       {orders.length > 0 && (
         <div className="hidden md:block">
-          <table className="w-full border-collapse">
-            {/* Table Header */}
-            <thead className="bg-bg-100 text-sm font-medium text-center text-[#000]">
-              <tr>
-                {TABLE_HEAD.map((head) => (
-                  <th key={head} className="px-4 py-3 font-medium">
-                    {head}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            {/* Table Body */}
-            <tbody className="text-sm text-center text-[#000]">
-              {orders?.map(({ name, specialCategoryId, note, createdAt, id,typeName }, index) => (
-                <tr
-                  key={index}
-                  className={`${
-                    index % 2 !== 0 ? "bg-[#FFFBF8]" : "bg-white"
-                  } border-b border-gray-200`}
-                >
-                  <td className="px-4 py-3">
+         <table className="w-full border-collapse"  dir="ltr">
+              {/* Table Header */}
+              <thead className="bg-bg-100 text-sm font-medium text-center text-secondary">
+                <tr>
+                  {TABLE_HEAD.map((head) => (
+                    <th key={head} className="px-4 py-3 font-medium">
+                      {head}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              {/* Table Body */}
+              <tbody className="text-sm text-center text-secondary">
+                {orders?.map(({ name, specialCategoryId, note, createdAt, id, typeName }, index) => (
+                  <tr
+                    key={index}
+                    className={`${index % 2 !== 0 ? "bg-bg-100/40" : "bg-white"
+                      } `}
+                  >
+                    <td className="px-4 py-3">
                     <div className="flex items-center justify-center gap-2 cursor-pointer">
                       <Link
                         href={"/my-special-orders/priceDetails/" + id}
-                        className="w-[140px] text-[#768396] h-[38px] bg-[#FFEBDD] px-4 py-2 rounded-lg whitespace-nowrap"
+                        className="  text-white h-[38px] font-semibold bg-secondary px-4 py-2 rounded-lg whitespace-nowrap"
                       >
-                        عرض تفاصيل السعر
-                      </Link>
-                      <Image
-                        src="/images/MyAccountImages/ai-generative.svg"
-                        alt="ai-generative"
-                        width={20}
-                        height={20}
-                      />
+                        عرض تفاصيل الطلب
+                      </Link> 
                     </div>
                   </td>
-                  <td className="px-4 py-3">
-                    {convertToArabicDate(createdAt)}
-                  </td>
-                  <td className="px-4 py-3">{note}</td>
-                  <td className="px-4 py-3">
-                    {getCategoryNameById(+specialCategoryId)}
-                  </td>
-                  <td className="px-4 py-3">{name}</td>
-                  <td className="px-4 py-3">{typeName}</td>
-
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    <td className="px-4 py-3">
+                      {convertToArabicDate(createdAt)}
+                    </td>
+                    <td className="px-4 py-3">{note}</td>
+                    <td className="px-4 py-3">
+                      {getCategoryNameById(+specialCategoryId)}
+                    </td>
+                    <td className="px-4 py-3">{name}</td>
+                    <td className="px-4 py-3">{typeName}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
         </div>
       )}
 

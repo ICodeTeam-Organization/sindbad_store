@@ -65,8 +65,8 @@ const OrdersWaitingPricingTable: React.FC<{
       <div className="w-full">
         {/* Desktop Table */}
         {orders.length > 0 && (
-          <div className="hidden md:block  " dir="rtl">
-            <table className="w-full border-collapse">
+          <div className="hidden md:block  ">
+            <table className="w-full border-collapse"  dir="ltr">
               {/* Table Header */}
               <thead className="bg-bg-100 text-sm font-medium text-center text-secondary">
                 <tr>
@@ -78,7 +78,7 @@ const OrdersWaitingPricingTable: React.FC<{
                 </tr>
               </thead>
               {/* Table Body */}
-              <tbody className="text-sm text-center text-secondary">
+              <tbody className="text-sm text-center text-secondary"  dir="ltr">
                 {orders?.map(({ name, specialCategoryId, note, createdAt, id, typeName }, index) => (
                   <tr
                     key={index}
@@ -89,7 +89,7 @@ const OrdersWaitingPricingTable: React.FC<{
                     <div className="flex items-center justify-center gap-2 cursor-pointer">
                       <Link
                         href={"/my-special-orders/priceDetails/" + id}
-                        className="w-[140px] text-white h-[38px] bg-secondary px-4 py-2 rounded-lg whitespace-nowrap"
+                        className="  text-white h-[38px] bg-secondary px-4 py-2 rounded-lg whitespace-nowrap"
                       >
                         عرض تفاصيل الطلب
                       </Link> 

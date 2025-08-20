@@ -40,6 +40,8 @@ export default async function PriceDetails({
     images,
   } = specialOrderDetails?.data;
 
+  console.log(specialOrderDetails?.data);
+  
   
 
   return (

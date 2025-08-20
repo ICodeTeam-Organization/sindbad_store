@@ -18,17 +18,17 @@ export default async function HomeLayout({
 
   return (
     <>
-      <div className="mdHalf:flex xl:container mx-auto relative">
+      <div className="mdHalf:flex  relative bg-bg-100">
         {/* <div className="mdHalf:block hidden border-l py-20 bg-white sticky top-0">
           <SideBar user={{
             email: resulte.data?.email  || "لا يوجد ايميل",
             fullName: resulte.data?.name || "لا يوجد اسم"
           }} />
         </div> */}
-        <main className="mdHalf:flex-1 bg-bg-100 mdHalf:p-8 p-4">
+        <main className="mdHalf:flex-1  xl:container mx-auto mdHalf:p-8 p-4">
         
 
-          <div className="p-4 py-8 relative bg-white rounded-md shadow-sm items-center justify-center flex flex-col gap-y-3  bg-[url('/images/hero_images/bg_hero.png')] bg-cover bg-no-repeat bg-center">
+          <div className="p-4 py-8 relative  bg-white rounded-md shadow-sm items-center justify-center flex flex-col gap-y-3  bg-[url('/images/hero_images/bg_hero.png')] bg-cover bg-no-repeat bg-center">
           <div className="absolute inset-0 bg-black bg-opacity-20 z-0"></div> 
             <div className="border rounded-full p-6 bg-white z-10" >
               <BsPerson className="text-[50px] text-gray-400" />
