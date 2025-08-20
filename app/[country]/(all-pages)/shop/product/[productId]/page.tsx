@@ -7,6 +7,7 @@ import { normalizeProduct } from "@/Data/mappers/productNormlizeMapper";
 import TabsComponent from "./components/taps";
 import { NormalizedProductType } from "@/Data/normalizTypes";
 import ProductCarsoule from "@/components/ProductCarsoule"; 
+import ProductMeta from "./components/ProductMetaData";
 
 type ProductPageProps = {
   params: {
@@ -59,7 +60,8 @@ const fetchSimilerProducts = async (
 };
 
 const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
-  const { productId } = params;
+  let { productId } = params;
+  productId = productId.split("_")[0]
 
   if (!productId) {
     notFound();
@@ -82,6 +84,7 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
 
   return (
     <div className="bg-bg-100">
+      <ProductMeta product={product} />
       <div className="xl:container mx-auto  pt-10 ">
         <ProductDetails product={product} />
         <div className="mdHalf:px-12 px-4 ">

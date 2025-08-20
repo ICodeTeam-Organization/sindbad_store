@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { SpecialOrdersResponseType } from "../../types"; 
-import Image from "next/image"; 
+import { SpecialOrdersResponseType } from "../../types";  
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getApi } from "@/lib/http";
 import { Button } from "@/components/ui/button";

@@ -33,28 +33,7 @@ function TopSectionOfHeader({
         // isHomePage && "mdHalf:mr-[170px]"
       )}
     >
-      {/* <div
-        className={cn(
-          " flex  items-center z-10 me-2" 
-        )}
-      >
-        <div
-          className={cn("mdHalf:hidden block")}
-          onClick={() => {
-            // setopenNav((o) => !o);
-          }}
-        >
-          <BiMenu className="cursor-pointer" size={40} />
-        </div>
-        <Link href="/" className="2lg:w-[130px] w-[120px] h-[70px]  2lg:h-[80px] relative">
-          <Image
-            className="block relative cursor-pointer"
-            src={"/images/logo.png"} 
-            fill
-            alt="logo"
-          />
-        </Link>
-      </div> */}
+    
       <div className="hidden mdHalf:block">
         <OrderFromAndHow isAuth={isAuth} defaultCountry={defaultCountry} />
       </div>

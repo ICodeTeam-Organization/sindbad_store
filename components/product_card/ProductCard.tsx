@@ -15,7 +15,8 @@ type propsType = {
   data: NormalizedProductType;
 };
 const ProductCard = ({ data }: propsType) => { 
-  const goto =  "/" +countrys[data?.country].toString() + `/shop/product/${data?.id}`;
+  const slugname = data?.name.split(" ").join("_")
+  const goto =  "/" +countrys[data?.country].toString() + `/shop/product/${data?.id}_${slugname}`;
   return (
     <div
       dir="rtl"

@@ -73,7 +73,7 @@ export default async function RootLayout({
                 <SendDataInBG />
                 <NuqsAdapter>
                   <SpecialOrderDialogsViewer />
-                  <MainHeader isHomePage isAuth={!!session} defaultCountry={defaultCountry ?? "1"} />
+                  <MainHeader  isAuth={!!session} defaultCountry={defaultCountry ?? "1"} />
                   {children}
                   <Footer />
                   {/* <About />

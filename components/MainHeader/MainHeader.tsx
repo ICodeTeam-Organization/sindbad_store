@@ -25,42 +25,7 @@ const MainHeader = ({
   const pathname = usePathname()
   const isHomePage = pathname.endsWith('/') || pathname.endsWith("/KSA" ) || pathname.endsWith("/UAE")
   const [openNav, setopenNav] = useState<boolean>(false);
-  // const session = useSession();
-  // const isAuth = session.status === "authenticated";
-
-  // let lastScrollTop = 0;
-  // const handleScroll = () => {
-  //   const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-  //   const divElement = document.getElementById("hideSearchComponentInMobileWhenScoll");
-
-  //   if (divElement) {
-  //     if (currentScroll > lastScrollTop) {
-  //       // Scrolling down, hide the div by translating it upwards
-  //       divElement.style.zIndex = "0";
-  //       divElement.style.opacity = "0";
-  //       divElement.style.visibility = "hidden";
-  //       divElement.style.transform = 'translateY(-100%)';
-  //       divElement.style.position = 'absolute'; // Ensure it doesn't take up space
-  //     } else {
-  //       // Scrolling up, show the div by resetting the transform
-  //       divElement.style.opacity = "1";
-  //       divElement.style.visibility = "visible";
-  //       divElement.style.transform = 'translateY(0)';
-  //       divElement.style.position = 'static'; // Ensure it's fixed on the screen again
-  //     }
-
-  //     // Update last scroll position
-  //     lastScrollTop = currentScroll <= 0 ? 0 : currentScroll; // Prevent negative values
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
-
+   
   return (
     <div className="mdHalf:shadow-sm shadow-md bg-white" >
       <div className="duration-300  lg:container mx-auto">
