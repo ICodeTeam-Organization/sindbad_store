@@ -74,17 +74,17 @@ export async function generateMetadata({ params }: ProductPageProps) {
     "اكتشف هذا المنتج الرائع الآن في متجرنا.";
 
   return {
-    title: product.name,
+    title: product?.name,
     description: description,
     openGraph: {
-      title: product.name,
+      title: product?.name,
       description: description,
       url: pageUrl,
       images: [imageUrl],
-      type: "product",
+      type: "website",
     },
     twitter: {
-      title: product.name,
+      title: product?.name,
       description: description,
       images: [imageUrl],
       card: "summary_large_image",
