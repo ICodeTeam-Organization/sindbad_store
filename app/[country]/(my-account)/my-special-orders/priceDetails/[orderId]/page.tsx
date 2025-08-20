@@ -16,7 +16,7 @@ export default async function PriceDetails({
 
   try {
     prices = await getApi<OfferDetailsResponseType>(
-      `SpecialProducts/Market/GetAllOfferPriceOfSpecificSpecialProductByCustomer/${+params?.orderId}`
+      `PriceOffers?specialProductId=${params?.orderId}`
     );
   } catch (error) {
     console.error("خطأ أثناء جلب الأسعار:", error);
@@ -24,7 +24,7 @@ export default async function PriceDetails({
 
   try {
     specialOrderDetails = await getApi<SpecialOrderDetailsType>(
-      `SpecialProducts/${+params?.orderId}`
+      `SpecialProducts/${params?.orderId}`
     );
   } catch (error) {
     console.error("خطأ أثناء جلب تفاصيل الطلب الخاص:", error);
@@ -38,10 +38,11 @@ export default async function PriceDetails({
     description,
     linkUrl,
     images,
-  } = specialOrderDetails?.data;
+  } = specialOrderDetails?.data.items[0];
 
-  
-
+  console.log("special : ",specialOrderDetails.data);
+  console.log("prices : ", prices)
+  console.log("prices : ", `PriceOffers?specialProductId=${params?.orderId}`)
   return (
     <div className=" p-5  rounded-md shadow-sm tajawal bg-white  ">
       <div className=" ">
