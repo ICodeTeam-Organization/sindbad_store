@@ -57,7 +57,7 @@ const MyAccountPage = async () => {
   } catch (error) {
     console.error("Error fetching data:", error);
 
-    // Fallback UI if an error occurs
+    // Fallback UI if an erro  r occurs
     return (
       <div className="p-6 h-[70vh] flex items-center justify-center">
         <div className="w-full text-center text-red-500">
