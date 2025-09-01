@@ -27,6 +27,10 @@ const MainHeader = ({
   const [openNav, setopenNav] = useState<boolean>(false);
    
   return (
+   <>
+    <div className="bg-primary h-10">
+
+    </div>
     <div className="mdHalf:shadow-sm shadow-md bg-white" >
       <div className="duration-300  lg:container mx-auto">
         <div
@@ -116,7 +120,7 @@ const MainHeader = ({
           <SearchComponent isHomePage={isHomePage} />
         </div>
       </div>
-    </div>
+    </div></>
   );
 };
 
