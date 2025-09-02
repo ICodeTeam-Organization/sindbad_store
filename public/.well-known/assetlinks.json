@@ -1,0 +1,14 @@
+[
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.example.sindbad_store",
+            "sha256_cert_fingerprints": [
+                " CF:F3:97:69:4B:D9:13:AE:77:22:BA:74:68:51:CC:CB:EE:FA:FA:C5:B5:A4:E7:C4:E2:EA:2E:03:32:78:5F:A9"
+            ]
+        }
+    }
+]
