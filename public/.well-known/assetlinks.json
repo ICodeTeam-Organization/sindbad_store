@@ -1,11 +1,27 @@
 [
     {
-        "relation": ["delegate_permission/common.handle_all_urls"],
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
         "target": {
             "namespace": "android_app",
-            "package_name": "com.cartlow.android",
-            "sha256_cert_fingerprints":
-            ["12:F5:34:91:DE:34:D2:56:FD:EE:7C:31:2F:BB:03:5B:0B:31:78:AC:5E:C4:21:7D:D7:08:91:82:25:2A:69:F8"]
+            "package_name": "com.example.sindbad_store",  
+            "sha256_cert_fingerprints": [
+                "58:69:29:81:CF:A8:35:A2:D0:5E:CF:05:E0:B3:42:7D:25:8E:B1:F9:55:F3:EC:26:A8:4B:2D:28:41:3F:AE:B2"
+
+            ]
+        }
+    },
+    {
+        "relation": [
+            "delegate_permission/common.handle_all_urls"
+        ],
+        "target": {
+            "namespace": "android_app",
+            "package_name": "com.example.sindbad_store.debug", 
+            "sha256_cert_fingerprints": [
+                "CF:F3:97:69:4B:D9:13:AE:77:22:BA:74:68:51:CC:CB:EE:FA:FA:C5:B5:A4:E7:C4:E2:EA:2E:03:32:78:5F:A9"
+            ]
         }
     }
 ]
